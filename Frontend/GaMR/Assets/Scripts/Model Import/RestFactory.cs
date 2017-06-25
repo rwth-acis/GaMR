@@ -36,7 +36,14 @@ public class RestFactory : MonoBehaviour {
 
         if (callback != null)
         {
-            callback(req.downloadHandler.text);
+            if (req.responseCode == 200)
+            {
+                callback(req.downloadHandler.text);
+            }
+            else
+            {
+                MessageBox.Show("Could not perform HTTP Request", MessageBoxType.ERROR);
+            }
         }
     }
 
@@ -47,7 +54,14 @@ public class RestFactory : MonoBehaviour {
 
         if (callback != null)
         {
-            callback(DownloadHandlerTexture.GetContent(req));
+            if (req.responseCode == 200)
+            {
+                callback(DownloadHandlerTexture.GetContent(req));
+            }
+            else
+            {
+                MessageBox.Show("Could not perform HTTP Request", MessageBoxType.ERROR);
+            }
         }
 
 
