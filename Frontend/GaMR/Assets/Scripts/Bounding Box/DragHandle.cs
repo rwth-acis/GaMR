@@ -1,0 +1,145 @@
+﻿using HoloToolkit.Unity.InputModule;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System;
+
+/// <summary>
+/// Registers drag movements and propagates them to the TransformationManager of the object which should be transformed
+/// </summary>
+public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHandler
+{
+
+    /// <summary>
+    /// the input manager of the application
+    /// </summary>
+    InputManager inputManager;
+    [Tooltip("Defines which operation this handle initiates: Translation, Rotation or Scale")]
+    public HandleType handleType;
+    [Tooltip("The object to manipulate")]
+    public Transform toManipulate;
+    private TransformationManager transformationManager;
+    [Tooltip("For rotation: defines the rotation axis")]
+    public Vector3 gestureOrientation;
+    [Tooltip("The speed of the operation")]
+    public float speed = 0.01f;
+
+    /// <summary>
+    /// Gets the value which has the maximum absolute value
+    /// e.g. for -1, 10, -500 it returns -500
+    /// </summary>
+    /// <param name="values">Array with the values to check</param>
+    /// <returns>The value with the maximum absolute value</returns>
+    private float GetMaxAbsolute(float[] values)
+    {
+        float max;
+        float realValue;
+
+        max = Math.Abs(values[0]);
+        realValue = values[0];
+
+        for (int i = 1; i < values.Length; i++)
+        {
+            if (Math.Abs(values[i]) > max)
+            {
+                max = Math.Abs(values[i]);
+                realValue = values[i];
+            }
+        }
+
+        return realValue;
+    }
+
+    // Use this for initialization
+    void Start()
+    {
+        transformationManager = toManipulate.GetComponent<TransformationManager>();
+        inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    public void OnManipulationStarted(ManipulationEventData eventData)
+    {
+        inputManager.OverrideFocusedObject = gameObject;
+    }
+
+    public void OnManipulationUpdated(ManipulationEventData eventData)
+    {
+        switch (handleType)
+        {
+            case HandleType.SCALE:
+                {
+                    // it is also possible to scale without preserving the aspect ratio
+                    // this option is implemented in here but it is currently not used
+                    bool preserveAspectRatio = true;
+                    if (preserveAspectRatio)
+                    {
+                        Vector2 centerProj = Camera.main.WorldToScreenPoint(toManipulate.position);
+                        Vector2 handleProj = Camera.main.WorldToScreenPoint(transform.position);
+
+                        Vector2 fromCenterToHandle = handleProj - centerProj;
+                        fromCenterToHandle = fromCenterToHandle.normalized;
+
+                        int drawDirection = Math.Sign(Vector2.Dot(eventData.CumulativeDelta, fromCenterToHandle));
+                        // fromCenterToHandle points outwards from the center
+                        // thus:
+                        // if drawDirection < 0: inwards-drag => scale down
+                        // if drawDirection > 0: outwards-drag => scale up
+
+                        // just get the most dominant 2D-axis to determine the strength of the scale
+                        float max = Math.Max(Math.Abs(eventData.CumulativeDelta.x), Math.Abs(eventData.CumulativeDelta.y));
+
+                        // determine scaling factor
+                        float scaleFac = 1.0f + (speed * max * drawDirection);
+
+                        // scale
+                        transformationManager.Scale(scaleFac * Vector3.one);
+                    }
+                    else
+                    {
+                        Vector3 scaleVec = speed * new Vector3(
+                eventData.CumulativeDelta.x * gestureOrientation.x,
+                eventData.CumulativeDelta.y * gestureOrientation.y,
+                eventData.CumulativeDelta.z * gestureOrientation.z);
+                        transformationManager.Scale(scaleVec);
+                    }
+                    break;
+                }
+            case HandleType.ROTATE:
+                {
+                    float[] values = new[] {eventData.CumulativeDelta.x,
+                            eventData.CumulativeDelta.y, eventData.CumulativeDelta.z};
+                    float rotationValue = GetMaxAbsolute(values);
+                    transformationManager.Rotate(gestureOrientation, speed * rotationValue);
+                    break;
+                }
+            case HandleType.TRANSLATE:
+                {
+                    //Vector3 translationVec = new Vector3(speed * eventData.CumulativeDelta.x, speed * eventData.CumulativeDelta.y, speed * eventData.CumulativeDelta.z);
+                    transformationManager.Translate(speed * eventData.CumulativeDelta);
+                    break;
+                }
+
+        }
+    }
+
+    public void OnManipulationCompleted(ManipulationEventData eventData)
+    {
+        inputManager.OverrideFocusedObject = null;
+    }
+
+    public void OnManipulationCanceled(ManipulationEventData eventData)
+    {
+        inputManager.OverrideFocusedObject = null;
+    }
+}
+
+public enum HandleType
+{
+    SCALE, ROTATE, TRANSLATE
+}
