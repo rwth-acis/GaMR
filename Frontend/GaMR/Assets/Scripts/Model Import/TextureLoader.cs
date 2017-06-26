@@ -16,7 +16,7 @@ public class TextureLoader : MonoBehaviour
     {
         infoManager = GameObject.Find("InformationManager").GetComponent<InformationManager>();
         rend = GetComponent<Renderer>();
-        RestFactory restFactory = GameObject.Find("RestFactory").GetComponent<RestFactory>();
+        RestManager restFactory = GameObject.Find("RestManager").GetComponent<RestManager>();
         restFactory.GetTexture(infoManager.BackendAddress + "/resources/texture/" + textureUrl, OnFinished);
     }
 

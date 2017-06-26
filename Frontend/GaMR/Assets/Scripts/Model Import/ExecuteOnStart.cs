@@ -9,7 +9,7 @@ public class ExecuteOnStart : MonoBehaviour {
 
     public Shader shader;
     public string baseUrl = "/resources/model/";
-    RestFactory restCaller;
+    RestManager restCaller;
     X3DObj x3dObject;
     public GameObject boundingBoxPrefab;
     public Vector3 spawnPosition;
@@ -19,9 +19,9 @@ public class ExecuteOnStart : MonoBehaviour {
     // Use this for initialization
     void Start () {
         infoManager = GameObject.Find("InformationManager").GetComponent<InformationManager>();
-        restCaller = GetComponent<RestFactory>();
-        x3dObject = new X3DObj(restCaller, infoManager.BackendAddress + baseUrl, shader);
-        x3dObject.LoadGameObjects(OnFinished); // this automatically creates them
+        restCaller = GetComponent<RestManager>();
+        //x3dObject = new X3DObj(restCaller, infoManager.BackendAddress + baseUrl, shader);
+        //x3dObject.LoadGameObjects(OnFinished); // this automatically creates them
 	}
 
     private void OnFinished()

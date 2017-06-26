@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 /// <summary>
 /// Handles the requests to the backend REST-service
 /// </summary>
-public class RestFactory : MonoBehaviour {
+public class RestManager : MonoBehaviour {
 
     /// <summary>
     /// creates a Coroutine which will query the url and return the result to the callback function

@@ -36,4 +36,29 @@ public class MainMenuActions : MonoBehaviour
             infoManager.ipAddressBackend = address;
         }
     }
+
+    public void EnterPort()
+    {
+        Keyboard.Display("Enter the Port", SetIPAddress);
+        gameObject.SetActive(false);
+    }
+
+    public void SetIPPort(string port)
+    {
+        gameObject.SetActive(true);
+        // if not null => input was accepted by user
+        if (port != null)
+        {
+            int iPort;
+            if (int.TryParse(port, out iPort))
+            {
+                Debug.Log("Set Port to " + port);
+                infoManager.portBackend = iPort;
+            }
+            else
+            {
+                MessageBox.Show("Input was not a number" + Environment.NewLine + "Could not set port", MessageBoxType.ERROR);
+            }
+        }
+    }
 }

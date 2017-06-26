@@ -1,3 +1,5 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -5,6 +7,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -22,6 +25,36 @@ public class Resources {
     {
         try {
             String json =  ReadFile("C:\\Temp\\3DModels\\" + no + ".json");
+            return Response.ok(json, MediaType.APPLICATION_JSON).build();
+        }
+        catch (IOException ioEx)
+        {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
+    @GET
+    @Path("model/overview")
+    @Produces(MediaType.APPLICATION_JSON)
+    /**
+     * gets all directories in the 3DModels folder
+     * each directory contains one model
+     */
+    public Response getOverview()
+    {
+        try {
+            File[] dirs = new File("C:\\Temp\\3DModels\\").listFiles(new FileFilter() {
+                                                                         public boolean accept(File pathname) {
+                                                                             return pathname.isDirectory();
+                                                                         }
+                                                                     });
+            CustomJSONArray jsonArray = new CustomJSONArray(dirs.length);
+            for (int i=0;i<dirs.length;i++)
+            {
+                jsonArray.array[i] = dirs[i].getName();
+            }
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(jsonArray);
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         }
         catch (IOException ioEx)

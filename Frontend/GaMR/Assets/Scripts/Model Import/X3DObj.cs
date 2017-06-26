@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 public class X3DObj
 {
     private List<X3DPiece> pieces;
-    private RestFactory restFactory;
+    private RestManager restFactory;
     private string baseUrl;
     private GameObject parent;
     private Shader shader;
@@ -19,7 +19,7 @@ public class X3DObj
 
     }
 
-    public X3DObj(RestFactory restFactory, string baseUrl, Shader shader)
+    public X3DObj(RestManager restFactory, string baseUrl, Shader shader)
     {
         pieces = new List<X3DPiece>();
         this.restFactory = restFactory;
