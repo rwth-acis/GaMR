@@ -42,7 +42,7 @@ public class RestManager : MonoBehaviour {
             }
             else
             {
-                MessageBox.Show("Could not perform HTTP Request", MessageBoxType.ERROR);
+                callback(null);
             }
         }
     }

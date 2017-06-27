@@ -20,9 +20,9 @@ public class ExecuteOnStart : MonoBehaviour {
     void Start () {
         infoManager = GameObject.Find("InformationManager").GetComponent<InformationManager>();
         restCaller = GetComponent<RestManager>();
-        //x3dObject = new X3DObj(restCaller, infoManager.BackendAddress + baseUrl, shader);
-        //x3dObject.LoadGameObjects(OnFinished); // this automatically creates them
-	}
+        x3dObject = new X3DObj(restCaller, infoManager.BackendAddress + baseUrl, shader);
+        x3dObject.LoadGameObjects(OnFinished); // this automatically creates them
+    }
 
     private void OnFinished()
     {

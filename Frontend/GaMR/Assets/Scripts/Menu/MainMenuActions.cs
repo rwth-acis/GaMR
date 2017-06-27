@@ -8,6 +8,7 @@ public class MainMenuActions : MonoBehaviour
 
     Menu menu;
     InformationManager infoManager;
+    RestManager restManager;
 
     public InformationManager InfoManager { get { return infoManager; } }
 
@@ -17,6 +18,11 @@ public class MainMenuActions : MonoBehaviour
         if (gameInfo != null)
         {
             infoManager = gameInfo.GetComponent<InformationManager>();
+        }
+        GameObject restObj = GameObject.Find("RestManager");
+        if (restObj != null)
+        {
+            restManager = restObj.GetComponent<RestManager>();
         }
     }
 
@@ -34,6 +40,25 @@ public class MainMenuActions : MonoBehaviour
         {
             Debug.Log("Set IP Address to " + address);
             infoManager.ipAddressBackend = address;
+        }
+
+        TestAddress();
+    }
+
+    private void TestAddress()
+    {
+        restManager.GET(infoManager.BackendAddress + "/resources/model/overview", RestResult);
+    }
+
+    private void RestResult(string result)
+    {
+        if (result != null)
+        {
+            MessageBox.Show("Address successfully saved" + Environment.NewLine + "The server is responding", MessageBoxType.SUCCESS);
+        }
+        else
+        {
+            MessageBox.Show("The address was saved" + Environment.NewLine + "However, the server does not respond", MessageBoxType.ERROR);
         }
     }
 
@@ -54,6 +79,7 @@ public class MainMenuActions : MonoBehaviour
             {
                 Debug.Log("Set Port to " + port);
                 infoManager.portBackend = iPort;
+                TestAddress();
             }
             else
             {

@@ -23,19 +23,19 @@ public class MessageBox : MonoBehaviour
         btn.OnPressed = Accept;
         if (type == MessageBoxType.ERROR)
         {
-            GameObject icon = (GameObject)Instantiate(Resources.Load("Animated Error"),iconPosition.position, Quaternion.identity, iconPosition);
+            Instantiate(Resources.Load("Animated Error"),iconPosition.position, Quaternion.identity, iconPosition);
         }
         else if (type == MessageBoxType.SUCCESS)
         {
-            GameObject icon = (GameObject)Instantiate(Resources.Load("Animated Success"), iconPosition.position, Quaternion.identity, iconPosition);
+            Instantiate(Resources.Load("Animated Success"), iconPosition.position, Quaternion.identity, iconPosition);
         }
         else if (type == MessageBoxType.WARNING)
         {
-            GameObject icon = (GameObject)Instantiate(Resources.Load("Animated Warning"), iconPosition.position, Quaternion.identity, iconPosition);
+            Instantiate(Resources.Load("Animated Warning"), iconPosition.position, Quaternion.identity, iconPosition);
         }
         else if (type == MessageBoxType.INFORMATION)
         {
-            GameObject icon = (GameObject)Instantiate(Resources.Load("Animated Info"), iconPosition.position, Quaternion.identity, iconPosition);
+            Instantiate(Resources.Load("Animated Info"), iconPosition.position, Quaternion.identity, iconPosition);
         }
 
         tagalongScript.TagalongDistance = 1.7f + 0.1f * count;
