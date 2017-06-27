@@ -6,6 +6,8 @@ using UnityEngine;
 public class MainMenuActions : MonoBehaviour
 {
 
+    public GameObject carouselMenu;
+    public GameObject carouselMenuStyle;
     Menu menu;
     InformationManager infoManager;
     RestManager restManager;
@@ -40,9 +42,8 @@ public class MainMenuActions : MonoBehaviour
         {
             Debug.Log("Set IP Address to " + address);
             infoManager.ipAddressBackend = address;
+            TestAddress();
         }
-
-        TestAddress();
     }
 
     private void TestAddress()
@@ -86,5 +87,46 @@ public class MainMenuActions : MonoBehaviour
                 MessageBox.Show("Input was not a number" + Environment.NewLine + "Could not set port", MessageBoxType.ERROR);
             }
         }
+    }
+
+    public void ShowCarouselMenu()
+    {
+        restManager.GET(infoManager.BackendAddress + "/resources/model/overview", AvailableModelsLoaded);
+    }
+
+    private void AvailableModelsLoaded(string res)
+    {
+        if (res == null)
+        {
+            MessageBox.Show("Server is not responding" + Environment.NewLine + "Could not list available 3D Models", MessageBoxType.ERROR);
+            return;
+        }
+
+        GameObject carouselInstance = Instantiate(carouselMenu);
+        CarouselMenu carouselScript = carouselInstance.GetComponent<CarouselMenu>();
+
+        JSONArray array = JsonUtility.FromJson<JSONArray>(res);
+        List<CustomMenuItem> items = new List<CustomMenuItem>();
+
+        foreach(string modelName in array.array)
+        {
+            CustomMenuItem item = carouselInstance.AddComponent<CustomMenuItem>();
+            item.Init(carouselMenuStyle, new List<CustomMenuItem>(), false);
+            item.onClickEvent.AddListener(delegate { OnCarouselItemClicked(modelName); });
+            item.Text = modelName;
+            items.Add(item);
+        }
+
+        if (carouselScript != null)
+        {
+            carouselScript.rootMenu = items;
+        }
+
+        Destroy(gameObject);
+    }
+
+    public void OnCarouselItemClicked(string name)
+    {
+        Debug.Log(name);
     }
 }

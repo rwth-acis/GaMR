@@ -60,7 +60,7 @@ public class RestManager : MonoBehaviour {
             }
             else
             {
-                MessageBox.Show("Could not perform HTTP Request", MessageBoxType.ERROR);
+                MessageBox.Show("Could not fetch texture", MessageBoxType.ERROR);
             }
         }
 

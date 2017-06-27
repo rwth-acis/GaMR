@@ -15,7 +15,7 @@ public class CarouselMenu : Menu
 
     public void Start()
     {
-        InstantiateCarouselMenu(4);
+        InstantiateCarouselMenu(0);
     }
 
     public new void InstantiateMenu(Vector3 instantiatePosition, Vector3 parentItemSize, List<CustomMenuItem> menu, CustomMenuItem parent, bool isSubMenu)
@@ -67,10 +67,13 @@ public class CarouselMenu : Menu
                 // perform this for the current middle and the right element
                 for (int i = 0; i < 2; i++)
                 {
-                    // only indicate the movement but don't perform it completely
-                    Vector3 target = pos[i + 2] + 0.2f * (pos[i + 3] - pos[i + 2]);
-                    float targetRot = 0.2f * rot[i + 3].y;
-                    StartCoroutine(TryMove(rootMenu[currentIndex + i].GameObjectInstance.transform, target, targetRot, 0.5f));
+                    if (currentIndex + i < rootMenu.Count) // if there is only one element => don't try to move other elements
+                    {
+                        // only indicate the movement but don't perform it completely
+                        Vector3 target = pos[i + 2] + 0.2f * (pos[i + 3] - pos[i + 2]);
+                        float targetRot = 0.2f * rot[i + 3].y;
+                        StartCoroutine(TryMove(rootMenu[currentIndex + i].GameObjectInstance.transform, target, targetRot, 0.5f));
+                    }
                 }
             }
             // else: move everything to the right, create a new entry on the left and destroy the last one on the right
@@ -90,16 +93,19 @@ public class CarouselMenu : Menu
                 // move everything else
                 for (int i = -1; i < 2; i++)
                 {
-                    // perform movement to next position
-                    Vector3 target = pos[i + 3];
-                    float targetRot = rot[i + 3].y;
-                    if (i != 1)
+                    if (currentIndex + i < rootMenu.Count) // if there is only one element => don't try to move other elements
                     {
-                        StartCoroutine(Move(rootMenu[currentIndex + i].GameObjectInstance.transform, target, targetRot, 1f));
-                    }
-                    else if (currentIndex + i < rootMenu.Count) // if it is the most right and exists => move and then destroy
-                    {
-                        StartCoroutine(MoveAndDestroy(rootMenu[currentIndex + i].GameObjectInstance.transform, target, targetRot, 1f, rootMenu[currentIndex + i]));
+                        // perform movement to next position
+                        Vector3 target = pos[i + 3];
+                        float targetRot = rot[i + 3].y;
+                        if (i != 1)
+                        {
+                            StartCoroutine(Move(rootMenu[currentIndex + i].GameObjectInstance.transform, target, targetRot, 1f));
+                        }
+                        else if (currentIndex + i < rootMenu.Count) // if it is the most right and exists => move and then destroy
+                        {
+                            StartCoroutine(MoveAndDestroy(rootMenu[currentIndex + i].GameObjectInstance.transform, target, targetRot, 1f, rootMenu[currentIndex + i]));
+                        }
                     }
                 }
                 currentIndex--;
@@ -118,10 +124,13 @@ public class CarouselMenu : Menu
                 // perform this for the current middle and the right element
                 for (int i = -1; i < 1; i++)
                 {
-                    // only indicate the movement but don't perform it completely
-                    Vector3 target = pos[i + 2] + 0.2f * (pos[i + 1] - pos[i + 2]);
-                    float targetRot = 0.2f * rot[i + 1].y;
-                    StartCoroutine(TryMove(rootMenu[currentIndex + i].GameObjectInstance.transform, target, targetRot, 0.5f));
+                    if (currentIndex + i >= 0) // if there is only one element => don't try to move other elements
+                    {
+                        // only indicate the movement but don't perform it completely
+                        Vector3 target = pos[i + 2] + 0.2f * (pos[i + 1] - pos[i + 2]);
+                        float targetRot = 0.2f * rot[i + 1].y;
+                        StartCoroutine(TryMove(rootMenu[currentIndex + i].GameObjectInstance.transform, target, targetRot, 0.5f));
+                    }
                 }
             }
             // else: move everything to the right, create a new entry on the right and destroy the last one on the left
@@ -141,16 +150,19 @@ public class CarouselMenu : Menu
 
                 for (int i = -1; i < 2; i++)
                 {
-                    // perform movement to next position
-                    Vector3 target = pos[i + 1];
-                    float targetRot = rot[i + 1].y;
-                    if (i != -1)
+                    if (currentIndex + i >= 0) // if there is only one element => don't try to move other elements
                     {
-                        StartCoroutine(Move(rootMenu[currentIndex + i].GameObjectInstance.transform, target, targetRot, 1f));
-                    }
-                    else if (currentIndex + i >= 0) // if it is the most left and exists => move and then destroy
-                    {
-                        StartCoroutine(MoveAndDestroy(rootMenu[currentIndex + i].GameObjectInstance.transform, target, targetRot, 1f, rootMenu[currentIndex+i]));
+                        // perform movement to next position
+                        Vector3 target = pos[i + 1];
+                        float targetRot = rot[i + 1].y;
+                        if (i != -1)
+                        {
+                            StartCoroutine(Move(rootMenu[currentIndex + i].GameObjectInstance.transform, target, targetRot, 1f));
+                        }
+                        else if (currentIndex + i >= 0) // if it is the most left and exists => move and then destroy
+                        {
+                            StartCoroutine(MoveAndDestroy(rootMenu[currentIndex + i].GameObjectInstance.transform, target, targetRot, 1f, rootMenu[currentIndex + i]));
+                        }
                     }
                 }
                 currentIndex++;

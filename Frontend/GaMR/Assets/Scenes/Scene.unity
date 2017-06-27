@@ -132,7 +132,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &48504329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,9 +205,19 @@ MonoBehaviour:
   closeOnClick: 0
   onClickEvent:
     m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+      m_Calls:
+      - m_Target: {fileID: 48504338}
+        m_MethodName: ShowCarouselMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   icon: {fileID: 0}
   text: Load 3D Model
 --- !u!114 &48504334
@@ -246,8 +256,7 @@ MonoBehaviour:
   onClickEvent:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   icon: {fileID: 0}
   text: Settings
 --- !u!114 &48504336
@@ -278,8 +287,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   icon: {fileID: 0}
   text: Set Port Number
 --- !u!114 &48504337
@@ -310,8 +318,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   icon: {fileID: 0}
   text: Set IP Address
 --- !u!114 &48504338
@@ -325,6 +332,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd6a761715c20d445a7158c5d296d075, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carouselMenu: {fileID: 1720901665156830, guid: ad15fa12ab62c0d4eb01ee4fefcd78d4,
+    type: 2}
+  carouselMenuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4,
+    type: 2}
 --- !u!114 &48504339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -635,6 +646,10 @@ Prefab:
     - target: {fileID: 4310309690420944, guid: ad15fa12ab62c0d4eb01ee4fefcd78d4, type: 2}
       propertyPath: m_RootOrder
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1720901665156830, guid: ad15fa12ab62c0d4eb01ee4fefcd78d4, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ad15fa12ab62c0d4eb01ee4fefcd78d4, type: 2}

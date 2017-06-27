@@ -20,7 +20,7 @@ public class CustomMenuItem : MonoBehaviour {
     private bool subMenuOpened;
 
     [Tooltip("Functions which are called if the user clicks the menu entry")]
-    public UnityEvent onClickEvent;
+    public StringEvent onClickEvent;
 
     [SerializeField]
     private Texture icon;
@@ -29,7 +29,25 @@ public class CustomMenuItem : MonoBehaviour {
 
     public Texture Icon { get { return icon; } set { menuStyleAdapter.UpdateIcon(value); icon = value; } }
 
-    public string Text { get { return text; } set { menuStyleAdapter.UpdateText(value); text = value; } }
+    public string Text { get { return text; } set { if (MenuSytleAdapter != null)
+            {
+                menuStyleAdapter.UpdateText(value);
+            }
+            text = value; } }
+
+    /// <summary>
+    /// should be called if the menu item is created programmatically and not in the Unity editor
+    /// </summary>
+    public void Init(GameObject menuStyle, List<CustomMenuItem> subMenu, bool closeOnClick)
+    {
+        this.menuStyle = menuStyle;
+        this.subMenu = subMenu;
+        this.closeOnClick = closeOnClick;
+        if (onClickEvent == null)
+        {
+            onClickEvent = new StringEvent();
+        }
+    }
 
     public void Create(Menu parentMenu, CustomMenuItem parent)
     {
@@ -46,7 +64,7 @@ public class CustomMenuItem : MonoBehaviour {
 
         if (onClickEvent == null)
         {
-            onClickEvent = new UnityEvent();
+            onClickEvent = new StringEvent();
         }
     }
 
@@ -59,7 +77,7 @@ public class CustomMenuItem : MonoBehaviour {
     {
         Debug.Log("clicked " + text);
         // invoke the defined action
-        onClickEvent.Invoke();
+        onClickEvent.Invoke(text);
 
         // reset the menu on click if closeOnClick is enabled
         if (closeOnClick)
