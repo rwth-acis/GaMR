@@ -19,12 +19,12 @@ import java.util.Scanner;
 public class Resources {
 
     @GET
-    @Path("model/{no}")
+    @Path("model/{name}/{no}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getModel(@PathParam("no") int no)
+    public Response getModel(@PathParam("name") String name, @PathParam("no") int no)
     {
         try {
-            String json =  ReadFile("C:\\Temp\\3DModels\\" + no + ".json");
+            String json =  ReadFile("C:\\Temp\\3DModels\\" + name + "\\" + no + ".json");
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         }
         catch (IOException ioEx)
@@ -64,11 +64,11 @@ public class Resources {
     }
 
     @GET
-    @Path("/texture/{name}")
+    @Path("/texture/{modelName}/{name}")
     @Produces("image/jpg")
-    public Response getTexture(@PathParam("name") String name)
+    public Response getTexture(@PathParam("modelName") String modelName, @PathParam("name") String name)
     {
-            File file = new File("C:\\Temp\\3DModels\\" + name);
+            File file = new File("C:\\Temp\\3DModels\\" + modelName + "\\" + name);
             if (file.exists()) {
                 return Response.ok(file, "image/jpg").header("Inline", "filename=\"" + file.getName() + "\"")
                         .build();

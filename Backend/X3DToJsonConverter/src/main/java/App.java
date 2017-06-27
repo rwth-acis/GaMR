@@ -133,7 +133,10 @@ public class App {
 
             for (int i=0;i<models.size();i++)
             {
-                mapper.writeValue(new File(outputPath + "\\" + i + ".json"), models.get(i));
+                File outputFile = new File(outputPath + "\\" + i + ".json");
+                // create all directories which don't exist
+                outputFile.getParentFile().mkdirs();
+                mapper.writeValue(outputFile, models.get(i));
             }
             System.out.println("Exported " + models.size() + " models to json");
         }

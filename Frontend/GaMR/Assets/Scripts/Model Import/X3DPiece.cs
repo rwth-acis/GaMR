@@ -66,6 +66,7 @@ public class X3DPiece
             {
                 TextureLoader loader = gameObject.AddComponent<TextureLoader>();
                 loader.textureUrl = textureName;
+                loader.modelName = ModelName;
             }
             gameObject.GetComponent<MeshFilter>().mesh = subMeshes[i];
             // it also needs a mesh collider to react to ray casts
@@ -128,6 +129,8 @@ public class X3DPiece
     {
         get { return pieceCount; }
     }
+
+    public string ModelName { get; set; }
 
 
 

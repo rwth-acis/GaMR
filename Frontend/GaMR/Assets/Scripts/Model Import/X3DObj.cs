@@ -9,6 +9,8 @@ public class X3DObj
     private List<X3DPiece> pieces;
     private RestManager restFactory;
     private string baseUrl;
+    private string url;
+    private string name;
     private GameObject parent;
     private Shader shader;
     private System.Action callback;
@@ -19,29 +21,32 @@ public class X3DObj
 
     }
 
-    public X3DObj(RestManager restFactory, string baseUrl, Shader shader)
+    public X3DObj(RestManager restFactory, string baseUrl, string name, Shader shader)
     {
         pieces = new List<X3DPiece>();
         this.restFactory = restFactory;
         this.baseUrl = baseUrl;
         this.shader = shader;
+        this.name = name;
+        url = baseUrl + name + "/";
     }
 
     public void LoadGameObjects(System.Action callback)
     {
         this.callback = callback;
-        restFactory.GET(baseUrl + "0", OnFinished);
+        restFactory.GET(url + "0", OnFinished);
     }
 
     private void OnFinished(string requestResult)
     {
         X3DPiece obj = JsonUtility.FromJson<X3DPiece>(requestResult);
+        obj.ModelName = name;
         pieces.Add(obj);
 
         // continue loading models if it is not the last one
         if (obj.PieceIndex < obj.PieceCount - 1)
         {
-            restFactory.GET(baseUrl + obj.PieceIndex + 1, OnFinished);
+            restFactory.GET(url + obj.PieceIndex + 1, OnFinished);
         }
         else
         {

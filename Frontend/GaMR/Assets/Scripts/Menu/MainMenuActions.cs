@@ -11,21 +11,16 @@ public class MainMenuActions : MonoBehaviour
     Menu menu;
     InformationManager infoManager;
     RestManager restManager;
+    ModelLoadManager modelLoadManager;
+    GameObject carouselInstance;
 
     public InformationManager InfoManager { get { return infoManager; } }
 
     public void Start()
     {
-        GameObject gameInfo = GameObject.Find("InformationManager");
-        if (gameInfo != null)
-        {
-            infoManager = gameInfo.GetComponent<InformationManager>();
-        }
-        GameObject restObj = GameObject.Find("RestManager");
-        if (restObj != null)
-        {
-            restManager = restObj.GetComponent<RestManager>();
-        }
+        infoManager = ComponentGetter.GetComponentOnGameobject<InformationManager>("InformationManager");
+        restManager = ComponentGetter.GetComponentOnGameobject<RestManager>("RestManager");
+        modelLoadManager = ComponentGetter.GetComponentOnGameobject<ModelLoadManager>("ModelLoadManager");
     }
 
     public void EnterIPAddress()
@@ -102,10 +97,14 @@ public class MainMenuActions : MonoBehaviour
             return;
         }
 
-        GameObject carouselInstance = Instantiate(carouselMenu);
+        if (carouselInstance == null)
+        {
+            carouselInstance = Instantiate(carouselMenu);
+        }
         CarouselMenu carouselScript = carouselInstance.GetComponent<CarouselMenu>();
 
         JSONArray array = JsonUtility.FromJson<JSONArray>(res);
+        Array.Sort(array.array);
         List<CustomMenuItem> items = new List<CustomMenuItem>();
 
         foreach(string modelName in array.array)
@@ -127,6 +126,8 @@ public class MainMenuActions : MonoBehaviour
 
     public void OnCarouselItemClicked(string name)
     {
-        Debug.Log(name);
+        modelLoadManager.Load(name);
+        Destroy(carouselInstance);
+        carouselInstance = null;
     }
 }

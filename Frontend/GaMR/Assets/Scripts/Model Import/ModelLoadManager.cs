@@ -1,26 +1,28 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
-using UnityEngine.UI;
 
-public class ExecuteOnStart : MonoBehaviour {
+public class ModelLoadManager : MonoBehaviour {
 
-    public Shader shader;
     public string baseUrl = "/resources/model/";
-    RestManager restCaller;
-    X3DObj x3dObject;
+    public Shader shader;
     public GameObject boundingBoxPrefab;
     public Vector3 spawnPosition;
     public Vector3 spawnEulerAngles;
-    private InformationManager infoManager;
 
-    // Use this for initialization
-    void Start () {
-        infoManager = GameObject.Find("InformationManager").GetComponent<InformationManager>();
-        restCaller = GetComponent<RestManager>();
-        x3dObject = new X3DObj(restCaller, infoManager.BackendAddress + baseUrl, "Skull", shader);
+    private RestManager restCaller;
+    private InformationManager infoManager;
+    private X3DObj x3dObject;
+
+    public void Start()
+    {
+        restCaller = ComponentGetter.GetComponentOnGameobject<RestManager>("RestManager");
+        infoManager = ComponentGetter.GetComponentOnGameobject<InformationManager>("InformationManager");
+    }
+
+    public void Load(string name)
+    {
+        x3dObject = new X3DObj(restCaller, infoManager.BackendAddress + baseUrl, name, shader);
         x3dObject.LoadGameObjects(OnFinished); // this automatically creates them
     }
 
@@ -34,7 +36,7 @@ public class ExecuteOnStart : MonoBehaviour {
     {
         // create a bounding-box around the object
         GameObject box = Instantiate(boundingBoxPrefab);
-        box.transform.localScale = bounds.size * (1/bounds.size.z);
+        box.transform.localScale = bounds.size * (1 / bounds.size.z);
         Transform contentHolder = box.transform.Find("Content");
         content.transform.parent = contentHolder;
 
