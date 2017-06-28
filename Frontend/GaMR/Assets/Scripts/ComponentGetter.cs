@@ -12,6 +12,8 @@ public class ComponentGetter {
     /// <returns>the component or null if the component or the gameobject do not exist</returns>
 	public static T GetComponentOnGameobject<T>(string gameObjectName)
     {
+        // first find the gameobject
+        // this check is necessary since the gameobject could not exist
         GameObject go = GameObject.Find(gameObjectName);
         if (go != null)
         {
@@ -19,6 +21,7 @@ public class ComponentGetter {
         }
         else
         {
+            // if it is null => the component will return null (i.e. default value)
             return default(T);
         }
     }

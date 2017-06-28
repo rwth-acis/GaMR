@@ -4,10 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+/// <summary>
+/// organizes a X3D object
+/// </summary>
 public class X3DObj
 {
     private List<X3DPiece> pieces;
-    private RestManager restFactory;
+    private RestManager restManager;
     private string baseUrl;
     private string url;
     private string name;
@@ -21,20 +24,34 @@ public class X3DObj
 
     }
 
-    public X3DObj(RestManager restFactory, string baseUrl, string name, Shader shader)
+    /// <summary>
+    /// Constructor to initialize the X3D object's parameters
+    /// </summary>
+    /// <param name="restManager">The RestManager-component for downloading data</param>
+    /// <param name="baseUrl">The base url where the models can be found</param>
+    /// <param name="name">The name of the X3D object</param>
+    /// <param name="shader">The shader which will be applied to the instantiated gameobject</param>
+    public X3DObj(RestManager restManager, string baseUrl, string name, Shader shader)
     {
         pieces = new List<X3DPiece>();
-        this.restFactory = restFactory;
+        this.restManager = restManager;
         this.baseUrl = baseUrl;
         this.shader = shader;
         this.name = name;
         url = baseUrl + name + "/";
     }
 
+    /// <summary>
+    /// Downloads the gameobjects
+    /// When finished it calls the callback-method
+    /// </summary>
+    /// <param name="callback">Method which is called when the download has finished</param>
     public void LoadGameObjects(System.Action callback)
     {
         this.callback = callback;
-        restFactory.GET(url + "0", OnFinished);
+        // only get the first piece of the X3D object
+        // the first piece contains information if there are successive pieces
+        restManager.GET(url + "0", OnFinished);
     }
 
     private void OnFinished(string requestResult)
@@ -46,7 +63,7 @@ public class X3DObj
         // continue loading models if it is not the last one
         if (obj.PieceIndex < obj.PieceCount - 1)
         {
-            restFactory.GET(url + obj.PieceIndex + 1, OnFinished);
+            restManager.GET(url + obj.PieceIndex + 1, OnFinished);
         }
         else
         {

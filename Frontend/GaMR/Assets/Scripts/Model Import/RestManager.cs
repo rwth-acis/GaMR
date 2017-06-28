@@ -47,6 +47,13 @@ public class RestManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Called as a Coroutine and queries the url. Expects an image as the query-result
+    /// When the image is downloaded, it is returned to the specified callback method
+    /// </summary>
+    /// <param name="url">The url to query</param>
+    /// <param name="callback">The callback method which receives the downloaded image</param>
+    /// <returns></returns>
     IEnumerator GetWWWTexture(string url, System.Action<Texture> callback)
     {
         UnityWebRequest req = UnityWebRequest.GetTexture(url);

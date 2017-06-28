@@ -5,6 +5,10 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
+/// <summary>
+/// Script for fast loading an example model
+/// Shows an example of how to load a X3D model
+/// </summary>
 public class ExecuteOnStart : MonoBehaviour {
 
     public Shader shader;
