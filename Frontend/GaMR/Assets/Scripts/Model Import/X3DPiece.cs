@@ -45,7 +45,8 @@ public class X3DPiece
         List<GameObject> results = new List<GameObject>();
         // get mesh
         List<Mesh> subMeshes = new List<Mesh>();
-        if (textureName == "")
+        // if it is not textured => use the unmodified imported mesh
+        if (textureName == null || textureCoords == null || textureIndex == null)
         {
             subMeshes.Add(CreateMesh());
         }

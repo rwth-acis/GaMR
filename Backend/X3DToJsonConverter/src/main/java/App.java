@@ -91,6 +91,13 @@ public class App {
             XPathExpression expr = xPath.compile("/X3D/Scene/Shape/IndexedFaceSet");
             NodeList nl = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
 
+            if (nl.getLength() == 0)
+            {
+                System.out.println("Could not convert the file: No model-pieces found");
+                System.out.println("The file seems to be corrupted or has the wrong format");
+                return;
+            }
+
             List<X3DPiece> models = new LinkedList<X3DPiece>();
 
             long time = System.currentTimeMillis();
@@ -109,8 +116,17 @@ public class App {
                 vertexCoords = extractChildNodeAttribute(currentElem, "Coordinate", "point");
                 textureCoords = extractChildNodeAttribute(currentElem, "TextureCoordinate", "point");
 
+
                 // get own attributes
-                textureIndex = currentElem.getAttribute("texCoordIndex");
+                if (textureCoords != null) {
+                    // if there are no textureCoords => model is not textured
+                    // then there is no need to search for a textureIndex
+                    textureIndex = currentElem.getAttribute("texCoordIndex");
+                }
+                else
+                {
+                    textureIndex = null;
+                }
                 vertexIndex = currentElem.getAttribute("coordIndex");
 
                 // get texture from sibling Appearance/ImageTexture
@@ -124,7 +140,7 @@ public class App {
 
             System.out.println("Conversion took " + (System.currentTimeMillis() - time) + " ms");
 
-            System.out.println(models.size() + " models converted");
+            System.out.println(models.size() + " model(s) converted");
 
 
             // convert object to json
@@ -138,7 +154,7 @@ public class App {
                 outputFile.getParentFile().mkdirs();
                 mapper.writeValue(outputFile, models.get(i));
             }
-            System.out.println("Exported " + models.size() + " models to json");
+            System.out.println("Exported " + models.size() + " model(s) to json");
         }
         catch (Exception e)
         {
@@ -151,7 +167,14 @@ public class App {
 
     private static String extractChildNodeAttribute(Element parent, String childName, String attributeName)
     {
-        Node childNode = parent.getElementsByTagName(childName).item(0);
-        return childNode.getAttributes().getNamedItem(attributeName).getNodeValue();
+        try {
+            Node childNode = parent.getElementsByTagName(childName).item(0);
+            return childNode.getAttributes().getNamedItem(attributeName).getNodeValue();
+        }catch (Exception e)
+        {
+            // if this does not work this mean that the childNode or the attribute does not exist
+            // just return null
+            return  null;
+        }
     }
 }

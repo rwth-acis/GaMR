@@ -64,12 +64,22 @@ public class X3DPiece {
             throws Exception {
         super();
         this.vertexCoords = convertStringToCoords(vertexCoords, 3);
-        this.textureCoords =  convertStringToCoords(textureCoords, 2);
+        if (textureCoords == null ||textureIndex == null ||textureName == null) {
+            // if one of those is null, the model will be untextured
+            // => no need to convert any texture data which are present
+            this.textureCoords = null;
+            this.textureIndex = null;
+            this.textureName = null;
+        }
+        else
+        {
+            this.textureCoords = convertStringToCoords(textureCoords, 2);
+            this.textureIndex = convertStringToIndex(textureIndex);
+            this.textureName = textureName;
+        }
         this.vertexIndex = convertStringToIndex(vertexIndex);
-        this.textureIndex = convertStringToIndex(textureIndex);
         this.pieceIndex = pieceIndex;
         this.pieceCount = pieceCount;
-        this.textureName = textureName;
     }
 
     /**
@@ -80,6 +90,7 @@ public class X3DPiece {
      * @return Array of Vectors which describe the coordinate positions
      */
     private Vector[] convertStringToCoords(String text, int dimension) throws Exception {
+
         Vector[] res;
         // split the string by spaces
         String[] parts = text.split("\\s+");
