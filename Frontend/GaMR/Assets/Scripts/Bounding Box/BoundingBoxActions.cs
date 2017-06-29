@@ -8,11 +8,13 @@ public class BoundingBoxActions : MonoBehaviour
     private bool boundingBoxVisible = true;
     public List<Transform> boundingBoxPieces;
     private BoxCollider coll;
+    private AnnotationManager annotationManager;
 
     // Use this for initialization
     public void Start()
     {
         coll = GetComponent<BoxCollider>();
+        annotationManager = gameObject.GetComponentInChildren<AnnotationManager>();
     }
 
     public void ToggleBoundingBox()
@@ -27,6 +29,11 @@ public class BoundingBoxActions : MonoBehaviour
             ToggleControls(true);
             boundingBoxVisible = true;
         }
+    }
+
+    public void ToogleEditMode()
+    {
+        annotationManager.EditMode = !annotationManager.EditMode;
     }
 
     private void ToggleControls(bool active)

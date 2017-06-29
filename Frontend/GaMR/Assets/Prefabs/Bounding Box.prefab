@@ -442,6 +442,7 @@ GameObject:
   - component: {fileID: 114690426633322592}
   - component: {fileID: 114210176810541556}
   - component: {fileID: 114085215344543860}
+  - component: {fileID: 114608270313318650}
   m_Layer: 0
   m_Name: Menu
   m_TagString: Untagged
@@ -2766,8 +2767,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   icon: {fileID: 0}
   text: Toggle Box
 --- !u!114 &114237755692054200
@@ -2784,6 +2784,8 @@ MonoBehaviour:
   rootMenu:
   - {fileID: 114690426633322592}
   padding: 0.05
+  alignment: 0
+  itemsInOneLine: 3
 --- !u!114 &114373247079702428
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2811,6 +2813,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSize: {x: 2, y: 2, z: 2}
   minSize: {x: 0.1, y: 0.1, z: 0.1}
+--- !u!114 &114608270313318650
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1650234700035164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuStyle: {fileID: 1036029510115268, guid: fc7e10eabc65e234b9f1dfc2109a12e2, type: 2}
+  subMenu: []
+  closeOnClick: 1
+  onClickEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114693266053701848}
+        m_MethodName: ToogleEditMode
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  icon: {fileID: 0}
+  text: Toggle EditMode
 --- !u!114 &114690426633322592
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2825,12 +2858,12 @@ MonoBehaviour:
   menuStyle: {fileID: 1036029510115268, guid: fc7e10eabc65e234b9f1dfc2109a12e2, type: 2}
   subMenu:
   - {fileID: 114210176810541556}
+  - {fileID: 114608270313318650}
   closeOnClick: 0
   onClickEvent:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   icon: {fileID: 0}
   text: '...'
 --- !u!114 &114693266053701848

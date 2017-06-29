@@ -84,8 +84,11 @@ public class X3DObj
     /// <returns>The parent GameObject which contains all pieces as children</returns>
     public GameObject CreateGameObjects()
     {
-        // create the parent object and give it the correct position
+        // create the parent object
         parent = new GameObject("X3D Parent");
+
+        AnnotationManager annotationManger = parent.AddComponent<AnnotationManager>();
+
         parentBounds = new Bounds();
         foreach(X3DPiece piece in pieces)
         {
@@ -96,8 +99,12 @@ public class X3DObj
                 parentBounds.Encapsulate(renderer.bounds);
                 // assign the parent
                 subObject.transform.parent = parent.transform;
+                // assign the TapNotifier and tell it to notify the parent
+                TapNotifier tapNotifier = subObject.AddComponent<TapNotifier>();
+                tapNotifier.RegisterListenerOnInputDown(annotationManger.TapOnModel);
             }
         }
+
 
         // normalize size to fit height of one unit
         float factor = 1 / parentBounds.size.z;

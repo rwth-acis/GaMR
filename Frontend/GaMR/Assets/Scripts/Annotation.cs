@@ -2,15 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Annotation : MonoBehaviour {
+public class Annotation {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    private Vector3 position;
+    private Vector3 up;
+    private string text;
+
+    public Annotation(Vector3 position, string text)
+    {
+        this.position = position;
+        this.text = text;
+    }
+
+    public Vector3 Position
+    {
+        get { return position; }
+    }
+
+    public string Text
+    {
+        get { return text; }
+    }
 }

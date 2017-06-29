@@ -8,7 +8,7 @@ using UnityEngine;
 /// This is needed since JSONUtility does not support arrays at the root of JSON
 /// </summary>
 [Serializable]
-public class JSONArray
+public class JSONArray<T>
 {
-    public string[] array;
+    public List<T> array;
 }

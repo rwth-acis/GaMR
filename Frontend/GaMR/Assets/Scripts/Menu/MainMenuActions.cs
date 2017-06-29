@@ -103,8 +103,8 @@ public class MainMenuActions : MonoBehaviour
         }
         CarouselMenu carouselScript = carouselInstance.GetComponent<CarouselMenu>();
 
-        JSONArray array = JsonUtility.FromJson<JSONArray>(res);
-        Array.Sort(array.array);
+        JSONArray<string> array = JsonUtility.FromJson<JSONArray<string>>(res);
+        array.array.Sort();
         List<CustomMenuItem> items = new List<CustomMenuItem>();
 
         foreach(string modelName in array.array)
