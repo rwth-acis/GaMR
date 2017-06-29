@@ -29,6 +29,7 @@ public class X3DPiece
     /// <param name="textureCoords">The coordinates on the texture (uv-coordinates)</param>
     /// <param name="vertexIndex">The index that determines which vertices form a face</param>
     /// <param name="textureIndex">The index that determines which vertices form a face on the texture</param>
+    /// <param name="textureName">The name of the associated texture</param>
     public X3DPiece(List<Vector3> vertexCoords, Vector2[] textureCoords, int[] vertexIndex, int[] textureIndex, int pieceIndex, int pieceCount, string textureName)
     {
         this.vertexCoords = vertexCoords;
@@ -40,6 +41,12 @@ public class X3DPiece
         this.textureName = textureName;
     }
 
+    /// <summary>
+    /// Creates GameObjects from the specified vertex and texture information
+    /// </summary>
+    /// <param name="shader">The shader which is applied to the GameObjects</param>
+    /// <returns>Usually one gameobject but if the final mesh has more than 65000 vertices
+    /// it will split the mesh and return multiple GameObjects which each have one part of the divided mesh.</returns>
     public List<GameObject> CreateGameObject(Shader shader)
     {
         List<GameObject> results = new List<GameObject>();
@@ -58,11 +65,12 @@ public class X3DPiece
         for (int i = 0; i < subMeshes.Count; i++)
         {
 
-            // create a GameObject and add the necessary components to render it
+            // create a GameObject for each subMesh and add the necessary components to render it
             GameObject gameObject = new GameObject("Imported X3D");
             gameObject.AddComponent<MeshFilter>();
             MeshRenderer renderer = gameObject.AddComponent<MeshRenderer>();
             renderer.material = new Material(shader);
+            // if it has a texture => attach a TextureLoader to download the assigned texture
             if (textureName != null)
             {
                 TextureLoader loader = gameObject.AddComponent<TextureLoader>();
@@ -79,6 +87,11 @@ public class X3DPiece
         return results;
     }
 
+
+    /// <summary>
+    /// Creates an untextured mesh from the vertex data of the X3DPiece
+    /// </summary>
+    /// <returns>the Unity mesh with correct normals</returns>
     private Mesh CreateMesh()
     {
         // create a mesh and upload the data it
@@ -89,9 +102,14 @@ public class X3DPiece
         return mesh;
     }
 
+    /// <summary>
+    /// Creates a mesh with UV-texture data from the vertex and texture data of the X3DPiece
+    /// </summary>
+    /// <returns>the Unity mesh</returns>
     private List<Mesh> CreateUVMeshes()
     {
         List<Mesh> res = new List<Mesh>();
+        // use mutliple meshes if there are more than 65000 vertices
         for (int j = 0; j < vertexIndex.Length / 64998 + 1; j++)
         {
             int offset = j * 64998;
@@ -100,6 +118,7 @@ public class X3DPiece
             Vector3[] newCoordinates = new Vector3[length];
             Vector2[] newUVCoordinates = new Vector2[length];
 
+            // unshare the vertices so that the UV-data can be used by Unity
             for (int i = 0; i < length; i++)
             {
                 newIndex[i] = i;
@@ -107,6 +126,7 @@ public class X3DPiece
                 newUVCoordinates[i] = textureCoords[textureIndex[i + offset]];
             }
 
+            // create the mesh
             Mesh mesh = new Mesh();
             mesh.vertices = newCoordinates;
             mesh.uv = newUVCoordinates;
@@ -121,16 +141,25 @@ public class X3DPiece
         return res;
     }
 
+    /// <summary>
+    /// The index of the current piece
+    /// </summary>
     public int PieceIndex
     {
         get { return pieceIndex; }
     }
 
+    /// <summary>
+    /// The number of pieces which are associated to the same X3DObject at this piece
+    /// </summary>
     public int PieceCount
     {
         get { return pieceCount; }
     }
 
+    /// <summary>
+    /// The name of the parent-X3DObject
+    /// </summary>
     public string ModelName { get; set; }
 
 

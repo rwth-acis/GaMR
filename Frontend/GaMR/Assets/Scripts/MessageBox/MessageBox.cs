@@ -3,19 +3,50 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Implements all logic of a MessageBox which can be displayed to the user for notification
+/// </summary>
 public class MessageBox : MonoBehaviour
 {
-
+    /// <summary>
+    /// The label of the MessageBox
+    /// </summary>
     public TextMesh label;
+    /// <summary>
+    /// The GameObject-button on the MessageBox
+    /// </summary>
     public GameObject button;
+    /// <summary>
+    /// Specifies the type of the MessageBox; this influences which icon will be shown
+    /// </summary>
     public MessageBoxType type = MessageBoxType.INFORMATION;
+    /// <summary>
+    /// Transform which corresponds to the position where the icon will be displayed
+    /// </summary>
     public Transform iconPosition;
+    /// <summary>
+    /// The text which should be shown to the user
+    /// </summary>
     private string text;
+    /// <summary>
+    /// The Button component on the button-gameobject
+    /// </summary>
     private Button btn;
+    /// <summary>
+    /// The number of currently opened MessageBoxes
+    /// This is used in order to display multiple MessageBoxes behind each other
+    /// </summary>
     private static int count = 0;
+    /// <summary>
+    /// The component which lets the MessageBox hover in the user's view
+    /// It is needed to set the depth at which it will be displayed
+    /// </summary>
     private SimpleTagalong tagalongScript;
 
-    // Use this for initialization
+    /// <summary>
+    /// Initializes the MessageBox: gets all necessary components
+    /// and creates the icon which corresponds to the type of the MessageBox
+    /// </summary>
     void Start()
     {
         btn = button.GetComponent<Button>();
@@ -41,8 +72,14 @@ public class MessageBox : MonoBehaviour
         tagalongScript.TagalongDistance = 1.7f + 0.1f * count;
     }
 
+    /// <summary>
+    /// Call this to show a new MessageBox
+    /// </summary>
+    /// <param name="text">The text message which should be displayed to the user</param>
+    /// <param name="type">The type of the MessageBox</param>
     public static void Show(string text, MessageBoxType type)
     {
+        // load the MessageBox from the resources and set the necessary variables
         GameObject messageBox = (GameObject) Instantiate(Resources.Load("MessageBox"));
         MessageBox msgBox = messageBox.GetComponent<MessageBox>();
         msgBox.Text = text;
@@ -50,12 +87,20 @@ public class MessageBox : MonoBehaviour
         count++;
     }
 
+    /// <summary>
+    /// This is called when the user clicks on the provided button
+    /// It destroys the MessageBox
+    /// </summary>
     public void Accept()
     {
         count--;
         Destroy(gameObject);
     }
 
+    /// <summary>
+    /// The text message which should be shown to the user
+    /// automatically updates the text-view on the MessageBox
+    /// </summary>
     public string Text
     {
         get { return text; }
@@ -63,6 +108,9 @@ public class MessageBox : MonoBehaviour
     }
 }
 
+/// <summary>
+/// Possible types of MessageBoxes
+/// </summary>
 public enum MessageBoxType
 {
     SUCCESS, INFORMATION, ERROR, WARNING

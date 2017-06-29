@@ -3,29 +3,61 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles the logic in order to display and modify a carousel menu
+/// </summary>
 public class CarouselMenu : Menu
 {
-
+    /// <summary>
+    /// the index of the element in the rootMenu which is shown in the middle
+    /// </summary>
     private int currentIndex;
+    /// <summary>
+    /// The buttons which scroll left or right
+    /// </summary>
     public GameObject buttonLeft, buttonRight;
     public Transform leftPosition, rightPosition, leftBackPosition, rightBackPosition;
     Vector3[] pos = new Vector3[5];
     Vector3[] rot = new Vector3[5];
+    /// <summary>
+    /// this is used to lock the object if there is currently movement
+    /// without this lock the user can break the CarouselMenu by tapping on the scroll-button
+    /// while movement is still happening since this will create new movement coroutines
+    /// </summary>
     private bool currentlyMoving = false;
 
+    /// <summary>
+    /// Called if the Component is created
+    /// Instantiates a new Carousel Menu
+    /// </summary>
     public void Start()
     {
         InstantiateCarouselMenu(0);
     }
 
+    /// <summary>
+    /// Overwrites the InstantiateMenu of the Menu-super class
+    /// Redirects to InstantiateCarouselMenu for the Instantiation of the carousel menu
+    /// the parameters are not used since the CarouselMenu behaves different to the menu
+    /// </summary>
+    /// <param name="instantiatePosition">not used</param>
+    /// <param name="parentItemSize">not used</param>
+    /// <param name="menu">not used</param>
+    /// <param name="parent">not used</param>
+    /// <param name="isSubMenu">not used</param>
     public new void InstantiateMenu(Vector3 instantiatePosition, Vector3 parentItemSize, List<CustomMenuItem> menu, CustomMenuItem parent, bool isSubMenu)
     {
         InstantiateCarouselMenu(currentIndex);
     }
 
+    /// <summary>
+    /// Instantiates a CarouselMenu
+    /// </summary>
+    /// <param name="startIndex">The index of the element in the root-menu 
+    /// which should initially be displayed in the middle</param>
     public void InstantiateCarouselMenu(int startIndex)
     {
-        // init the index and the positions
+        // initialize the index and the positions
         currentIndex = startIndex;
         pos[0] = leftBackPosition.localPosition;
         pos[1] = leftPosition.localPosition;
@@ -56,6 +88,12 @@ public class CarouselMenu : Menu
         btnRight.OnPressed = ScrollRight;
     }
 
+    /// <summary>
+    /// called if the corresponding button is tapped
+    /// initiates the movement
+    /// creates and destroys menu entries which appear and disappear
+    /// also handles special cases like reaching the limit of the rootMenu-array
+    /// </summary>
     public void ScrollLeft()
     {
         Debug.Log("Clicked left");
@@ -113,6 +151,12 @@ public class CarouselMenu : Menu
         }
     }
 
+    /// <summary>
+    /// called if the corresponding button is tapped
+    /// initiates the movement
+    /// creates and destroys menu entries which appear and disappear
+    /// also handles special cases like reaching the limit of the rootMenu-array
+    /// </summary>
     public void ScrollRight()
     {
         Debug.Log("Clicked right");
@@ -170,6 +214,15 @@ public class CarouselMenu : Menu
         }
     }
 
+    /// <summary>
+    /// Manages the movement to indicate that the end of the menu-array is reached
+    /// The movement to the next position is only indicated and then undone
+    /// </summary>
+    /// <param name="toMove">The transform which should be moved</param>
+    /// <param name="newPos">The position where toMove should move to</param>
+    /// <param name="newYAngle">The y-rotation toMove should have at newPos</param>
+    /// <param name="duration">The duration of one half of the movement</param>
+    /// <returns></returns>
     private IEnumerator TryMove(Transform toMove, Vector3 newPos, float newYAngle, float duration)
     {
         currentlyMoving = true;
@@ -184,6 +237,14 @@ public class CarouselMenu : Menu
         currentlyMoving = false;
     }
 
+    /// <summary>
+    /// Manages the scrolling movement of one menu entry to its next position
+    /// </summary>
+    /// <param name="toMove">The transform of the menu entry which should be moved</param>
+    /// <param name="newPos">The target position of the movement</param>
+    /// <param name="newYAngle">The y-rotation that toMove should haved at newPos</param>
+    /// <param name="duration">The duration of the movement</param>
+    /// <returns></returns>
     private IEnumerator Move(Transform toMove, Vector3 newPos, float newYAngle, float duration)
     {
         currentlyMoving = true;
@@ -203,6 +264,16 @@ public class CarouselMenu : Menu
         currentlyMoving = false;
     }
 
+    /// <summary>
+    /// Manages the movement of a menu entry which is scrolling out of the currently displayed carousel
+    /// destroys the GameObject of the menu entry when the movement has finished
+    /// </summary>
+    /// <param name="toMove"></param>
+    /// <param name="newPos"></param>
+    /// <param name="newYAngle"></param>
+    /// <param name="duration"></param>
+    /// <param name="toDestroy"></param>
+    /// <returns></returns>
     private IEnumerator MoveAndDestroy(Transform toMove, Vector3 newPos, float newYAngle, float duration, CustomMenuItem toDestroy)
     {
         yield return Move(toMove, newPos, newYAngle, duration);

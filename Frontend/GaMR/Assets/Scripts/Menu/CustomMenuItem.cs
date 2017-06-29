@@ -22,9 +22,9 @@ public class CustomMenuItem : MonoBehaviour {
     [Tooltip("Functions which are called if the user clicks the menu entry")]
     public StringEvent onClickEvent;
 
-    [SerializeField]
+    [SerializeField] // this makes the variable appear in the editor
     private Texture icon;
-    [SerializeField]
+    [SerializeField] // this makes the variable appear in the editor
     private string text;
 
     public Texture Icon { get { return icon; } set { menuStyleAdapter.UpdateIcon(value); icon = value; } }

@@ -54,8 +54,14 @@ public class X3DObj
         restManager.GET(url + "0", OnFinished);
     }
 
+    /// <summary>
+    /// Called when the gameobjects have been loaded
+    /// </summary>
+    /// <param name="requestResult">The resulting JSON string of the web request;
+    /// it contains the information about the X3D piece</param>
     private void OnFinished(string requestResult)
     {
+        // de-serialize the json string
         X3DPiece obj = JsonUtility.FromJson<X3DPiece>(requestResult);
         obj.ModelName = name;
         pieces.Add(obj);
@@ -72,6 +78,10 @@ public class X3DObj
         }
     }
 
+    /// <summary>
+    /// Creates Gameobjects from the pieces of the X3DObject
+    /// </summary>
+    /// <returns>The parent GameObject which contains all pieces as children</returns>
     public GameObject CreateGameObjects()
     {
         // create the parent object and give it the correct position
@@ -105,11 +115,18 @@ public class X3DObj
         return parent;
     }
 
+    /// <summary>
+    /// the number of individual pieces in the X3D object
+    /// </summary>
     public int PieceCount
     {
         get { return pieces.Count; }
     }
 
+    /// <summary>
+    /// The combined bounds of all pieces
+    /// This should be used instead of the bounds of the parentObject since they do not consider child-bounds
+    /// </summary>
     public Bounds Bounds
     {
         get { return parentBounds; }
