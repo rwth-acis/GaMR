@@ -88,7 +88,7 @@ public class App {
 
             XPathFactory xPathFactory =XPathFactory.newInstance();
             XPath xPath = xPathFactory.newXPath();
-            XPathExpression expr = xPath.compile("/X3D/Scene/Shape/IndexedFaceSet");
+            XPathExpression expr = xPath.compile("/X3D/Scene//Shape/IndexedFaceSet");
             NodeList nl = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
 
             if (nl.getLength() == 0)
@@ -133,6 +133,10 @@ public class App {
                 Element parent = (Element) currentElem.getParentNode();
                 Element appearance = (Element)parent.getElementsByTagName("Appearance").item(0);
                 textureName = extractChildNodeAttribute(appearance, "ImageTexture", "url");
+                if (textureName != null && textureName.startsWith("\"") && textureName.endsWith("\""))
+                {
+                    textureName = textureName.substring(1,textureName.length()-1);
+                }
 
                 X3DPiece x3d = new X3DPiece(vertexCoords, textureCoords, vertexIndex, textureIndex, i, nl.getLength(), textureName);
                 models.add(x3d);

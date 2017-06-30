@@ -69,7 +69,7 @@ public class X3DObj
         // continue loading models if it is not the last one
         if (obj.PieceIndex < obj.PieceCount - 1)
         {
-            restManager.GET(url + obj.PieceIndex + 1, OnFinished);
+            restManager.GET(url + (obj.PieceIndex + 1), OnFinished);
         }
         else
         {
