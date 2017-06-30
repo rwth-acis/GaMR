@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+[ExecuteInEditMode]
 public class Key : MonoBehaviour, IInputHandler {
 
     public KeyType keyType = KeyType.LETTER;
+    public string letter;
     private Keyboard keyboard;
     private TextMesh caption;
+    private Transform capslockIndication; 
 
 
     public void Start()
@@ -18,6 +21,22 @@ public class Key : MonoBehaviour, IInputHandler {
         if (capObj != null)
         {
             caption = capObj.GetComponent<TextMesh>();
+        }
+
+        if (keyType == KeyType.CAPSLOCK)
+        {
+            capslockIndication = transform.Find("Capslock");
+        }
+    }
+
+    public void Update()
+    {
+        // this is called in the editor because of the [ExecuteInEditMode]
+        // automatically update the caption with the specified letter
+        if (!Application.isPlaying && keyType == KeyType.LETTER)
+        {
+            caption.text = letter;
+            gameObject.name = "Key " + letter;
         }
     }
 
@@ -30,7 +49,7 @@ public class Key : MonoBehaviour, IInputHandler {
                 if (caption != null)
                 {
                     // add the caption to the text
-                    keyboard.Text += caption.text;
+                    keyboard.Text += letter;
                 }
             }
             else if (keyType == KeyType.BACK)
@@ -40,6 +59,23 @@ public class Key : MonoBehaviour, IInputHandler {
                 {
                     keyboard.Text = keyboard.Text.Substring(0, keyboard.Text.Length - 1);
                 }
+            }
+            else if (keyType == KeyType.ENTER)
+            {
+                keyboard.Text += Environment.NewLine;
+            }
+            else if (keyType == KeyType.SHIFT)
+            {
+                if (!keyboard.Capslock)
+                {
+                    keyboard.Shift = !keyboard.Shift;
+                }
+            }
+            else if (keyType == KeyType.CAPSLOCK)
+            {
+                keyboard.Capslock = !keyboard.Capslock;
+                keyboard.Shift = keyboard.Capslock;
+                capslockIndication.gameObject.SetActive(keyboard.Capslock);
             }
             else if (keyType == KeyType.ACCEPT)
             {
@@ -61,9 +97,22 @@ public class Key : MonoBehaviour, IInputHandler {
         KeyPressed();
         Debug.Log("Key Pressed");
     }
+
+    public void Shift(bool shiftOn)
+    {
+        if (shiftOn)
+        {
+            letter = letter.ToUpper();
+        }
+        else
+        {
+            letter = letter.ToLower();
+        }
+        caption.text = letter;
+    }
 }
 
 public enum KeyType
 {
-    LETTER, ACCEPT, CANCEL, BACK
+    LETTER, ACCEPT, CANCEL, BACK, ENTER, SHIFT, CAPSLOCK
 }

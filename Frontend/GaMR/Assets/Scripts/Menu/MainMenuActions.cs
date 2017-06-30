@@ -25,7 +25,7 @@ public class MainMenuActions : MonoBehaviour
 
     public void EnterIPAddress()
     {
-        Keyboard.Display("Enter the IP-Address", SetIPAddress);
+        Keyboard.Display("Enter the IP-Address", SetIPAddress, false);
         gameObject.SetActive(false);
     }
 
@@ -60,7 +60,7 @@ public class MainMenuActions : MonoBehaviour
 
     public void EnterPort()
     {
-        Keyboard.Display("Enter the Port", SetIPAddress);
+        Keyboard.Display("Enter the Port", SetIPAddress, false);
         gameObject.SetActive(false);
     }
 
