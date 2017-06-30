@@ -10,12 +10,16 @@ public class AnnotationManager : MonoBehaviour
     private List<Annotation> annotations;
     private bool editMode = true;
     private GazeManager gazeManager;
+    private RestManager restManager;
+    private InformationManager infoManager;
 
     // Use this for initialization
     void Start()
     {
         annotations = new List<Annotation>();
         gazeManager = ComponentGetter.GetComponentOnGameobject<GazeManager>("InputManager");
+        restManager = ComponentGetter.GetComponentOnGameobject<RestManager>("RestManager");
+        infoManager = ComponentGetter.GetComponentOnGameobject<InformationManager>("InformationManager");
     }
 
     public void TapOnModel()
@@ -40,6 +44,10 @@ public class AnnotationManager : MonoBehaviour
         array.array = annotations;
 
         string jsonPost = JsonUtility.ToJson(array);
+        if (restManager != null)
+        {
+            restManager.POST(infoManager.BackendAddress + "/resources/annotation/Skull", jsonPost);
+        }
     }
 
     public void Load(string res)
@@ -51,5 +59,18 @@ public class AnnotationManager : MonoBehaviour
     {
         get { return editMode; }
         set { editMode = value; }
+    }
+
+    public void OnDestroy()
+    {
+        Save();
+    }
+
+    public void OnApplicationFocus(bool focus)
+    {
+        if (focus == false)
+        {
+            Save();
+        }
     }
 }

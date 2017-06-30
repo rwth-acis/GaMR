@@ -1,14 +1,9 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.File;
-import java.io.FileFilter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 /**
@@ -76,6 +71,26 @@ public class Resources {
             else {
                 return Response.status(Response.Status.BAD_REQUEST).build();
             }
+    }
+
+    @POST
+    @Path("/annotation/{modelName}")
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response storeAnnotations( @PathParam("modelName") String modelName, String json )
+    {
+        System.out.println(modelName + ": " + json);
+        File file = new File("C:\\Temp\\3DModels\\" + modelName + "\\" + "annotations.json");
+        try {
+            FileWriter writer = new FileWriter(file);
+            writer.write(json);
+            writer.close();
+            return  Response.status(Response.Status.CREATED).build();
+        }
+        catch (IOException e)
+        {
+            return  Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 

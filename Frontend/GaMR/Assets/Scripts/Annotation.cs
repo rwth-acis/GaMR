@@ -1,11 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class Annotation {
 
+    [SerializeField]
     private Vector3 position;
-    private Vector3 up;
+    [SerializeField]
     private string text;
 
     public Annotation(Vector3 position, string text)

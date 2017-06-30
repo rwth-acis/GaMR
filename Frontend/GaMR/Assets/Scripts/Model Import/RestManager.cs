@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -16,6 +18,21 @@ public class RestManager : MonoBehaviour {
 	public void GET(string url, System.Action<string> callback)
     {
         StartCoroutine(GetWWW(url, callback));
+    }
+
+    public void POST(string url, string json)
+    {
+        StartCoroutine(PostWWW(url, json));
+    }
+
+    private IEnumerator PostWWW(string url, string json)
+    {
+        UnityWebRequest req = new UnityWebRequest(url, "POST");
+        req.SetRequestHeader("Content-Type", "application/json");
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
+        req.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
+        yield return req.Send();
+        Debug.Log(req.responseCode);
     }
 
     public void GetTexture(string url, System.Action<Texture> callback)
