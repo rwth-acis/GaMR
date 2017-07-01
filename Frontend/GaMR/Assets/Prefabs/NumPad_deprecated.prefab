@@ -522,7 +522,7 @@ GameObject:
   - component: {fileID: 114914083827946830}
   - component: {fileID: 114427787079425846}
   m_Layer: 0
-  m_Name: NumPad
+  m_Name: NumPad_deprecated
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3164,6 +3164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyType: 0
+  letter: 
 --- !u!114 &114032482094290134
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3176,6 +3177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyType: 0
+  letter: 
 --- !u!114 &114054674302926402
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3188,6 +3190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyType: 1
+  letter: 
 --- !u!114 &114074912596935674
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3200,6 +3203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyType: 0
+  letter: 
 --- !u!114 &114124774009769120
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3213,6 +3217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputField: {fileID: 102860906782086976}
   label: {fileID: 102824252658316958}
+  maxNumberOfLines: 10
 --- !u!114 &114202793200813328
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3225,6 +3230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyType: 0
+  letter: 
 --- !u!114 &114280643733419138
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3237,6 +3243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyType: 0
+  letter: 
 --- !u!114 &114296103893275436
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3276,6 +3283,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyType: 0
+  letter: 
 --- !u!114 &114330891424245146
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3288,6 +3296,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyType: 0
+  letter: 
 --- !u!114 &114339208335964880
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3300,6 +3309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyType: 0
+  letter: 
 --- !u!114 &114417781741968604
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3312,6 +3322,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyType: 3
+  letter: 
 --- !u!114 &114427787079425846
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3355,6 +3366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyType: 0
+  letter: 
 --- !u!114 &114743051277423710
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3394,6 +3406,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyType: 0
+  letter: 
 --- !u!114 &114826706572002888
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3406,6 +3419,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyType: 2
+  letter: 
 --- !u!114 &114838875919405274
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3418,6 +3432,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyType: 0
+  letter: 
 --- !u!114 &114882405187784992
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3430,6 +3445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyType: 0
+  letter: 
 --- !u!114 &114914083827946830
 MonoBehaviour:
   m_ObjectHideFlags: 1
