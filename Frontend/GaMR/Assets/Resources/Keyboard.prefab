@@ -2780,6 +2780,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4644143031276702}
+  - component: {fileID: 114814961767501656}
   m_Layer: 0
   m_Name: InputField
   m_TagString: Untagged
@@ -4989,8 +4990,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1075373543892784}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 3.1}
-  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 3}
+  m_LocalScale: {x: 0.46, y: 0.46, z: 1}
   m_Children:
   - {fileID: 4644143031276702}
   - {fileID: 4729595012900044}
@@ -11717,7 +11718,7 @@ TextMesh:
   m_Font: {fileID: 12800000, guid: 86574c70442309b45be5a1c37a37a40b, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4290295992
+    rgba: 4294967295
 --- !u!114 &114043712284308008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -11899,7 +11900,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2be8bd2ebd8277c448d6d81c75517fee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TagalongDistance: 3
+  TagalongDistance: 1.8
   EnforceDistance: 1
   PositionUpdateSpeed: 9.8
   SmoothMotion: 1
@@ -12353,6 +12354,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyType: 0
   letter: Q
+--- !u!114 &114814961767501656
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1871605279217456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4dee6a28ca5e8949bc80ebd0de0b5da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 3
+  smoothTime: 0.3
 --- !u!114 &114832318374092536
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -12435,7 +12449,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1075373543892784}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1c655338633f4544180b3d90a593ac17, type: 3}
   m_Name: 

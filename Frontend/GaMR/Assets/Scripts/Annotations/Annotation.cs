@@ -17,6 +17,12 @@ public class Annotation {
         this.text = text;
     }
 
+    public Annotation(Vector3 position)
+    {
+        this.position = position;
+        this.text = "";
+    }
+
     public Vector3 Position
     {
         get { return position; }
@@ -25,5 +31,6 @@ public class Annotation {
     public string Text
     {
         get { return text; }
+        set { text = value; }
     }
 }

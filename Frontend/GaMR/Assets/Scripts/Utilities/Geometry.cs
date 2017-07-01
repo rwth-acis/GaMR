@@ -15,5 +15,4 @@ public class Geometry {
         transform.rotation = rotation;
         return res;
     }
-        
 }

@@ -382,7 +382,7 @@ GameObject:
   - component: {fileID: 4822076224604562}
   - component: {fileID: 114658172299990250}
   m_Layer: 0
-  m_Name: TextInput
+  m_Name: 'Key '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3024,7 +3024,7 @@ TextMesh:
   m_Font: {fileID: 12800000, guid: 86574c70442309b45be5a1c37a37a40b, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4290295992
+    rgba: 4294967295
 --- !u!102 &102653305999548230
 TextMesh:
   serializedVersion: 3
@@ -3273,6 +3273,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputField: {fileID: 102074213821929452}
   label: {fileID: 102634453665622918}
+  maxNumberOfLines: 10
 --- !u!114 &114371902864044880
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3318,7 +3319,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1053249532688312}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1c655338633f4544180b3d90a593ac17, type: 3}
   m_Name: 

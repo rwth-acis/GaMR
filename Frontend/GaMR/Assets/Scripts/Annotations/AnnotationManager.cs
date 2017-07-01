@@ -12,6 +12,7 @@ public class AnnotationManager : MonoBehaviour
     private GazeManager gazeManager;
     private RestManager restManager;
     private InformationManager infoManager;
+    private GameObject currentlyEditedAnnotation;
 
     // Use this for initialization
     void Start()
@@ -29,13 +30,35 @@ public class AnnotationManager : MonoBehaviour
             GameObject annotationObject = (GameObject)Instantiate(Resources.Load("AnnotationSphere"));
             annotationObject.transform.position = gazeManager.HitPosition;
             annotationObject.transform.parent = gameObject.transform;
-            Add(annotationObject.transform.localPosition, "");
+
+            AnnotationContainer container = annotationObject.AddComponent<AnnotationContainer>();
+            container.annotationManager = this;
+
+            //currentlyEditedAnnotation = annotationObject;
+            //Keyboard.Display("Enter the text of the annotation", UserInputFinished, true);
         }
     }
 
-    private void Add(Vector3 position, string text)
+    //private void UserInputFinished(string input)
+    //{
+    //    if (input == null) // user canceled
+    //    {
+    //        Destroy(currentlyEditedAnnotation);
+    //    }
+    //    else
+    //    {
+    //        Add(currentlyEditedAnnotation.transform.localPosition, input);
+    //    }
+    //}
+
+    public void Add(Annotation annotation)
     {
-        annotations.Add(new Annotation(position, text));
+        annotations.Add(annotation);
+    }
+
+    public void Delete(Annotation annotation)
+    {
+        annotations.Remove(annotation);
     }
 
     public void Save()

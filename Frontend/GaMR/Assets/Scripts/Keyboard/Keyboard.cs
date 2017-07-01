@@ -16,6 +16,7 @@ public class Keyboard : MonoBehaviour
     private List<Key> letterKeys;
     private Key[] allKeys;
     private bool shift = true;
+    private bool textInitialization = true;
 
     // variables concerning the size-height adaption
     private Transform inputBackgroundPivot, inputBackground;
@@ -23,7 +24,7 @@ public class Keyboard : MonoBehaviour
     private Transform background, backgroundPivot;
     private float lineHeight;
     private BoxCollider coll;
-    private float padding = 0.02f;
+    private float padding = 0.015f;
 
     // variables concerning the width limit
     private float maxWidth;
@@ -74,6 +75,11 @@ public class Keyboard : MonoBehaviour
 
     public static void Display(string label, Action<string> callWithResult, bool fullKeyboard)
     {
+        Display(label, "", callWithResult, fullKeyboard);
+    }
+
+    public static void Display(string label, string text, Action<string> callWithResult, bool fullKeyboard)
+    {
         GameObject keyboardInstance;
         if (fullKeyboard)
         {
@@ -85,6 +91,7 @@ public class Keyboard : MonoBehaviour
         }
         Keyboard keyboard = keyboardInstance.GetComponent<Keyboard>();
         keyboard.label.text = label;
+        keyboard.Text = text;
         keyboard.callWithResult = callWithResult;
     }
 
@@ -103,9 +110,17 @@ public class Keyboard : MonoBehaviour
                 // update the input field
                 NotifyInputField();
                 // also handle one-time shift: use lower-case again after one letter
-                if (!Capslock && Shift)
+                // do not change shift if text is initialized by the program
+                if (!textInitialization)
                 {
-                    Shift = false;
+                    if (!Capslock && Shift)
+                    {
+                        Shift = false;
+                    }
+                }
+                else
+                {
+                    textInitialization = false;
                 }
                 // check and update the sizes of the backgrounds
                 if (numberOfOldLines != numberOfNewLines)
