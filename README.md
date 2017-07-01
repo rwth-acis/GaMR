@@ -1,2 +1,2 @@
 # GaMR
-A Gamification Framework for Mixed Reality
+A Gamification Framework for Mixed Reality Training
