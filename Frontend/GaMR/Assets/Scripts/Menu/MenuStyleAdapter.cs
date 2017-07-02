@@ -16,7 +16,7 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
     private Transform caption;
     private Transform container;
     private TextMesh textMesh;
-    private Transform iconPlane;
+    private Transform icon;
     private Renderer textRenderer;
     private Renderer iconRenderer;
 
@@ -39,10 +39,10 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
             textRenderer = caption.GetComponent<Renderer>();
         }
 
-        iconPlane = transform.Find("IconPlane");
-        if (iconPlane != null)
+        icon = transform.Find("Icon");
+        if (icon != null)
         {
-            iconRenderer = iconPlane.GetComponent<Renderer>();
+            iconRenderer = icon.GetComponent<Renderer>();
         }
 
         clickListeners = new List<System.Action>();

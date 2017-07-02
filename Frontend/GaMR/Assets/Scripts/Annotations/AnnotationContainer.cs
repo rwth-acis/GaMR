@@ -7,7 +7,6 @@ using System;
 public class AnnotationContainer : MonoBehaviour, IInputHandler {
 
     public AnnotationManager annotationManager;
-    private GameObject annotationBoxInstance;
 
 
     public void Start()
@@ -39,9 +38,25 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler {
 
     public void OnInputDown(InputEventData eventData)
     {
-        if (annotationBoxInstance == null)
+        // close the keyboard if it is open
+        if (Keyboard.currentlyOpenedKeyboard != null)
         {
-            annotationBoxInstance = AnnotationBox.Show(this);
+            Keyboard.currentlyOpenedKeyboard.Cancel();
+        }
+
+
+        // make sure that only one annotation box is opened and that it is opened for this annotation
+        if (AnnotationBox.currentlyOpenAnnotationBox != null)
+        {
+            if (AnnotationBox.currentlyOpenAnnotationBox.container != this)
+            {
+                AnnotationBox.currentlyOpenAnnotationBox.Close();
+                AnnotationBox.Show(this);
+            }
+        }
+        else
+        {
+            AnnotationBox.Show(this);
         }
     }
 

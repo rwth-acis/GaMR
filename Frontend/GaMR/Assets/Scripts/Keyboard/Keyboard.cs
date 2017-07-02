@@ -29,6 +29,9 @@ public class Keyboard : MonoBehaviour
     // variables concerning the width limit
     private float maxWidth;
 
+
+    public static Keyboard currentlyOpenedKeyboard;
+
     // Use this for initialization
     public void Start()
     {
@@ -93,6 +96,7 @@ public class Keyboard : MonoBehaviour
         keyboard.label.text = label;
         keyboard.Text = text;
         keyboard.callWithResult = callWithResult;
+        currentlyOpenedKeyboard = keyboard;
     }
 
     public string Text
@@ -144,8 +148,15 @@ public class Keyboard : MonoBehaviour
         {
             callWithResult(null);
         }
-        GameObject.Destroy(gameObject);
+        Close();
     }
+
+    private void Close()
+    {
+        currentlyOpenedKeyboard = null;
+        Destroy(gameObject);
+    }
+
 
     private void UpdateHeights()
     {
@@ -189,7 +200,7 @@ public class Keyboard : MonoBehaviour
         {
             callWithResult(text);
         }
-        GameObject.Destroy(gameObject);
+        Close();
     }
 
     public bool Shift

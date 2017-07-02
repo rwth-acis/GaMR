@@ -1018,6 +1018,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   editButton: {fileID: 1362611710452002}
   deleteButton: {fileID: 1657781700306784}
+  closeButton: {fileID: 1085188495527814}
   textField: {fileID: 1446905998180244}
   container: {fileID: 0}
 --- !u!114 &114506332172296948

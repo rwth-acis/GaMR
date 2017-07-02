@@ -31,25 +31,21 @@ public class AnnotationManager : MonoBehaviour
             annotationObject.transform.position = gazeManager.HitPosition;
             annotationObject.transform.parent = gameObject.transform;
 
+            // close currently opened annotation box
+            if (AnnotationBox.currentlyOpenAnnotationBox != null)
+            {
+                AnnotationBox.currentlyOpenAnnotationBox.Close();
+            }
+            // close keyboard if opened
+            if (Keyboard.currentlyOpenedKeyboard != null)
+            {
+                Keyboard.currentlyOpenedKeyboard.Cancel();
+            }
+
             AnnotationContainer container = annotationObject.AddComponent<AnnotationContainer>();
             container.annotationManager = this;
-
-            //currentlyEditedAnnotation = annotationObject;
-            //Keyboard.Display("Enter the text of the annotation", UserInputFinished, true);
         }
     }
-
-    //private void UserInputFinished(string input)
-    //{
-    //    if (input == null) // user canceled
-    //    {
-    //        Destroy(currentlyEditedAnnotation);
-    //    }
-    //    else
-    //    {
-    //        Add(currentlyEditedAnnotation.transform.localPosition, input);
-    //    }
-    //}
 
     public void Add(Annotation annotation)
     {

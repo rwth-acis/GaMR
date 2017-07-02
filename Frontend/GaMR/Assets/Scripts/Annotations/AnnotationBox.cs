@@ -6,10 +6,12 @@ using UnityEngine;
 public class AnnotationBox : MonoBehaviour
 {
 
-    public GameObject editButton, deleteButton;
+    public GameObject editButton, deleteButton, closeButton;
     public GameObject textField;
-    private Button buttonEdit, buttonDelete;
+    private Button buttonEdit, buttonDelete, buttonClose;
     private Caption caption;
+
+    public static AnnotationBox currentlyOpenAnnotationBox;
 
 
     public AnnotationContainer container;
@@ -20,6 +22,7 @@ public class AnnotationBox : MonoBehaviour
 
         buttonEdit = editButton.GetComponent<Button>();
         buttonDelete = deleteButton.GetComponent<Button>();
+        buttonClose = closeButton.GetComponent<Button>();
         caption = textField.GetComponent<Caption>();
 
         // necessary since caption has not yet called Start() but is needed immediately
@@ -28,6 +31,7 @@ public class AnnotationBox : MonoBehaviour
 
         buttonEdit.OnPressed = EditText;
         buttonDelete.OnPressed = DeleteAnnotation;
+        buttonClose.OnPressed = Close;
     }
 
     private void EditText()
@@ -50,19 +54,20 @@ public class AnnotationBox : MonoBehaviour
     private void DeleteAnnotation()
     {
         container.DeleteAnnotation();
-        Destroy(gameObject);
+        Close();
     }
 
-    private void Close()
+    public void Close()
     {
+        currentlyOpenAnnotationBox = null;
         Destroy(gameObject);
     }
 
-    public static GameObject Show(AnnotationContainer container)
+    public static void Show(AnnotationContainer container)
     {
         GameObject instance = (GameObject)GameObject.Instantiate(Resources.Load("AnnotationBox"));
         AnnotationBox annotationBox = instance.GetComponent<AnnotationBox>();
         annotationBox.container = container;
-        return instance;
+        currentlyOpenAnnotationBox = annotationBox;
     }
 }
