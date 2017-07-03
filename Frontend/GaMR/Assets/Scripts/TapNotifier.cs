@@ -39,11 +39,12 @@ public class TapNotifier : MonoBehaviour, IInputHandler
         }
     }
 
-    public void RegisterListenerOnInputUp(Action callback)
+    public void RegisterListenerOnInputUp(UnityAction callback)
     {
-        if (inputUpEvent != null)
+        Init();
+        if (callback != null)
         {
-            inputUpEvent.Invoke();
+            inputUpEvent.AddListener(callback);
         }
     }
 
@@ -57,5 +58,9 @@ public class TapNotifier : MonoBehaviour, IInputHandler
 
     public void OnInputUp(InputEventData eventData)
     {
+        if (inputUpEvent != null)
+        {
+            inputUpEvent.Invoke();
+        }
     }
 }

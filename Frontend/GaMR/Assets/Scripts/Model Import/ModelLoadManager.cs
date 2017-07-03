@@ -46,6 +46,7 @@ public class ModelLoadManager : MonoBehaviour {
     {
         GameObject obj = x3dObject.CreateGameObjects();
         CreateBoundingBox(obj, x3dObject.Bounds);
+
     }
 
     /// <summary>

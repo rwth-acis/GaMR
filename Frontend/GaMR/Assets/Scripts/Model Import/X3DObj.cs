@@ -86,6 +86,8 @@ public class X3DObj
     {
         // create the parent object
         parent = new GameObject("X3D Parent");
+        ObjectInfo objInfo = parent.AddComponent<ObjectInfo>();
+        objInfo.ModelName = ModelName;
 
         AnnotationManager annotationManger = parent.AddComponent<AnnotationManager>();
 
@@ -137,5 +139,10 @@ public class X3DObj
     public Bounds Bounds
     {
         get { return parentBounds; }
+    }
+
+    public string ModelName
+    {
+        get { return name; }
     }
 }

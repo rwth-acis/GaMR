@@ -20,11 +20,6 @@ public class Button : MonoBehaviour, IInputHandler {
     /// <param name="eventData">Provided data of the tap event</param>
     public void OnInputDown(InputEventData eventData)
     {
-        // redirect to the specified method
-        if (OnPressed!=null)
-        {
-            OnPressed();
-        }
     }
 
     /// <summary>
@@ -33,6 +28,10 @@ public class Button : MonoBehaviour, IInputHandler {
     /// <param name="eventData">Provided data of the tap event</param>
     public void OnInputUp(InputEventData eventData)
     {
-        // nothing to do here
+        // redirect to the specified method
+        if (OnPressed != null)
+        {
+            OnPressed();
+        }
     }
 }

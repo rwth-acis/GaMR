@@ -12,7 +12,7 @@ public class AnnotationManager : MonoBehaviour
     private GazeManager gazeManager;
     private RestManager restManager;
     private InformationManager infoManager;
-    private GameObject currentlyEditedAnnotation;
+    private ObjectInfo objectInfo;
 
     // Use this for initialization
     void Start()
@@ -21,6 +21,7 @@ public class AnnotationManager : MonoBehaviour
         gazeManager = ComponentGetter.GetComponentOnGameobject<GazeManager>("InputManager");
         restManager = ComponentGetter.GetComponentOnGameobject<RestManager>("RestManager");
         infoManager = ComponentGetter.GetComponentOnGameobject<InformationManager>("InformationManager");
+        objectInfo = GetComponent<ObjectInfo>();
     }
 
     public void TapOnModel()
@@ -65,7 +66,7 @@ public class AnnotationManager : MonoBehaviour
         string jsonPost = JsonUtility.ToJson(array);
         if (restManager != null)
         {
-            restManager.POST(infoManager.BackendAddress + "/resources/annotation/Skull", jsonPost);
+            restManager.POST(infoManager.BackendAddress + "/resources/annotation/" + objectInfo.ModelName, jsonPost);
         }
     }
 
