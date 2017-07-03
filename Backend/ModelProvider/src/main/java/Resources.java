@@ -74,7 +74,7 @@ public class Resources {
     }
 
     @POST
-    @Path("/annotation/{modelName}")
+    @Path("/annotation/save/{modelName}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
     public Response storeAnnotations( @PathParam("modelName") String modelName, String json )
@@ -90,6 +90,21 @@ public class Resources {
         catch (IOException e)
         {
             return  Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GET
+    @Path("/annotation/load/{modelName}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAnnotations(@PathParam("modelName") String modelName)
+    {
+        try {
+            String json =  ReadFile("C:\\Temp\\3DModels\\" + modelName + "\\annotations.json");
+            return Response.ok(json, MediaType.APPLICATION_JSON).build();
+        }
+        catch (IOException ioEx)
+        {
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
 

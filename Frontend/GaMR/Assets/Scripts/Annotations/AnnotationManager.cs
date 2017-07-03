@@ -22,6 +22,8 @@ public class AnnotationManager : MonoBehaviour
         restManager = ComponentGetter.GetComponentOnGameobject<RestManager>("RestManager");
         infoManager = ComponentGetter.GetComponentOnGameobject<InformationManager>("InformationManager");
         objectInfo = GetComponent<ObjectInfo>();
+
+        restManager.GET(infoManager.BackendAddress + "/resources/annotation/load/" + objectInfo.ModelName, Load);
     }
 
     public void TapOnModel()
@@ -44,6 +46,7 @@ public class AnnotationManager : MonoBehaviour
             }
 
             AnnotationContainer container = annotationObject.AddComponent<AnnotationContainer>();
+            container.loaded = false;
             container.annotationManager = this;
         }
     }
@@ -66,13 +69,28 @@ public class AnnotationManager : MonoBehaviour
         string jsonPost = JsonUtility.ToJson(array);
         if (restManager != null)
         {
-            restManager.POST(infoManager.BackendAddress + "/resources/annotation/" + objectInfo.ModelName, jsonPost);
+            restManager.POST(infoManager.BackendAddress + "/resources/annotation/save/" + objectInfo.ModelName, jsonPost);
         }
     }
 
     public void Load(string res)
     {
-        JSONArray<Annotation> array = JsonUtility.FromJson<JSONArray<Annotation>>(res);
+        if (res != null)
+        {
+            JSONArray<Annotation> array = JsonUtility.FromJson<JSONArray<Annotation>>(res);
+            foreach(Annotation annotation in array.array)
+            {
+                GameObject annotationObject = (GameObject)Instantiate(Resources.Load("AnnotationSphere"));
+                annotationObject.transform.position = annotation.Position;
+                annotationObject.transform.parent = gameObject.transform;
+
+                AnnotationContainer container = annotationObject.AddComponent<AnnotationContainer>();
+                container.annotationManager = this;
+                container.loaded = true;
+                container.Annotation = annotation;
+            }
+            annotations = array.array;
+        }
     }
 
     public bool EditMode

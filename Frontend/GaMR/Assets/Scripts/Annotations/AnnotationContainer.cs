@@ -4,14 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class AnnotationContainer : MonoBehaviour, IInputHandler {
+public class AnnotationContainer : MonoBehaviour, IInputHandler
+{
 
     public AnnotationManager annotationManager;
+    public bool loaded;
 
 
     public void Start()
     {
-        Keyboard.Display("Enter the text of the annotation", UserInputFinished, true);
+        if (!loaded)
+        {
+            Keyboard.Display("Enter the text of the annotation", UserInputFinished, true);
+        }
     }
 
     private void UserInputFinished(string input)
@@ -28,9 +33,10 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler {
     }
 
     // Update is called once per frame
-    void Update () {
-		
-	}
+    void Update()
+    {
+
+    }
 
     public void OnInputUp(InputEventData eventData)
     {
@@ -62,7 +68,7 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler {
 
     public Annotation Annotation
     {
-        get;set;
+        get; set;
     }
 
     public void DeleteAnnotation()
