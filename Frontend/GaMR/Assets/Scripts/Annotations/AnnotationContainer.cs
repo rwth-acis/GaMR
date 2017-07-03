@@ -4,13 +4,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+/// <summary>
+/// Container which encapulates an annotation so that it can be attached to a gameobject
+/// </summary>
 public class AnnotationContainer : MonoBehaviour, IInputHandler
 {
 
     public AnnotationManager annotationManager;
     public bool loaded;
 
-
+    /// <summary>
+    /// initializes the container
+    /// if it was not created from the load-routine a keyboard automatically appears
+    /// to fill the annotation with text
+    /// </summary>
     public void Start()
     {
         if (!loaded)
@@ -19,13 +26,18 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
         }
     }
 
+    /// <summary>
+    /// Called when the user has finished the input on the keyboard
+    /// </summary>
+    /// <param name="input">The input of the user (null if input was cancelled)</param>
     private void UserInputFinished(string input)
     {
+        // if input cancelled => destroy the annotation object again
         if (input == null) // user canceled
         {
             Destroy(gameObject);
         }
-        else
+        else // create an annotation and add it to the annotation-manager
         {
             Annotation = new Annotation(transform.position, input);
             annotationManager.Add(Annotation);
@@ -66,11 +78,17 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
         }
     }
 
+    /// <summary>
+    /// The annotation object
+    /// </summary>
     public Annotation Annotation
     {
         get; set;
     }
 
+    /// <summary>
+    /// deletes the annotation's gameobject and the annotation in the annotation-manager
+    /// </summary>
     public void DeleteAnnotation()
     {
         annotationManager.Delete(Annotation);

@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The display-window which is shown if an annotation is selected
+/// </summary>
 public class AnnotationBox : MonoBehaviour
 {
 
@@ -16,7 +19,11 @@ public class AnnotationBox : MonoBehaviour
 
     public AnnotationContainer container;
 
-    // Use this for initialization
+    /// <summary>
+    /// initializes the annotation box
+    /// assigns all buttons
+    /// fills it with the text of the annotation
+    /// </summary>
     void Start()
     {
 
@@ -34,6 +41,9 @@ public class AnnotationBox : MonoBehaviour
         buttonClose.OnPressed = Close;
     }
 
+    /// <summary>
+    /// Called if the edit-button is pressed => opens a keyboard to edit the annotation
+    /// </summary>
     private void EditText()
     {
         Keyboard.Display("Edit the annotation", container.Annotation.Text, OnEditFinished, true);
@@ -41,6 +51,11 @@ public class AnnotationBox : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// called if the edit-keyboard is closed
+    /// applies changes to the annotation-text
+    /// </summary>
+    /// <param name="input">The text which was typed by the user (null if input was cancelled)</param>
     private void OnEditFinished(string input)
     {
         if (input != null)
@@ -51,18 +66,30 @@ public class AnnotationBox : MonoBehaviour
         gameObject.SetActive(true);
     }
 
+    /// <summary>
+    /// called if the delete-button is pressed
+    /// deletes the annotation
+    /// </summary>
     private void DeleteAnnotation()
     {
         container.DeleteAnnotation();
         Close();
     }
 
+    /// <summary>
+    /// called if the close-button is pressed
+    /// closes the AnnotationBox
+    /// </summary>
     public void Close()
     {
         currentlyOpenAnnotationBox = null;
         Destroy(gameObject);
     }
 
+    /// <summary>
+    /// Creates an annotation box and shows it
+    /// </summary>
+    /// <param name="container"></param>
     public static void Show(AnnotationContainer container)
     {
         GameObject instance = (GameObject)GameObject.Instantiate(Resources.Load("AnnotationBox"));

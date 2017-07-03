@@ -14,7 +14,10 @@ public class AnnotationManager : MonoBehaviour
     private InformationManager infoManager;
     private ObjectInfo objectInfo;
 
-    // Use this for initialization
+    /// <summary>
+    /// Initializes the annotation-manager
+    /// Collects the necessary components and loads previously stored annotations if they exist
+    /// </summary>
     void Start()
     {
         annotations = new List<Annotation>();
@@ -26,6 +29,10 @@ public class AnnotationManager : MonoBehaviour
         restManager.GET(infoManager.BackendAddress + "/resources/annotation/load/" + objectInfo.ModelName, Load);
     }
 
+    /// <summary>
+    /// called if the annotation-object is tapped
+    /// shows an annotation box with the corresponding annotation's content
+    /// </summary>
     public void TapOnModel()
     {
         if (editMode)
@@ -51,16 +58,27 @@ public class AnnotationManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// adds a new annotation to the list
+    /// </summary>
+    /// <param name="annotation">The annotation to add</param>
     public void Add(Annotation annotation)
     {
         annotations.Add(annotation);
     }
 
+    /// <summary>
+    /// Deletes an annotation from the list
+    /// </summary>
+    /// <param name="annotation">The annotation to delete</param>
     public void Delete(Annotation annotation)
     {
         annotations.Remove(annotation);
     }
 
+    /// <summary>
+    /// saves all annotations by communicating the list of annotations to the backend
+    /// </summary>
     public void Save()
     {
         JSONArray<Annotation> array = new JSONArray<Annotation>();
