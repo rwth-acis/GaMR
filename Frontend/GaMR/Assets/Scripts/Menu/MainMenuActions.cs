@@ -12,7 +12,7 @@ public class MainMenuActions : MonoBehaviour
     InformationManager infoManager;
     RestManager restManager;
     ModelLoadManager modelLoadManager;
-    GameObject carouselInstance;
+    static GameObject carouselInstance;
 
     public InformationManager InfoManager { get { return infoManager; } }
 
@@ -21,6 +21,10 @@ public class MainMenuActions : MonoBehaviour
         infoManager = ComponentGetter.GetComponentOnGameobject<InformationManager>("InformationManager");
         restManager = ComponentGetter.GetComponentOnGameobject<RestManager>("RestManager");
         modelLoadManager = ComponentGetter.GetComponentOnGameobject<ModelLoadManager>("ModelLoadManager");
+        if (carouselInstance != null)
+        {
+            Destroy(carouselInstance);
+        }
     }
 
     public void EnterIPAddress()

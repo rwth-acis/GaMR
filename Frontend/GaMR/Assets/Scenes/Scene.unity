@@ -251,7 +251,6 @@ MonoBehaviour:
   shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   boundingBoxPrefab: {fileID: 1446011052128680, guid: 82427b962df012c4ab2bc95cb7d2a543,
     type: 2}
-  spawnPosition: {x: 0, y: 0, z: 3}
   spawnEulerAngles: {x: 0, y: 180, z: 0}
 --- !u!1 &501829635
 GameObject:

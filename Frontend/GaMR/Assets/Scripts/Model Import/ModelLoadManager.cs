@@ -63,7 +63,7 @@ public class ModelLoadManager : MonoBehaviour {
         content.transform.parent = contentHolder;
 
         // set the correct position and rotation
-        box.transform.position = Camera.main.transform.position + new Vector3(0, 0, 3);
+        box.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 2.5f;
         box.transform.localRotation = Quaternion.Euler(spawnEulerAngles);
     }
 }

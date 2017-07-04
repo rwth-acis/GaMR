@@ -10,6 +10,7 @@ public class Menu : MonoBehaviour {
     public Direction alignment = Direction.HORIZONTAL;
     [Tooltip("This is only used if alignment is set to GRID")]
     public int itemsInOneLine = 3;
+    public GameObject defaultMenuStyle;
 
 	// Use this for initialization
 	void Start () {

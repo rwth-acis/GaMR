@@ -104,8 +104,8 @@ public class AnnotationManager : MonoBehaviour
             foreach(Annotation annotation in array.array)
             {
                 GameObject annotationObject = (GameObject)Instantiate(Resources.Load("AnnotationSphere"));
-                annotationObject.transform.localPosition = annotation.Position;
                 annotationObject.transform.parent = gameObject.transform;
+                annotationObject.transform.localPosition = annotation.Position;
 
                 AnnotationContainer container = annotationObject.AddComponent<AnnotationContainer>();
                 container.annotationManager = this;

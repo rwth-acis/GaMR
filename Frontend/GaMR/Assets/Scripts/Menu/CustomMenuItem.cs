@@ -5,7 +5,8 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(Menu))]
-public class CustomMenuItem : MonoBehaviour {
+public class CustomMenuItem : MonoBehaviour
+{
 
 
     public GameObject menuStyle;
@@ -29,11 +30,18 @@ public class CustomMenuItem : MonoBehaviour {
 
     public Texture Icon { get { return icon; } set { menuStyleAdapter.UpdateIcon(value); icon = value; } }
 
-    public string Text { get { return text; } set { if (MenuSytleAdapter != null)
+    public string Text
+    {
+        get { return text; }
+        set
+        {
+            if (MenuSytleAdapter != null)
             {
                 menuStyleAdapter.UpdateText(value);
             }
-            text = value; } }
+            text = value;
+        }
+    }
 
     /// <summary>
     /// should be called if the menu item is created programmatically and not in the Unity editor
@@ -54,6 +62,10 @@ public class CustomMenuItem : MonoBehaviour {
         this.parentMenuItem = parent;
         this.parentMenu = parentMenu;
         subMenuOpened = false;
+        if (menuStyle == null)
+        {
+            menuStyle = parentMenu.defaultMenuStyle;
+        }
         containerInstance = Instantiate(menuStyle, parentMenu.transform);
 
         menuStyleAdapter = containerInstance.GetComponent<MenuStyleAdapter>();
@@ -120,7 +132,7 @@ public class CustomMenuItem : MonoBehaviour {
 
     private void DestroySubmenus()
     {
-        foreach(CustomMenuItem child in subMenu)
+        foreach (CustomMenuItem child in subMenu)
         {
             child.Destroy();
         }

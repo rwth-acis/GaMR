@@ -50,7 +50,7 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
         {
             // deselect the object since editing has finished
             mat.color = deselectedColor;
-            Annotation = new Annotation(transform.position, input);
+            Annotation = new Annotation(transform.localPosition, input);
             annotationManager.Add(Annotation);
         }
     }

@@ -78,7 +78,7 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
     {
         if (iconRenderer != null)
         {
-            iconRenderer.material.SetTexture("_MainTexture", newIcon);
+            iconRenderer.material.SetTexture("_MainTex", newIcon);
         }
     }
 
@@ -91,7 +91,8 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
     {
         get
         {
-            return container.transform.localScale;
+            Bounds bounds = Geometry.GetBoundsIndependentFromRotation(container);
+            return bounds.size;
         }
     }
 

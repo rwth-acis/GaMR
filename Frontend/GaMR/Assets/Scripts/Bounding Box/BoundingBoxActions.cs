@@ -44,4 +44,9 @@ public class BoundingBoxActions : MonoBehaviour
             boxPart.gameObject.SetActive(active);
         }
     }
+
+    public void DeleteObject()
+    {
+        Destroy(gameObject);
+    }
 }
