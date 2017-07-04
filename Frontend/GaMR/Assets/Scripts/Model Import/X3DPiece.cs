@@ -108,6 +108,9 @@ public class X3DPiece
     /// <returns>the Unity mesh</returns>
     private List<Mesh> CreateUVMeshes()
     {
+        // first create the untextured mesh in order to get the correct normals
+        Mesh untextured = CreateMesh();
+        Vector3[] normals = untextured.normals;
         List<Mesh> res = new List<Mesh>();
         // use mutliple meshes if there are more than 65000 vertices
         for (int j = 0; j < vertexIndex.Length / 64998 + 1; j++)
@@ -117,6 +120,7 @@ public class X3DPiece
             int[] newIndex = new int[length];
             Vector3[] newCoordinates = new Vector3[length];
             Vector2[] newUVCoordinates = new Vector2[length];
+            Vector3[] newNormals = new Vector3[length];
 
             // unshare the vertices so that the UV-data can be used by Unity
             for (int i = 0; i < length; i++)
@@ -124,6 +128,7 @@ public class X3DPiece
                 newIndex[i] = i;
                 newCoordinates[i] = vertexCoords[vertexIndex[i + offset]];
                 newUVCoordinates[i] = textureCoords[textureIndex[i + offset]];
+                newNormals[i] = normals[vertexIndex[i + offset]];
             }
 
             // create the mesh
@@ -132,7 +137,7 @@ public class X3DPiece
             mesh.uv = newUVCoordinates;
             mesh.triangles = newIndex;
 
-            mesh.RecalculateNormals();
+            mesh.normals = newNormals;
 
             res.Add(mesh);
         }
