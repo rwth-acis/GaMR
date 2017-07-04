@@ -82,6 +82,7 @@ public class AnnotationBox : MonoBehaviour
     /// </summary>
     public void Close()
     {
+        container.Deselect();
         currentlyOpenAnnotationBox = null;
         Destroy(gameObject);
     }
@@ -95,6 +96,7 @@ public class AnnotationBox : MonoBehaviour
         GameObject instance = (GameObject)GameObject.Instantiate(Resources.Load("AnnotationBox"));
         AnnotationBox annotationBox = instance.GetComponent<AnnotationBox>();
         annotationBox.container = container;
+        container.Select();
         currentlyOpenAnnotationBox = annotationBox;
     }
 }

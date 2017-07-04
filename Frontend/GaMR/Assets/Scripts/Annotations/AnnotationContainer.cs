@@ -13,15 +13,24 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
     public AnnotationManager annotationManager;
     public bool loaded;
 
+    private Material mat;
+
+    private Color deselectedColor;
+    public Color selectedColor = Color.red;
+
     /// <summary>
     /// initializes the container
     /// if it was not created from the load-routine a keyboard automatically appears
     /// to fill the annotation with text
+    /// also: the annotation appears as selected
     /// </summary>
     public void Start()
     {
+        deselectedColor = GetComponent<Renderer>().material.color;
+        mat = gameObject.GetComponent<Renderer>().material;
         if (!loaded)
         {
+            mat.color = selectedColor;
             Keyboard.Display("Enter the text of the annotation", UserInputFinished, true);
         }
     }
@@ -39,6 +48,8 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
         }
         else // create an annotation and add it to the annotation-manager
         {
+            // deselect the object since editing has finished
+            mat.color = deselectedColor;
             Annotation = new Annotation(transform.position, input);
             annotationManager.Add(Annotation);
         }
@@ -85,7 +96,7 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
     {
         get; set;
     }
-
+    
     /// <summary>
     /// deletes the annotation's gameobject and the annotation in the annotation-manager
     /// </summary>
@@ -93,5 +104,15 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
     {
         annotationManager.Delete(Annotation);
         Destroy(gameObject);
+    }
+
+    public void Select()
+    {
+        mat.color = new Color(selectedColor.r, selectedColor.g, selectedColor.b, mat.color.a);
+    }
+
+    internal void Deselect()
+    {
+        mat.color = new Color(deselectedColor.r, deselectedColor.g, deselectedColor.b, mat.color.a);
     }
 }

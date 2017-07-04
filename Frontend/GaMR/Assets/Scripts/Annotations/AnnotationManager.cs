@@ -7,18 +7,18 @@ using System;
 public class AnnotationManager : MonoBehaviour
 {
 
-    private List<Annotation> annotations;
-    private bool editMode = true;
-    private GazeManager gazeManager;
-    private RestManager restManager;
-    private InformationManager infoManager;
-    private ObjectInfo objectInfo;
+    protected List<Annotation> annotations;
+    protected bool editMode = true;
+    protected GazeManager gazeManager;
+    protected RestManager restManager;
+    protected InformationManager infoManager;
+    protected ObjectInfo objectInfo;
 
     /// <summary>
     /// Initializes the annotation-manager
     /// Collects the necessary components and loads previously stored annotations if they exist
     /// </summary>
-    void Start()
+    protected void Start()
     {
         annotations = new List<Annotation>();
         gazeManager = ComponentGetter.GetComponentOnGameobject<GazeManager>("InputManager");
@@ -26,6 +26,11 @@ public class AnnotationManager : MonoBehaviour
         infoManager = ComponentGetter.GetComponentOnGameobject<InformationManager>("InformationManager");
         objectInfo = GetComponent<ObjectInfo>();
 
+        LoadAnnotations();
+    }
+
+    protected void LoadAnnotations()
+    {
         restManager.GET(infoManager.BackendAddress + "/resources/annotation/load/" + objectInfo.ModelName, Load);
     }
 
@@ -79,7 +84,7 @@ public class AnnotationManager : MonoBehaviour
     /// <summary>
     /// saves all annotations by communicating the list of annotations to the backend
     /// </summary>
-    public void Save()
+    protected void Save()
     {
         JSONArray<Annotation> array = new JSONArray<Annotation>();
         array.array = annotations;
@@ -91,7 +96,7 @@ public class AnnotationManager : MonoBehaviour
         }
     }
 
-    public void Load(string res)
+    protected void Load(string res)
     {
         if (res != null)
         {
@@ -99,7 +104,7 @@ public class AnnotationManager : MonoBehaviour
             foreach(Annotation annotation in array.array)
             {
                 GameObject annotationObject = (GameObject)Instantiate(Resources.Load("AnnotationSphere"));
-                annotationObject.transform.position = annotation.Position;
+                annotationObject.transform.localPosition = annotation.Position;
                 annotationObject.transform.parent = gameObject.transform;
 
                 AnnotationContainer container = annotationObject.AddComponent<AnnotationContainer>();

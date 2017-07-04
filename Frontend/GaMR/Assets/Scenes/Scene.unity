@@ -454,6 +454,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ipAddressBackend: 192.168.178.48
   portBackend: 8080
+  playerType: 1
 --- !u!1 &1648687113
 GameObject:
   m_ObjectHideFlags: 0

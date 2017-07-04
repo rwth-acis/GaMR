@@ -11,9 +11,15 @@ public class InformationManager : MonoBehaviour {
 
     public string ipAddressBackend = "192.168.178.43";
     public int portBackend = 8080;
+    public PlayerType playerType = PlayerType.STUDENT;
 
     /// <summary>
     /// http address which combines the ip address and the port
     /// </summary>
     public string BackendAddress { get { return "http://" + ipAddressBackend + ":" + portBackend.ToString(); } }
+}
+
+public enum PlayerType
+{
+    AUTHOR, STUDENT
 }

@@ -10,7 +10,6 @@ public class FadeInOnFocus : MonoBehaviour, IFocusable
     public float minimumAlpha = 0.4f;
     private Material mat;
     private float alpha = 1f;
-    private Color color;
     private bool inFocus;
     private bool matInitializedInLastFrame = false;
 
@@ -18,7 +17,6 @@ public class FadeInOnFocus : MonoBehaviour, IFocusable
     void Start()
     {
         mat = GetComponent<Renderer>().material;
-        color = mat.color;
     }
 
     public void OnFocusEnter()
@@ -69,7 +67,7 @@ public class FadeInOnFocus : MonoBehaviour, IFocusable
         while (time < duration)
         {
             alpha = Mathf.Lerp(alpha, 1 - dir + minimumAlpha, time / duration);
-            mat.SetColor("_Color", new Color(color.r, color.g, color.b, alpha));
+            mat.SetColor("_Color", new Color(mat.color.r, mat.color.g, mat.color.b, alpha));
             time += Time.deltaTime;
             yield return null;
         }

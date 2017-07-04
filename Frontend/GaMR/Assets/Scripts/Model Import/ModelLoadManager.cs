@@ -10,7 +10,6 @@ public class ModelLoadManager : MonoBehaviour {
     public string baseUrl = "/resources/model/";
     public Shader shader;
     public GameObject boundingBoxPrefab;
-    public Vector3 spawnPosition;
     public Vector3 spawnEulerAngles;
 
     private RestManager restCaller;
@@ -64,7 +63,7 @@ public class ModelLoadManager : MonoBehaviour {
         content.transform.parent = contentHolder;
 
         // set the correct position and rotation
-        box.transform.localPosition = spawnPosition;
+        box.transform.position = Camera.main.transform.position + new Vector3(0, 0, 3);
         box.transform.localRotation = Quaternion.Euler(spawnEulerAngles);
     }
 }
