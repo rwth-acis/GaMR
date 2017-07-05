@@ -50,10 +50,12 @@ public class Resources {
             }
             ObjectMapper mapper = new ObjectMapper();
             String json = mapper.writeValueAsString(jsonArray);
+            System.out.println(json);
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         }
         catch (IOException ioEx)
         {
+            System.out.println("error");
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }

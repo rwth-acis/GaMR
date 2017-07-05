@@ -105,9 +105,8 @@ public class MainMenuActions : MonoBehaviour
         {
             carouselInstance = Instantiate(carouselMenu);
         }
-        CarouselMenu carouselScript = carouselInstance.GetComponent<CarouselMenu>();
 
-        JSONArray<string> array = JsonUtility.FromJson<JSONArray<string>>(res);
+        JsonStringArray array = JsonUtility.FromJson<JsonStringArray>(res);
         array.array.Sort();
         List<CustomMenuItem> items = new List<CustomMenuItem>();
 
@@ -119,6 +118,8 @@ public class MainMenuActions : MonoBehaviour
             item.Text = modelName;
             items.Add(item);
         }
+
+        CarouselMenu carouselScript = carouselInstance.GetComponent<CarouselMenu>();
 
         if (carouselScript != null)
         {

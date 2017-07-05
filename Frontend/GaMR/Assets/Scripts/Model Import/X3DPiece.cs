@@ -53,7 +53,7 @@ public class X3DPiece
         // get mesh
         List<Mesh> subMeshes = new List<Mesh>();
         // if it is not textured => use the unmodified imported mesh
-        if (textureName == null || textureCoords == null || textureIndex == null)
+        if (string.IsNullOrEmpty(textureName) || textureCoords == null || textureIndex == null ||textureCoords.Length == 0 ||textureIndex.Length == 0)
         {
             subMeshes.Add(CreateMesh());
         }
@@ -71,7 +71,7 @@ public class X3DPiece
             MeshRenderer renderer = gameObject.AddComponent<MeshRenderer>();
             renderer.material = new Material(shader);
             // if it has a texture => attach a TextureLoader to download the assigned texture
-            if (textureName != null)
+            if (!string.IsNullOrEmpty(textureName))
             {
                 TextureLoader loader = gameObject.AddComponent<TextureLoader>();
                 loader.textureUrl = textureName;

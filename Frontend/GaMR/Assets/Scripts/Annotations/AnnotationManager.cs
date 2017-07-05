@@ -86,7 +86,7 @@ public class AnnotationManager : MonoBehaviour
     /// </summary>
     protected void Save()
     {
-        JSONArray<Annotation> array = new JSONArray<Annotation>();
+        JsonAnnotationArray array = new JsonAnnotationArray();
         array.array = annotations;
 
         string jsonPost = JsonUtility.ToJson(array);
@@ -100,7 +100,7 @@ public class AnnotationManager : MonoBehaviour
     {
         if (res != null)
         {
-            JSONArray<Annotation> array = JsonUtility.FromJson<JSONArray<Annotation>>(res);
+            JsonAnnotationArray array = JsonUtility.FromJson<JsonAnnotationArray>(res);
             foreach(Annotation annotation in array.array)
             {
                 GameObject annotationObject = (GameObject)Instantiate(Resources.Load("AnnotationSphere"));

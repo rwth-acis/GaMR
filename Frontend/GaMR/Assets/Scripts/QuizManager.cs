@@ -8,7 +8,7 @@ public class QuizManager : AnnotationManager
 
     protected new void Save()
     {
-        JSONArray<Annotation> array = new JSONArray<Annotation>();
+        JsonArray<Annotation> array = new JsonArray<Annotation>();
         array.array = annotations;
 
         string jsonPost = JsonUtility.ToJson(array);
