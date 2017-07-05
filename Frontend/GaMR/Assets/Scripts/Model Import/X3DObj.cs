@@ -141,6 +141,9 @@ public class X3DObj
         get { return parentBounds; }
     }
 
+    /// <summary>
+    /// The name of the 3D model
+    /// </summary>
     public string ModelName
     {
         get { return name; }

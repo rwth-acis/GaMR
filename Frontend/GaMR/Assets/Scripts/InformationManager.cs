@@ -6,6 +6,7 @@ using UnityEngine;
 /// Manages important settings of the application
 /// contains definitions for the IP address of the backend,
 /// the port and a property which combines all into a http address which can be called
+/// also provides information about the user
 /// </summary>
 public class InformationManager : MonoBehaviour {
 

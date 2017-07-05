@@ -11,7 +11,7 @@ using UnityEngine.Networking;
 public class RestManager : MonoBehaviour {
 
     /// <summary>
-    /// creates a Coroutine which will query the url and return the result to the callback function
+    /// creates a coroutine which will query the url and return the result to the callback function
     /// </summary>
     /// <param name="url">The url to query</param>
     /// <param name="callback">The callback method which receives the downloaded data</param>
@@ -20,11 +20,22 @@ public class RestManager : MonoBehaviour {
         StartCoroutine(GetWWW(url, callback));
     }
 
+    /// <summary>
+    /// Creates a coroutine which will post the specified data to the url
+    /// </summary>
+    /// <param name="url">The url to post the data to</param>
+    /// <param name="json">The body of the post</param>
     public void POST(string url, string json)
     {
         StartCoroutine(PostWWW(url, json));
     }
 
+    /// <summary>
+    /// Called as a coroutine and posts the data to the url.
+    /// </summary>
+    /// <param name="url">The url to post the data to</param>
+    /// <param name="json">The body of the post</param>
+    /// <returns></returns>
     private IEnumerator PostWWW(string url, string json)
     {
         UnityWebRequest req = new UnityWebRequest(url, "POST");
@@ -41,7 +52,7 @@ public class RestManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// Called as a Coroutine and queries the url. When data are downloaded, they are returned to the callback-method
+    /// Called as a coroutine and queries the url. When data are downloaded, they are returned to the callback-method
     /// </summary>
     /// <param name="url">The url to query</param>
     /// <param name="callback">The callback method which receives the downloaded data</param>

@@ -3,12 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// represents and handles the logic of the 3D keyboard
+/// </summary>
 public class Keyboard : MonoBehaviour
 {
     // public variables to set in the editor
+    [Tooltip("The TextMesh which should show the text which is put in")]
     public TextMesh inputField;
+    [Tooltip("The label which can display a message to the user describing what is currently edited")]
     public TextMesh label;
-    public int maxNumberOfLines = 10;
+    [Tooltip("The maximum number of lines that the input may have at maximum")]
+    public int maxNumberOfLines = 4;
 
     // variables related to the logical keyboard-functionality
     private string text = "";
@@ -32,7 +38,11 @@ public class Keyboard : MonoBehaviour
 
     public static Keyboard currentlyOpenedKeyboard;
 
-    // Use this for initialization
+    /// <summary>
+    /// Finds the necessary components: the background of the keyboard, it collider, all keys 
+    /// and keys of type LETTER
+    /// Also sets the scaling pivots of the background and text-field and scales them to their initial size
+    /// </summary>
     public void Start()
     {
         // get necessary components
@@ -65,7 +75,12 @@ public class Keyboard : MonoBehaviour
         ScaleToHeight(inputBackgroundPivot, inputBackground, lineHeight + padding);
     }
 
-
+    /// <summary>
+    /// Creates a new gameobject which is located at the upper edge of the given transform
+    /// This gameobject can then be used to scale the object and keeping the upper edge constant
+    /// </summary>
+    /// <param name="transform">The transform which gets the scaling pivot</param>
+    /// <returns>The pivot on the upper edge of the transform</returns>
     private Transform CreateScalingPivot(Transform transform)
     {
         GameObject pivotPoint = new GameObject("BackgroundScalingPivot");
@@ -76,11 +91,28 @@ public class Keyboard : MonoBehaviour
         return pivotPoint.transform;
     }
 
+    /// <summary>
+    /// Instantiates and shows a new keyboard
+    /// It is initialized with the given parameters
+    /// </summary>
+    /// <param name="label">The message to show to the user</param>
+    /// <param name="callWithResult">The method to call when the input is finished</param>
+    /// <param name="fullKeyboard">If true: The full-text keyboard is displayed; if false: only a numeric
+    /// version is shown</param>
     public static void Display(string label, Action<string> callWithResult, bool fullKeyboard)
     {
         Display(label, "", callWithResult, fullKeyboard);
     }
 
+    /// <summary>
+    /// Instantiates and shows a new keyboard
+    /// It is initialized with the given parameters and its textfield is also filled with the predefined text
+    /// </summary>
+    /// <param name="label">The message to show to the user</param>
+    /// <param name="text">The text which is already in the input field</param>
+    /// <param name="callWithResult">The method to call when the input is finished</param>
+    /// <param name="fullKeyboard">If true: The full-text keyboard is displayed; if false: only a numeric
+    /// version is shown</param>
     public static void Display(string label, string text, Action<string> callWithResult, bool fullKeyboard)
     {
         GameObject keyboardInstance;
@@ -99,6 +131,11 @@ public class Keyboard : MonoBehaviour
         currentlyOpenedKeyboard = keyboard;
     }
 
+    /// <summary>
+    /// The text which is shown in the input-field of the keyboard
+    /// Automatically adapts the input-TextMesh to show this text
+    /// Also handles size-changes to fit the number of lines
+    /// </summary>
     public string Text
     {
         get
@@ -137,11 +174,17 @@ public class Keyboard : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Applies the text of the keyboard to the input-field
+    /// </summary>
     private void NotifyInputField()
     {
         inputField.text = Text;
     }
 
+    /// <summary>
+    /// Called if the user cancles the input
+    /// </summary>
     public void Cancel()
     {
         if (callWithResult != null)
@@ -151,13 +194,19 @@ public class Keyboard : MonoBehaviour
         Close();
     }
 
+    /// <summary>
+    /// Closes the keyboard and clears the current instance
+    /// </summary>
     private void Close()
     {
         currentlyOpenedKeyboard = null;
         Destroy(gameObject);
     }
 
-
+    /// <summary>
+    /// Adapts the heights of the background and the input field to fit the number of lines of the input
+    /// Also updates the positions of the keys accordingly
+    /// </summary>
     private void UpdateHeights()
     {
         int dirFac;
@@ -178,6 +227,12 @@ public class Keyboard : MonoBehaviour
         coll.center = background.position - transform.position;
     }
 
+    /// <summary>
+    /// Scales a tranform to the specified absolute height
+    /// </summary>
+    /// <param name="pivot">The scaling pivot of the transform</param>
+    /// <param name="trans">The transform to scale</param>
+    /// <param name="height">The target height</param>
     private void ScaleToHeight(Transform pivot, Transform trans, float height)
     {
         Transform parent = pivot.parent;
@@ -194,6 +249,9 @@ public class Keyboard : MonoBehaviour
         pivot.parent = parent;
     }
 
+    /// <summary>
+    /// Called if the user ends the input and accepts it
+    /// </summary>
     public void Accept()
     {
         if (callWithResult != null)
@@ -203,18 +261,29 @@ public class Keyboard : MonoBehaviour
         Close();
     }
 
+    /// <summary>
+    /// The shift-state of the keyboard
+    /// When set it automatically updates the key-captions
+    /// </summary>
     public bool Shift
     {
         get { return shift; }
         set { shift = value; UpdateKeys(value); }
     }
 
+    /// <summary>
+    /// Whether or not capslock is activated
+    /// </summary>
     public bool Capslock
     {
         get;
         set;
     }
 
+    /// <summary>
+    /// Tells the keys to update their caption to show upper letters when shift is activated
+    /// </summary>
+    /// <param name="shiftOn"></param>
     private void UpdateKeys(bool shiftOn)
     {
         foreach (Key key in letterKeys)
