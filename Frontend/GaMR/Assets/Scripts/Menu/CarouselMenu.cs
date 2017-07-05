@@ -8,6 +8,9 @@ using UnityEngine;
 /// </summary>
 public class CarouselMenu : Menu
 {
+
+    private static CarouselMenu instance;
+
     /// <summary>
     /// the index of the element in the rootMenu which is shown in the middle
     /// </summary>
@@ -33,6 +36,17 @@ public class CarouselMenu : Menu
     public void Start()
     {
         InstantiateCarouselMenu(0);
+    }
+
+    public static CarouselMenu Show()
+    {
+        if (instance != null)
+        {
+            Destroy(instance.gameObject);
+        }
+        GameObject carouselInstance = (GameObject)Instantiate(Resources.Load("Carousel Menu"));
+        instance = carouselInstance.GetComponent<CarouselMenu>();
+        return instance;
     }
 
     /// <summary>

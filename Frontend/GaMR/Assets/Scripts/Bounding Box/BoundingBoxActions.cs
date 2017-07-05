@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,10 +9,13 @@ using UnityEngine;
 public class BoundingBoxActions : MonoBehaviour
 {
 
+    public GameObject carouselMenuStyle;
+
     private bool boundingBoxVisible = true;
     public List<Transform> boundingBoxPieces;
     private BoxCollider coll;
     private AnnotationManager annotationManager;
+    private ObjectInfo objectInfo;
 
     /// <summary>
     /// Get the necessary components: the collider of the bounding box and its annotationManager
@@ -20,6 +24,7 @@ public class BoundingBoxActions : MonoBehaviour
     {
         coll = GetComponent<BoxCollider>();
         annotationManager = gameObject.GetComponentInChildren<AnnotationManager>();
+        objectInfo = transform.Find("Content/X3D Parent").GetComponent<ObjectInfo>();
     }
 
     /// <summary>
@@ -66,5 +71,43 @@ public class BoundingBoxActions : MonoBehaviour
     public void DeleteObject()
     {
         Destroy(gameObject);
+    }
+
+    public void SelectQuiz()
+    {
+        RestManager.instance.GET(InformationManager.instance.BackendAddress + "/resources/quiz/overview/" + objectInfo.ModelName, AvailableQuizzesLoaded);
+    }
+
+    private void AvailableQuizzesLoaded(string res)
+    {
+        if (res == null)
+        {
+            MessageBox.Show("Server is not responding" + Environment.NewLine + "Could not list available Quizzes", MessageBoxType.ERROR);
+            return;
+        }
+        else
+        {
+            JsonStringArray array = JsonUtility.FromJson<JsonStringArray>(res);
+            array.array.Sort();
+            List<CustomMenuItem> items = new List<CustomMenuItem>();
+
+            CarouselMenu carouselInstance = CarouselMenu.Show();
+
+            foreach(string quiz in array.array)
+            {
+                CustomMenuItem item = carouselInstance.gameObject.AddComponent<CustomMenuItem>();
+                item.Init(carouselMenuStyle, new List<CustomMenuItem>(), false);
+                item.onClickEvent.AddListener(delegate { OnCarouselItemClicked(quiz); });
+                item.Text = quiz;
+                items.Add(item);
+            }
+
+            carouselInstance.rootMenu = items;
+        }
+    }
+
+    private void OnCarouselItemClicked(string quizName)
+    {
+
     }
 }

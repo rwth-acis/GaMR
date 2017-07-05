@@ -10,6 +10,16 @@ using UnityEngine.Networking;
 /// </summary>
 public class RestManager : MonoBehaviour {
 
+    public static RestManager instance;
+
+    public void Start()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+
     /// <summary>
     /// creates a coroutine which will query the url and return the result to the callback function
     /// </summary>

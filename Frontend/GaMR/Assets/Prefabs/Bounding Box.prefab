@@ -445,8 +445,9 @@ GameObject:
   - component: {fileID: 114608270313318650}
   - component: {fileID: 114303808722759862}
   - component: {fileID: 114026705982335136}
-  - component: {fileID: 114170565747589032}
   - component: {fileID: 114074211718337270}
+  - component: {fileID: 114170565747589032}
+  - component: {fileID: 114200560091583630}
   m_Layer: 0
   m_Name: Menu
   m_TagString: Untagged
@@ -2745,8 +2746,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuStyle: {fileID: 1036029510115268, guid: fc7e10eabc65e234b9f1dfc2109a12e2, type: 2}
   subMenu:
-  - {fileID: 114170565747589032}
   - {fileID: 114074211718337270}
+  - {fileID: 114170565747589032}
+  - {fileID: 114200560091583630}
   closeOnClick: 0
   visibleTo: 0
   onClickEvent:
@@ -2780,12 +2782,12 @@ MonoBehaviour:
   menuStyle: {fileID: 1036029510115268, guid: fc7e10eabc65e234b9f1dfc2109a12e2, type: 2}
   subMenu: []
   closeOnClick: 1
-  visibleTo: 0
+  visibleTo: 2
   onClickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: 
+      - m_Target: {fileID: 114693266053701848}
+        m_MethodName: SelectQuiz
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2794,7 +2796,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 0
+        m_CallState: 2
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   icon: {fileID: 0}
   text: Take Quiz
@@ -2827,6 +2829,38 @@ MonoBehaviour:
   onClickEvent:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 114693266053701848}
+        m_MethodName: SelectQuiz
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  icon: {fileID: 0}
+  text: Edit Quiz
+--- !u!114 &114200560091583630
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1650234700035164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuStyle: {fileID: 1036029510115268, guid: fc7e10eabc65e234b9f1dfc2109a12e2, type: 2}
+  subMenu: []
+  closeOnClick: 1
+  visibleTo: 1
+  onClickEvent:
+    m_PersistentCalls:
+      m_Calls:
       - m_Target: {fileID: 0}
         m_MethodName: 
         m_Mode: 1
@@ -2840,7 +2874,7 @@ MonoBehaviour:
         m_CallState: 0
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   icon: {fileID: 0}
-  text: Edit Quiz
+  text: Add Quiz
 --- !u!114 &114210176810541556
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3018,6 +3052,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1047a2e052f00c94db16333a394053de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carouselMenuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4,
+    type: 2}
   boundingBoxPieces:
   - {fileID: 4719646614242434}
   - {fileID: 4953889453901290}
