@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 /// <summary>
 /// Script for fast loading an example model
-/// Shows an example of how to load a X3D model
+/// An example on how to load a X3D model
 /// </summary>
 public class ExecuteOnStart : MonoBehaviour {
 

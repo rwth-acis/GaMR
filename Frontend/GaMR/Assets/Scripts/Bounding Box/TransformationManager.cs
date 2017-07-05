@@ -4,10 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+/// <summary>
+/// Transforms the attached gameobject
+/// Provides a collection of shortcut-methods for transformations
+/// </summary>
 public class TransformationManager : MonoBehaviour
 {
-
+    [Tooltip("The maximum size of the gameObject's bounds")]
     public Vector3 maxSize;
+    [Tooltip("The minimum size of the gameObject's bounds")]
     public Vector3 minSize;
 
     public void Scale(Vector3 scaleVector)

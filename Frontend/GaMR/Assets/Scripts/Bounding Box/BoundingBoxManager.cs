@@ -22,7 +22,9 @@ public class BoundingBoxManager : MonoBehaviour
     private Transform xAxis, yAxis, zAxis, menu;
     private List<Transform> widgets;
 
-
+    /// <summary>
+    /// gets the necessary comoponents: children for menus and all widgets
+    /// </summary>
     void Start()
     {
         // get the axes of the bounding-box
@@ -44,7 +46,9 @@ public class BoundingBoxManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Keeps the handles at the same size and undoes stretching to the wires
+    /// </summary>
     void Update()
     {
         CompensateAxisDeformation();

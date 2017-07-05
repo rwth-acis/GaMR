@@ -50,24 +50,30 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
         return realValue;
     }
 
-    // Use this for initialization
+    /// <summary>
+    /// Gets the necessary components: the transformationManager and  the inputManager
+    /// </summary>
     void Start()
     {
         transformationManager = toManipulate.GetComponent<TransformationManager>();
         inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
+    /// <summary>
+    /// Called if the user starts a manipulation gesture
+    /// </summary>
+    /// <param name="eventData">The data of the manipulation event</param>
     public void OnManipulationStarted(ManipulationEventData eventData)
     {
+        // set the focus to this object so that the manipulation continues to have effect even if
+        // the user does not look at the gameObject anymore
         inputManager.OverrideFocusedObject = gameObject;
     }
 
+    /// <summary>
+    /// Called when a manipulation gesture is currently happening
+    /// </summary>
+    /// <param name="eventData">The data of the manipulation event</param>
     public void OnManipulationUpdated(ManipulationEventData eventData)
     {
         switch (handleType)
@@ -128,17 +134,30 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
         }
     }
 
+    /// <summary>
+    /// Called when the user successfully completes a manipulation gesture
+    /// </summary>
+    /// <param name="eventData">The data of the manipulation event</param>
     public void OnManipulationCompleted(ManipulationEventData eventData)
     {
+        // release the focus-override so that other objects can now be affected by the manipulation gesture
         inputManager.OverrideFocusedObject = null;
     }
 
+    /// <summary>
+    /// Called when the user cancels a manipulation gesture
+    /// </summary>
+    /// <param name="eventData">The data of the manipulation gesture</param>
     public void OnManipulationCanceled(ManipulationEventData eventData)
     {
+        // release the focus-override so that other objects can now be affected by the manipulation gesture
         inputManager.OverrideFocusedObject = null;
     }
 }
 
+/// <summary>
+/// The type of transformation that the handle is responsible for
+/// </summary>
 public enum HandleType
 {
     SCALE, ROTATE, TRANSLATE
