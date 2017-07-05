@@ -14,6 +14,8 @@ public class CustomMenuItem : MonoBehaviour
     [Tooltip("If enabled, the whole menu will be closed and the root menu will be displayed again")]
     public bool closeOnClick;
 
+    public PlayerType visibleTo = PlayerType.ALL;
+
     private MenuStyleAdapter menuStyleAdapter;
     private GameObject containerInstance;
     private Menu parentMenu;
@@ -138,7 +140,7 @@ public class CustomMenuItem : MonoBehaviour
         }
     }
 
-    [System.Obsolete("InstantiateSubMenus is obsolte, please use parentMenu.InstantiateMenu instead")]
+    [System.Obsolete("InstantiateSubMenus is obsolete, please use parentMenu.InstantiateMenu instead")]
     private void InstantiateSubMenus()
     {
         Vector3 instantiatePosition = GameObjectInstance.transform.localPosition;

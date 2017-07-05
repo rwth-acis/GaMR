@@ -10,9 +10,19 @@ using UnityEngine;
 /// </summary>
 public class InformationManager : MonoBehaviour {
 
+    public static InformationManager instance;
+
     public string ipAddressBackend = "192.168.178.43";
     public int portBackend = 8080;
     public PlayerType playerType = PlayerType.STUDENT;
+
+    public void Start()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
 
     /// <summary>
     /// http address which combines the ip address and the port
@@ -22,5 +32,5 @@ public class InformationManager : MonoBehaviour {
 
 public enum PlayerType
 {
-    AUTHOR, STUDENT
+    ALL, AUTHOR, STUDENT
 }

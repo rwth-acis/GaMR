@@ -8,6 +8,7 @@ public class AnnotationManager : MonoBehaviour
 {
 
     protected List<Annotation> annotations;
+    protected List<AnnotationContainer> annotationContainers;
     protected bool editMode = true;
     protected GazeManager gazeManager;
     protected RestManager restManager;
@@ -21,6 +22,7 @@ public class AnnotationManager : MonoBehaviour
     protected void Start()
     {
         annotations = new List<Annotation>();
+        annotationContainers = new List<AnnotationContainer>();
         gazeManager = ComponentGetter.GetComponentOnGameobject<GazeManager>("InputManager");
         restManager = ComponentGetter.GetComponentOnGameobject<RestManager>("RestManager");
         infoManager = ComponentGetter.GetComponentOnGameobject<InformationManager>("InformationManager");
@@ -67,18 +69,20 @@ public class AnnotationManager : MonoBehaviour
     /// adds a new annotation to the list
     /// </summary>
     /// <param name="annotation">The annotation to add</param>
-    public void Add(Annotation annotation)
+    public void Add(AnnotationContainer annotationContainer)
     {
-        annotations.Add(annotation);
+        annotations.Add(annotationContainer.Annotation);
+        annotationContainers.Add(annotationContainer);
     }
 
     /// <summary>
     /// Deletes an annotation from the list
     /// </summary>
     /// <param name="annotation">The annotation to delete</param>
-    public void Delete(Annotation annotation)
+    public void Delete(AnnotationContainer annotationContainer)
     {
-        annotations.Remove(annotation);
+        annotations.Remove(annotationContainer.Annotation);
+        annotationContainers.Remove(annotationContainer);
     }
 
     /// <summary>
@@ -101,18 +105,39 @@ public class AnnotationManager : MonoBehaviour
         if (res != null)
         {
             JsonAnnotationArray array = JsonUtility.FromJson<JsonAnnotationArray>(res);
-            foreach(Annotation annotation in array.array)
-            {
-                GameObject annotationObject = (GameObject)Instantiate(Resources.Load("AnnotationSphere"));
-                annotationObject.transform.parent = gameObject.transform;
-                annotationObject.transform.localPosition = annotation.Position;
-
-                AnnotationContainer container = annotationObject.AddComponent<AnnotationContainer>();
-                container.annotationManager = this;
-                container.loaded = true;
-                container.Annotation = annotation;
-            }
             annotations = array.array;
+            ShowAllAnnotations();
+        }
+    }
+
+    public void HideAllAnnotations()
+    {
+        foreach(AnnotationContainer container in annotationContainers)
+        {
+            Destroy(container.gameObject);
+        }
+        // clear the list
+        annotationContainers.Clear();
+    }
+
+    public void ShowAllAnnotations()
+    {
+        if (annotationContainers.Count != 0)
+        {
+            HideAllAnnotations();
+        }
+
+        foreach (Annotation annotation in annotations)
+        {
+            GameObject annotationObject = (GameObject)Instantiate(Resources.Load("AnnotationSphere"));
+            annotationObject.transform.parent = gameObject.transform;
+            annotationObject.transform.localPosition = annotation.Position;
+
+            AnnotationContainer container = annotationObject.AddComponent<AnnotationContainer>();
+            container.annotationManager = this;
+            container.loaded = true;
+            container.Annotation = annotation;
+            annotationContainers.Add(container);
         }
     }
 

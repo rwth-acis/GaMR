@@ -50,12 +50,10 @@ public class Resources {
             }
             ObjectMapper mapper = new ObjectMapper();
             String json = mapper.writeValueAsString(jsonArray);
-            System.out.println(json);
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         }
         catch (IOException ioEx)
         {
-            System.out.println("error");
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
@@ -107,6 +105,78 @@ public class Resources {
         catch (IOException ioEx)
         {
             return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
+    @GET
+    @Path("/quiz/overview/{modelName}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getQuizOverview(@PathParam("modelName") String modelName)
+    {
+        try {
+            File file = new File("C:\\Temp\\3DModels\\" + modelName + "\\Quizzes\\");
+            if (file.exists()) {
+                File[] files = file.listFiles(new FileFilter() {
+                    public boolean accept(File pathname) {
+                        return pathname.getName().endsWith(".json");
+                    }
+                });
+                CustomJSONArray jsonArray = new CustomJSONArray(files.length);
+                for (int i = 0; i < files.length; i++) {
+                    jsonArray.array[i] = files[i].getName().replaceAll(".json", "");
+                }
+                ObjectMapper mapper = new ObjectMapper();
+                String json = mapper.writeValueAsString(jsonArray);
+                return Response.ok(json, MediaType.APPLICATION_JSON).build();
+            }
+            else
+            {
+                // no quizzes created to this point => just return an empty array
+                CustomJSONArray jsonArray = new CustomJSONArray(0);
+                ObjectMapper mapper = new ObjectMapper();
+                String json = mapper.writeValueAsString(jsonArray);
+                return Response.ok(json, MediaType.APPLICATION_JSON).build();
+            }
+        }
+        catch (IOException ioEx)
+        {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
+    @GET
+    @Path("/quiz/load/{modelName}/{quizName}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getQuiz(@PathParam("modelName") String modelName, @PathParam("quizName") String quizName)
+    {
+        try {
+            String json = ReadFile("C:\\Temp\\3DModels\\" + modelName + "\\Quizzes\\" + quizName + ".json");
+            return Response.ok(json, MediaType.APPLICATION_JSON).build();
+        }
+        catch (IOException ioEx)
+        {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
+    @POST
+    @Path("/quiz/save/{modelName}/{quizName}")
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response storeQuiz( @PathParam("modelName") String modelName, @PathParam("quizName") String quizName,
+                               String json )
+    {
+        System.out.println("Quiz: " + modelName + ": " + json);
+        File file = new File("C:\\Temp\\3DModels\\" + modelName + "\\Quizzes\\" + quizName + ".json");
+        try {
+            FileWriter writer = new FileWriter(file);
+            writer.write(json);
+            writer.close();
+            return  Response.status(Response.Status.CREATED).build();
+        }
+        catch (IOException e)
+        {
+            return  Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
 

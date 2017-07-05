@@ -93,43 +93,61 @@ public class Menu : MonoBehaviour {
         // instantiate the menu
         for (int i = 0; i < menu.Count; i++)
         {
-            menu[i].Create(this, parent);
-            if (i > 0)
+            if (menu[i].visibleTo == PlayerType.ALL || menu[i].visibleTo == InformationManager.instance.playerType)
             {
-                // set the correct position
-                if (alignment == Direction.HORIZONTAL)
+                menu[i].Create(this, parent);
+                if (i > 0)
                 {
-                    // get to the middle between the previous and the current item
-                    instantiatePosition.x += (menu[i - 1].MenuSytleAdapter.Size.x + padding) / 2;
-                    // get to the center of the current item
-                    instantiatePosition.x += (menu[i].MenuSytleAdapter.Size.x + padding) / 2;
-                }
-                else if (alignment == Direction.VERTICAL)
-                {
-                    // get to the middle between the previous and the current item
-                    instantiatePosition.y -= (menu[i - 1].MenuSytleAdapter.Size.y + padding) / 2;
-                    // get to the center of the current item
-                    instantiatePosition.y -= (menu[i].MenuSytleAdapter.Size.y + padding) / 2;
-                }
-                else if (alignment == Direction.GRID)
-                {
-                    // get to the middle between the previous and the current item
-                    instantiatePosition.x += (menu[i - 1].MenuSytleAdapter.Size.x + padding) / 2;
-                    // get to the center of the current item
-                    instantiatePosition.x += (menu[i].MenuSytleAdapter.Size.x + padding) / 2;
-                    // if one line is filled => move to next line
-                    if (i % itemsInOneLine == 0)
+                    // set the correct position
+                    if (alignment == Direction.HORIZONTAL)
                     {
-                        // get to the middle between the previous and the current item
-                        instantiatePosition.y -= (menu[i - 1].MenuSytleAdapter.Size.y + padding) / 2;
-                        // get to the center of the current item
-                        instantiatePosition.y -= (menu[i].MenuSytleAdapter.Size.y + padding) / 2;
-                        // also reset the x coordinate
-                        instantiatePosition.x = origInstantiatePos.x;
+                        // if the previous item was created => move to the next position to place the current item there
+                        if (menu[i - 1].MenuSytleAdapter != null)
+                        {
+                            // get to the middle between the previous and the current item
+                            instantiatePosition.x += (menu[i - 1].MenuSytleAdapter.Size.x + padding) / 2;
+                            // get to the center of the current item
+                            instantiatePosition.x += (menu[i].MenuSytleAdapter.Size.x + padding) / 2;
+                        }
+                    }
+                    else if (alignment == Direction.VERTICAL)
+                    {
+                        // if the previous item was created => move to the next position to place the current item there
+                        if (menu[i - 1].MenuSytleAdapter != null)
+                        {
+                            // get to the middle between the previous and the current item
+                            instantiatePosition.y -= (menu[i - 1].MenuSytleAdapter.Size.y + padding) / 2;
+                            // get to the center of the current item
+                            instantiatePosition.y -= (menu[i].MenuSytleAdapter.Size.y + padding) / 2;
+                        }
+                    }
+                    else if (alignment == Direction.GRID)
+                    {
+                        // if the previous item was created => move to the next position to place the current item there
+                        if (menu[i - 1].MenuSytleAdapter != null)
+                        {
+                            // get to the middle between the previous and the current item
+                            instantiatePosition.x += (menu[i - 1].MenuSytleAdapter.Size.x + padding) / 2;
+                            // get to the center of the current item
+                            instantiatePosition.x += (menu[i].MenuSytleAdapter.Size.x + padding) / 2;
+                            // if one line is filled => move to next line
+                            if (i % itemsInOneLine == 0)
+                            {
+                                // get to the middle between the previous and the current item
+                                if (menu[i - 1].MenuSytleAdapter != null)
+                                {
+                                    instantiatePosition.y -= (menu[i - 1].MenuSytleAdapter.Size.y + padding) / 2;
+                                }
+                                // get to the center of the current item
+                                instantiatePosition.y -= (menu[i].MenuSytleAdapter.Size.y + padding) / 2;
+                                // also reset the x coordinate
+                                instantiatePosition.x = origInstantiatePos.x;
+                            }
+                        }
                     }
                 }
+                menu[i].Position = instantiatePosition;
             }
-            menu[i].Position = instantiatePosition;
         }
     }
 }

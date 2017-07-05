@@ -51,7 +51,7 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
             // deselect the object since editing has finished
             mat.color = deselectedColor;
             Annotation = new Annotation(transform.localPosition, input);
-            annotationManager.Add(Annotation);
+            annotationManager.Add(this);
         }
     }
 
@@ -102,7 +102,7 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
     /// </summary>
     public void DeleteAnnotation()
     {
-        annotationManager.Delete(Annotation);
+        annotationManager.Delete(this);
         Destroy(gameObject);
     }
 
