@@ -33,6 +33,10 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
             mat.color = selectedColor;
             Keyboard.Display("Enter the text of the annotation", UserInputFinished, true);
         }
+        if (annotationManager.GetType() == typeof(QuizManager))
+        {
+            Debug.Log("I am a quiz!");
+        }
     }
 
     /// <summary>

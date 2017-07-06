@@ -15,11 +15,22 @@ public class AnnotationManager : MonoBehaviour
     protected InformationManager infoManager;
     protected ObjectInfo objectInfo;
 
+    protected string subPathLoad = "/resources/annotation/load/";
+    protected string subPathSave = "/resources/annotation/save/";
+
     /// <summary>
     /// Initializes the annotation-manager
     /// Collects the necessary components and loads previously stored annotations if they exist
     /// </summary>
-    protected void Start()
+    public void Start()
+    {
+        Init();
+        subPathLoad += objectInfo.ModelName;
+        subPathSave += objectInfo.ModelName;
+        LoadAnnotations();
+    }
+
+    protected void Init()
     {
         annotations = new List<Annotation>();
         annotationContainers = new List<AnnotationContainer>();
@@ -27,13 +38,11 @@ public class AnnotationManager : MonoBehaviour
         restManager = ComponentGetter.GetComponentOnGameobject<RestManager>("RestManager");
         infoManager = ComponentGetter.GetComponentOnGameobject<InformationManager>("InformationManager");
         objectInfo = GetComponent<ObjectInfo>();
-
-        LoadAnnotations();
     }
 
     protected void LoadAnnotations()
     {
-        restManager.GET(infoManager.BackendAddress + "/resources/annotation/load/" + objectInfo.ModelName, Load);
+        restManager.GET(infoManager.BackendAddress + subPathLoad, Load);
     }
 
     /// <summary>
@@ -96,7 +105,7 @@ public class AnnotationManager : MonoBehaviour
         string jsonPost = JsonUtility.ToJson(array);
         if (restManager != null)
         {
-            restManager.POST(infoManager.BackendAddress + "/resources/annotation/save/" + objectInfo.ModelName, jsonPost);
+            restManager.POST(infoManager.BackendAddress + subPathSave, jsonPost);
         }
     }
 
@@ -118,10 +127,12 @@ public class AnnotationManager : MonoBehaviour
         }
         // clear the list
         annotationContainers.Clear();
+        this.enabled = false;
     }
 
     public void ShowAllAnnotations()
     {
+        this.enabled = true;
         if (annotationContainers.Count != 0)
         {
             HideAllAnnotations();

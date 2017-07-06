@@ -16,6 +16,8 @@ public class BoundingBoxActions : MonoBehaviour
     private BoxCollider coll;
     private AnnotationManager annotationManager;
     private ObjectInfo objectInfo;
+    private Transform x3dParent;
+    private CarouselMenu carouselInstance;
 
     /// <summary>
     /// Get the necessary components: the collider of the bounding box and its annotationManager
@@ -24,7 +26,7 @@ public class BoundingBoxActions : MonoBehaviour
     {
         coll = GetComponent<BoxCollider>();
         annotationManager = gameObject.GetComponentInChildren<AnnotationManager>();
-        Transform x3dParent = transform.Find("Content/X3D Parent");
+        x3dParent = transform.Find("Content/X3D Parent");
         if (x3dParent != null)
         {
             objectInfo = x3dParent.GetComponent<ObjectInfo>();
@@ -95,7 +97,7 @@ public class BoundingBoxActions : MonoBehaviour
             array.array.Sort();
             List<CustomMenuItem> items = new List<CustomMenuItem>();
 
-            CarouselMenu carouselInstance = CarouselMenu.Show();
+            carouselInstance = CarouselMenu.Show();
 
             foreach(string quiz in array.array)
             {
@@ -112,6 +114,8 @@ public class BoundingBoxActions : MonoBehaviour
 
     private void OnCarouselItemClicked(string quizName)
     {
-
+        QuizManager quizManager = x3dParent.gameObject.AddComponent<QuizManager>();
+        quizManager.QuizName = quizName;
+        Destroy(carouselInstance.gameObject);
     }
 }
