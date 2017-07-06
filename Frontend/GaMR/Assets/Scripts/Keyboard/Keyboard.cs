@@ -64,15 +64,22 @@ public class Keyboard : MonoBehaviour
 
         // geometry calcuations:
         // set the scaling pivots for the backgrounds
-        inputBackgroundPivot = CreateScalingPivot(inputBackground);
-        backgroundPivot = CreateScalingPivot(background);
+        if (inputBackground != null)
+        {
+            inputBackgroundPivot = CreateScalingPivot(inputBackground);
+            maxWidth = Geometry.GetBoundsIndependentFromRotation(inputBackground).size.x;
+        }
+        if (background != null)
+        {
+            backgroundPivot = CreateScalingPivot(background);
+        }
 
         // calculate the height of one text line
         lineHeight = Geometry.GetBoundsIndependentFromRotation(inputField.transform).size.y;
-        maxWidth = Geometry.GetBoundsIndependentFromRotation(inputBackground).size.x;
 
         // scale the input background to fit the text
-        ScaleToHeight(inputBackgroundPivot, inputBackground, lineHeight + padding);
+        //ScaleToHeight(inputBackgroundPivot, inputBackground, lineHeight + padding);
+        UpdateHeights();
     }
 
     /// <summary>
@@ -212,19 +219,25 @@ public class Keyboard : MonoBehaviour
         int dirFac;
         dirFac = Math.Sign(numberOfNewLines - numberOfOldLines);
         float newTextHeight = Geometry.GetBoundsIndependentFromRotation(inputField.transform).size.y;
-        ScaleToHeight(inputBackgroundPivot, inputBackground, newTextHeight + padding);
+        if (inputBackground != null)
+        {
+            ScaleToHeight(inputBackgroundPivot, inputBackground, newTextHeight + padding);
+        }
         foreach (Key k in allKeys)
         {
             k.transform.position -= dirFac * new Vector3(0, lineHeight, 0);
         }
 
-        float backgroundHeight = Geometry.GetBoundsIndependentFromRotation(background).size.y;
-        ScaleToHeight(backgroundPivot, background, backgroundHeight + dirFac * lineHeight);
-        coll.size = new Vector3(
-            coll.size.x,
-            backgroundPivot.localScale.y * background.localScale.y,
-            coll.size.z);
-        coll.center = background.position - transform.position;
+        if (background != null)
+        {
+            float backgroundHeight = Geometry.GetBoundsIndependentFromRotation(background).size.y;
+            ScaleToHeight(backgroundPivot, background, backgroundHeight + dirFac * lineHeight);
+            coll.size = new Vector3(
+                coll.size.x,
+                backgroundPivot.localScale.y * background.localScale.y,
+                coll.size.z);
+            coll.center = background.position - transform.position;
+        }
     }
 
     /// <summary>

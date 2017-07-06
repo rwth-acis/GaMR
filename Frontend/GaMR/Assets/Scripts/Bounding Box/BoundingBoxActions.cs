@@ -24,7 +24,11 @@ public class BoundingBoxActions : MonoBehaviour
     {
         coll = GetComponent<BoxCollider>();
         annotationManager = gameObject.GetComponentInChildren<AnnotationManager>();
-        objectInfo = transform.Find("Content/X3D Parent").GetComponent<ObjectInfo>();
+        Transform x3dParent = transform.Find("Content/X3D Parent");
+        if (x3dParent != null)
+        {
+            objectInfo = x3dParent.GetComponent<ObjectInfo>();
+        }
     }
 
     /// <summary>

@@ -26,6 +26,7 @@ public class TestKey {
         captionObj.transform.parent = go.transform;
         caption = captionObj.AddComponent<TextMesh>();
 
+        keyboard.Start();
         key.Start();
     }
 
@@ -33,7 +34,8 @@ public class TestKey {
     public void TestOnKeyPressed_Letter()
     {
         key.keyType = KeyType.LETTER;
-        caption.text = "D";
+        //caption.text = "D";
+        key.letter = "D";
 
         key.KeyPressed();
 

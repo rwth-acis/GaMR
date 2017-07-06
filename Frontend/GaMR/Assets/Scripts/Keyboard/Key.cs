@@ -132,15 +132,18 @@ public class Key : MonoBehaviour, IInputHandler {
     /// <param name="shiftOn"></param>
     public void Shift(bool shiftOn)
     {
-        if (shiftOn)
+        if (keyType == KeyType.LETTER)
         {
-            letter = letter.ToUpper();
+            if (shiftOn)
+            {
+                letter = letter.ToUpper();
+            }
+            else
+            {
+                letter = letter.ToLower();
+            }
+            caption.text = letter;
         }
-        else
-        {
-            letter = letter.ToLower();
-        }
-        caption.text = letter;
     }
 }
 
