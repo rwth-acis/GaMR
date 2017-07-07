@@ -89,7 +89,7 @@ public class X3DObj
         ObjectInfo objInfo = parent.AddComponent<ObjectInfo>();
         objInfo.ModelName = ModelName;
 
-        AnnotationManager annotationManger = parent.AddComponent<AnnotationManager>();
+        AttachementManager attachementManager = parent.AddComponent<AttachementManager>();
 
         parentBounds = new Bounds();
         foreach(X3DPiece piece in pieces)
@@ -101,11 +101,13 @@ public class X3DObj
                 parentBounds.Encapsulate(renderer.bounds);
                 // assign the parent
                 subObject.transform.parent = parent.transform;
-                // assign the TapNotifier and tell it to notify the parent
+                // assign the TapNotifier; it can notfiy the parents about tap events
                 TapNotifier tapNotifier = subObject.AddComponent<TapNotifier>();
-                tapNotifier.RegisterListenerOnInputDown(annotationManger.TapOnModel);
             }
         }
+
+        // initialize the attachement manager => this creates the annotation manager and informs the tap notifier
+        attachementManager.Init();
 
 
         // normalize size to fit height of one unit

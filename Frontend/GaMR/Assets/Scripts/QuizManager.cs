@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,29 +9,32 @@ public class QuizManager : AnnotationManager
     protected new string subPathSave = "/resources/quiz/save/";
 
     private AnnotationManager annotationManager;
+    private Annotation currentQuestion;
 
     public string QuizName { get; set; }
-    public bool inEditMode { get; set; }
+
+    public bool PositionToName { get; set; }
 
     public new void Start()
     {
         Init();
         subPathLoad += objectInfo.ModelName + "/";
         subPathSave += objectInfo.ModelName + "/";
-        // hide the annotations from the standard-annotation manager
-        annotationManager = GetComponent<AnnotationManager>();
-        annotationManager.HideAllAnnotations();
 
-        if (InformationManager.instance.playerType == PlayerType.AUTHOR)
+        if (InformationManager.instance.playerType == PlayerType.STUDENT)
         {
-            inEditMode = true;
+            editMode = false;
+        }
+        else
+        {
+            editMode = true;
         }
 
         // load the annotations/quiz questions
         LoadAnnotations();
     }
 
-    protected new void Save()
+    protected override void Save()
     {
         JsonArray<Annotation> array = new JsonArray<Annotation>();
         array.array = annotations;
@@ -42,23 +46,26 @@ public class QuizManager : AnnotationManager
         }
     }
 
-    protected new void LoadAnnotations()
+    protected override void LoadAnnotations()
     {
         restManager.GET(infoManager.BackendAddress + subPathLoad + QuizName, Load);
     }
 
-    public new void OnDestroy()
+
+    public void EvaluateQuestion(Annotation annotation)
     {
-        Save();
+        EvaluateQuestion(annotation, currentQuestion.Text);
     }
 
-    public new void OnApplicationFocus(bool focus)
+    public void EvaluateQuestion(Annotation annotation, string input)
     {
-        if (focus == false)
+        if (annotation.Text == input)
         {
-            Save();
+            MessageBox.Show("Correct", MessageBoxType.SUCCESS);
+        }
+        else
+        {
+            MessageBox.Show("Incorrect", MessageBoxType.ERROR);
         }
     }
-
-
 }

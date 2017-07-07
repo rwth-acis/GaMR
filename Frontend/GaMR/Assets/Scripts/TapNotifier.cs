@@ -51,6 +51,16 @@ public class TapNotifier : MonoBehaviour, IInputHandler
         }
     }
 
+    public void UnRegisterListenerOnInputDown(UnityAction callback)
+    {
+        inputDownEvent.RemoveListener(callback);
+    }
+
+    public void UnRegisterListenerOnInputUp(UnityAction callback)
+    {
+        inputUpEvent.RemoveListener(callback);
+    }
+
     /// <summary>
     /// adds a new listener for the input-up-event
     /// </summary>

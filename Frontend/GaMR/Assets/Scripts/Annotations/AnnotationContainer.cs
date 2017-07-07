@@ -18,6 +18,8 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
     private Color deselectedColor;
     public Color selectedColor = Color.red;
 
+    private bool isQuiz;
+
     /// <summary>
     /// initializes the container
     /// if it was not created from the load-routine a keyboard automatically appears
@@ -36,6 +38,11 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
         if (annotationManager.GetType() == typeof(QuizManager))
         {
             Debug.Log("I am a quiz!");
+            isQuiz = true;
+        }
+        else
+        {
+            isQuiz = false;
         }
     }
 
@@ -59,6 +66,14 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
         }
     }
 
+    private void UserQuizInputFinished(string input)
+    {
+        if (input != null)
+        {
+            ((QuizManager)annotationManager).EvaluateQuestion(Annotation, input);
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -77,19 +92,34 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
             Keyboard.currentlyOpenedKeyboard.Cancel();
         }
 
-
-        // make sure that only one annotation box is opened and that it is opened for this annotation
-        if (AnnotationBox.currentlyOpenAnnotationBox != null)
+        // show the annotation-edit box if it is in edit mode
+        if (!isQuiz || (isQuiz && annotationManager.EditMode))
         {
-            if (AnnotationBox.currentlyOpenAnnotationBox.container != this)
+            // make sure that only one annotation box is opened and that it is opened for this annotation
+            if (AnnotationBox.currentlyOpenAnnotationBox != null)
             {
-                AnnotationBox.currentlyOpenAnnotationBox.Close();
+                if (AnnotationBox.currentlyOpenAnnotationBox.container != this)
+                {
+                    AnnotationBox.currentlyOpenAnnotationBox.Close();
+                    AnnotationBox.Show(this);
+                }
+            }
+            else
+            {
                 AnnotationBox.Show(this);
             }
         }
+        // else: it is a quiz
         else
         {
-            AnnotationBox.Show(this);
+            if (((QuizManager)annotationManager).PositionToName)
+            {
+                Keyboard.Display("How is this part called?", UserQuizInputFinished, true);
+            }
+            else
+            {
+                ((QuizManager)annotationManager).EvaluateQuestion(Annotation);
+            }
         }
     }
 
@@ -100,7 +130,7 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
     {
         get; set;
     }
-    
+
     /// <summary>
     /// deletes the annotation's gameobject and the annotation in the annotation-manager
     /// </summary>

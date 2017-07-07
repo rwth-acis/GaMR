@@ -40,7 +40,7 @@ public class AnnotationManager : MonoBehaviour
         objectInfo = GetComponent<ObjectInfo>();
     }
 
-    protected void LoadAnnotations()
+    protected virtual void LoadAnnotations()
     {
         restManager.GET(infoManager.BackendAddress + subPathLoad, Load);
     }
@@ -97,7 +97,7 @@ public class AnnotationManager : MonoBehaviour
     /// <summary>
     /// saves all annotations by communicating the list of annotations to the backend
     /// </summary>
-    protected void Save()
+    protected virtual void Save()
     {
         JsonAnnotationArray array = new JsonAnnotationArray();
         array.array = annotations;
@@ -127,12 +127,10 @@ public class AnnotationManager : MonoBehaviour
         }
         // clear the list
         annotationContainers.Clear();
-        this.enabled = false;
     }
 
     public void ShowAllAnnotations()
     {
-        this.enabled = true;
         if (annotationContainers.Count != 0)
         {
             HideAllAnnotations();

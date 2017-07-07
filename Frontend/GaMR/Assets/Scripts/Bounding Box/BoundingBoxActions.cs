@@ -14,7 +14,7 @@ public class BoundingBoxActions : MonoBehaviour
     private bool boundingBoxVisible = true;
     public List<Transform> boundingBoxPieces;
     private BoxCollider coll;
-    private AnnotationManager annotationManager;
+    private AttachementManager attachementManager;
     private ObjectInfo objectInfo;
     private Transform x3dParent;
     private CarouselMenu carouselInstance;
@@ -25,7 +25,7 @@ public class BoundingBoxActions : MonoBehaviour
     public void Start()
     {
         coll = GetComponent<BoxCollider>();
-        annotationManager = gameObject.GetComponentInChildren<AnnotationManager>();
+        attachementManager = gameObject.GetComponentInChildren<AttachementManager>();
         x3dParent = transform.Find("Content/X3D Parent");
         if (x3dParent != null)
         {
@@ -55,7 +55,7 @@ public class BoundingBoxActions : MonoBehaviour
     /// </summary>
     public void ToogleEditMode()
     {
-        annotationManager.EditMode = !annotationManager.EditMode;
+        attachementManager.EditMode = !attachementManager.EditMode;
     }
 
     /// <summary>
@@ -114,8 +114,8 @@ public class BoundingBoxActions : MonoBehaviour
 
     private void OnCarouselItemClicked(string quizName)
     {
-        QuizManager quizManager = x3dParent.gameObject.AddComponent<QuizManager>();
-        quizManager.QuizName = quizName;
+        AttachementManager attachementManager = x3dParent.GetComponent<AttachementManager>();
+        attachementManager.SetQuizManager(quizName);
         Destroy(carouselInstance.gameObject);
     }
 }
