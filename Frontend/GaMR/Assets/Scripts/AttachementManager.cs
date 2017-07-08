@@ -15,6 +15,8 @@ public class AttachementManager : MonoBehaviour
         SetAnnotationManager();
     }
 
+    public bool IsQuiz { get; private set; }
+
     public AnnotationManager SetAnnotationManager()
     {
         return SetManager(false, "");
@@ -38,10 +40,12 @@ public class AttachementManager : MonoBehaviour
             QuizManager quizManager = gameObject.AddComponent<QuizManager>();
             quizManager.QuizName = quizName;
             manager = quizManager;
+            IsQuiz = true;
         }
         else
         {
             manager = gameObject.AddComponent<AnnotationManager>();
+            IsQuiz = false;
         }
         RegisterOnNotifiers();
         return manager;

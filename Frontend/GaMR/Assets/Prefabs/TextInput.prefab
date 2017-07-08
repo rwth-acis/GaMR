@@ -219,3 +219,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offset: {x: 0.06, y: 0.04}
+  disabledColor: {r: 0.52205884, g: 0.52205884, b: 0.52205884, a: 1}

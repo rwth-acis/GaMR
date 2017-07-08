@@ -214,6 +214,7 @@ GameObject:
   - component: {fileID: 114388767313605806}
   - component: {fileID: 114972046707705556}
   - component: {fileID: 114693266053701848}
+  - component: {fileID: 114784786473035406}
   m_Layer: 0
   m_Name: Bounding Box
   m_TagString: Untagged
@@ -2768,6 +2769,7 @@ MonoBehaviour:
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   icon: {fileID: 0}
   text: Quiz
+  menuItemName: QuizParent
 --- !u!114 &114074211718337270
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2800,6 +2802,7 @@ MonoBehaviour:
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   icon: {fileID: 0}
   text: Take Quiz
+  menuItemName: TakeQuiz
 --- !u!114 &114085215344543860
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2843,6 +2846,7 @@ MonoBehaviour:
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   icon: {fileID: 0}
   text: Edit Quiz
+  menuItemName: EditQuiz
 --- !u!114 &114200560091583630
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2875,6 +2879,7 @@ MonoBehaviour:
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   icon: {fileID: 0}
   text: Add Quiz
+  menuItemName: AddQuiz
 --- !u!114 &114210176810541556
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2907,6 +2912,7 @@ MonoBehaviour:
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   icon: {fileID: 0}
   text: Toggle Box
+  menuItemName: ToggleBox
 --- !u!114 &114237755692054200
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2925,6 +2931,22 @@ MonoBehaviour:
   itemsInOneLine: 3
   defaultMenuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4,
     type: 2}
+  externalInitialization:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114784786473035406}
+        m_MethodName: InitializeMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!114 &114303808722759862
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2957,6 +2979,7 @@ MonoBehaviour:
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   icon: {fileID: 2800000, guid: 1084042cd684e6c468d1736a3b6997fd, type: 3}
   text: 
+  menuItemName: Delete
 --- !u!114 &114373247079702428
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3016,6 +3039,7 @@ MonoBehaviour:
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   icon: {fileID: 0}
   text: Toggle EditMode
+  menuItemName: ToggleEditMode
 --- !u!114 &114690426633322592
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3041,6 +3065,7 @@ MonoBehaviour:
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   icon: {fileID: 0}
   text: '...'
+  menuItemName: RootDots
 --- !u!114 &114693266053701848
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3059,6 +3084,17 @@ MonoBehaviour:
   - {fileID: 4953889453901290}
   - {fileID: 4027860339322194}
   - {fileID: 4125963923855076}
+--- !u!114 &114784786473035406
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1446011052128680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3135e79986613754182fccb72523c760, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114811453368044840
 MonoBehaviour:
   m_ObjectHideFlags: 1

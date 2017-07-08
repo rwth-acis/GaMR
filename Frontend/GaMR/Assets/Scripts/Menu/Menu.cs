@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Menu : MonoBehaviour {
 
@@ -11,11 +12,50 @@ public class Menu : MonoBehaviour {
     [Tooltip("This is only used if alignment is set to GRID")]
     public int itemsInOneLine = 3;
     public GameObject defaultMenuStyle;
+    private Dictionary<string, CustomMenuItem> allMenuItems;
 
-	// Use this for initialization
-	void Start () {
-        //InitMenu();
+    public UnityEvent externalInitialization;
+
+    // Use this for initialization
+    void Start () {
+        allMenuItems = new Dictionary<string, CustomMenuItem>();
+        FillDictionary(rootMenu);
         InstantiateMenu(Vector3.zero, Vector3.zero, rootMenu, null, false);
+        if (externalInitialization != null)
+        {
+            externalInitialization.Invoke();
+        }
+    }
+
+    private void FillDictionary(List<CustomMenuItem> menuList)
+    {
+        foreach (CustomMenuItem item in menuList)
+        {
+            if (!allMenuItems.ContainsKey(item.menuItemName))
+            {
+                allMenuItems.Add(item.menuItemName, item);
+            }
+            else
+            {
+                Debug.LogWarning("There are multiple menu items with the name: " + item.menuItemName + Environment.NewLine + "One or more could not be logged in the dictionary");
+            }
+            if (item.subMenu.Count > 0)
+            {
+                FillDictionary(item.subMenu);
+            }
+        }
+    }
+
+    public CustomMenuItem GetItem(string name)
+    {
+        if (allMenuItems.ContainsKey(name))
+        {
+            return allMenuItems[name];
+        }
+        else
+        {
+            return null;
+        }
     }
 
     [System.Obsolete("InitMenu is obsolte, please use InstantiateMenu instead")]
@@ -84,6 +124,7 @@ public class Menu : MonoBehaviour {
 
     public void InstantiateMenu(Vector3 instantiatePosition, Vector3 parentItemSize, List<CustomMenuItem> menu, CustomMenuItem parent, bool isSubMenu)
     {
+        externalInitialization.Invoke();
         Vector3 origInstantiatePos = instantiatePosition;
         if (isSubMenu)
         {

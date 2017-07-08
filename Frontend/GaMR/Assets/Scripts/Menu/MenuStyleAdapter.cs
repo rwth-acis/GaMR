@@ -19,9 +19,20 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
     private Transform icon;
     private Renderer textRenderer;
     private Renderer iconRenderer;
+    private Renderer containerRenderer;
+    private bool itemEnabled;
+    private Color enabledColor;
+
+    public Color disabledColor = new Color(0.7f,0.7f,0.7f);
 
     private List<System.Action> clickListeners;
 
+
+    public bool ItemEnabled
+    {
+        get { return itemEnabled; }
+        set { itemEnabled = value; SetState(value); }
+    }
 
     // this needs to be initialized manually since "start" is not called in time on instantiated objects
     /// <summary>
@@ -45,8 +56,29 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
             iconRenderer = icon.GetComponent<Renderer>();
         }
 
+        if (container != null)
+        {
+            containerRenderer = container.GetComponent<Renderer>();
+            enabledColor = containerRenderer.material.color;
+        }
+
         clickListeners = new List<System.Action>();
 
+    }
+
+    private void SetState(bool enabled)
+    {
+        if (containerRenderer != null)
+        {
+            if (enabled)
+            {
+                containerRenderer.material.color = enabledColor;
+            }
+            else
+            {
+                containerRenderer.material.color = disabledColor;
+            }
+        }
     }
 
     /// <summary>

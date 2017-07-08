@@ -112,6 +112,7 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
         // else: it is a quiz
         else
         {
+            // determine which direction was asked
             if (((QuizManager)annotationManager).PositionToName)
             {
                 Keyboard.Display("How is this part called?", UserQuizInputFinished, true);

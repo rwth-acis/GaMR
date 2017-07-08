@@ -21,6 +21,7 @@ public class CustomMenuItem : MonoBehaviour
     private Menu parentMenu;
     private CustomMenuItem parentMenuItem;
     private bool subMenuOpened;
+    private bool itemEnabled = true;
 
     [Tooltip("Functions which are called if the user clicks the menu entry")]
     public StringEvent onClickEvent;
@@ -29,6 +30,8 @@ public class CustomMenuItem : MonoBehaviour
     private Texture icon;
     [SerializeField] // this makes the variable appear in the editor
     private string text;
+
+    public string menuItemName;
 
     public Texture Icon { get { return icon; } set { menuStyleAdapter.UpdateIcon(value); icon = value; } }
 
@@ -42,6 +45,19 @@ public class CustomMenuItem : MonoBehaviour
                 menuStyleAdapter.UpdateText(value);
             }
             text = value;
+        }
+    }
+
+    public bool ItemEnabled
+    {
+        get { return itemEnabled; }
+        set
+        {
+            itemEnabled = value;
+            if (menuStyleAdapter != null)
+            {
+                menuStyleAdapter.ItemEnabled = value;
+            }
         }
     }
 
@@ -68,13 +84,14 @@ public class CustomMenuItem : MonoBehaviour
         {
             menuStyle = parentMenu.defaultMenuStyle;
         }
-        containerInstance = Instantiate(menuStyle, parentMenu.transform);
+        containerInstance = GameObject.Instantiate(menuStyle, parentMenu.transform);
 
         menuStyleAdapter = containerInstance.GetComponent<MenuStyleAdapter>();
         menuStyleAdapter.Initialize();
         menuStyleAdapter.RegisterForClickEvent(OnClick);
         menuStyleAdapter.UpdateText(text);
         menuStyleAdapter.UpdateIcon(icon);
+        menuStyleAdapter.ItemEnabled = ItemEnabled;
 
         if (onClickEvent == null)
         {
@@ -90,45 +107,48 @@ public class CustomMenuItem : MonoBehaviour
     public void OnClick()
     {
         Debug.Log("clicked " + text);
-        // invoke the defined action
-        onClickEvent.Invoke(text);
+        if (ItemEnabled)
+        {
+            // invoke the defined action
+            onClickEvent.Invoke(text);
 
-        // reset the menu on click if closeOnClick is enabled
-        if (closeOnClick)
-        {
-            parentMenu.ResetMenu();
-            return;
-        }
+            // reset the menu on click if closeOnClick is enabled
+            if (closeOnClick)
+            {
+                parentMenu.ResetMenu();
+                return;
+            }
 
-        // also spawn the sub menu if it exists
-        if (subMenu.Count > 0 && !subMenuOpened)
-        {
-            //InstantiateSubMenus();
-            parentMenu.InstantiateMenu(GameObjectInstance.transform.localPosition, menuStyleAdapter.Size, subMenu, this, true);
-            if (parentMenuItem != null)
+            // also spawn the sub menu if it exists
+            if (subMenu.Count > 0 && !subMenuOpened)
             {
-                parentMenu.HideSiblings(this, parentMenuItem.subMenu);
+                //InstantiateSubMenus();
+                parentMenu.InstantiateMenu(GameObjectInstance.transform.localPosition, menuStyleAdapter.Size, subMenu, this, true);
+                if (parentMenuItem != null)
+                {
+                    parentMenu.HideSiblings(this, parentMenuItem.subMenu);
+                }
+                else
+                {
+                    parentMenu.HideSiblings(this, parentMenu.rootMenu);
+                }
+                subMenuOpened = true;
             }
-            else
+            else if (subMenu.Count > 0)
             {
-                parentMenu.HideSiblings(this, parentMenu.rootMenu);
+                // destroy the sub menu
+                DestroySubmenus();
+                // if parentMenuItem is null => it is the root
+                if (parentMenuItem != null)
+                {
+                    parentMenu.ShowSiblings(parentMenuItem.subMenu);
+                }
+                else
+                {
+                    parentMenu.ShowSiblings(parentMenu.rootMenu);
+                }
+                subMenuOpened = false;
             }
-            subMenuOpened = true;
-        }
-        else if (subMenu.Count > 0)
-        {
-            // destroy the sub menu
-            DestroySubmenus();
-            // if parentMenuItem is null => it is the root
-            if (parentMenuItem != null)
-            {
-                parentMenu.ShowSiblings(parentMenuItem.subMenu);
-            }
-            else
-            {
-                parentMenu.ShowSiblings(parentMenu.rootMenu);
-            }
-            subMenuOpened = false;
         }
     }
 
