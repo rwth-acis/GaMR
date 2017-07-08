@@ -8,7 +8,6 @@ public class QuizManager : AnnotationManager
     protected new string subPathLoad = "/resources/quiz/load/";
     protected new string subPathSave = "/resources/quiz/save/";
 
-    private AnnotationManager annotationManager;
     private Annotation currentQuestion;
 
     public string QuizName { get; set; }
@@ -48,9 +47,29 @@ public class QuizManager : AnnotationManager
 
     protected override void LoadAnnotations()
     {
-        restManager.GET(infoManager.BackendAddress + subPathLoad + QuizName, Load);
+        restManager.GET(infoManager.BackendAddress + subPathLoad + QuizName, QuizLoaded);
     }
 
+    private void QuizLoaded(string res)
+    {
+        Load(res);
+        InitializeQuiz();
+    }
+
+    private void InitializeQuiz()
+    {
+        int value = (int) UnityEngine.Random.Range(0, 2);
+        if (value == 0)
+        {
+            PositionToName = true;
+            MessageBox.Show("Click on the annotations\n and enter the name of the\n corresponding part",MessageBoxType.INFORMATION);
+        }
+        else
+        {
+            PositionToName = false;
+            MessageBox.Show("Connect the names on the right\n with their corresponding position", MessageBoxType.INFORMATION);
+        }
+    }
 
     public void EvaluateQuestion(Annotation annotation)
     {

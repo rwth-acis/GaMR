@@ -81,6 +81,7 @@ public class MessageBox : MonoBehaviour
     {
         // load the MessageBox from the resources and set the necessary variables
         GameObject messageBox = (GameObject) Instantiate(Resources.Load("MessageBox"));
+        messageBox.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 3;
         MessageBox msgBox = messageBox.GetComponent<MessageBox>();
         msgBox.Text = text;
         msgBox.type = type;
