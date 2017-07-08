@@ -84,6 +84,11 @@ public class BoundingBoxActions : MonoBehaviour
         RestManager.instance.GET(InformationManager.instance.BackendAddress + "/resources/quiz/overview/" + objectInfo.ModelName, AvailableQuizzesLoaded);
     }
 
+    public void LoadAnnotations()
+    {
+        attachementManager.SetAnnotationManager();
+    }
+
     private void AvailableQuizzesLoaded(string res)
     {
         if (res == null)
@@ -114,7 +119,6 @@ public class BoundingBoxActions : MonoBehaviour
 
     private void OnCarouselItemClicked(string quizName)
     {
-        AttachementManager attachementManager = x3dParent.GetComponent<AttachementManager>();
         attachementManager.SetQuizManager(quizName);
         Destroy(carouselInstance.gameObject);
     }

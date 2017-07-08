@@ -449,6 +449,7 @@ GameObject:
   - component: {fileID: 114074211718337270}
   - component: {fileID: 114170565747589032}
   - component: {fileID: 114200560091583630}
+  - component: {fileID: 114525896231483904}
   m_Layer: 0
   m_Name: Menu
   m_TagString: Untagged
@@ -3007,6 +3008,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSize: {x: 2, y: 2, z: 2}
   minSize: {x: 0.1, y: 0.1, z: 0.1}
+--- !u!114 &114525896231483904
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1650234700035164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuStyle: {fileID: 1036029510115268, guid: fc7e10eabc65e234b9f1dfc2109a12e2, type: 2}
+  subMenu: []
+  closeOnClick: 1
+  visibleTo: 0
+  onClickEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114693266053701848}
+        m_MethodName: LoadAnnotations
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  icon: {fileID: 0}
+  text: Load Annotations
+  menuItemName: LoadAnnotations
 --- !u!114 &114608270313318650
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3056,6 +3090,7 @@ MonoBehaviour:
   - {fileID: 114210176810541556}
   - {fileID: 114608270313318650}
   - {fileID: 114026705982335136}
+  - {fileID: 114525896231483904}
   - {fileID: 114303808722759862}
   closeOnClick: 0
   visibleTo: 0

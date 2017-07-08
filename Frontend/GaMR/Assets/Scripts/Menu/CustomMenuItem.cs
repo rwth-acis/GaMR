@@ -4,16 +4,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// logical representation of a menu item
+/// </summary>
 [RequireComponent(typeof(Menu))]
 public class CustomMenuItem : MonoBehaviour
 {
-
-
+    /// <summary>
+    /// the style of the menu item (which GameObject will be instantiated)
+    /// </summary>
     public GameObject menuStyle;
+    /// <summary>
+    /// list of child menu items
+    /// </summary>
     public List<CustomMenuItem> subMenu;
     [Tooltip("If enabled, the whole menu will be closed and the root menu will be displayed again")]
     public bool closeOnClick;
 
+    /// <summary>
+    /// visibility settings of the menu item
+    /// </summary>
     public PlayerType visibleTo = PlayerType.ALL;
 
     private MenuStyleAdapter menuStyleAdapter;
@@ -33,8 +43,14 @@ public class CustomMenuItem : MonoBehaviour
 
     public string menuItemName;
 
+    /// <summary>
+    /// the icon of the menu item
+    /// </summary>
     public Texture Icon { get { return icon; } set { menuStyleAdapter.UpdateIcon(value); icon = value; } }
 
+    /// <summary>
+    /// the text-content of the menu item
+    /// </summary>
     public string Text
     {
         get { return text; }
@@ -48,6 +64,9 @@ public class CustomMenuItem : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// whether the item is currently enabled
+    /// </summary>
     public bool ItemEnabled
     {
         get { return itemEnabled; }
@@ -75,6 +94,11 @@ public class CustomMenuItem : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// creates the menu item as a visible object in the 3D scene
+    /// </summary>
+    /// <param name="parentMenu">The menu to which the item belongs</param>
+    /// <param name="parent">The parent menu item</param>
     public void Create(Menu parentMenu, CustomMenuItem parent)
     {
         this.parentMenuItem = parent;
@@ -99,11 +123,17 @@ public class CustomMenuItem : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// destroys the gameobject representation of the menu item
+    /// </summary>
     public void Destroy()
     {
         GameObject.Destroy(containerInstance);
     }
 
+    /// <summary>
+    /// called if the menu item is cliced
+    /// </summary>
     public void OnClick()
     {
         Debug.Log("clicked " + text);
@@ -152,6 +182,9 @@ public class CustomMenuItem : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// destroys the gameobjects of all child menu items
+    /// </summary>
     private void DestroySubmenus()
     {
         foreach (CustomMenuItem child in subMenu)
@@ -192,9 +225,18 @@ public class CustomMenuItem : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// the menuStyleAdapter which is attached to this menu
+    /// </summary>
     public MenuStyleAdapter MenuSytleAdapter { get { return menuStyleAdapter; } }
 
+    /// <summary>
+    /// the position of the gameobject-representation
+    /// </summary>
     public Vector3 Position { get { return containerInstance.transform.localPosition; } set { containerInstance.transform.localPosition = value; } }
 
+    /// <summary>
+    /// the gameobject representation
+    /// </summary>
     public GameObject GameObjectInstance { get { return containerInstance; } }
 }
