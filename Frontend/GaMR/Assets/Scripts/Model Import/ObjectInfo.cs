@@ -14,4 +14,17 @@ public class ObjectInfo : MonoBehaviour {
     {
         get;set;
     }
+
+    public Vector3 Size
+    {
+        get {
+            return new Vector3(Bounds.size.x * transform.localScale.x,
+          Bounds.size.y * transform.localScale.y * Bounds.size.z * transform.localScale.z);
+        }
+    }
+
+    public Bounds Bounds
+    {
+        get;set;
+    }
 }

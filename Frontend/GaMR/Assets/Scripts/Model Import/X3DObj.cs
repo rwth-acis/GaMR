@@ -106,6 +106,8 @@ public class X3DObj
             }
         }
 
+        objInfo.Bounds = parentBounds;
+
         // initialize the attachement manager => this creates the annotation manager and informs the tap notifier
         attachementManager.Init();
 

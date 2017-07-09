@@ -33,5 +33,15 @@ public class BoundingBoxMenuInitialization : MonoBehaviour
         {
             toggleEditMode.ItemEnabled = true;
         }
+
+        CustomMenuItem loadAnnotations = menu.GetItem("LoadAnnotations");
+        if (!attachementManager.IsQuiz)
+        {
+            loadAnnotations.ItemEnabled = false;
+        }
+        else
+        {
+            loadAnnotations.ItemEnabled = true;
+        }
     }
 }

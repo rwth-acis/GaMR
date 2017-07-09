@@ -8,7 +8,8 @@ public class QuizManager : AnnotationManager
     protected new string subPathLoad = "/resources/quiz/load/";
     protected new string subPathSave = "/resources/quiz/save/";
 
-    private Annotation currentQuestion;
+    private string currentQuestion;
+    private ObjectInfo objInfo;
 
     public string QuizName { get; set; }
 
@@ -17,6 +18,7 @@ public class QuizManager : AnnotationManager
     public new void Start()
     {
         Init();
+        objInfo = GetComponent<ObjectInfo>();
         subPathLoad += objectInfo.ModelName + "/";
         subPathSave += objectInfo.ModelName + "/";
 
@@ -58,7 +60,7 @@ public class QuizManager : AnnotationManager
 
     private void InitializeQuiz()
     {
-        int value = (int) UnityEngine.Random.Range(0, 2);
+        int value = UnityEngine.Random.Range(0, 2);
         if (value == 0)
         {
             PositionToName = true;
@@ -67,13 +69,37 @@ public class QuizManager : AnnotationManager
         else
         {
             PositionToName = false;
-            MessageBox.Show("Connect the names on the right\n with their corresponding position", MessageBoxType.INFORMATION);
+            MessageBox.Show("Connect the names\n with their corresponding position", MessageBoxType.INFORMATION);
+            GameObject quizHook = new GameObject("QuizHook");
+            quizHook.transform.parent = gameObject.transform.parent.parent; // the bounding box is the parent
+            quizHook.transform.position = gameObject.transform.position + new Vector3(objInfo.Size.x, 0, 0);
+
+            Menu availableNames = quizHook.AddComponent<Menu>();
+            availableNames.rootMenu = new List<CustomMenuItem>();
+            availableNames.alignment = Direction.VERTICAL;
+            availableNames.defaultMenuStyle = (GameObject) Resources.Load("QuizItem");
+            for (int i = 0; i < annotationContainers.Count; i++)
+            {
+                CustomMenuItem item = quizHook.AddComponent<CustomMenuItem>();
+                item.Init(null, null, false);
+                string annotationText = annotationContainers[i].Annotation.Text;
+                item.Text = annotationText;
+                item.menuItemName = annotationText;
+                item.subMenu = new List<CustomMenuItem>();
+                item.onClickEvent.AddListener(delegate { OnItemClicked(annotationText); });
+                availableNames.rootMenu.Add(item);
+            }
         }
+    }
+
+    private void OnItemClicked(string text)
+    {
+        currentQuestion = text;
     }
 
     public void EvaluateQuestion(Annotation annotation)
     {
-        EvaluateQuestion(annotation, currentQuestion.Text);
+        EvaluateQuestion(annotation, currentQuestion);
     }
 
     public void EvaluateQuestion(Annotation annotation, string input)

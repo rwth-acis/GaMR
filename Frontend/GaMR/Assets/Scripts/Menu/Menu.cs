@@ -39,7 +39,7 @@ public class Menu : MonoBehaviour {
             {
                 Debug.LogWarning("There are multiple menu items with the name: " + item.menuItemName + Environment.NewLine + "One or more could not be logged in the dictionary");
             }
-            if (item.subMenu.Count > 0)
+            if (item.subMenu != null && item.subMenu.Count > 0)
             {
                 FillDictionary(item.subMenu);
             }
@@ -124,7 +124,10 @@ public class Menu : MonoBehaviour {
 
     public void InstantiateMenu(Vector3 instantiatePosition, Vector3 parentItemSize, List<CustomMenuItem> menu, CustomMenuItem parent, bool isSubMenu)
     {
-        externalInitialization.Invoke();
+        if (externalInitialization != null)
+        {
+            externalInitialization.Invoke();
+        }
         Vector3 origInstantiatePos = instantiatePosition;
         if (isSubMenu)
         {
