@@ -20,6 +20,11 @@ public class CustomMenuItem : MonoBehaviour
     public List<CustomMenuItem> subMenu;
     [Tooltip("If enabled, the whole menu will be closed and the root menu will be displayed again")]
     public bool closeOnClick;
+    [Tooltip("The menu item will be marked or unmarked when clicking on it")]
+    public bool markOnClick;
+    [Tooltip("Marks the menu item. Only used if markOnClick is true")]
+    [SerializeField]
+    private bool marked;
 
     /// <summary>
     /// visibility settings of the menu item
@@ -80,6 +85,15 @@ public class CustomMenuItem : MonoBehaviour
         }
     }
 
+    public bool Marked
+    {
+        get { return marked; }
+        set
+        {
+            marked = value; menuStyleAdapter.Marked = value;
+        }
+    }
+
     /// <summary>
     /// should be called if the menu item is created programmatically and not in the Unity editor
     /// </summary>
@@ -116,6 +130,10 @@ public class CustomMenuItem : MonoBehaviour
         menuStyleAdapter.UpdateText(text);
         menuStyleAdapter.UpdateIcon(icon);
         menuStyleAdapter.ItemEnabled = ItemEnabled;
+        if (markOnClick)
+        {
+            menuStyleAdapter.Marked = marked;
+        }
 
         if (onClickEvent == null)
         {
@@ -141,6 +159,18 @@ public class CustomMenuItem : MonoBehaviour
         {
             // invoke the defined action
             onClickEvent.Invoke(text);
+
+            if (markOnClick)
+            {
+                if (parentMenu.markOnlyOne)
+                {
+                    parentMenu.MarkOne(this);
+                }
+                else
+                {
+                    Marked = !Marked;
+                }
+            }
 
             // reset the menu on click if closeOnClick is enabled
             if (closeOnClick)

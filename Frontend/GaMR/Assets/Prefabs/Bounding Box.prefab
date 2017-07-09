@@ -2752,6 +2752,8 @@ MonoBehaviour:
   - {fileID: 114170565747589032}
   - {fileID: 114200560091583630}
   closeOnClick: 0
+  markOnClick: 0
+  marked: 0
   visibleTo: 0
   onClickEvent:
     m_PersistentCalls:
@@ -2785,6 +2787,8 @@ MonoBehaviour:
   menuStyle: {fileID: 1036029510115268, guid: fc7e10eabc65e234b9f1dfc2109a12e2, type: 2}
   subMenu: []
   closeOnClick: 1
+  markOnClick: 0
+  marked: 0
   visibleTo: 2
   onClickEvent:
     m_PersistentCalls:
@@ -2829,6 +2833,8 @@ MonoBehaviour:
   menuStyle: {fileID: 1036029510115268, guid: fc7e10eabc65e234b9f1dfc2109a12e2, type: 2}
   subMenu: []
   closeOnClick: 1
+  markOnClick: 0
+  marked: 0
   visibleTo: 1
   onClickEvent:
     m_PersistentCalls:
@@ -2862,6 +2868,8 @@ MonoBehaviour:
   menuStyle: {fileID: 1036029510115268, guid: fc7e10eabc65e234b9f1dfc2109a12e2, type: 2}
   subMenu: []
   closeOnClick: 1
+  markOnClick: 0
+  marked: 0
   visibleTo: 1
   onClickEvent:
     m_PersistentCalls:
@@ -2895,6 +2903,8 @@ MonoBehaviour:
   menuStyle: {fileID: 1036029510115268, guid: fc7e10eabc65e234b9f1dfc2109a12e2, type: 2}
   subMenu: []
   closeOnClick: 1
+  markOnClick: 1
+  marked: 1
   visibleTo: 0
   onClickEvent:
     m_PersistentCalls:
@@ -2962,6 +2972,8 @@ MonoBehaviour:
   menuStyle: {fileID: 1502407284026280, guid: 6991a469ffe932a4f8a451be8df08fd0, type: 2}
   subMenu: []
   closeOnClick: 1
+  markOnClick: 0
+  marked: 0
   visibleTo: 0
   onClickEvent:
     m_PersistentCalls:
@@ -3022,6 +3034,8 @@ MonoBehaviour:
   menuStyle: {fileID: 1036029510115268, guid: fc7e10eabc65e234b9f1dfc2109a12e2, type: 2}
   subMenu: []
   closeOnClick: 1
+  markOnClick: 0
+  marked: 0
   visibleTo: 0
   onClickEvent:
     m_PersistentCalls:
@@ -3055,6 +3069,8 @@ MonoBehaviour:
   menuStyle: {fileID: 1036029510115268, guid: fc7e10eabc65e234b9f1dfc2109a12e2, type: 2}
   subMenu: []
   closeOnClick: 1
+  markOnClick: 1
+  marked: 1
   visibleTo: 0
   onClickEvent:
     m_PersistentCalls:
@@ -3093,6 +3109,8 @@ MonoBehaviour:
   - {fileID: 114525896231483904}
   - {fileID: 114303808722759862}
   closeOnClick: 0
+  markOnClick: 0
+  marked: 0
   visibleTo: 0
   onClickEvent:
     m_PersistentCalls:

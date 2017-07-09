@@ -15,6 +15,8 @@ public class Menu : MonoBehaviour {
     private Dictionary<string, CustomMenuItem> allMenuItems;
 
     public UnityEvent externalInitialization;
+    public bool markOnlyOne;
+    private CustomMenuItem markedItem;
 
     // Use this for initialization
     void Start () {
@@ -193,6 +195,16 @@ public class Menu : MonoBehaviour {
                 menu[i].Position = instantiatePosition;
             }
         }
+    }
+
+    public void MarkOne(CustomMenuItem item)
+    {
+        if (markedItem != null)
+        {
+            markedItem.Marked = false;
+        }
+        item.Marked = true;
+        markedItem = item;
     }
 }
 

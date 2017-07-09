@@ -77,6 +77,7 @@ public class QuizManager : AnnotationManager
             Menu availableNames = quizHook.AddComponent<Menu>();
             availableNames.rootMenu = new List<CustomMenuItem>();
             availableNames.alignment = Direction.VERTICAL;
+            availableNames.markOnlyOne = true;
             availableNames.defaultMenuStyle = (GameObject) Resources.Load("QuizItem");
             for (int i = 0; i < annotationContainers.Count; i++)
             {
@@ -87,6 +88,7 @@ public class QuizManager : AnnotationManager
                 item.menuItemName = annotationText;
                 item.subMenu = new List<CustomMenuItem>();
                 item.onClickEvent.AddListener(delegate { OnItemClicked(annotationText); });
+                item.markOnClick = true;
                 availableNames.rootMenu.Add(item);
             }
         }

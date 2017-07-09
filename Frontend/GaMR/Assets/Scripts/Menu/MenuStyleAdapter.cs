@@ -22,8 +22,10 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
     private Renderer containerRenderer;
     private bool itemEnabled;
     private Color enabledColor;
+    private bool marked;
 
     public Color disabledColor = new Color(0.7f,0.7f,0.7f);
+    public Color markedColor = Color.red;
 
     private List<System.Action> clickListeners;
 
@@ -32,6 +34,12 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
     {
         get { return itemEnabled; }
         set { itemEnabled = value; SetState(value); }
+    }
+
+    public bool Marked
+    {
+        get { return marked; }
+        set { marked = value; Mark(value); }
     }
 
     // this needs to be initialized manually since "start" is not called in time on instantiated objects
@@ -135,6 +143,18 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
     public void RegisterForClickEvent(System.Action action)
     {
         clickListeners.Add(action);
+    }
+
+    private void Mark(bool mark)
+    {
+        if (mark)
+        {
+            containerRenderer.material.color = markedColor;
+        }
+        else
+        {
+            containerRenderer.material.color = enabledColor;
+        }
     }
 
     /// <summary>
