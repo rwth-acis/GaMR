@@ -220,3 +220,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offset: {x: 0.06, y: 0.04}
   disabledColor: {r: 0.9485294, g: 0.9485294, b: 0.9485294, a: 1}
+  markedColor: {r: 0.2859537, g: 0.31794018, b: 0.9485294, a: 1}
+  focusedColor: {r: 0.6764706, g: 0.6764706, b: 1, a: 1}

@@ -26,6 +26,7 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
 
     public Color disabledColor = new Color(0.7f,0.7f,0.7f);
     public Color markedColor = Color.red;
+    public Color focusedColor = Color.blue;
 
     private List<System.Action> clickListeners;
 
@@ -172,12 +173,29 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
 
     public void OnFocusEnter()
     {
-
+        if (itemEnabled)
+        {
+            containerRenderer.material.color = focusedColor;
+        }
     }
 
     public void OnFocusExit()
     {
-
+        if (itemEnabled)
+        {
+            if (marked)
+            {
+                containerRenderer.material.color = markedColor;
+            }
+            else
+            {
+                containerRenderer.material.color = enabledColor;
+            }
+        }
+        else
+        {
+            containerRenderer.material.color = disabledColor;
+        }
     }
 
     /// <summary>
