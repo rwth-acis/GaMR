@@ -1,0 +1,20 @@
+{
+  "strings": [
+    {
+      "key": "Load 3D Model",
+      "value": "3D Modell laden"
+    },
+    {
+      "key": "Settings",
+      "value": "Einstellungen"
+    },
+    {
+      "key": "Set IP Address",
+      "value": "IP Adresse einstellen"
+    },
+    {
+      "key": "Set Port Number",
+      "value": "Port einstellen"
+    }
+  ]
+}

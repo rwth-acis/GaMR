@@ -48,6 +48,11 @@ public class CustomMenuItem : MonoBehaviour
 
     public string menuItemName;
 
+    public void Start()
+    {
+        Text = LocalizationManager.Instance.ResolveString(text);
+    }
+
     /// <summary>
     /// the icon of the menu item
     /// </summary>
@@ -61,11 +66,12 @@ public class CustomMenuItem : MonoBehaviour
         get { return text; }
         set
         {
+            string localizedText = LocalizationManager.Instance.ResolveString(value);
             if (MenuSytleAdapter != null)
             {
-                menuStyleAdapter.UpdateText(value);
+                menuStyleAdapter.UpdateText(localizedText);
             }
-            text = value;
+            text = localizedText;
         }
     }
 
