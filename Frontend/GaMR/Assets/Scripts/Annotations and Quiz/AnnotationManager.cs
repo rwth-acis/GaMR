@@ -156,7 +156,7 @@ public class AnnotationManager : MonoBehaviour
         set { editMode = value; }
     }
 
-    public void OnDestroy()
+    public virtual void OnDestroy()
     {
         Save();
     }

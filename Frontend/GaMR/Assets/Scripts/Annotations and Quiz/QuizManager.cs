@@ -10,6 +10,7 @@ public class QuizManager : AnnotationManager
 
     private string currentQuestion;
     private ObjectInfo objInfo;
+    private GameObject quizObject;
 
     public string QuizName { get; set; }
 
@@ -37,13 +38,21 @@ public class QuizManager : AnnotationManager
 
     protected override void Save()
     {
-        JsonArray<Annotation> array = new JsonArray<Annotation>();
-        array.array = annotations;
-
-        string jsonPost = JsonUtility.ToJson(array);
-        if (restManager != null)
+        if (InformationManager.instance.playerType != PlayerType.STUDENT)
         {
-            restManager.POST(infoManager.BackendAddress + subPathSave + QuizName, jsonPost);
+            // if not student => save the quiz itself
+            JsonArray<Annotation> array = new JsonArray<Annotation>();
+            array.array = annotations;
+
+            string jsonPost = JsonUtility.ToJson(array);
+            if (restManager != null)
+            {
+                restManager.POST(infoManager.BackendAddress + subPathSave + QuizName, jsonPost);
+            }
+        }
+        else // if it is a student => save the achievements
+        {
+
         }
     }
 
@@ -70,18 +79,18 @@ public class QuizManager : AnnotationManager
         {
             PositionToName = false;
             MessageBox.Show("Connect the names\n with their corresponding position", MessageBoxType.INFORMATION);
-            GameObject quizHook = new GameObject("QuizHook");
-            quizHook.transform.parent = gameObject.transform.parent.parent; // the bounding box is the parent
-            quizHook.transform.position = gameObject.transform.position + new Vector3(objInfo.Size.x, 0, 0);
+            quizObject = new GameObject("Quiz");
+            quizObject.transform.parent = gameObject.transform.parent.parent; // the bounding box is the parent
+            quizObject.transform.position = gameObject.transform.position + new Vector3(objInfo.Size.x, 0, 0);
 
-            Menu availableNames = quizHook.AddComponent<Menu>();
+            Menu availableNames = quizObject.AddComponent<Menu>();
             availableNames.rootMenu = new List<CustomMenuItem>();
             availableNames.alignment = Direction.VERTICAL;
             availableNames.markOnlyOne = true;
             availableNames.defaultMenuStyle = (GameObject) Resources.Load("QuizItem");
             for (int i = 0; i < annotationContainers.Count; i++)
             {
-                CustomMenuItem item = quizHook.AddComponent<CustomMenuItem>();
+                CustomMenuItem item = quizObject.AddComponent<CustomMenuItem>();
                 item.Init(null, null, false);
                 string annotationText = annotationContainers[i].Annotation.Text;
                 item.Text = annotationText;
@@ -113,6 +122,20 @@ public class QuizManager : AnnotationManager
         else
         {
             MessageBox.Show("Incorrect", MessageBoxType.ERROR);
+        }
+    }
+
+    public override void OnDestroy()
+    {
+        base.OnDestroy();
+        CleanUp();
+    }
+
+    private void CleanUp()
+    {
+        if (quizObject != null)
+        {
+            Destroy(quizObject);
         }
     }
 }
