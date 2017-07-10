@@ -116,6 +116,7 @@ public class MainMenuActions : MonoBehaviour
             item.Init(carouselMenuStyle, new List<CustomMenuItem>(), false);
             item.onClickEvent.AddListener(delegate { OnCarouselItemClicked(modelName); });
             item.Text = modelName;
+            item.menuItemName = modelName;
             items.Add(item);
         }
 

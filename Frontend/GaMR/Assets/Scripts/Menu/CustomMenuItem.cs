@@ -90,7 +90,11 @@ public class CustomMenuItem : MonoBehaviour
         get { return marked; }
         set
         {
-            marked = value; menuStyleAdapter.Marked = value;
+            marked = value;
+            if (menuStyleAdapter != null)
+            {
+                menuStyleAdapter.Marked = value;
+            }
         }
     }
 
@@ -154,11 +158,11 @@ public class CustomMenuItem : MonoBehaviour
     /// </summary>
     public void OnClick()
     {
-        Debug.Log("clicked " + text);
+        Debug.Log("clicked " + text + " (" + menuItemName + ")");
         if (ItemEnabled)
         {
             // invoke the defined action
-            onClickEvent.Invoke(text);
+            onClickEvent.Invoke(menuItemName);
 
             if (markOnClick)
             {

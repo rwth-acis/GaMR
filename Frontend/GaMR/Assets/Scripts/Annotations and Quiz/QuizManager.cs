@@ -8,9 +8,11 @@ public class QuizManager : AnnotationManager
     protected new string subPathLoad = "/resources/quiz/load/";
     protected new string subPathSave = "/resources/quiz/save/";
 
-    private string currentQuestion;
+    private AnnotationContainer currentContainer;
+    private CustomMenuItem currentMenuItem;
     private ObjectInfo objInfo;
     private GameObject quizObject;
+    private Menu availableNames; // only used in the mode "name to position"
 
     public string QuizName { get; set; }
 
@@ -83,7 +85,7 @@ public class QuizManager : AnnotationManager
             quizObject.transform.parent = gameObject.transform.parent.parent; // the bounding box is the parent
             quizObject.transform.position = gameObject.transform.position + new Vector3(objInfo.Size.x, 0, 0);
 
-            Menu availableNames = quizObject.AddComponent<Menu>();
+            availableNames = quizObject.AddComponent<Menu>();
             availableNames.rootMenu = new List<CustomMenuItem>();
             availableNames.alignment = Direction.VERTICAL;
             availableNames.markOnlyOne = true;
@@ -94,9 +96,10 @@ public class QuizManager : AnnotationManager
                 item.Init(null, null, false);
                 string annotationText = annotationContainers[i].Annotation.Text;
                 item.Text = annotationText;
-                item.menuItemName = annotationText;
+                string index = i.ToString();
+                item.menuItemName = i.ToString();
                 item.subMenu = new List<CustomMenuItem>();
-                item.onClickEvent.AddListener(delegate { OnItemClicked(annotationText); });
+                item.onClickEvent.AddListener(OnItemClicked);
                 item.markOnClick = true;
                 availableNames.rootMenu.Add(item);
             }
@@ -105,23 +108,41 @@ public class QuizManager : AnnotationManager
 
     private void OnItemClicked(string text)
     {
-        currentQuestion = text;
+        // text should be the index since the item was initialized this way
+        int index = int.Parse(text);
+        currentContainer = annotationContainers[index];
+        // availableNames is not null or else this could not be called
+        currentMenuItem = availableNames.rootMenu[index];
     }
 
-    public void EvaluateQuestion(Annotation annotation)
+    public bool EvaluateQuestion(Annotation annotation)
     {
-        EvaluateQuestion(annotation, currentQuestion);
+        if (currentContainer != null)
+        {
+            bool res = EvaluateQuestion(annotation, currentContainer.Annotation.Text);
+            if (res)
+            {
+                currentMenuItem.Destroy();
+            }
+            return res;
+        }
+        else
+        {
+            return false;
+        }
     }
 
-    public void EvaluateQuestion(Annotation annotation, string input)
+    public bool EvaluateQuestion(Annotation annotation, string input)
     {
         if (annotation.Text == input)
         {
             MessageBox.Show("Correct", MessageBoxType.SUCCESS);
+            return true;
         }
         else
         {
             MessageBox.Show("Incorrect", MessageBoxType.ERROR);
+            return false;
         }
     }
 
