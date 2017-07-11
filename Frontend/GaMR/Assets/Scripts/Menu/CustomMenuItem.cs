@@ -50,7 +50,7 @@ public class CustomMenuItem : MonoBehaviour
 
     public void Start()
     {
-        Text = LocalizationManager.Instance.ResolveString(text);
+        Text = text; // this is for automatic translation on starup
     }
 
     /// <summary>

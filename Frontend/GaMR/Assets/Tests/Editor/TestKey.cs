@@ -35,7 +35,7 @@ public class TestKey {
     {
         key.keyType = KeyType.LETTER;
         //caption.text = "D";
-        key.letter = "D";
+        key.Letter = "D";
 
         key.KeyPressed();
 

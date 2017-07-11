@@ -51,9 +51,11 @@ public class Keyboard : MonoBehaviour
         coll = GetComponent<BoxCollider>();
 
         letterKeys = new List<Key>();
+
         Capslock = false;
 
         allKeys = GetComponentsInChildren<Key>();
+
         foreach (Key k in allKeys)
         {
             if (k.keyType == KeyType.LETTER)
@@ -61,6 +63,22 @@ public class Keyboard : MonoBehaviour
                 letterKeys.Add(k);
             }
         }
+
+        // initialize the letter keys with the keyboard layout
+        if (letterKeys.Count == LocalizationManager.Instance.KeyboardLayout.Count)
+        {
+            List<string> letters = LocalizationManager.Instance.KeyboardLayout;
+            for (int i = 0; i < letterKeys.Count; i++)
+            {
+                letterKeys[i].Letter = letters[i];
+            }
+        }
+        else
+        {
+            Debug.LogError("Keyboard-layout file has the wrong number of keys: Should be " + letterKeys.Count + " but is " + LocalizationManager.Instance.KeyboardLayout.Count);
+        }
+
+
 
         // geometry calcuations:
         // set the scaling pivots for the backgrounds

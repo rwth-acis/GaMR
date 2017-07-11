@@ -12,7 +12,8 @@ public class Key : MonoBehaviour, IInputHandler {
     [Tooltip("The type of the key. This determines its functionality if it is pressed")]
     public KeyType keyType = KeyType.LETTER;
     [Tooltip("If keyType is LETTER: the letter which is shown by the key")]
-    public string letter;
+    [SerializeField]
+    private string letter;
     private Keyboard keyboard;
     private TextMesh caption;
     private Transform capslockIndication; 
@@ -51,6 +52,12 @@ public class Key : MonoBehaviour, IInputHandler {
             caption.text = letter;
             gameObject.name = "Key " + letter;
         }
+    }
+
+    public string Letter
+    {
+        get { return letter; }
+        set { letter = value; caption.text = value; }
     }
 
     /// <summary>
