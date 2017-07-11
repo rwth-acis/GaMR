@@ -47,11 +47,13 @@ public class MainMenuActions : MonoBehaviour
 
     private void TestAddress()
     {
+        WaitCursor.Show();
         restManager.GET(infoManager.BackendAddress + "/resources/model/overview", RestResult);
     }
 
     private void RestResult(string result)
     {
+        WaitCursor.Hide();
         if (result != null)
         {
             MessageBox.Show(LocalizationManager.Instance.ResolveString("Address successfully saved") + Environment.NewLine + 
@@ -93,11 +95,13 @@ public class MainMenuActions : MonoBehaviour
 
     public void ShowCarouselMenu()
     {
+        WaitCursor.Show();
         restManager.GET(infoManager.BackendAddress + "/resources/model/overview", AvailableModelsLoaded);
     }
 
     private void AvailableModelsLoaded(string res)
     {
+        WaitCursor.Hide();
         if (res == null)
         {
             MessageBox.Show(LocalizationManager.Instance.ResolveString("Server is not responding") + Environment.NewLine + 

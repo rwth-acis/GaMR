@@ -34,6 +34,7 @@ public class ModelLoadManager : MonoBehaviour {
     {
         x3dObject = new X3DObj(restCaller, infoManager.BackendAddress + baseUrl, name, shader);
         x3dObject.LoadGameObjects(OnFinished); // this automatically creates them
+        WaitCursor.Show();
     }
 
     /// <summary>
@@ -43,6 +44,7 @@ public class ModelLoadManager : MonoBehaviour {
     /// </summary>
     private void OnFinished()
     {
+        WaitCursor.Hide();
         GameObject obj = x3dObject.CreateGameObjects();
         CreateBoundingBox(obj, x3dObject.Bounds);
 

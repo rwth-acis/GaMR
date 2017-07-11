@@ -25,6 +25,7 @@ public class TextureLoader : MonoBehaviour
         infoManager = ComponentGetter.GetComponentOnGameobject<InformationManager>("InformationManager");
         RestManager restManager = ComponentGetter.GetComponentOnGameobject<RestManager>("RestManager");
         rend = GetComponent<Renderer>();
+        WaitCursor.Show();
         restManager.GetTexture(infoManager.BackendAddress + "/resources/texture/" + modelName + "/" + textureUrl, OnFinished);
     }
 
@@ -35,6 +36,7 @@ public class TextureLoader : MonoBehaviour
     /// <param name="requestResult">The downloaded texture</param>
     private void OnFinished(Texture requestResult)
     {
+        WaitCursor.Hide();
         rend.material.SetTexture("_MainTex", requestResult);
     }
 }
