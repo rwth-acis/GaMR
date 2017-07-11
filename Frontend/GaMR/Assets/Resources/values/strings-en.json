@@ -15,6 +15,102 @@
     {
       "key": "Set Port Number",
       "value": "Set Port Number"
+    },
+    {
+      "key": "Enter the port",
+      "value": "Enter the port"
+    },
+    {
+      "key": "Toggle Box",
+      "value": "Toggle Box"
+    },
+    {
+      "key": "Toggle EditMode",
+      "value": "Toggle EditMode"
+    },
+    {
+      "key": "Quiz",
+      "value": "Quiz"
+    },
+    {
+      "key": "Take Quiz",
+      "value": "Take Quiz"
+    },
+    {
+      "key": "Edit Quiz",
+      "value": "Edit Quiz"
+    },
+    {
+      "key": "Add Quiz",
+      "value": "Add Quiz"
+    },
+    {
+      "key": "Load Annotations",
+      "value": "Load Annotations"
+    },
+    {
+      "key": "Click on the annotations and enter the name of the corresponding part",
+      "value": "Click on the annotations and enter the name of the corresponding part"
+    },
+    {
+      "key": "Connect the names with their corresponding position",
+      "value": "Connect the names with their corresponding position"
+    },
+    {
+      "key": "Correct",
+      "value": "Correct"
+    },
+    {
+      "key": "Incorrect",
+      "value": "Incorrect"
+    },
+    {
+      "key": "Server is not responding",
+      "value": "Server is not responding"
+    },
+    {
+      "key": "Could not list available quizzes",
+      "value": "Could not list available quizzes"
+    },
+    {
+      "key": "Address successfully saved",
+      "value": "Address successfully saved"
+    },
+    {
+      "key": "The server is responding",
+      "value": "The server is responding"
+    },
+    {
+      "key": "However, the server does not respond",
+      "value": "However, the server does not respond"
+    },
+    {
+      "key": "Could not list available 3D models",
+      "value": "Could not list available 3D models"
+    },
+    {
+      "key": "Input was not a number",
+      "value": "Input was not a number"
+    },
+    {
+      "key": "Could not set port",
+      "value": "Could not set port"
+    },
+    {
+      "key": "Could not fetch texture",
+      "value": "Could not fetch texture"
+    },
+    {
+      "key": "Enter the IP-Address",
+      "value": "Enter the IP-Address"
+    },
+    {
+      "key": "Enter the text of the annotation",
+      "value": "Enter the text of the annotation"
+    },
+    {
+      "key": "How is this part called?",
+      "value": "How is this part called?"
     }
   ]
 }

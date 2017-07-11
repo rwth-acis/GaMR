@@ -75,12 +75,12 @@ public class QuizManager : AnnotationManager
         if (value == 0)
         {
             PositionToName = true;
-            MessageBox.Show("Click on the annotations\n and enter the name of the\n corresponding part",MessageBoxType.INFORMATION);
+            MessageBox.Show(LocalizationManager.Instance.ResolveString("Click on the annotations and enter the name of the corresponding part"), MessageBoxType.INFORMATION);
         }
         else
         {
             PositionToName = false;
-            MessageBox.Show("Connect the names\n with their corresponding position", MessageBoxType.INFORMATION);
+            MessageBox.Show(LocalizationManager.Instance.ResolveString("Connect the names with their corresponding position"), MessageBoxType.INFORMATION);
             quizObject = new GameObject("Quiz");
             quizObject.transform.parent = gameObject.transform.parent.parent; // the bounding box is the parent
             quizObject.transform.position = gameObject.transform.position + new Vector3(objInfo.Size.x, 0, 0);
@@ -136,12 +136,12 @@ public class QuizManager : AnnotationManager
     {
         if (annotation.Text == input)
         {
-            MessageBox.Show("Correct", MessageBoxType.SUCCESS);
+            MessageBox.Show(LocalizationManager.Instance.ResolveString("Correct"), MessageBoxType.SUCCESS);
             return true;
         }
         else
         {
-            MessageBox.Show("Incorrect", MessageBoxType.ERROR);
+            MessageBox.Show(LocalizationManager.Instance.ResolveString("Incorrect"), MessageBoxType.ERROR);
             return false;
         }
     }

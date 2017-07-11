@@ -6,12 +6,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="ModelProvider" />
         <module name="SimpleRestService" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="ModelProvider" target="1.5" />
       <module name="SimpleRestService" target="1.5" />
     </bytecodeTargetLevel>
   </component>

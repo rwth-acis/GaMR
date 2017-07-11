@@ -33,7 +33,7 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
         if (!loaded)
         {
             mat.color = selectedColor;
-            Keyboard.Display("Enter the text of the annotation", UserInputFinished, true);
+            Keyboard.Display(LocalizationManager.Instance.ResolveString("Enter the text of the annotation"), UserInputFinished, true);
         }
         if (annotationManager.GetType() == typeof(QuizManager))
         {
@@ -115,7 +115,7 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
             // determine which direction was asked
             if (((QuizManager)annotationManager).PositionToName)
             {
-                Keyboard.Display("How is this part called?", UserQuizInputFinished, true);
+                Keyboard.Display(LocalizationManager.Instance.ResolveString("How is this part called?"), UserQuizInputFinished, true);
             }
             else
             {

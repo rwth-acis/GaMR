@@ -15,6 +15,102 @@
     {
       "key": "Set Port Number",
       "value": "Port einstellen"
+    },
+    {
+      "key": "Enter the port",
+      "value": "Port eingeben"
+    },
+    {
+      "key": "Toggle Box",
+      "value": "Box\nein-/ausschalten"
+    },
+    {
+      "key": "Toggle EditMode",
+      "value": "Bearbeitungsmodus\nein-/ausschalten"
+    },
+    {
+      "key": "Quiz",
+      "value": "Quiz"
+    },
+    {
+      "key": "Take Quiz",
+      "value": "Quiz starten"
+    },
+    {
+      "key": "Edit Quiz",
+      "value": "Quiz bearbeiten"
+    },
+    {
+      "key": "Add Quiz",
+      "value": "Quiz hinzufügen"
+    },
+    {
+      "key": "Load Annotations",
+      "value": "Anmerkungen laden"
+    },
+    {
+      "key": "Click on the annotations and enter the name of the corresponding part",
+      "value": "Tippe auf die Anmerkungen und gebe den dazugehörigen Namen ein"
+    },
+    {
+      "key": "Connect the names with their corresponding position",
+      "value": "Verbinde die Namen mit der entsprechenden Position"
+    },
+    {
+      "key": "Correct",
+      "value": "Richtig"
+    },
+    {
+      "key": "Incorrect",
+      "value": "Falsch"
+    },
+    {
+      "key": "Server is not responding",
+      "value": "Server antwortet nicht"
+    },
+    {
+      "key": "Could not list available quizzes",
+      "value": "Konnte verfügbare Quiz nicht auflisten"
+    },
+    {
+      "key": "Address successfully saved",
+      "value": "Adresse erfolgreich gespeichert"
+    },
+    {
+      "key": "The server is responding",
+      "value": "Server gefunden"
+    },
+    {
+      "key": "However, the server does not respond",
+      "value": "Der Server antwortet allerdings nicht"
+    },
+    {
+      "key": "Could not list available 3D models",
+      "value": "Konnte 3D Modelle nicht auflisten"
+    },
+    {
+      "key": "Input was not a number",
+      "value": "Eingabe war keine Zahl"
+    },
+    {
+      "key": "Could not set port",
+      "value": "Port wurde nicht gespeichert"
+    },
+    {
+      "key": "Could not fetch texture",
+      "value": "Konnte Textur nicht laden"
+    },
+    {
+      "key": "Enter the IP-Address",
+      "value": "IP-Adresse eingeben"
+    },
+    {
+      "key": "Enter the text of the annotation",
+      "value": "Gebe den Text der Anmerkung ein"
+    },
+    {
+      "key": "How is this part called?",
+      "value": "Wie wird dieses Teil genannt?"
     }
   ]
 }

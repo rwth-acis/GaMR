@@ -29,7 +29,7 @@ public class MainMenuActions : MonoBehaviour
 
     public void EnterIPAddress()
     {
-        Keyboard.Display("Enter the IP-Address", SetIPAddress, false);
+        Keyboard.Display(LocalizationManager.Instance.ResolveString("Enter the IP-Address"), SetIPAddress, false);
         gameObject.SetActive(false);
     }
 
@@ -54,17 +54,19 @@ public class MainMenuActions : MonoBehaviour
     {
         if (result != null)
         {
-            MessageBox.Show("Address successfully saved" + Environment.NewLine + "The server is responding", MessageBoxType.SUCCESS);
+            MessageBox.Show(LocalizationManager.Instance.ResolveString("Address successfully saved") + Environment.NewLine + 
+                LocalizationManager.Instance.ResolveString("The server is responding"), MessageBoxType.SUCCESS);
         }
         else
         {
-            MessageBox.Show("The address was saved" + Environment.NewLine + "However, the server does not respond", MessageBoxType.ERROR);
+            MessageBox.Show(LocalizationManager.Instance.ResolveString("Address successfully saved") + Environment.NewLine + 
+                LocalizationManager.Instance.ResolveString("However, the server does not respond"), MessageBoxType.WARNING);
         }
     }
 
     public void EnterPort()
     {
-        Keyboard.Display("Enter the Port", SetIPAddress, false);
+        Keyboard.Display(LocalizationManager.Instance.ResolveString("Enter the port"), SetIPAddress, false);
         gameObject.SetActive(false);
     }
 
@@ -83,7 +85,8 @@ public class MainMenuActions : MonoBehaviour
             }
             else
             {
-                MessageBox.Show("Input was not a number" + Environment.NewLine + "Could not set port", MessageBoxType.ERROR);
+                MessageBox.Show(LocalizationManager.Instance.ResolveString("Input was not a number") + Environment.NewLine + 
+                    LocalizationManager.Instance.ResolveString("Could not set port"), MessageBoxType.ERROR);
             }
         }
     }
@@ -97,7 +100,8 @@ public class MainMenuActions : MonoBehaviour
     {
         if (res == null)
         {
-            MessageBox.Show("Server is not responding" + Environment.NewLine + "Could not list available 3D Models", MessageBoxType.ERROR);
+            MessageBox.Show(LocalizationManager.Instance.ResolveString("Server is not responding") + Environment.NewLine + 
+                LocalizationManager.Instance.ResolveString("Could not list available 3D models"), MessageBoxType.ERROR);
             return;
         }
 

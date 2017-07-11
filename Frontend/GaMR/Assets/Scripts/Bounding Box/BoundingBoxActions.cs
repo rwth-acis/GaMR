@@ -93,7 +93,8 @@ public class BoundingBoxActions : MonoBehaviour
     {
         if (res == null)
         {
-            MessageBox.Show("Server is not responding" + Environment.NewLine + "Could not list available Quizzes", MessageBoxType.ERROR);
+            MessageBox.Show(LocalizationManager.Instance.ResolveString("Server is not responding")
+                + Environment.NewLine + LocalizationManager.Instance.ResolveString("Could not list available quizzes"), MessageBoxType.ERROR);
             return;
         }
         else

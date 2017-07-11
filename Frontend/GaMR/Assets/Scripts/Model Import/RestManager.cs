@@ -105,7 +105,7 @@ public class RestManager : MonoBehaviour {
             }
             else
             {
-                MessageBox.Show("Could not fetch texture", MessageBoxType.ERROR);
+                MessageBox.Show(LocalizationManager.Instance.ResolveString("Could not fetch texture"), MessageBoxType.ERROR);
             }
         }
 

@@ -52,6 +52,7 @@ public class LocalizationManager : MonoBehaviour
         }
         else
         {
+            Debug.LogWarning("Requested string could not be translated: " + text);
             return text;
         }
     }

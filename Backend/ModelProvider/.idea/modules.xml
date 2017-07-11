@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ModelProvider.iml" filepath="$PROJECT_DIR$/ModelProvider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SimpleRestService.iml" filepath="$PROJECT_DIR$/SimpleRestService.iml" />
     </modules>
   </component>
 </project>
