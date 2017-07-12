@@ -25,8 +25,13 @@ public class TestKey {
         captionObj = new GameObject("Caption");
         captionObj.transform.parent = go.transform;
         caption = captionObj.AddComponent<TextMesh>();
-
+        InformationManager infoManager = parent.AddComponent<InformationManager>();
+        LocalizationManager manager = parent.AddComponent<LocalizationManager>();
+        infoManager.Start();
+        manager.Start();
         keyboard.Start();
+        // due to localization 50 keys are expected but for simplicity this test case only provides one
+        LogAssert.Expect(LogType.Error, "Keyboard-layout file has the wrong number of keys: Should be 1 but is 50");
         key.Start();
     }
 
