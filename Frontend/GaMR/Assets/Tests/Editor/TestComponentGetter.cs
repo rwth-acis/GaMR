@@ -6,11 +6,14 @@ using System.Collections;
 
 public class TestComponentGetter {
 
-	[SetUp]
+    InformationManager originalInfoManager;
+    GameObject informationGameobject;
+
+    [SetUp]
     public void SetUp()
     {
-        GameObject go = new GameObject("InformationManager");
-        go.AddComponent<InformationManager>();
+        informationGameobject = new GameObject("InformationManager");
+        originalInfoManager = informationGameobject.AddComponent<InformationManager>();
     }
 
     [Test]
@@ -21,9 +24,18 @@ public class TestComponentGetter {
     }
 
     [Test]
-    public void TestGetComponentOnGameobject_()
+    public void TestGetComponentOnGameobject_NoScriptAttached()
     {
-        InformationManager infoManager = ComponentGetter.GetComponentOnGameobject<InformationManager>("This object does not exist");
-        Assert.IsNull(infoManager);
+        GameObject go = new GameObject("No InfoManager");
+        InformationManager infoManger = ComponentGetter.GetComponentOnGameobject<InformationManager>("No InfoManager");
+        Assert.IsNull(infoManger);
+    }
+
+    [Test]
+    public void TestGetComponentOnGameobject()
+    {
+        InformationManager infoManager = ComponentGetter.GetComponentOnGameobject<InformationManager>("InformationManager");
+
+        Assert.IsNotNull(infoManager);
     }
 }
