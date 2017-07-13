@@ -123,4 +123,17 @@ public class BoundingBoxActions : MonoBehaviour
         attachementManager.SetQuizManager(quizName);
         Destroy(carouselInstance.gameObject);
     }
+
+    public void CreateNewQuiz()
+    {
+        Keyboard.Display(LocalizationManager.Instance.ResolveString("Enter the name of the quiz"), CreateQuiz, true);
+    }
+
+    private void CreateQuiz(string text)
+    {
+        if (text != null)
+        {
+            attachementManager.SetQuizManager(text);
+        }
+    }
 }

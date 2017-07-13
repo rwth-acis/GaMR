@@ -64,6 +64,7 @@ public class AttachementManager : MonoBehaviour
             manager.HideAllAnnotations();
             Destroy(manager);
         }
+
         if (isQuiz)
         {
             QuizManager quizManager = gameObject.AddComponent<QuizManager>();

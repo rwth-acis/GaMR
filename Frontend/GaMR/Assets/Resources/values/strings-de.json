@@ -111,6 +111,10 @@
     {
       "key": "How is this part called?",
       "value": "Wie wird dieses Teil genannt?"
+    },
+    {
+      "key": "Enter the name of the quiz",
+      "value": "Geben Sie den Quiz-Namen ein"
     }
   ]
 }
