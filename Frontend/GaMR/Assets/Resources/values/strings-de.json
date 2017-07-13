@@ -1,4 +1,4 @@
-{
+ï»¿{
   "strings": [
     {
       "key": "Load 3D Model",
@@ -42,7 +42,7 @@
     },
     {
       "key": "Add Quiz",
-      "value": "Quiz hinzufügen"
+      "value": "Quiz hinzufÃ¼gen"
     },
     {
       "key": "Load Annotations",
@@ -50,7 +50,7 @@
     },
     {
       "key": "Click on the annotations and enter the name of the corresponding part",
-      "value": "Tippe auf die Anmerkungen und gebe den dazugehörigen Namen ein"
+      "value": "Tippe auf die Anmerkungen und gebe den dazugehÃ¶rigen Namen ein"
     },
     {
       "key": "Connect the names with their corresponding position",
@@ -70,7 +70,7 @@
     },
     {
       "key": "Could not list available quizzes",
-      "value": "Konnte verfügbare Quiz nicht auflisten"
+      "value": "Konnte verfÃ¼gbare Quiz nicht auflisten"
     },
     {
       "key": "Address successfully saved",

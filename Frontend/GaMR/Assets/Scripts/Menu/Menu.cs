@@ -95,7 +95,7 @@ public class Menu : MonoBehaviour {
     {
         foreach(CustomMenuItem item in siblings)
         {
-            if (item != current)
+            if (item != current && item.GameObjectInstance != null)
             {
                 item.GameObjectInstance.SetActive(false);
             }
@@ -106,7 +106,11 @@ public class Menu : MonoBehaviour {
     {
         foreach (CustomMenuItem item in siblings)
         {
-            item.GameObjectInstance.SetActive(true);
+            if (item.GameObjectInstance != null)
+            {
+                item.GameObjectInstance.SetActive(true);
+                item.MenuSytleAdapter.UpdateContainerColor();
+            }
         }
     }
 

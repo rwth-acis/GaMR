@@ -66,7 +66,10 @@ public class QuizManager : AnnotationManager
     private void QuizLoaded(string res)
     {
         Load(res);
-        InitializeQuiz();
+        if (InformationManager.instance.playerType == PlayerType.STUDENT)
+        {
+            InitializeQuiz();
+        }
     }
 
     private void InitializeQuiz()

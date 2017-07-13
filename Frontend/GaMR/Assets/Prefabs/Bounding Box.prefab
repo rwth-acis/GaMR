@@ -450,6 +450,8 @@ GameObject:
   - component: {fileID: 114170565747589032}
   - component: {fileID: 114200560091583630}
   - component: {fileID: 114525896231483904}
+  - component: {fileID: 114861203737701888}
+  - component: {fileID: 114323379201935522}
   m_Layer: 0
   m_Name: Menu
   m_TagString: Untagged
@@ -2866,8 +2868,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuStyle: {fileID: 1036029510115268, guid: fc7e10eabc65e234b9f1dfc2109a12e2, type: 2}
-  subMenu: []
-  closeOnClick: 1
+  subMenu:
+  - {fileID: 114323379201935522}
+  - {fileID: 114861203737701888}
+  closeOnClick: 0
   markOnClick: 0
   marked: 0
   visibleTo: 1
@@ -2958,6 +2962,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  markOnlyOne: 0
 --- !u!114 &114303808722759862
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2993,6 +2998,41 @@ MonoBehaviour:
   icon: {fileID: 2800000, guid: 1084042cd684e6c468d1736a3b6997fd, type: 3}
   text: 
   menuItemName: Delete
+--- !u!114 &114323379201935522
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1650234700035164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuStyle: {fileID: 1036029510115268, guid: fc7e10eabc65e234b9f1dfc2109a12e2, type: 2}
+  subMenu: []
+  closeOnClick: 1
+  markOnClick: 0
+  marked: 0
+  visibleTo: 1
+  onClickEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 0
+    m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  icon: {fileID: 0}
+  text: New Quiz
+  menuItemName: NewQuiz
 --- !u!114 &114373247079702428
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3162,6 +3202,41 @@ MonoBehaviour:
   wireDiameter: 0.002
   widgetSize: 0.05
   menuSize: 1
+--- !u!114 &114861203737701888
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1650234700035164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuStyle: {fileID: 1036029510115268, guid: fc7e10eabc65e234b9f1dfc2109a12e2, type: 2}
+  subMenu: []
+  closeOnClick: 1
+  markOnClick: 0
+  marked: 0
+  visibleTo: 1
+  onClickEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 0
+    m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  icon: {fileID: 0}
+  text: From current\nannotations
+  menuItemName: ConvertToQuiz
 --- !u!114 &114885505972973812
 MonoBehaviour:
   m_ObjectHideFlags: 1

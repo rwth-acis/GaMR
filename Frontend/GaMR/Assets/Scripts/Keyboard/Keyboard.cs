@@ -38,6 +38,9 @@ public class Keyboard : MonoBehaviour
 
     public static Keyboard currentlyOpenedKeyboard;
 
+
+    public bool IsFullKeyboard { get; set; }
+
     /// <summary>
     /// Finds the necessary components: the background of the keyboard, it collider, all keys 
     /// and keys of type LETTER
@@ -64,18 +67,21 @@ public class Keyboard : MonoBehaviour
             }
         }
 
-        // initialize the letter keys with the keyboard layout
-        if (letterKeys.Count == LocalizationManager.Instance.KeyboardLayout.Count)
+        if (IsFullKeyboard)
         {
-            List<string> letters = LocalizationManager.Instance.KeyboardLayout;
-            for (int i = 0; i < letterKeys.Count; i++)
+            // initialize the letter keys with the keyboard layout
+            if (letterKeys.Count == LocalizationManager.Instance.KeyboardLayout.Count)
             {
-                letterKeys[i].Letter = letters[i];
+                List<string> letters = LocalizationManager.Instance.KeyboardLayout;
+                for (int i = 0; i < letterKeys.Count; i++)
+                {
+                    letterKeys[i].Letter = letters[i];
+                }
             }
-        }
-        else
-        {
-            Debug.LogError("Keyboard-layout file has the wrong number of keys: Should be " + letterKeys.Count + " but is " + LocalizationManager.Instance.KeyboardLayout.Count);
+            else
+            {
+                Debug.LogError("Keyboard-layout file has the wrong number of keys: Should be " + letterKeys.Count + " but is " + LocalizationManager.Instance.KeyboardLayout.Count);
+            }
         }
 
 
@@ -153,6 +159,7 @@ public class Keyboard : MonoBehaviour
         keyboard.label.text = label;
         keyboard.Text = text;
         keyboard.callWithResult = callWithResult;
+        keyboard.IsFullKeyboard = fullKeyboard;
         currentlyOpenedKeyboard = keyboard;
     }
 

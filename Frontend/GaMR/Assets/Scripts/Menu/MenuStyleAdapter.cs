@@ -40,7 +40,7 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
     public bool Marked
     {
         get { return marked; }
-        set { marked = value; Mark(value); }
+        set { marked = value; UpdateContainerColor(); }
     }
 
     // this needs to be initialized manually since "start" is not called in time on instantiated objects
@@ -146,18 +146,6 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
         clickListeners.Add(action);
     }
 
-    private void Mark(bool mark)
-    {
-        if (mark)
-        {
-            containerRenderer.material.color = markedColor;
-        }
-        else
-        {
-            containerRenderer.material.color = enabledColor;
-        }
-    }
-
     /// <summary>
     /// called when a click happened
     /// calls all methods which are registered
@@ -180,6 +168,11 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
     }
 
     public void OnFocusExit()
+    {
+        UpdateContainerColor();
+    }
+
+    public void UpdateContainerColor()
     {
         if (itemEnabled)
         {
