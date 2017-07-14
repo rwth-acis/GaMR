@@ -29,6 +29,10 @@ public class Menu : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// creates a dictionary of all menu items with their names as key
+    /// </summary>
+    /// <param name="menuList">The menu list to add to the dictionary</param>
     private void FillDictionary(List<CustomMenuItem> menuList)
     {
         foreach (CustomMenuItem item in menuList)
@@ -48,6 +52,11 @@ public class Menu : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// returns a menu item on the menu by its name
+    /// </summary>
+    /// <param name="name">The name of the menu item</param>
+    /// <returns>the menu item with this name; null if it does not exist</returns>
     public CustomMenuItem GetItem(string name)
     {
         if (allMenuItems.ContainsKey(name))
@@ -91,6 +100,11 @@ public class Menu : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Hides all siblings
+    /// </summary>
+    /// <param name="current">The current menu item which should not be hidden</param>
+    /// <param name="siblings">The menu item list which should be hidden</param>
     public void HideSiblings(CustomMenuItem current, List<CustomMenuItem> siblings)
     {
         foreach(CustomMenuItem item in siblings)
@@ -102,6 +116,10 @@ public class Menu : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// shows all siblings to a menu item
+    /// </summary>
+    /// <param name="siblings">The siblings to show</param>
     public void ShowSiblings(List<CustomMenuItem> siblings)
     {
         foreach (CustomMenuItem item in siblings)

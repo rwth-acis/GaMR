@@ -30,13 +30,18 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
 
     private List<System.Action> clickListeners;
 
-
+    /// <summary>
+    /// whether or not the item is (logically) enabled
+    /// </summary>
     public bool ItemEnabled
     {
         get { return itemEnabled; }
         set { itemEnabled = value; SetState(value); }
     }
 
+    /// <summary>
+    /// whether or not the item is marked
+    /// </summary>
     public bool Marked
     {
         get { return marked; }
@@ -75,6 +80,10 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
 
     }
 
+    /// <summary>
+    /// (logically) enables or disables the menu item
+    /// </summary>
+    /// <param name="enabled"></param>
     private void SetState(bool enabled)
     {
         if (containerRenderer != null)
@@ -115,6 +124,10 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
 
     }
 
+    /// <summary>
+    /// sets the icon texture on the iconRenderer-object
+    /// </summary>
+    /// <param name="newIcon">the icon to set</param>
     public void UpdateIcon(Texture newIcon)
     {
         if (iconRenderer != null)
@@ -159,6 +172,9 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
         }
     }
 
+    /// <summary>
+    /// called when the user focuses the item
+    /// </summary>
     public void OnFocusEnter()
     {
         if (itemEnabled)
@@ -167,11 +183,17 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
         }
     }
 
+    /// <summary>
+    /// called when the user stops focusing the item
+    /// </summary>
     public void OnFocusExit()
     {
         UpdateContainerColor();
     }
 
+    /// <summary>
+    /// sets the container color according to its current state
+    /// </summary>
     public void UpdateContainerColor()
     {
         if (itemEnabled)
