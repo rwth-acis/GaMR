@@ -136,4 +136,17 @@ public class BoundingBoxActions : MonoBehaviour
             attachementManager.SetQuizManager(text);
         }
     }
+
+    public void ConvertAnnotations()
+    {
+        Keyboard.Display(LocalizationManager.Instance.ResolveString("Enter the name of the quiz"), ConvertToQuiz, true);
+    }
+
+    private void ConvertToQuiz(string res)
+    {
+        if (res != null)
+        {
+            attachementManager.ConvertToQuizManager(res);
+        }
+    }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -116,5 +117,15 @@ public class AttachementManager : MonoBehaviour
         get { return manager.EditMode; }
         set { manager.EditMode = value; }
 
+    }
+
+    public void ConvertToQuizManager(string res)
+    {
+        if (!IsQuiz)
+        {
+            manager.SaveAsQuiz(res);
+
+            SetQuizManager(res);
+        }
     }
 }

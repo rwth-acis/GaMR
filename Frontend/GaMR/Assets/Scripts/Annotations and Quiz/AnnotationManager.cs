@@ -109,6 +109,21 @@ public class AnnotationManager : MonoBehaviour
         }
     }
 
+    public void SaveAsQuiz(string name)
+    {
+        string subQuizPathName = "/resources/quiz/save/" + objectInfo.ModelName + "/";
+
+        JsonAnnotationArray array = new JsonAnnotationArray();
+        array.array = annotations;
+
+        string jsonPost = JsonUtility.ToJson(array);
+        if (restManager != null)
+        {
+            restManager.POST(infoManager.BackendAddress + subQuizPathName + name, jsonPost);
+        }
+
+    }
+
     protected void Load(string res)
     {
         if (res != null)
@@ -167,5 +182,11 @@ public class AnnotationManager : MonoBehaviour
         {
             Save();
         }
+    }
+
+    public List<Annotation> Annotations
+    {
+        get { return annotations; }
+        set { annotations = value; ShowAllAnnotations(); }
     }
 }
