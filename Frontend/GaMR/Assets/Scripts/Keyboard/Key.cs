@@ -23,7 +23,7 @@ public class Key : MonoBehaviour, IInputHandler {
     /// finds the associated keyboard and the text-object if one is attached
     /// if keyType is CAPSLOCK it also finds the capslock-indication
     /// </summary>
-    public void Start()
+    public void Awake()
     {
         keyboard = transform.parent.GetComponent<Keyboard>();
         Transform capObj = transform.Find("Caption");

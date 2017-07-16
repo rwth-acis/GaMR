@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class AutoLineBreak {
 
-	public static string ReturnStringWithLineBreaks(TextMesh textMesh, string text, float maxWidth)
+	public static string StringWithLineBreaks(TextMesh textMesh, string text, float maxWidth)
     {
         string originalText = textMesh.text;
         // line breaks if the last char was not a letter
@@ -25,7 +25,7 @@ public class AutoLineBreak {
             else
             {
                 res += currentLine + Environment.NewLine;
-                currentLine = "";
+                currentLine = word;
             }
 
             if (word.EndsWith("\n"))

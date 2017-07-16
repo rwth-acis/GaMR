@@ -53,6 +53,8 @@ public class Keyboard : MonoBehaviour
         background = transform.Find("Background");
         coll = GetComponent<BoxCollider>();
 
+        maxWidth = Geometry.GetBoundsIndependentFromRotation(inputBackground).size.x;
+
         letterKeys = new List<Key>();
 
         Capslock = false;
@@ -176,10 +178,11 @@ public class Keyboard : MonoBehaviour
         }
         set
         {
-            numberOfNewLines = value.Split('\n').Length;
+            string wrappedText = AutoLineBreak.StringWithLineBreaks(inputField, value, maxWidth);
+            numberOfNewLines = wrappedText.Split('\n').Length;
             if (numberOfNewLines <= maxNumberOfLines)
             {
-                text = value;
+                text = wrappedText;
                 // update the input field
                 NotifyInputField();
                 // also handle one-time shift: use lower-case again after one letter

@@ -120,7 +120,7 @@ public class MessageBox : MonoBehaviour
     {
         get { return text; }
         //set { text = value; label.text = value; }
-        set { text = AutoLineBreak.ReturnStringWithLineBreaks(label, value, maxWidth); label.text = text; }
+        set { text = AutoLineBreak.StringWithLineBreaks(label, value, maxWidth); label.text = text; }
     }
 }
 
