@@ -43,6 +43,19 @@ public class MessageBox : MonoBehaviour
     /// </summary>
     private SimpleTagalong tagalongScript;
 
+    private float maxWidth;
+    private Transform background;
+
+
+    private void Awake()
+    {
+        background = transform.Find("Background");
+
+        float backgroundWidth = Geometry.GetBoundsIndependentFromRotation(background).size.x;
+
+        maxWidth = backgroundWidth - (backgroundWidth/2f - (background.localPosition.x - label.transform.localPosition.x));
+    }
+
     /// <summary>
     /// Initializes the MessageBox: gets all necessary components
     /// and creates the icon which corresponds to the type of the MessageBox
@@ -51,6 +64,7 @@ public class MessageBox : MonoBehaviour
     {
         btn = button.GetComponent<Button>();
         tagalongScript = GetComponent<SimpleTagalong>();
+
         btn.OnPressed = Accept;
         if (type == MessageBoxType.ERROR)
         {
@@ -105,7 +119,8 @@ public class MessageBox : MonoBehaviour
     public string Text
     {
         get { return text; }
-        set { text = value; label.text = value; }
+        //set { text = value; label.text = value; }
+        set { text = AutoLineBreak.ReturnStringWithLineBreaks(label, value, maxWidth); label.text = text; }
     }
 }
 
