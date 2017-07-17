@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
+    public GameObject menuObject;
 
+    private static GameObject staticMenuObject;
     private static GameObject instance;
 
     public void Start()
     {
+        // initialize for static call
+        staticMenuObject = menuObject;
         Show();
     }
 
     public static void Show()
     {
-        instance = (GameObject)GameObject.Instantiate(Resources.Load("MainMenu"));
+        instance = GameObject.Instantiate(staticMenuObject);
         instance.transform.position = Camera.main.transform.position + new Vector3(-0.2f,0,0) + 2 * Camera.main.transform.forward;
     }
 
