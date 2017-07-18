@@ -29,6 +29,7 @@ GameObject:
   - component: {fileID: 114481922604197128}
   - component: {fileID: 114549317331441724}
   - component: {fileID: 114135506855412898}
+  - component: {fileID: 114872079562857364}
   m_Layer: 2
   m_Name: LoginMenu
   m_TagString: Untagged
@@ -117,8 +118,8 @@ MonoBehaviour:
   onClickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114549317331441724}
-        m_MethodName: ShowCarouselMenu
+      - m_Target: {fileID: 114872079562857364}
+        m_MethodName: ShowLoginForm
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -278,3 +279,14 @@ MonoBehaviour:
   icon: {fileID: 0}
   text: Settings
   menuItemName: Settings
+--- !u!114 &114872079562857364
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1859928805744080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a33788d71d32624d87e7cdf37aab0b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

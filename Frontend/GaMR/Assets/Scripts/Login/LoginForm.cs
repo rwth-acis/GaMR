@@ -15,7 +15,7 @@ public class LoginForm : MonoBehaviour
     [Tooltip("The background of the password input field")]
     public GameObject passwordInputField;
     [Tooltip("The button-gameobject")]
-    public GameObject confirmButton;
+    public GameObject confirmButtonObject;
 
     private TextMesh userNameCaption;
     private TextMesh passwordCaption;
@@ -56,8 +56,17 @@ public class LoginForm : MonoBehaviour
         Button passwordButton = passwordInputField.AddComponent<Button>();
         passwordButton.OnPressed = InputPassword;
 
+        Button confirmButton = confirmButtonObject.AddComponent<Button>();
+        confirmButton.OnPressed = Login;
+
         userNameCaption = userNameInputText.GetComponent<TextMesh>();
         passwordCaption = passwordInputText.GetComponent<TextMesh>();
+    }
+
+    private void Login()
+    {
+        Debug.Log("Logged in");
+        AuthorizationManager.Authorize(UserName, Password);
     }
 
     private void InputPassword()
