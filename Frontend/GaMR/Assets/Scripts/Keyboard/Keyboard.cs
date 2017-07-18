@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HoloToolkit.Unity;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine;
 /// <summary>
 /// represents and handles the logic of the 3D keyboard
 /// </summary>
-public class Keyboard : MonoBehaviour
+public class Keyboard : MonoBehaviour, IWindow
 {
     // public variables to set in the editor
     [Tooltip("The TextMesh which should show the text which is put in")]
@@ -37,6 +38,8 @@ public class Keyboard : MonoBehaviour
 
 
     public static Keyboard currentlyOpenedKeyboard;
+
+    private SimpleTagalong tagalongScript;
 
 
     public bool IsFullKeyboard { get; set; }
@@ -106,6 +109,10 @@ public class Keyboard : MonoBehaviour
         // scale the input background to fit the text
         //ScaleToHeight(inputBackgroundPivot, inputBackground, lineHeight + padding);
         UpdateHeights();
+
+        tagalongScript = GetComponent<SimpleTagalong>();
+
+        WindowManager.Instance.Add(this);
     }
 
     /// <summary>
@@ -321,6 +328,28 @@ public class Keyboard : MonoBehaviour
         set;
     }
 
+    public bool WindowStackable
+    {
+        get
+        {
+            return true;
+        }
+    }
+
+    public bool WindowSingleton
+    {
+        get
+        {
+            return true;
+        }
+    }
+
+    public float WindowDepth
+    {
+        get { return tagalongScript.TagalongDistance; }
+        set { tagalongScript.TagalongDistance = value; }
+    }
+
     /// <summary>
     /// Tells the keys to update their caption to show upper letters when shift is activated
     /// </summary>
@@ -331,5 +360,10 @@ public class Keyboard : MonoBehaviour
         {
             key.Shift(shiftOn);
         }
+    }
+
+    public void CloseWindow()
+    {
+        Cancel();
     }
 }

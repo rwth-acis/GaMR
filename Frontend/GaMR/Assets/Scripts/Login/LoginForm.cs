@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using HoloToolkit.Unity.InputModule;
 using UnityEngine;
+using HoloToolkit.Unity;
 
-public class LoginForm : MonoBehaviour
+public class LoginForm : MonoBehaviour, IWindow
 {
     [Tooltip("The gameobject with the textmesh that displays the user name")]
     public GameObject userNameInputText;
@@ -23,6 +24,8 @@ public class LoginForm : MonoBehaviour
     private string userName = "";
     private string password = "";
 
+    private SimpleTagalong tagalongScript;
+
     private string UserName
     {
         get { return userName; }
@@ -35,6 +38,25 @@ public class LoginForm : MonoBehaviour
         set { password = value;
             passwordCaption.text = DisplayPassword(value);
         }
+    }
+
+    public bool WindowStackable
+    {
+        get
+        {
+            return false;
+        }
+    }
+
+    public bool WindowSingleton
+    {
+        get { return true; }
+    }
+
+    public float WindowDepth
+    {
+        get { return tagalongScript.TagalongDistance; }
+        set { tagalongScript.TagalongDistance = value; }
     }
 
     private string DisplayPassword(string password)
@@ -61,6 +83,10 @@ public class LoginForm : MonoBehaviour
 
         userNameCaption = userNameInputText.GetComponent<TextMesh>();
         passwordCaption = passwordInputText.GetComponent<TextMesh>();
+
+        tagalongScript = GetComponent<SimpleTagalong>();
+
+        WindowManager.Instance.Add(this);
     }
 
     private void Login()
@@ -93,5 +119,15 @@ public class LoginForm : MonoBehaviour
         {
             UserName = name;
         }
+    }
+
+    public void Cancel()
+    {
+        Destroy(gameObject);
+    }
+
+    public void CloseWindow()
+    {
+        Cancel();
     }
 }
