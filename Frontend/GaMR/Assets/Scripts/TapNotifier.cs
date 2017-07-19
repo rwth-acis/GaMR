@@ -41,7 +41,7 @@ public class TapNotifier : MonoBehaviour, IInputHandler
     /// <summary>
     /// Adds a new listener for the input-down-event
     /// </summary>
-    /// <param name="callback"></param>
+    /// <param name="callback">The listener to remove</param>
     public void RegisterListenerOnInputDown(UnityAction callback)
     {
         Init();
@@ -51,11 +51,19 @@ public class TapNotifier : MonoBehaviour, IInputHandler
         }
     }
 
+    /// <summary>
+    /// Removes a listener from the input-down-event
+    /// </summary>
+    /// <param name="callback">The listener to remove</param>
     public void UnRegisterListenerOnInputDown(UnityAction callback)
     {
         inputDownEvent.RemoveListener(callback);
     }
 
+    /// <summary>
+    /// Removes a listener 
+    /// </summary>
+    /// <param name="callback"></param>
     public void UnRegisterListenerOnInputUp(UnityAction callback)
     {
         inputUpEvent.RemoveListener(callback);

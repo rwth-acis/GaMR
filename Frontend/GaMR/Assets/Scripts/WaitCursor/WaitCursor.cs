@@ -2,11 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Contains the logic for the wait cursor
+/// </summary>
 public class WaitCursor : MonoBehaviour
 {
+    /// <summary>
+    /// the singleton instance of the wait cursor which should be manipulated
+    /// </summary>
     private static WaitCursor instance;
 
-    // Use this for initialization
+    /// <summary>
+    /// Initializes the singleton instance and disables the wait cursor
+    /// </summary>
     void Start()
     {
         if (instance == null)
@@ -16,6 +24,9 @@ public class WaitCursor : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// Displays the wait cursor
+    /// </summary>
     public static void Show()
     {
         if (instance != null)
@@ -24,6 +35,9 @@ public class WaitCursor : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Hides the wait cursor
+    /// </summary>
     public static void Hide()
     {
         if (instance != null)
