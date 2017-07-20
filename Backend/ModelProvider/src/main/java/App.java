@@ -2,13 +2,28 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
+import java.io.File;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by bened on 11.06.2017.
  */
 
 public class App {
 
+    public static String path;
+
     public static void main(String[] args) throws Exception {
+
+        path = Resources.ReadFile("config.conf");
+        System.out.println("3D models at " + path);
+
+
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
 

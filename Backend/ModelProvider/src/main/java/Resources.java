@@ -19,7 +19,7 @@ public class Resources {
     public Response getModel(@PathParam("name") String name, @PathParam("no") int no)
     {
         try {
-            String json =  ReadFile("C:\\Temp\\3DModels\\" + name + "\\" + no + ".json");
+            String json =  ReadFile(App.path + name + "\\" + no + ".json");
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         }
         catch (IOException ioEx)
@@ -38,7 +38,7 @@ public class Resources {
     public Response getOverview()
     {
         try {
-            File[] dirs = new File("C:\\Temp\\3DModels\\").listFiles(new FileFilter() {
+            File[] dirs = new File(App.path).listFiles(new FileFilter() {
                                                                          public boolean accept(File pathname) {
                                                                              return pathname.isDirectory();
                                                                          }
@@ -63,7 +63,7 @@ public class Resources {
     @Produces("image/jpg")
     public Response getTexture(@PathParam("modelName") String modelName, @PathParam("name") String name)
     {
-            File file = new File("C:\\Temp\\3DModels\\" + modelName + "\\" + name);
+            File file = new File(App.path + modelName + "\\" + name);
             if (file.exists()) {
                 return Response.ok(file, "image/jpg").header("Inline", "filename=\"" + file.getName() + "\"")
                         .build();
@@ -80,7 +80,7 @@ public class Resources {
     public Response storeAnnotations( @PathParam("modelName") String modelName, String json )
     {
         System.out.println(modelName + ": " + json);
-        File file = new File("C:\\Temp\\3DModels\\" + modelName + "\\" + "annotations.json");
+        File file = new File(App.path + modelName + "\\" + "annotations.json");
         try {
             FileWriter writer = new FileWriter(file);
             writer.write(json);
@@ -99,7 +99,7 @@ public class Resources {
     public Response getAnnotations(@PathParam("modelName") String modelName)
     {
         try {
-            String json =  ReadFile("C:\\Temp\\3DModels\\" + modelName + "\\annotations.json");
+            String json =  ReadFile(App.path + modelName + "\\annotations.json");
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         }
         catch (IOException ioEx)
@@ -114,7 +114,7 @@ public class Resources {
     public Response getQuizOverview(@PathParam("modelName") String modelName)
     {
         try {
-            File file = new File("C:\\Temp\\3DModels\\" + modelName + "\\Quizzes\\");
+            File file = new File(App.path + modelName + "\\Quizzes\\");
             if (file.exists()) {
                 File[] files = file.listFiles(new FileFilter() {
                     public boolean accept(File pathname) {
@@ -150,7 +150,7 @@ public class Resources {
     public Response getQuiz(@PathParam("modelName") String modelName, @PathParam("quizName") String quizName)
     {
         try {
-            String json = ReadFile("C:\\Temp\\3DModels\\" + modelName + "\\Quizzes\\" + quizName + ".json");
+            String json = ReadFile(App.path + modelName + "\\Quizzes\\" + quizName + ".json");
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         }
         catch (IOException ioEx)
@@ -167,7 +167,7 @@ public class Resources {
                                String json )
     {
         System.out.println("Quiz: " + modelName + ": " + json);
-        File file = new File("C:\\Temp\\3DModels\\" + modelName + "\\Quizzes\\" + quizName + ".json");
+        File file = new File(App.path + modelName + "\\Quizzes\\" + quizName + ".json");
         try {
             FileWriter writer = new FileWriter(file);
             writer.write(json);
@@ -181,7 +181,7 @@ public class Resources {
     }
 
 
-    private String ReadFile(String path) throws IOException
+    public static String ReadFile(String path) throws IOException
     {
         return new Scanner(new File(path)).useDelimiter("\\A").next();
     }
