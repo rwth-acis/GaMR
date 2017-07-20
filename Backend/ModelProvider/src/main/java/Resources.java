@@ -19,7 +19,8 @@ public class Resources {
     public Response getModel(@PathParam("name") String name, @PathParam("no") int no)
     {
         try {
-            String json =  ReadFile(App.path + name + "\\" + no + ".json");
+            System.out.println("Request for " + App.path + File.separatorChar + name + File.separatorChar + no + ".json");
+            String json =  ReadFile(App.path + File.separatorChar + name + File.separatorChar + no + ".json");
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         }
         catch (IOException ioEx)
@@ -63,7 +64,7 @@ public class Resources {
     @Produces("image/jpg")
     public Response getTexture(@PathParam("modelName") String modelName, @PathParam("name") String name)
     {
-            File file = new File(App.path + modelName + "\\" + name);
+            File file = new File(App.path + File.separatorChar + modelName + File.separatorChar + name);
             if (file.exists()) {
                 return Response.ok(file, "image/jpg").header("Inline", "filename=\"" + file.getName() + "\"")
                         .build();
@@ -80,7 +81,7 @@ public class Resources {
     public Response storeAnnotations( @PathParam("modelName") String modelName, String json )
     {
         System.out.println(modelName + ": " + json);
-        File file = new File(App.path + modelName + "\\" + "annotations.json");
+        File file = new File(App.path + File.separatorChar + modelName + File.separatorChar + "annotations.json");
         try {
             FileWriter writer = new FileWriter(file);
             writer.write(json);
@@ -99,7 +100,7 @@ public class Resources {
     public Response getAnnotations(@PathParam("modelName") String modelName)
     {
         try {
-            String json =  ReadFile(App.path + modelName + "\\annotations.json");
+            String json =  ReadFile(App.path + File.separatorChar + modelName + File.separatorChar + "annotations.json");
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         }
         catch (IOException ioEx)
@@ -114,7 +115,8 @@ public class Resources {
     public Response getQuizOverview(@PathParam("modelName") String modelName)
     {
         try {
-            File file = new File(App.path + modelName + "\\Quizzes\\");
+            File file = new File(App.path + File.separatorChar + modelName + File.separatorChar + "Quizzes"
+                    + File.separatorChar);
             if (file.exists()) {
                 File[] files = file.listFiles(new FileFilter() {
                     public boolean accept(File pathname) {
@@ -150,7 +152,8 @@ public class Resources {
     public Response getQuiz(@PathParam("modelName") String modelName, @PathParam("quizName") String quizName)
     {
         try {
-            String json = ReadFile(App.path + modelName + "\\Quizzes\\" + quizName + ".json");
+            String json = ReadFile(App.path + File.separatorChar + modelName + File.separatorChar
+                    + "Quizzes" + File.separatorChar + quizName + ".json");
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         }
         catch (IOException ioEx)
@@ -167,7 +170,8 @@ public class Resources {
                                String json )
     {
         System.out.println("Quiz: " + modelName + ": " + json);
-        File file = new File(App.path + modelName + "\\Quizzes\\" + quizName + ".json");
+        File file = new File(App.path + File.separatorChar + modelName + File.separatorChar + "Quizzes" +
+                File.separatorChar + quizName + ".json");
         try {
             FileWriter writer = new FileWriter(file);
             writer.write(json);
