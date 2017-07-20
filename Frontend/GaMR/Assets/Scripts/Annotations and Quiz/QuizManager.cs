@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Administers the quiz and the quiz display
+/// </summary>
 public class QuizManager : AnnotationManager
 {
     protected new string subPathLoad = "/resources/quiz/load/";
@@ -14,10 +17,20 @@ public class QuizManager : AnnotationManager
     private GameObject quizObject;
     private Menu availableNames; // only used in the mode "name to position"
 
+    /// <summary>
+    /// The name of the quiz
+    /// </summary>
     public string QuizName { get; set; }
 
+    /// <summary>
+    /// if true: quiz is in the mode where the position is given and the user has to enter the name
+    /// if false: quiz is in the mode where the names are given and the user has to find the position
+    /// </summary>
     public bool PositionToName { get; set; }
 
+    /// <summary>
+    /// initializes the quiz and loads the quiz elements
+    /// </summary>
     public new void Start()
     {
         Init();
@@ -38,6 +51,9 @@ public class QuizManager : AnnotationManager
         LoadAnnotations();
     }
 
+    /// <summary>
+    /// Saves the quiz if the PlayerType is not STUDENT
+    /// </summary>
     protected override void Save()
     {
         if (InformationManager.instance.playerType != PlayerType.STUDENT)
@@ -58,11 +74,18 @@ public class QuizManager : AnnotationManager
         }
     }
 
+    /// <summary>
+    /// loads the annotations
+    /// </summary>
     protected override void LoadAnnotations()
     {
         restManager.GET(infoManager.BackendAddress + subPathLoad + QuizName, QuizLoaded);
     }
 
+    /// <summary>
+    /// called when the quiz has finished loading
+    /// </summary>
+    /// <param name="res">The json string which is the result of the web request</param>
     private void QuizLoaded(string res)
     {
         Load(res);
@@ -72,6 +95,10 @@ public class QuizManager : AnnotationManager
         }
     }
 
+    /// <summary>
+    /// initializes the quiz
+    /// randomly sets the mode and creates the necessary parts
+    /// </summary>
     private void InitializeQuiz()
     {
         int value = UnityEngine.Random.Range(0, 2);
@@ -109,15 +136,24 @@ public class QuizManager : AnnotationManager
         }
     }
 
-    private void OnItemClicked(string text)
+    /// <summary>
+    /// Called when an item is clicked
+    /// </summary>
+    /// <param name="name">The name of the item</param>
+    private void OnItemClicked(string name)
     {
         // text should be the index since the item was initialized this way
-        int index = int.Parse(text);
+        int index = int.Parse(name);
         currentContainer = annotationContainers[index];
         // availableNames is not null or else this could not be called
         currentMenuItem = availableNames.rootMenu[index];
     }
 
+    /// <summary>
+    /// Evaluates a question by comparing the selected annotation with solution annotation currentContainer
+    /// </summary>
+    /// <param name="annotation">The selected annotation to compare</param>
+    /// <returns></returns>
     public bool EvaluateQuestion(Annotation annotation)
     {
         if (currentContainer != null)
@@ -135,6 +171,13 @@ public class QuizManager : AnnotationManager
         }
     }
 
+    /// <summary>
+    /// evaluates a question by comparing the annotation with the input text
+    /// Shows a MessageBox to indicate success or failure
+    /// </summary>
+    /// <param name="annotation">The selected annotation</param>
+    /// <param name="input">The user input to compare to the annotation's text</param>
+    /// <returns>true if input is equal to the annotations text, else false</returns>
     public bool EvaluateQuestion(Annotation annotation, string input)
     {
         if (annotation.Text == input)
@@ -149,12 +192,20 @@ public class QuizManager : AnnotationManager
         }
     }
 
+    /// <summary>
+    /// called when the QuizManager is destroyed
+    /// calls the base method to save the annotations
+    /// cleans up remaining quiz components
+    /// </summary>
     public override void OnDestroy()
     {
         base.OnDestroy();
         CleanUp();
     }
 
+    /// <summary>
+    /// cleans up remaining items of the quiz
+    /// </summary>
     private void CleanUp()
     {
         if (quizObject != null)
