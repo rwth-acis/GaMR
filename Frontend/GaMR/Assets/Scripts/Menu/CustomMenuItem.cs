@@ -8,6 +8,7 @@ using UnityEngine.Events;
 /// logical representation of a menu item
 /// </summary>
 [RequireComponent(typeof(Menu))]
+[Serializable]
 public class CustomMenuItem : MonoBehaviour
 {
     /// <summary>
@@ -18,6 +19,8 @@ public class CustomMenuItem : MonoBehaviour
     /// list of child menu items
     /// </summary>
     public List<CustomMenuItem> subMenu;
+    public bool overrideMenuDirection = false;
+    public Direction subMenuDirection;
     [Tooltip("If enabled, the whole menu will be closed and the root menu will be displayed again")]
     public bool closeOnClick;
     [Tooltip("The menu item will be marked or unmarked when clicking on it")]
@@ -50,6 +53,7 @@ public class CustomMenuItem : MonoBehaviour
 
     public void Start()
     {
+        InitialText = text;
         Text = text; // this is for automatic translation on starup
     }
 
@@ -73,6 +77,11 @@ public class CustomMenuItem : MonoBehaviour
             }
             text = localizedText;
         }
+    }
+
+    public string InitialText
+    {
+        get; private set;
     }
 
     /// <summary>
@@ -193,10 +202,16 @@ public class CustomMenuItem : MonoBehaviour
             if (subMenu.Count > 0 && !subMenuOpened)
             {
                 //InstantiateSubMenus();
-                parentMenu.InstantiateMenu(GameObjectInstance.transform.localPosition, menuStyleAdapter.Size, subMenu, this, true);
+                Direction dir = parentMenu.alignment;
+                if (overrideMenuDirection)
+                {
+                    dir = subMenuDirection;
+                }
+                parentMenu.InstantiateMenu(GameObjectInstance.transform.localPosition, menuStyleAdapter.Size, subMenu, this, true, dir);
                 if (parentMenuItem != null)
                 {
                     parentMenu.HideSiblings(this, parentMenuItem.subMenu);
+                    parentMenuItem.Hide();
                 }
                 else
                 {
@@ -212,6 +227,7 @@ public class CustomMenuItem : MonoBehaviour
                 if (parentMenuItem != null)
                 {
                     parentMenu.ShowSiblings(parentMenuItem.subMenu);
+                    parentMenuItem.Show();
                 }
                 else
                 {
@@ -230,6 +246,23 @@ public class CustomMenuItem : MonoBehaviour
         foreach (CustomMenuItem child in subMenu)
         {
             child.Destroy();
+        }
+    }
+
+    public void Hide()
+    {
+        if (GameObjectInstance != null)
+        {
+            GameObjectInstance.SetActive(false);
+        }
+    }
+
+    public void Show()
+    {
+        if (GameObjectInstance != null)
+        {
+            GameObjectInstance.SetActive(true);
+            MenuSytleAdapter.UpdateContainerColor();
         }
     }
 

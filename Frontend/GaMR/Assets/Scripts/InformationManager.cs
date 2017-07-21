@@ -34,7 +34,7 @@ public class InformationManager : MonoBehaviour {
     public Language Language
     {
         get { return language; }
-        set { language = value; }
+        set { language = value; LocalizationManager.Instance.UpdateLanguage(); }
     }
 }
 

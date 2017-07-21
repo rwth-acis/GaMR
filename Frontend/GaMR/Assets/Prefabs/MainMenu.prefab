@@ -29,6 +29,9 @@ GameObject:
   - component: {fileID: 114481922604197128}
   - component: {fileID: 114549317331441724}
   - component: {fileID: 114135506855412898}
+  - component: {fileID: 114387031185171422}
+  - component: {fileID: 114195293521763746}
+  - component: {fileID: 114795987222237594}
   m_Layer: 2
   m_Name: MainMenu
   m_TagString: Untagged
@@ -97,6 +100,43 @@ MonoBehaviour:
   PositionUpdateSpeed: 9.8
   SmoothMotion: 1
   SmoothingFactor: 0.75
+--- !u!114 &114195293521763746
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1859928805744080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
+  subMenu: []
+  overrideMenuDirection: 0
+  subMenuDirection: 0
+  closeOnClick: 1
+  markOnClick: 0
+  marked: 0
+  visibleTo: 0
+  onClickEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114549317331441724}
+        m_MethodName: SetLanguageEnglish
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  icon: {fileID: 0}
+  text: English
+  menuItemName: English
 --- !u!114 &114367800701407598
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -110,7 +150,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
   subMenu: []
+  overrideMenuDirection: 0
+  subMenuDirection: 0
   closeOnClick: 0
+  markOnClick: 0
+  marked: 0
   visibleTo: 0
   onClickEvent:
     m_PersistentCalls:
@@ -130,6 +174,45 @@ MonoBehaviour:
   icon: {fileID: 0}
   text: Load 3D Model
   menuItemName: Load
+--- !u!114 &114387031185171422
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1859928805744080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
+  subMenu:
+  - {fileID: 114795987222237594}
+  - {fileID: 114195293521763746}
+  overrideMenuDirection: 1
+  subMenuDirection: 0
+  closeOnClick: 0
+  markOnClick: 0
+  marked: 0
+  visibleTo: 0
+  onClickEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 0
+    m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  icon: {fileID: 0}
+  text: Change Language
+  menuItemName: ChangeLanguage
 --- !u!114 &114481922604197128
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -143,7 +226,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
   subMenu: []
+  overrideMenuDirection: 0
+  subMenuDirection: 0
   closeOnClick: 1
+  markOnClick: 0
+  marked: 0
   visibleTo: 0
   onClickEvent:
     m_PersistentCalls:
@@ -202,7 +289,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
   subMenu: []
+  overrideMenuDirection: 0
+  subMenuDirection: 0
   closeOnClick: 1
+  markOnClick: 0
+  marked: 0
   visibleTo: 0
   onClickEvent:
     m_PersistentCalls:
@@ -240,6 +331,49 @@ MonoBehaviour:
   alignment: 1
   itemsInOneLine: 3
   defaultMenuStyle: {fileID: 0}
+  externalInitialization:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  markOnlyOne: 0
+--- !u!114 &114795987222237594
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1859928805744080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
+  subMenu: []
+  overrideMenuDirection: 0
+  subMenuDirection: 0
+  closeOnClick: 1
+  markOnClick: 0
+  marked: 0
+  visibleTo: 0
+  onClickEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114549317331441724}
+        m_MethodName: SetLangaugeGerman
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  icon: {fileID: 0}
+  text: Deutsch
+  menuItemName: Deutsch
 --- !u!114 &114852617649403874
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -255,7 +389,12 @@ MonoBehaviour:
   subMenu:
   - {fileID: 114632834833330776}
   - {fileID: 114481922604197128}
+  - {fileID: 114387031185171422}
+  overrideMenuDirection: 0
+  subMenuDirection: 0
   closeOnClick: 0
+  markOnClick: 0
+  marked: 0
   visibleTo: 0
   onClickEvent:
     m_PersistentCalls:

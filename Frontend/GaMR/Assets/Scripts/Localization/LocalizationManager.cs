@@ -13,14 +13,11 @@ public class LocalizationManager : MonoBehaviour
 
     public void Start()
     {
-        language = InformationManager.instance.Language;
-        LoadDictionary();
-        LoadKeyboardLayout();
-
         if (instance == null)
         {
             instance = this;
         }
+        UpdateLanguage();
     }
 
     private void LoadDictionary()
@@ -82,6 +79,14 @@ public class LocalizationManager : MonoBehaviour
             Debug.LogWarning("Requested string could not be translated: " + text);
             return text;
         }
+    }
+
+    public void UpdateLanguage()
+    {
+        language = InformationManager.instance.Language;
+        LoadDictionary();
+        LoadKeyboardLayout();
+
     }
 
     private string GetLanguageCode(Language language)

@@ -8,10 +8,10 @@ public class MainMenuActions : MonoBehaviour
 
     public GameObject carouselMenu;
     public GameObject carouselMenuStyle;
-    Menu menu;
     InformationManager infoManager;
     RestManager restManager;
     ModelLoadManager modelLoadManager;
+    Menu menu;
     static GameObject carouselInstance;
 
     public InformationManager InfoManager { get { return infoManager; } }
@@ -21,6 +21,7 @@ public class MainMenuActions : MonoBehaviour
         infoManager = ComponentGetter.GetComponentOnGameobject<InformationManager>("InformationManager");
         restManager = ComponentGetter.GetComponentOnGameobject<RestManager>("RestManager");
         modelLoadManager = ComponentGetter.GetComponentOnGameobject<ModelLoadManager>("ModelLoadManager");
+        menu = GetComponent<Menu>();
         if (carouselInstance != null)
         {
             Destroy(carouselInstance);
@@ -143,5 +144,21 @@ public class MainMenuActions : MonoBehaviour
         modelLoadManager.Load(name);
         Destroy(carouselInstance);
         carouselInstance = null;
+    }
+
+    public void SetLangaugeGerman()
+    {
+        SetLanguage(Language.GERMAN);
+    }
+
+    public void SetLanguageEnglish()
+    {
+        SetLanguage(Language.ENGLISH);
+    }
+
+    private void SetLanguage(Language language)
+    {
+        InformationManager.instance.Language = language;
+        menu.UpdateTexts();
     }
 }
