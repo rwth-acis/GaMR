@@ -3,6 +3,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,8 +21,14 @@ public class App {
 
     public static void main(String[] args) throws Exception {
 
-        path = Resources.ReadFile("config.conf");
-        System.out.println("3D models at " + path);
+        try {
+            path = Resources.ReadFile("config.conf");
+            System.out.println("3D models at " + path);
+        }
+        catch (IOException e)
+        {
+            System.out.println("Could not read the config file");
+        }
 
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);

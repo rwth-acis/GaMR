@@ -28,14 +28,6 @@ public class TransformationManager : MonoBehaviour
         {
             transform.localScale = newScale;
         }
-        else if (newScale.x < minSize.x && newScale.y < minSize.y && newScale.z < minSize.z)
-        {
-            transform.localScale = minSize;
-        }
-        else
-        {
-            transform.localScale = maxSize;
-        }
     }
 
     public void Rotate(Vector3 axis, float angle)

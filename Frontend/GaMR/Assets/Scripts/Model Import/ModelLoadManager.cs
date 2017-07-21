@@ -60,7 +60,7 @@ public class ModelLoadManager : MonoBehaviour {
     {
         // create a bounding-box around the object
         GameObject box = Instantiate(boundingBoxPrefab);
-        box.transform.localScale = bounds.size * (1 / bounds.size.z);
+        box.transform.localScale = bounds.size;
         Transform contentHolder = box.transform.Find("Content");
         content.transform.parent = contentHolder;
 
