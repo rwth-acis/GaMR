@@ -81,7 +81,7 @@ public class BoundingBoxActions : MonoBehaviour
 
     public void SelectQuiz()
     {
-        RestManager.instance.GET(InformationManager.instance.BackendAddress + "/resources/quiz/overview/" + objectInfo.ModelName, AvailableQuizzesLoaded);
+        RestManager.instance.GET(InformationManager.Instance.BackendAddress + "/resources/quiz/overview/" + objectInfo.ModelName, AvailableQuizzesLoaded);
     }
 
     public void LoadAnnotations()

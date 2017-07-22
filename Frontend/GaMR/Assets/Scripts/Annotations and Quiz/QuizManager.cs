@@ -38,7 +38,7 @@ public class QuizManager : AnnotationManager
         subPathLoad += objectInfo.ModelName + "/";
         subPathSave += objectInfo.ModelName + "/";
 
-        if (InformationManager.instance.playerType == PlayerType.STUDENT)
+        if (InformationManager.Instance.playerType == PlayerType.STUDENT)
         {
             editMode = false;
         }
@@ -56,7 +56,7 @@ public class QuizManager : AnnotationManager
     /// </summary>
     protected override void Save()
     {
-        if (InformationManager.instance.playerType != PlayerType.STUDENT)
+        if (InformationManager.Instance.playerType != PlayerType.STUDENT)
         {
             // if not student => save the quiz itself
             JsonArray<Annotation> array = new JsonArray<Annotation>();
@@ -89,7 +89,7 @@ public class QuizManager : AnnotationManager
     private void QuizLoaded(string res)
     {
         Load(res);
-        if (InformationManager.instance.playerType == PlayerType.STUDENT)
+        if (InformationManager.Instance.playerType == PlayerType.STUDENT)
         {
             InitializeQuiz();
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using HoloToolkit.Unity;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,9 +9,7 @@ using UnityEngine;
 /// the port and a property which combines all into a http address which can be called
 /// also provides information about the user
 /// </summary>
-public class InformationManager : MonoBehaviour {
-
-    public static InformationManager instance;
+public class InformationManager : Singleton<InformationManager> {
 
     public string ipAddressBackend = "192.168.178.43";
     public int portBackend = 8080;
@@ -20,10 +19,6 @@ public class InformationManager : MonoBehaviour {
 
     public void Start()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
     }
 
     /// <summary>

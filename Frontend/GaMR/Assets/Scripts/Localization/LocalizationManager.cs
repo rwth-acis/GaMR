@@ -1,22 +1,17 @@
-﻿using System;
+﻿using HoloToolkit.Unity;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LocalizationManager : MonoBehaviour
+public class LocalizationManager : Singleton<LocalizationManager>
 {
-    private static LocalizationManager instance;
-
     private Dictionary<string, string> dictionary;
     private List<string> keyboardLayout;
     private Language language;
 
     public void Start()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
         UpdateLanguage();
     }
 
@@ -63,11 +58,6 @@ public class LocalizationManager : MonoBehaviour
         }
     }
 
-    public static LocalizationManager Instance
-    {
-        get { return instance; }
-    }
-
     public string ResolveString(string text)
     {
         if (dictionary.ContainsKey(text))
@@ -83,7 +73,7 @@ public class LocalizationManager : MonoBehaviour
 
     public void UpdateLanguage()
     {
-        language = InformationManager.instance.Language;
+        language = InformationManager.Instance.Language;
         LoadDictionary();
         LoadKeyboardLayout();
 

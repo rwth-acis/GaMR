@@ -158,7 +158,7 @@ public class MainMenuActions : MonoBehaviour
 
     private void SetLanguage(Language language)
     {
-        InformationManager.instance.Language = language;
+        InformationManager.Instance.Language = language;
         menu.UpdateTexts();
     }
 }

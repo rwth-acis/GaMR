@@ -163,7 +163,7 @@ public class Menu : MonoBehaviour
         // instantiate the menu
         for (int i = 0; i < menu.Count; i++)
         {
-            if (menu[i].visibleTo == PlayerType.ALL || menu[i].visibleTo == InformationManager.instance.playerType)
+            if (menu[i].visibleTo == PlayerType.ALL || menu[i].visibleTo == InformationManager.Instance.playerType)
             {
                 menu[i].Create(this, parent);
                 if (i > 0)
