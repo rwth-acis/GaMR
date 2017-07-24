@@ -570,7 +570,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
   subMenu: []
+  overrideMenuDirection: 0
+  subMenuDirection: 0
   closeOnClick: 0
+  markOnClick: 0
+  marked: 0
   visibleTo: 0
   onClickEvent:
     m_PersistentCalls:
@@ -578,6 +582,7 @@ MonoBehaviour:
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   icon: {fileID: 0}
   text: 2
+  menuItemName: 
 --- !u!114 &114093701877948598
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -591,7 +596,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
   subMenu: []
+  overrideMenuDirection: 0
+  subMenuDirection: 0
   closeOnClick: 0
+  markOnClick: 0
+  marked: 0
   visibleTo: 0
   onClickEvent:
     m_PersistentCalls:
@@ -599,6 +608,7 @@ MonoBehaviour:
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   icon: {fileID: 0}
   text: 5
+  menuItemName: 
 --- !u!114 &114156244309229110
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -623,7 +633,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
   subMenu: []
+  overrideMenuDirection: 0
+  subMenuDirection: 0
   closeOnClick: 0
+  markOnClick: 0
+  marked: 0
   visibleTo: 0
   onClickEvent:
     m_PersistentCalls:
@@ -631,6 +645,7 @@ MonoBehaviour:
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   icon: {fileID: 0}
   text: 4
+  menuItemName: 
 --- !u!114 &114710737103795226
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -644,7 +659,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
   subMenu: []
+  overrideMenuDirection: 0
+  subMenuDirection: 0
   closeOnClick: 0
+  markOnClick: 0
+  marked: 0
   visibleTo: 0
   onClickEvent:
     m_PersistentCalls:
@@ -652,6 +671,7 @@ MonoBehaviour:
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   icon: {fileID: 0}
   text: 3
+  menuItemName: 
 --- !u!114 &114763930099096782
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -673,12 +693,20 @@ MonoBehaviour:
   alignment: 0
   itemsInOneLine: 3
   defaultMenuStyle: {fileID: 0}
+  externalInitialization:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  markOnlyOne: 0
   buttonLeft: {fileID: 1605118535636396}
   buttonRight: {fileID: 1676990775773604}
   leftPosition: {fileID: 4249784100598590}
   rightPosition: {fileID: 4918754606773788}
   leftBackPosition: {fileID: 4608718423418060}
   rightBackPosition: {fileID: 4532848046693066}
+  normalMoveTime: 1
+  fastMoveTime: 0.5
 --- !u!114 &114881105624592406
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -692,7 +720,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
   subMenu: []
+  overrideMenuDirection: 0
+  subMenuDirection: 0
   closeOnClick: 0
+  markOnClick: 0
+  marked: 0
   visibleTo: 0
   onClickEvent:
     m_PersistentCalls:
@@ -700,6 +732,7 @@ MonoBehaviour:
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   icon: {fileID: 0}
   text: Carousel Menu not initialized
+  menuItemName: 
 --- !u!114 &114938762641796128
 MonoBehaviour:
   m_ObjectHideFlags: 1

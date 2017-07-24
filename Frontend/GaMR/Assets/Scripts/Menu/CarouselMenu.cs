@@ -27,7 +27,13 @@ public class CarouselMenu : Menu
     /// without this lock the user can break the CarouselMenu by tapping on the scroll-button
     /// while movement is still happening since this will create new movement coroutines
     /// </summary>
-    private bool currentlyMoving = false;
+    private int currentlyMoving = 0;
+
+    [SerializeField]
+    private float normalMoveTime = 1f;
+    [SerializeField]
+    private float fastMoveTime = 0.2f;
+
 
     /// <summary>
     /// Called if the Component is created
@@ -59,7 +65,7 @@ public class CarouselMenu : Menu
     /// <param name="menu">not used</param>
     /// <param name="parent">not used</param>
     /// <param name="isSubMenu">not used</param>
-    public new void InstantiateMenu(Vector3 instantiatePosition, Vector3 parentItemSize, List<CustomMenuItem> menu, CustomMenuItem parent, bool isSubMenu)
+    public void InstantiateMenu(Vector3 instantiatePosition, Vector3 parentItemSize, List<CustomMenuItem> menu, CustomMenuItem parent, bool isSubMenu)
     {
         InstantiateCarouselMenu(currentIndex);
     }
@@ -96,10 +102,32 @@ public class CarouselMenu : Menu
         }
 
         // add the button component to the buttons
-        Button btnLeft = buttonLeft.AddComponent<Button>();
-        Button btnRight = buttonRight.AddComponent<Button>();
-        btnLeft.OnPressed = ScrollLeft;
-        btnRight.OnPressed = ScrollRight;
+        LongPressButton btnLeft = buttonLeft.AddComponent<LongPressButton>();
+        LongPressButton btnRight = buttonRight.AddComponent<LongPressButton>();
+        btnLeft.OnPressed = ScrollLeftNormal;
+        btnLeft.OnLongPressed = ScrollLeftFast;
+        btnRight.OnPressed = ScrollRightNormal;
+        btnRight.OnLongPressed = ScrollRightFast;
+    }
+
+    public void ScrollLeftNormal()
+    {
+        ScrollLeft(normalMoveTime);
+    }
+
+    public void ScrollRightNormal()
+    {
+        ScrollRight(normalMoveTime);
+    }
+
+    public void ScrollLeftFast()
+    {
+        ScrollLeft(fastMoveTime);
+    }
+
+    public void ScrollRightFast()
+    {
+        ScrollRight(fastMoveTime);
     }
 
     /// <summary>
@@ -108,10 +136,10 @@ public class CarouselMenu : Menu
     /// creates and destroys menu entries which appear and disappear
     /// also handles special cases like reaching the limit of the rootMenu-array
     /// </summary>
-    public void ScrollLeft()
+    private void ScrollLeft(float moveTime)
     {
         Debug.Log("Clicked left");
-        if (!currentlyMoving)
+        if (currentlyMoving == 0)
         {
             // if it is the most left element => indicate movement and then undo it
             if (currentIndex == 0)
@@ -124,7 +152,7 @@ public class CarouselMenu : Menu
                         // only indicate the movement but don't perform it completely
                         Vector3 target = pos[i + 2] + 0.2f * (pos[i + 3] - pos[i + 2]);
                         float targetRot = 0.2f * rot[i + 3].y;
-                        StartCoroutine(TryMove(rootMenu[currentIndex + i].GameObjectInstance.transform, target, targetRot, 0.5f));
+                        StartCoroutine(TryMove(rootMenu[currentIndex + i].GameObjectInstance.transform, target, targetRot, moveTime / 2f));
                     }
                 }
             }
@@ -139,7 +167,7 @@ public class CarouselMenu : Menu
                     rootMenu[currentIndex - 2].Position = pos[0];
                     rootMenu[currentIndex - 2].GameObjectInstance.transform.localEulerAngles = rot[0];
                     // move it to the next position on the right
-                    StartCoroutine(Move(rootMenu[currentIndex - 2].GameObjectInstance.transform, pos[1], rot[1].y, 1f));
+                    StartCoroutine(Move(rootMenu[currentIndex - 2].GameObjectInstance.transform, pos[1], rot[1].y, moveTime));
                 }
 
                 // move everything else
@@ -152,7 +180,7 @@ public class CarouselMenu : Menu
                         float targetRot = rot[i + 3].y;
                         if (i != 1)
                         {
-                            StartCoroutine(Move(rootMenu[currentIndex + i].GameObjectInstance.transform, target, targetRot, 1f));
+                            StartCoroutine(Move(rootMenu[currentIndex + i].GameObjectInstance.transform, target, targetRot, moveTime));
                         }
                         else if (currentIndex + i < rootMenu.Count) // if it is the most right and exists => move and then destroy
                         {
@@ -171,10 +199,10 @@ public class CarouselMenu : Menu
     /// creates and destroys menu entries which appear and disappear
     /// also handles special cases like reaching the limit of the rootMenu-array
     /// </summary>
-    public void ScrollRight()
+    private void ScrollRight(float moveTime)
     {
         Debug.Log("Clicked right");
-        if (!currentlyMoving)
+        if (currentlyMoving == 0)
         {
             // if it is the most right element => indicate movement and then undo it
             if (currentIndex == rootMenu.Count - 1)
@@ -187,7 +215,7 @@ public class CarouselMenu : Menu
                         // only indicate the movement but don't perform it completely
                         Vector3 target = pos[i + 2] + 0.2f * (pos[i + 1] - pos[i + 2]);
                         float targetRot = 0.2f * rot[i + 1].y;
-                        StartCoroutine(TryMove(rootMenu[currentIndex + i].GameObjectInstance.transform, target, targetRot, 0.5f));
+                        StartCoroutine(TryMove(rootMenu[currentIndex + i].GameObjectInstance.transform, target, targetRot, moveTime / 2f));
                     }
                 }
             }
@@ -202,7 +230,7 @@ public class CarouselMenu : Menu
                     rootMenu[currentIndex + 2].Position = pos[4];
                     rootMenu[currentIndex + 2].GameObjectInstance.transform.localEulerAngles = rot[4];
                     // move it to the next left position
-                    StartCoroutine(Move(rootMenu[currentIndex + 2].GameObjectInstance.transform, pos[3], rot[3].y, 1f));
+                    StartCoroutine(Move(rootMenu[currentIndex + 2].GameObjectInstance.transform, pos[3], rot[3].y, moveTime));
                 }
 
 
@@ -215,7 +243,7 @@ public class CarouselMenu : Menu
                         float targetRot = rot[i + 1].y;
                         if (i != -1)
                         {
-                            StartCoroutine(Move(rootMenu[currentIndex + i].GameObjectInstance.transform, target, targetRot, 1f));
+                            StartCoroutine(Move(rootMenu[currentIndex + i].GameObjectInstance.transform, target, targetRot, moveTime));
                         }
                         else if (currentIndex + i >= 0) // if it is the most left and exists => move and then destroy
                         {
@@ -239,7 +267,7 @@ public class CarouselMenu : Menu
     /// <returns></returns>
     private IEnumerator TryMove(Transform toMove, Vector3 newPos, float newYAngle, float duration)
     {
-        currentlyMoving = true;
+        currentlyMoving++;
         //float elapsedTime = 0;
         Vector3 startingPos = toMove.localPosition;
         float startingYAngle = toMove.localEulerAngles.y;
@@ -247,8 +275,7 @@ public class CarouselMenu : Menu
         yield return Move(toMove, newPos, newYAngle, duration);
         // then undo movement again
         yield return Move(toMove, startingPos, startingYAngle, duration);
-
-        currentlyMoving = false;
+        currentlyMoving--;
     }
 
     /// <summary>
@@ -261,7 +288,7 @@ public class CarouselMenu : Menu
     /// <returns></returns>
     private IEnumerator Move(Transform toMove, Vector3 newPos, float newYAngle, float duration)
     {
-        currentlyMoving = true;
+        currentlyMoving++;
         float elapsedTime = 0;
         Vector3 startingPos = toMove.localPosition;
         float startingYAngle = toMove.localEulerAngles.y;
@@ -275,7 +302,7 @@ public class CarouselMenu : Menu
         }
         toMove.localPosition = newPos;
         toMove.localEulerAngles = new Vector3(0, newYAngle, 0);
-        currentlyMoving = false;
+        currentlyMoving--;
     }
 
     /// <summary>
@@ -290,7 +317,9 @@ public class CarouselMenu : Menu
     /// <returns></returns>
     private IEnumerator MoveAndDestroy(Transform toMove, Vector3 newPos, float newYAngle, float duration, CustomMenuItem toDestroy)
     {
+        currentlyMoving++;
         yield return Move(toMove, newPos, newYAngle, duration);
         toDestroy.Destroy();
+        currentlyMoving--;
     }
 }
