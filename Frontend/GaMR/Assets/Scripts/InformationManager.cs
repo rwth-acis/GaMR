@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 /// <summary>
 /// Manages important settings of the application
@@ -19,6 +20,7 @@ public class InformationManager : Singleton<InformationManager> {
 
     public void Start()
     {
+        LoadValues();
     }
 
     /// <summary>
@@ -30,6 +32,44 @@ public class InformationManager : Singleton<InformationManager> {
     {
         get { return language; }
         set { language = value; LocalizationManager.Instance.UpdateLanguage(); }
+    }
+
+    protected override void OnDestroy()
+    {
+        SaveValues();
+    }
+
+    public void OnApplicationFocus(bool focus)
+    {
+        if (!focus)
+        {
+            SaveValues();
+        }
+    }
+
+    public void OnApplicationPause(bool pause)
+    {
+        if (pause)
+        {
+            SaveValues();
+        }
+    }
+
+    private void SaveValues()
+    {
+        PlayerPrefs.SetString("ipAddress", ipAddressBackend);
+        PlayerPrefs.SetInt("port", portBackend);
+        PlayerPrefs.SetInt("language", (int)language);
+        Debug.Log("Data saved");
+    }
+
+    private void LoadValues()
+    {
+        ipAddressBackend = PlayerPrefs.GetString("ipAddress", "192.168.178.43");
+        portBackend = PlayerPrefs.GetInt("port", 8080);
+        this.Language = (Language) PlayerPrefs.GetInt("language", 0);
+        Debug.Log("Loaded " + ipAddressBackend + ":" + portBackend);
+        Debug.Log("Language: " + language);
     }
 }
 
