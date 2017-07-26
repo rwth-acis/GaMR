@@ -16,6 +16,9 @@ public class QuizManager : AnnotationManager
     private ObjectInfo objInfo;
     private GameObject quizObject;
     private Menu availableNames; // only used in the mode "name to position"
+    private ProgressBar progressBar;
+
+    private int correctlyAnswered = 0;
 
     /// <summary>
     /// The name of the quiz
@@ -134,6 +137,12 @@ public class QuizManager : AnnotationManager
                 availableNames.rootMenu.Add(item);
             }
         }
+
+        // in both cases: create progress bar
+        GameObject progressBarObject = (GameObject)Instantiate(Resources.Load("ProgressBar"));
+        progressBarObject.transform.parent = gameObject.transform.parent.parent;
+        progressBarObject.transform.position = gameObject.transform.position + new Vector3(-objInfo.Size.x, - objInfo.Size.y/2f, 0);
+        progressBar = progressBarObject.GetComponent<ProgressBar>();
     }
 
     /// <summary>
@@ -183,6 +192,8 @@ public class QuizManager : AnnotationManager
         if (annotation.Text == input)
         {
             MessageBox.Show(LocalizationManager.Instance.ResolveString("Correct"), MessageBoxType.SUCCESS);
+            correctlyAnswered++;
+            progressBar.Progress = (float)correctlyAnswered / annotations.Count;
             return true;
         }
         else

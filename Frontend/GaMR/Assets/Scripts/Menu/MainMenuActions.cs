@@ -69,7 +69,7 @@ public class MainMenuActions : MonoBehaviour
 
     public void EnterPort()
     {
-        Keyboard.Display(LocalizationManager.Instance.ResolveString("Enter the port"), SetIPAddress, false);
+        Keyboard.Display(LocalizationManager.Instance.ResolveString("Enter the port"), SetIPPort, false);
         gameObject.SetActive(false);
     }
 
