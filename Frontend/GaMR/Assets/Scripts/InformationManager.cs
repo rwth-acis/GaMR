@@ -60,6 +60,7 @@ public class InformationManager : Singleton<InformationManager> {
         PlayerPrefs.SetString("ipAddress", ipAddressBackend);
         PlayerPrefs.SetInt("port", portBackend);
         PlayerPrefs.SetInt("language", (int)language);
+        PlayerPrefs.Save();
         Debug.Log("Data saved");
     }
 

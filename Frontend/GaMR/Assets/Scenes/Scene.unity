@@ -109,61 +109,6 @@ NavMeshSettings:
     tileSize: 256
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &26819298
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4820122446597736, guid: cd90550651b1f154ab55c3d9f8f30cad, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4820122446597736, guid: cd90550651b1f154ab55c3d9f8f30cad, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -0.18
-      objectReference: {fileID: 0}
-    - target: {fileID: 4820122446597736, guid: cd90550651b1f154ab55c3d9f8f30cad, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4820122446597736, guid: cd90550651b1f154ab55c3d9f8f30cad, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4820122446597736, guid: cd90550651b1f154ab55c3d9f8f30cad, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4820122446597736, guid: cd90550651b1f154ab55c3d9f8f30cad, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4820122446597736, guid: cd90550651b1f154ab55c3d9f8f30cad, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4820122446597736, guid: cd90550651b1f154ab55c3d9f8f30cad, type: 2}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4113239349286418, guid: cd90550651b1f154ab55c3d9f8f30cad, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4820122446597736, guid: cd90550651b1f154ab55c3d9f8f30cad, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.18
-      objectReference: {fileID: 0}
-    - target: {fileID: 114534134562770816, guid: cd90550651b1f154ab55c3d9f8f30cad,
-        type: 2}
-      propertyPath: targetHeight
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: cd90550651b1f154ab55c3d9f8f30cad, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &124761191
 GameObject:
   m_ObjectHideFlags: 0
@@ -543,6 +488,38 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3eddd1c29199313478dd3f912bfab2ab, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1017724484 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000011070707148, guid: 3eddd1c29199313478dd3f912bfab2ab,
+    type: 2}
+  m_PrefabInternal: {fileID: 846444435}
+--- !u!114 &1017724485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1017724484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c62fd7a55ba7458499b69cae18f83806, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RecognizerStart: 0
+  Keywords:
+  - Keyword: Load 3D Model
+    KeyCode: 0
+  - Keyword: Set IP Address
+    KeyCode: 0
+  - Keyword: Set Port
+    KeyCode: 0
+  - Keyword: Scale Up
+    KeyCode: 0
+  - Keyword: Scale Down
+    KeyCode: 0
+  - Keyword: Rotate Clockwards
+    KeyCode: 0
+  - Keyword: Rotate Counter Clockwards
+    KeyCode: 0
 --- !u!4 &1278030233 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4000011656901714, guid: 3eddd1c29199313478dd3f912bfab2ab,
