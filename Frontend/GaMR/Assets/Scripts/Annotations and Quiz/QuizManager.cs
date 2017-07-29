@@ -105,6 +105,15 @@ public class QuizManager : AnnotationManager
     private void InitializeQuiz()
     {
         int value = UnityEngine.Random.Range(0, 2);
+
+        // get the boundingBoxHook: it always faces the player
+        // this will be used to correctly align the quiz options and the progress bar
+        Transform boundingBoxHook = gameObject.transform.parent.parent.Find("FacePlayer");
+        // reset the rotation in order to position the progress bar at the right point
+        Quaternion currentRotation = boundingBoxHook.localRotation;
+        boundingBoxHook.localRotation = Quaternion.identity;
+
+
         if (value == 0)
         {
             PositionToName = true;
@@ -115,7 +124,8 @@ public class QuizManager : AnnotationManager
             PositionToName = false;
             MessageBox.Show(LocalizationManager.Instance.ResolveString("Connect the names with their corresponding position"), MessageBoxType.INFORMATION);
             quizObject = new GameObject("Quiz");
-            quizObject.transform.parent = gameObject.transform.parent.parent; // the bounding box is the parent
+            quizObject.AddComponent<RotateToCameraOnYAxis>();
+            quizObject.transform.parent = boundingBoxHook;
             quizObject.transform.position = gameObject.transform.position + new Vector3(objInfo.Size.x, 0, 0);
 
             availableNames = quizObject.AddComponent<Menu>();
@@ -140,8 +150,14 @@ public class QuizManager : AnnotationManager
 
         // in both cases: create progress bar
         GameObject progressBarObject = (GameObject)Instantiate(Resources.Load("ProgressBar"));
-        progressBarObject.transform.parent = gameObject.transform.parent.parent;
+
+        progressBarObject.transform.parent = boundingBoxHook;
+
         progressBarObject.transform.position = gameObject.transform.position + new Vector3(-objInfo.Size.x, - objInfo.Size.y/2f, 0);
+
+        // set the rotation to the value it had before
+        boundingBoxHook.localRotation = currentRotation;
+
         progressBar = progressBarObject.GetComponent<ProgressBar>();
     }
 
@@ -222,6 +238,10 @@ public class QuizManager : AnnotationManager
         if (quizObject != null)
         {
             Destroy(quizObject);
+        }
+        if (progressBar != null)
+        {
+            Destroy(progressBar.gameObject);
         }
     }
 }
