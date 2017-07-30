@@ -8,17 +8,13 @@ public class MainMenuActions : MonoBehaviour
 
     public GameObject carouselMenu;
     public GameObject carouselMenuStyle;
-    InformationManager infoManager;
     RestManager restManager;
     ModelLoadManager modelLoadManager;
     Menu menu;
     static GameObject carouselInstance;
 
-    public InformationManager InfoManager { get { return infoManager; } }
-
     public void Start()
     {
-        infoManager = ComponentGetter.GetComponentOnGameobject<InformationManager>("InformationManager");
         restManager = ComponentGetter.GetComponentOnGameobject<RestManager>("RestManager");
         modelLoadManager = ComponentGetter.GetComponentOnGameobject<ModelLoadManager>("ModelLoadManager");
         menu = GetComponent<Menu>();
@@ -41,7 +37,7 @@ public class MainMenuActions : MonoBehaviour
         if (address != null)
         {
             Debug.Log("Set IP Address to " + address);
-            infoManager.ipAddressBackend = address;
+            InformationManager.Instance.ipAddressBackend = address;
             TestAddress();
         }
     }
@@ -49,7 +45,7 @@ public class MainMenuActions : MonoBehaviour
     private void TestAddress()
     {
         WaitCursor.Show();
-        restManager.GET(infoManager.BackendAddress + "/resources/model/overview", RestResult);
+        restManager.GET(InformationManager.Instance.BackendAddress + "/resources/model/overview", RestResult);
     }
 
     private void RestResult(string result)
@@ -83,7 +79,7 @@ public class MainMenuActions : MonoBehaviour
             if (int.TryParse(port, out iPort))
             {
                 Debug.Log("Set Port to " + port);
-                infoManager.portBackend = iPort;
+                InformationManager.Instance.portBackend = iPort;
                 TestAddress();
             }
             else
@@ -97,7 +93,7 @@ public class MainMenuActions : MonoBehaviour
     public void ShowCarouselMenu()
     {
         WaitCursor.Show();
-        restManager.GET(infoManager.BackendAddress + "/resources/model/overview", AvailableModelsLoaded);
+        restManager.GET(InformationManager.Instance.BackendAddress + "/resources/model/overview", AvailableModelsLoaded);
     }
 
     private void AvailableModelsLoaded(string res)

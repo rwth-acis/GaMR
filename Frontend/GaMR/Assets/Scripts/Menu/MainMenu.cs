@@ -18,14 +18,23 @@ public class MainMenu : MonoBehaviour
 
     public static void Show()
     {
-        instance = GameObject.Instantiate(staticMenuObject);
+        if (instance == null)
+        {
+            instance = GameObject.Instantiate(staticMenuObject);
+        }
+        else
+        {
+            instance.SetActive(true);
+        }
         instance.transform.position = Camera.main.transform.position + new Vector3(-0.2f,0,0) + 2 * Camera.main.transform.forward;
     }
 
     public static void Close()
     {
-        Destroy(instance);
-        instance = null;
+        if (instance != null)
+        {
+            instance.SetActive(false);
+        }
     }
 
     public static GameObject Instance

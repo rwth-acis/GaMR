@@ -17,11 +17,11 @@ public class EmptyTapManager : MonoBehaviour, IInputHandler
 
     private void EmptyTapDetected()
     {
-        if (MainMenu.Instance == null)
+        if (MainMenu.Instance == null || MainMenu.Instance.gameObject.activeSelf == false)
         {
             MainMenu.Show();
         }
-        else
+        else if (MainMenu.Instance.gameObject.activeSelf == true)
         {
             MainMenu.Close();
         }
