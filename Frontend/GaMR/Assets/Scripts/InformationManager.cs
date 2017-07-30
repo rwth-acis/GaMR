@@ -66,7 +66,7 @@ public class InformationManager : Singleton<InformationManager> {
 
     private void LoadValues()
     {
-        ipAddressBackend = PlayerPrefs.GetString("ipAddress", "192.168.178.43");
+        ipAddressBackend = PlayerPrefs.GetString("ipAddress", "192.0.0.0");
         portBackend = PlayerPrefs.GetInt("port", 8080);
         this.Language = (Language) PlayerPrefs.GetInt("language", 0);
         Debug.Log("Loaded " + ipAddressBackend + ":" + portBackend);
