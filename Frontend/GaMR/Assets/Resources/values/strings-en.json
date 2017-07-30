@@ -115,6 +115,18 @@
     {
       "key": "Enter the name of the quiz",
       "value": "Enter the name of the quiz"
+    },
+    {
+      "key": "Change Language",
+      "value": "Change Language"
+    },
+    {
+      "key": "New Quiz",
+      "value": "New Quiz"
+    },
+    {
+      "key": "From current annotations",
+      "value": "From current annotations"
     }
   ]
 }

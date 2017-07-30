@@ -115,6 +115,18 @@
     {
       "key": "Enter the name of the quiz",
       "value": "Geben Sie den Quiz-Namen ein"
+    },
+    {
+      "key": "Change Language",
+      "value": "Sprache ändern"
+    },
+    {
+      "key": "New Quiz",
+      "value": "Neues Quiz"
+    },
+    {
+      "key": "From current annotations",
+      "value": "Aus aktuellen Anmerkungen"
     }
   ]
 }
