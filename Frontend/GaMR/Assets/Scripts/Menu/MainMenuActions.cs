@@ -112,6 +112,13 @@ public class MainMenuActions : MonoBehaviour
         }
 
         JsonStringArray array = JsonUtility.FromJson<JsonStringArray>(res);
+
+        if (array.array.Count == 0)
+        {
+            MessageBox.Show(LocalizationManager.Instance.ResolveString("There are no 3D models to show"), MessageBoxType.INFORMATION);
+            return;
+        }
+
         array.array.Sort();
         List<CustomMenuItem> items = new List<CustomMenuItem>();
 

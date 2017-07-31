@@ -100,6 +100,11 @@ public class BoundingBoxActions : MonoBehaviour
         else
         {
             JsonStringArray array = JsonUtility.FromJson<JsonStringArray>(res);
+            if (array.array.Count == 0)
+            {
+                MessageBox.Show(LocalizationManager.Instance.ResolveString("There are no quizzes to show for this 3D model"), MessageBoxType.INFORMATION);
+                return;
+            }
             array.array.Sort();
             List<CustomMenuItem> items = new List<CustomMenuItem>();
 

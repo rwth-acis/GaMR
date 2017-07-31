@@ -127,6 +127,14 @@
     {
       "key": "From current annotations",
       "value": "Aus aktuellen Anmerkungen"
+    },
+    {
+      "key": "There are no 3D models to show",
+      "value": "Es sind keine 3D-Modelle vorhanden"
+    },
+    {
+      "key": "There are no quizzes to show for this 3D model",
+      "value": "Es ist noch kein Quiz für dieses Modell vorhanden"
     }
   ]
 }
