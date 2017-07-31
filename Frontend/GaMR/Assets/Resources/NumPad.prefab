@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 65884893037311156}
   - component: {fileID: 114122261655489126}
   - component: {fileID: 114589734838573796}
+  - component: {fileID: 114910857897271844}
   m_Layer: 2
   m_Name: NumPad
   m_TagString: Untagged
@@ -3272,7 +3273,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputField: {fileID: 102074213821929452}
   label: {fileID: 102634453665622918}
-  maxNumberOfLines: 10
+  maxNumberOfLines: 1
+  cursorTime: 0.5
 --- !u!114 &114371902864044880
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3407,6 +3409,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyType: 0
   letter: 8
+--- !u!114 &114910857897271844
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1053249532688312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19b8c13363e3c72438618e93f899073b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useFilter: 1
+  whiteListChars: 0123456789,.
 --- !u!114 &114995000759892486
 MonoBehaviour:
   m_ObjectHideFlags: 1
