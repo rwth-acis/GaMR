@@ -56,6 +56,7 @@ public class AnnotationManager : MonoBehaviour
             GameObject annotationObject = (GameObject)Instantiate(Resources.Load("AnnotationSphere"));
             annotationObject.transform.position = gazeManager.HitPosition;
             annotationObject.transform.parent = gameObject.transform;
+            annotationObject.transform.localScale = new Vector3(5, 5, 5);
 
             // close currently opened annotation box
             if (AnnotationBox.currentlyOpenAnnotationBox != null)
@@ -156,6 +157,8 @@ public class AnnotationManager : MonoBehaviour
             GameObject annotationObject = (GameObject)Instantiate(Resources.Load("AnnotationSphere"));
             annotationObject.transform.parent = gameObject.transform;
             annotationObject.transform.localPosition = annotation.Position;
+            annotationObject.transform.localScale = new Vector3(5, 5, 5);
+
 
             AnnotationContainer container = annotationObject.AddComponent<AnnotationContainer>();
             container.annotationManager = this;
