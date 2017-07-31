@@ -24,6 +24,10 @@ public class Keyboard : MonoBehaviour
     private bool shift = true;
     private bool textInitialization = true;
 
+    private bool cursorOn = false;
+    public float cursorTime = 0.5f;
+    private float elapsedTimeSinceCursorToggle = 0f;
+
     // variables concerning the size-height adaption
     private Transform inputBackgroundPivot, inputBackground;
     private int numberOfNewLines = 1, numberOfOldLines = 1;
@@ -215,6 +219,7 @@ public class Keyboard : MonoBehaviour
     private void NotifyInputField()
     {
         inputField.text = Text;
+        cursorOn = false;
     }
 
     /// <summary>
@@ -330,6 +335,25 @@ public class Keyboard : MonoBehaviour
         foreach (Key key in letterKeys)
         {
             key.Shift(shiftOn);
+        }
+    }
+
+    private void Update()
+    {
+        elapsedTimeSinceCursorToggle += Time.deltaTime;
+        if (elapsedTimeSinceCursorToggle >= cursorTime)
+        {
+            if (cursorOn)
+            {
+                inputField.text = inputField.text.Substring(0, inputField.text.Length - 1);
+                cursorOn = false;
+            }
+            else
+            {
+                inputField.text += "|";
+                cursorOn = true;
+            }
+            elapsedTimeSinceCursorToggle = 0;
         }
     }
 }
