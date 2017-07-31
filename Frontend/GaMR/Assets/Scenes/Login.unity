@@ -202,8 +202,8 @@ Transform:
   m_Children:
   - {fileID: 1517614937}
   - {fileID: 501829637}
-  - {fileID: 1278030233}
   - {fileID: 2035823017}
+  - {fileID: 972694080}
   - {fileID: 1782103929}
   - {fileID: 1962335648}
   m_Father: {fileID: 0}
@@ -341,7 +341,7 @@ Prefab:
     - {fileID: 9500000, guid: b3ddab8aca9fe0a47b24a94a68809193, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: b3ddab8aca9fe0a47b24a94a68809193, type: 3}
   m_IsPrefabParent: 0
---- !u!1001 &846444435
+--- !u!1001 &850561888
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -378,7 +378,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000011656901714, guid: 3eddd1c29199313478dd3f912bfab2ab, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114000012009196210, guid: 3eddd1c29199313478dd3f912bfab2ab,
         type: 2}
@@ -397,11 +397,43 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3eddd1c29199313478dd3f912bfab2ab, type: 2}
   m_IsPrefabParent: 0
---- !u!4 &1278030233 stripped
+--- !u!1 &972694079 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000011070707148, guid: 3eddd1c29199313478dd3f912bfab2ab,
+    type: 2}
+  m_PrefabInternal: {fileID: 850561888}
+--- !u!4 &972694080 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4000011656901714, guid: 3eddd1c29199313478dd3f912bfab2ab,
     type: 2}
-  m_PrefabInternal: {fileID: 846444435}
+  m_PrefabInternal: {fileID: 850561888}
+--- !u!114 &972694081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 972694079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c62fd7a55ba7458499b69cae18f83806, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RecognizerStart: 0
+  Keywords:
+  - Keyword: Load 3D Model
+    KeyCode: 0
+  - Keyword: Set IP Address
+    KeyCode: 0
+  - Keyword: Set Port
+    KeyCode: 0
+  - Keyword: Scale Up
+    KeyCode: 0
+  - Keyword: Scale Down
+    KeyCode: 0
+  - Keyword: Rotate Clockwards
+    KeyCode: 0
+  - Keyword: Rotate Counter Clockwards
+    KeyCode: 0
 --- !u!1 &1517614936
 GameObject:
   m_ObjectHideFlags: 0
@@ -800,7 +832,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 140169217}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2035823018
 MonoBehaviour:
