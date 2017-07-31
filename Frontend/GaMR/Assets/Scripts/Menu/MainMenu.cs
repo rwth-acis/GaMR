@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
 
     private static GameObject staticMenuObject;
     private static GameObject instance;
+    private static Menu menu;
 
     public void Start()
     {
@@ -21,6 +22,7 @@ public class MainMenu : MonoBehaviour
         if (instance == null)
         {
             instance = GameObject.Instantiate(staticMenuObject);
+            menu = instance.GetComponent<Menu>();
         }
         else
         {
@@ -33,6 +35,7 @@ public class MainMenu : MonoBehaviour
     {
         if (instance != null)
         {
+            menu.ResetMenu();
             instance.SetActive(false);
         }
     }

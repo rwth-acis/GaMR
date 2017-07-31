@@ -134,7 +134,11 @@
     },
     {
       "key": "There are no quizzes to show for this 3D model",
-      "value": "There are no quizzes to show"
+      "value": "There are no quizzes to show for this 3D model"
+    },
+    {
+      "key": "Log out",
+      "value": "Log out"
     }
   ]
 }

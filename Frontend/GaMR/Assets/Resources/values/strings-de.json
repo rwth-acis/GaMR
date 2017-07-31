@@ -135,6 +135,10 @@
     {
       "key": "There are no quizzes to show for this 3D model",
       "value": "Es ist noch kein Quiz für dieses Modell vorhanden"
+    },
+    {
+      "key": "Log out",
+      "value": "Abmelden"
     }
   ]
 }

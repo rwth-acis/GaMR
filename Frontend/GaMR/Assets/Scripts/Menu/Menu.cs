@@ -72,7 +72,7 @@ public class Menu : MonoBehaviour
         }
     }
 
-    [System.Obsolete("InitMenu is obsolte, please use InstantiateMenu instead")]
+    [System.Obsolete("InitMenu is obsolete, please use InstantiateMenu instead")]
     private void InitMenu()
     {
         Vector3 instantiatePosition = new Vector3(0, 0, 0);
