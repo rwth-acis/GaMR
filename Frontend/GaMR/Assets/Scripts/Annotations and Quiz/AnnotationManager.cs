@@ -18,6 +18,8 @@ public class AnnotationManager : MonoBehaviour
     protected string subPathLoad = "/resources/annotation/load/";
     protected string subPathSave = "/resources/annotation/save/";
 
+    protected float annotationSize = 5.5f;
+
     /// <summary>
     /// Initializes the annotation-manager
     /// Collects the necessary components and loads previously stored annotations if they exist
@@ -56,8 +58,8 @@ public class AnnotationManager : MonoBehaviour
             GameObject annotationObject = (GameObject)Instantiate(Resources.Load("AnnotationSphere"));
             annotationObject.transform.position = gazeManager.HitPosition;
             annotationObject.transform.parent = gameObject.transform;
-            annotationObject.transform.localScale = new Vector3(5, 5, 5);
-
+            annotationObject.transform.localScale = new Vector3(annotationSize, annotationSize, annotationSize);
+            
             // close currently opened annotation box
             if (AnnotationBox.currentlyOpenAnnotationBox != null)
             {

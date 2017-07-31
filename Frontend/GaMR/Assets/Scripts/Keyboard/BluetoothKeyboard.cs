@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,43 +29,57 @@ public class BluetoothKeyboard : MonoBehaviour
         // any key is held down
         if (Input.anyKey)
         {
+            string clearedInputString = "";
             // evaluate the input
             foreach(char c in Input.inputString)
             {
                 if (c=='\n' || c=='\r')
                 {
+                    CommitText(clearedInputString);
+                    clearedInputString = "";
                     pseudoKey.keyType = KeyType.ENTER;
+                    pseudoKey.KeyPressed();
 
                 }
                 else if (c == '\b')
                 {
+                    CommitText(clearedInputString);
+                    clearedInputString = "";
                     pseudoKey.keyType = KeyType.BACK;
+                    pseudoKey.KeyPressed();
                 }
                 else
                 {
-                    pseudoKey.keyType = KeyType.LETTER;
                     if (useFilter)
                     {
-                        pseudoKey.Letter = "";
-                        // go through the filter and assign the char if it is allowed
-                        // if the letter is not allowed it is not set and the key will have "" as a letter
-                        foreach(char allowedChar in whiteListChars)
+                        // go through the filter and add the char to the clearedInput if it is allowed
+                        // if the letter is not allowed it is not added
+                        foreach (char allowedChar in whiteListChars)
                         {
                             if (allowedChar == c)
                             {
-                                pseudoKey.Letter = c.ToString();
+                                clearedInputString += c.ToString();
                                 break; // no need to resume since the char was found
                             }
                         }
                     }
-                    else // just assign the letter
+                    else
                     {
-                        pseudoKey.Letter = c.ToString();
+                        clearedInputString += c.ToString();
                     }
                 }
-
-                pseudoKey.KeyPressed();
             }
+
+
+
+            CommitText(clearedInputString);
         }
+    }
+
+    private void CommitText(string input)
+    {
+        pseudoKey.keyType = KeyType.LETTER;
+        pseudoKey.Letter = input;
+        pseudoKey.KeyPressed();
     }
 }
