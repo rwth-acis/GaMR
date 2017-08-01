@@ -62,7 +62,7 @@ public class QuizManager : AnnotationManager
         if (InformationManager.Instance.playerType != PlayerType.STUDENT)
         {
             // if not student => save the quiz itself
-            JsonArray<Annotation> array = new JsonArray<Annotation>();
+            JsonAnnotationArray array = new JsonAnnotationArray();
             array.array = annotations;
 
             string jsonPost = JsonUtility.ToJson(array);

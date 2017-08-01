@@ -173,6 +173,7 @@ public class Resources {
         File file = new File(App.path + File.separatorChar + modelName + File.separatorChar + "Quizzes" +
                 File.separatorChar + quizName + ".json");
         try {
+            file.getParentFile().mkdirs();
             FileWriter writer = new FileWriter(file);
             writer.write(json);
             writer.close();
@@ -180,6 +181,7 @@ public class Resources {
         }
         catch (IOException e)
         {
+            System.out.println(e.getMessage());
             return  Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
