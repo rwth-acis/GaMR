@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Component which enables bluetooth input for a keyboard on the same gameobject
+/// </summary>
 [RequireComponent(typeof(Keyboard))]
 public class BluetoothKeyboard : MonoBehaviour
 {
@@ -14,7 +17,9 @@ public class BluetoothKeyboard : MonoBehaviour
     [Tooltip("Specify allowed characters without any separators")]
     public string whiteListChars = "";
 
-    // Use this for initialization
+    /// <summary>
+    /// initializes and gets all necessary components
+    /// </summary>
     void Start()
     {
         keyBoard = gameObject.GetComponent<Keyboard>();
@@ -23,7 +28,9 @@ public class BluetoothKeyboard : MonoBehaviour
         pseudoKey = pseudoKeyObject.AddComponent<Key>();
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// recognizes input on the bluetooth keyboard and converts it to input on the 3D keyboard
+    /// </summary>
     void Update()
     {
         // any key is held down
@@ -76,6 +83,10 @@ public class BluetoothKeyboard : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// commits the given text to the 3D keyboard
+    /// </summary>
+    /// <param name="input">The text to send to the 3D keyboard</param>
     private void CommitText(string input)
     {
         pseudoKey.keyType = KeyType.LETTER;

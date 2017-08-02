@@ -5,9 +5,11 @@ using UnityEngine;
 
 public class ProgressBar : MonoBehaviour {
 
+    [Tooltip("The full height of the progress bar")]
     public float targetHeight = 0.28f;
 
     private Vector3 velocity = Vector3.zero;
+    [Tooltip("The time needed to complete the movement to the new value")]
     public float smoothTime = 0.3f;
     [SerializeField]
     private GameObject progressBar;
@@ -20,12 +22,19 @@ public class ProgressBar : MonoBehaviour {
     [SerializeField]
     private float progress = 0f;
 
+    /// <summary>
+    /// The progress which is currently displayed by the progress bar
+    /// </summary>
     public float Progress
     {
         get { return progress; }
         set { progress = value; }
     }
 
+    /// <summary>
+    /// sets the progress bar to 0 without smoothing
+    /// places the badge
+    /// </summary>
     private void Start()
     {
         progressBar.transform.localScale = new Vector3(
@@ -49,6 +58,9 @@ public class ProgressBar : MonoBehaviour {
         badge.transform.localPosition = upperCap.transform.localPosition + new Vector3(0, badgeBounds.size.x + 0.25f, 0);
     }
 
+    /// <summary>
+    /// smoothly moves the progress bar to match the current progress value
+    /// </summary>
     private void Update()
     {
         progress = Math.Min(Math.Max(0, progress), 1);
