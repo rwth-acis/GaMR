@@ -89,6 +89,9 @@ public class X3DObj
         ObjectInfo objInfo = parent.AddComponent<ObjectInfo>();
         objInfo.ModelName = ModelName;
 
+        Rigidbody rigidBody = parent.AddComponent<Rigidbody>();
+        rigidBody.isKinematic = true;
+
         AttachementManager attachementManager = parent.AddComponent<AttachementManager>();
 
         parentBounds = new Bounds();
