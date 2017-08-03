@@ -14,6 +14,12 @@ public class TransformationManager : MonoBehaviour
     public Vector3 maxSize;
     [Tooltip("The minimum size of the gameObject's bounds")]
     public Vector3 minSize;
+    private Rigidbody ridgidBody;
+
+    private void Start()
+    {
+        ridgidBody = GetComponent<Rigidbody>();
+    }
 
     public void Scale(Vector3 scaleVector)
     {
@@ -37,7 +43,14 @@ public class TransformationManager : MonoBehaviour
 
     internal void Translate(Vector3 movement)
     {
-        transform.Translate(movement, Space.World);
+        RaycastHit hitInfo;
+        // check if the object would collide with something
+        // if not => perform the movement
+        bool collidesWithSomething = ridgidBody.SweepTest(movement, out hitInfo, movement.magnitude);
+        if (!collidesWithSomething)
+        {
+            transform.Translate(movement, Space.World);
+        }
     }
 
     private IEnumerator SmoothRotate(Vector3 axis, float angle, float time)
