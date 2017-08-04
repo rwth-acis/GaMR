@@ -48,8 +48,22 @@ public class CustomMenuItem : MonoBehaviour
     private Texture icon;
     [SerializeField] // this makes the variable appear in the editor
     private string text;
+    [SerializeField]
+    private string menuItemName;
 
-    public string menuItemName;
+    public string MenuItemName
+    {
+        get { return menuItemName; }
+        set
+        {
+            if (parentMenu != null)
+            {
+                parentMenu.UpdateItemName(menuItemName, value);
+            }
+            menuItemName = value;
+        }
+    }
+
 
     public void Start()
     {

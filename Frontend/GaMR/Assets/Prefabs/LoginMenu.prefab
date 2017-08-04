@@ -250,7 +250,7 @@ MonoBehaviour:
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   icon: {fileID: 0}
   text: Set Port Number
-  menuItemName: PortNumber
+  menuItemName: SetPortNumber
 --- !u!114 &114542621868998812
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -313,7 +313,7 @@ MonoBehaviour:
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   icon: {fileID: 0}
   text: Set IP Address
-  menuItemName: IPAddress
+  menuItemName: SetIpAddress
 --- !u!114 &114678792982612236
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -350,7 +350,7 @@ MonoBehaviour:
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   icon: {fileID: 0}
   text: Deutsch
-  menuItemName: Deutsch
+  menuItemName: German
 --- !u!114 &114781139826200458
 MonoBehaviour:
   m_ObjectHideFlags: 1

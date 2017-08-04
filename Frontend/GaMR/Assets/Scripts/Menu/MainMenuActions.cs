@@ -123,17 +123,17 @@ public class MainMenuActions : MonoBehaviour
         array.array.Sort();
         List<CustomMenuItem> items = new List<CustomMenuItem>();
 
-        foreach(string modelName in array.array)
+        CarouselMenu carouselScript = carouselInstance.GetComponent<CarouselMenu>();
+
+        foreach (string modelName in array.array)
         {
             CustomMenuItem item = carouselInstance.AddComponent<CustomMenuItem>();
             item.Init(carouselMenuStyle, new List<CustomMenuItem>(), false);
             item.onClickEvent.AddListener(delegate { OnCarouselItemClicked(modelName); });
             item.Text = modelName;
-            item.menuItemName = modelName;
+            item.MenuItemName = modelName;
             items.Add(item);
         }
-
-        CarouselMenu carouselScript = carouselInstance.GetComponent<CarouselMenu>();
 
         if (carouselScript != null)
         {

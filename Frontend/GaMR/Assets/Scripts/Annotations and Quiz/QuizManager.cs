@@ -17,6 +17,7 @@ public class QuizManager : AnnotationManager
     private GameObject quizObject;
     private Menu availableNames; // only used in the mode "name to position"
     private ProgressBar progressBar;
+    List<int> freeIndices;
 
     private int correctlyAnswered = 0;
 
@@ -126,21 +127,33 @@ public class QuizManager : AnnotationManager
             quizObject = new GameObject("Quiz");
             quizObject.AddComponent<RotateToCameraOnYAxis>();
             quizObject.transform.parent = boundingBoxHook;
-            quizObject.transform.position = gameObject.transform.position + new Vector3(objInfo.Size.x, 0, 0);
+            quizObject.transform.position = gameObject.transform.position + new Vector3(objInfo.Size.x,objInfo.Size.y/2, 0);
 
             availableNames = quizObject.AddComponent<Menu>();
             availableNames.rootMenu = new List<CustomMenuItem>();
             availableNames.alignment = Direction.VERTICAL;
             availableNames.markOnlyOne = true;
             availableNames.defaultMenuStyle = (GameObject) Resources.Load("QuizItem");
-            for (int i = 0; i < annotationContainers.Count; i++)
+
+            InitializeFreeIndices();
+
+            // only take 5 questions at first
+            for (int i = 0; i < 5; i++)
             {
                 CustomMenuItem item = quizObject.AddComponent<CustomMenuItem>();
                 item.Init(null, null, false);
-                string annotationText = annotationContainers[i].Annotation.Text;
+
+                int randomIndex = UnityEngine.Random.Range(0, freeIndices.Count);
+                int annotationIndex = freeIndices[randomIndex];
+
+
+                string annotationText = annotations[annotationIndex].Text;
                 item.Text = annotationText;
-                string index = i.ToString();
-                item.menuItemName = i.ToString();
+
+                freeIndices.RemoveAt(randomIndex);
+
+                string index = annotationIndex.ToString();
+                item.MenuItemName = index;
                 item.subMenu = new List<CustomMenuItem>();
                 item.onClickEvent.AddListener(OnItemClicked);
                 item.markOnClick = true;
@@ -161,6 +174,15 @@ public class QuizManager : AnnotationManager
         progressBar = progressBarObject.GetComponent<ProgressBar>();
     }
 
+    private void InitializeFreeIndices()
+    {
+        freeIndices = new List<int>();
+        for (int i = 0; i < annotations.Count; i++)
+        {
+            freeIndices.Add(i);
+        }
+    }
+
     /// <summary>
     /// Called when an item is clicked
     /// </summary>
@@ -171,7 +193,7 @@ public class QuizManager : AnnotationManager
         int index = int.Parse(name);
         currentContainer = annotationContainers[index];
         // availableNames is not null or else this could not be called
-        currentMenuItem = availableNames.rootMenu[index];
+        currentMenuItem = availableNames.GetItem(name);
     }
 
     /// <summary>
@@ -181,12 +203,24 @@ public class QuizManager : AnnotationManager
     /// <returns></returns>
     public bool EvaluateQuestion(Annotation annotation)
     {
-        if (currentContainer != null)
+        if (currentContainer != null && currentMenuItem != null)
         {
             bool res = EvaluateQuestion(annotation, currentContainer.Annotation.Text);
-            if (res)
+            if (res) // answer was correct
             {
-                currentMenuItem.Destroy();
+                // if there are still annotations to ask => change the menu item
+                if (freeIndices.Count > 0)
+                {
+                    int randomIndex = UnityEngine.Random.Range(0, freeIndices.Count);
+                    currentMenuItem.Text = annotations[freeIndices[randomIndex]].Text;
+                    currentMenuItem.MenuItemName = freeIndices[randomIndex].ToString();
+                    currentMenuItem.Marked = false;
+                    freeIndices.RemoveAt(randomIndex);
+                }
+                else
+                {
+                    currentMenuItem.Destroy();
+                }
             }
             return res;
         }

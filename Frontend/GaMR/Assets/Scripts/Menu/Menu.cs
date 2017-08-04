@@ -40,18 +40,28 @@ public class Menu : MonoBehaviour
     {
         foreach (CustomMenuItem item in menuList)
         {
-            if (!allMenuItems.ContainsKey(item.menuItemName))
+            if (!allMenuItems.ContainsKey(item.MenuItemName))
             {
-                allMenuItems.Add(item.menuItemName, item);
+                allMenuItems.Add(item.MenuItemName, item);
             }
             else
             {
-                Debug.LogWarning("There are multiple menu items with the name: " + item.menuItemName + Environment.NewLine + "One or more could not be logged in the dictionary");
+                Debug.LogWarning("There are multiple menu items with the name: " + item.MenuItemName + Environment.NewLine + "One or more could not be logged in the dictionary");
             }
             if (item.subMenu != null && item.subMenu.Count > 0)
             {
                 FillDictionary(item.subMenu);
             }
+        }
+    }
+
+    public void UpdateItemName(string oldname, string newName)
+    {
+        if (allMenuItems.ContainsKey(oldname) && !allMenuItems.ContainsKey(newName))
+        {
+            CustomMenuItem value = allMenuItems[oldname];
+            allMenuItems.Remove(oldname);
+            allMenuItems.Add(newName, value);
         }
     }
 
