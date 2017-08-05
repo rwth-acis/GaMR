@@ -24,8 +24,6 @@ public class LoginForm : MonoBehaviour, IWindow
     private string userName = "";
     private string password = "";
 
-    private SimpleTagalong tagalongScript;
-
     private string UserName
     {
         get { return userName; }
@@ -64,10 +62,6 @@ public class LoginForm : MonoBehaviour, IWindow
 
         userNameCaption = userNameInputText.GetComponent<TextMesh>();
         passwordCaption = passwordInputText.GetComponent<TextMesh>();
-
-        tagalongScript = GetComponent<SimpleTagalong>();
-
-        WindowManager.Instance.Add(this);
     }
 
     private void Login()

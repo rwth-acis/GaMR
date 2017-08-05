@@ -39,8 +39,6 @@ public class Keyboard : MonoBehaviour, IWindow
 
     public static Keyboard currentlyOpenedKeyboard;
 
-    private SimpleTagalong tagalongScript;
-
 
     public bool IsFullKeyboard { get; set; }
 
@@ -109,8 +107,6 @@ public class Keyboard : MonoBehaviour, IWindow
         // scale the input background to fit the text
         //ScaleToHeight(inputBackgroundPivot, inputBackground, lineHeight + padding);
         UpdateHeights();
-
-        tagalongScript = GetComponent<SimpleTagalong>();
     }
 
     /// <summary>
