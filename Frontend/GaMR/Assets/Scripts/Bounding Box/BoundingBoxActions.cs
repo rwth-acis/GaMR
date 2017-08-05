@@ -18,6 +18,7 @@ public class BoundingBoxActions : MonoBehaviour
     private ObjectInfo objectInfo;
     private Transform x3dParent;
     private CarouselMenu carouselInstance;
+    private bool nextQuizPositionToName;
 
     /// <summary>
     /// Get the necessary components: the collider of the bounding box and its annotationManager
@@ -79,7 +80,7 @@ public class BoundingBoxActions : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void SelectQuiz()
+    private void SelectQuiz()
     {
         RestManager.instance.GET(InformationManager.Instance.BackendAddress + "/resources/quiz/overview/" + objectInfo.ModelName, AvailableQuizzesLoaded);
     }
@@ -126,12 +127,39 @@ public class BoundingBoxActions : MonoBehaviour
     private void OnCarouselItemClicked(string quizName)
     {
         attachementManager.SetQuizManager(quizName);
+        ((QuizManager)attachementManager.Manager).PositionToName = nextQuizPositionToName;
         Destroy(carouselInstance.gameObject);
     }
 
     public void CreateNewQuiz()
     {
         Keyboard.Display(LocalizationManager.Instance.ResolveString("Enter the name of the quiz"), CreateQuiz, true);
+    }
+
+    public void SelectQuizPositionToName()
+    {
+        nextQuizPositionToName = true;
+        SelectQuiz();
+    }
+
+    public void SelectQuizNameToPosition()
+    {
+        nextQuizPositionToName = false;
+        SelectQuiz();
+    }
+
+    public void SelectQuizRandom()
+    {
+        int decision = UnityEngine.Random.Range(0, 2);
+        if (decision == 0)
+        {
+            nextQuizPositionToName = false;
+        }
+        else
+        {
+            nextQuizPositionToName = true;
+        }
+        SelectQuiz();
     }
 
     private void CreateQuiz(string text)
