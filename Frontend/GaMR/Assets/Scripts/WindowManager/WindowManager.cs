@@ -5,49 +5,99 @@ using UnityEngine;
 
 public class WindowManager : Singleton<WindowManager>
 {
-    private static WindowManager instance;
-
     private List<Window> openWindows;
+
+    public float focusedDepth = 2f;
+    private float originalFocusedDepth;
+
+    private int layerMask;
 
 
     // Use this for initialization
     void Start()
     {
         openWindows = new List<Window>();
+        // ignore IgnoreRaycast
+        int ignoreRaycast = 1 << 2;
+        int ignoreWindows = 1 << 8;
+
+        layerMask = ignoreRaycast | ignoreWindows;
+        layerMask = ~layerMask;
+
+
+        originalFocusedDepth = focusedDepth;
     }
 
     public void Add(Window window)
     {
-        if (window.stackable)
+        // if it is stackable => close all open windows
+        if (!window.stackable)
         {
-            foreach(Window w in openWindows)
-            {
-                w.WindowDepth += 0.1f;
-            }
-        }
-        else
-        {
-            List<Window> tempCopy = openWindows;
+            List<Window> tempCopy = CopyWindows();
             foreach (Window w in tempCopy)
             {
                 w.Close();
             }
         }
+        // if it is a type singleton => close all windows of the same type
+        else if (window.typeSingleton)
+        {
+            List<Window> tempCopy = CopyWindows();
+            foreach (Window w in tempCopy)
+            {
+                if (w.typeId == window.typeId)
+                {
+                    w.Close();
+                }
+            }
+        }
+        // else: just add the window to the stack
 
         openWindows.Add(window);
-        window.WindowDepth = 2f;
+
+        UpdateAlignment();
+    }
+
+    private void UpdateAlignment()
+    {
+        for (int i = 0; i < openWindows.Count; i++)
+        {
+            openWindows[i].WindowDepth = focusedDepth + (openWindows.Count - i - 1) * 0.1f;
+        }
     }
 
     public void Remove(Window window)
     {
-        int toDelete = openWindows.IndexOf(window);
-        for (int i = 0; i < openWindows.Count; i++)
+        openWindows.Remove(window);
+        UpdateAlignment();
+    }
+
+    private List<Window> CopyWindows()
+    {
+        List<Window> res = new List<Window>();
+        foreach (Window w in openWindows)
         {
-            if (i > toDelete)
-            {
-                openWindows[i].WindowDepth -= 0.1f;
-            }
+            res.Add(w);
         }
-        openWindows.RemoveAt(toDelete);
+
+        return res;
+    }
+
+    private void FixedUpdate()
+    {
+        Vector3 camForward = Camera.main.transform.forward;
+
+        RaycastHit hit;
+
+
+        if (Physics.Raycast(Camera.main.transform.position, camForward, out hit, 2f, layerMask))
+        {
+            focusedDepth = hit.distance - 0.1f;
+            UpdateAlignment();
+        }
+        else
+        {
+            focusedDepth = originalFocusedDepth;
+        }
     }
 }

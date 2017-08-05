@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4313109104028798}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Icon Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   - component: {fileID: 4261284997169178}
   - component: {fileID: 23220523879859604}
   - component: {fileID: 102212912411368376}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,8 @@ GameObject:
   - component: {fileID: 114362202242509368}
   - component: {fileID: 114382012829115516}
   - component: {fileID: 114717588543387404}
-  m_Layer: 0
+  - component: {fileID: 114278280153972126}
+  m_Layer: 8
   m_Name: MessageBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +75,7 @@ GameObject:
   - component: {fileID: 33149569156097060}
   - component: {fileID: 65144766887318560}
   - component: {fileID: 23881132470764712}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +92,7 @@ GameObject:
   - component: {fileID: 4566803884352514}
   - component: {fileID: 65068787117575332}
   - component: {fileID: 114286858875541380}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Button OK
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +109,7 @@ GameObject:
   - component: {fileID: 4298289557958836}
   - component: {fileID: 33804086234425376}
   - component: {fileID: 23466135815971114}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +126,7 @@ GameObject:
   - component: {fileID: 4875550602472542}
   - component: {fileID: 23695027952357402}
   - component: {fileID: 102966915876320262}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Caption
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -449,6 +450,20 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
+--- !u!114 &114278280153972126
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1355279511959336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbf7cdd875647c2469b43b190fd5db9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stackable: 1
+  typeSingleton: 0
+  typeId: MessageBox
 --- !u!114 &114286858875541380
 MonoBehaviour:
   m_ObjectHideFlags: 1

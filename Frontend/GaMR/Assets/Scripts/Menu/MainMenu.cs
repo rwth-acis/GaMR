@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainMenu : MonoBehaviour
+public class MainMenu : MonoBehaviour, IWindow
 {
     public GameObject menuObject;
 
@@ -38,6 +39,11 @@ public class MainMenu : MonoBehaviour
             menu.ResetMenu();
             instance.SetActive(false);
         }
+    }
+
+    public void CloseWindow()
+    {
+        Close();
     }
 
     public static GameObject Instance

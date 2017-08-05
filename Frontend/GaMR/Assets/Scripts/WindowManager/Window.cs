@@ -6,8 +6,10 @@ using UnityEngine;
 public class Window : MonoBehaviour
 {
     public bool stackable;
-    public bool singletonType;
+    public bool typeSingleton;
     public string typeId;
+
+    private bool started = false;
 
     private float windowDepth;
     private IWindow externalWindowLogic;
@@ -17,7 +19,15 @@ public class Window : MonoBehaviour
     public float WindowDepth
     {
         get { return windowDepth; }
-        set { windowDepth = value; tagalong.TagalongDistance = windowDepth; }
+        set
+        {
+            windowDepth = value;
+            if (tagalong == null)
+            {
+                tagalong = GetComponent<SimpleTagalong>();
+            }
+            tagalong.TagalongDistance = windowDepth;
+        }
     }
 
     /// <summary>
@@ -25,9 +35,10 @@ public class Window : MonoBehaviour
     /// </summary>
     public void Start()
     {
-        WindowManager.Instance.Add(this);
         externalWindowLogic = GetComponent<IWindow>();
         tagalong = GetComponent<SimpleTagalong>();
+        WindowManager.Instance.Add(this);
+        started = true;
     }
 
     public void Close()
@@ -44,6 +55,28 @@ public class Window : MonoBehaviour
 
     private void OnDestroy()
     {
-        WindowManager.Instance.Remove(this);
+        NotifyWindowManager();
+    }
+
+    private void OnDisable()
+    {
+        NotifyWindowManager();
+    }
+
+    private void OnEnable()
+    {
+        if (started)
+        {
+            WindowManager.Instance.Add(this);
+        }
+    }
+
+    private void NotifyWindowManager()
+    {
+        // if this is called when the scene is unloaded => Instance is null and it does not matter
+        if (WindowManager.Instance != null)
+        {
+            WindowManager.Instance.Remove(this);
+        }
     }
 }
