@@ -139,6 +139,14 @@
     {
       "key": "Log out",
       "value": "Abmelden"
+    },
+    {
+      "key": "Name-Position",
+      "value": "Name-Position"
+    },
+    {
+      "key": "Position-Name",
+      "value": "Position-Name"
     }
   ]
 }
