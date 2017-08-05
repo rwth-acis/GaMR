@@ -25,7 +25,7 @@ public class BoundingBoxMenuInitialization : MonoBehaviour
     public void InitializeMenu()
     {
         CustomMenuItem toggleEditMode = menu.GetItem("ToggleEditMode");
-        if (attachementManager.IsQuiz && InformationManager.instance.playerType == PlayerType.STUDENT)
+        if (attachementManager.IsQuiz && InformationManager.Instance.playerType == PlayerType.STUDENT)
         {
             toggleEditMode.ItemEnabled = false;
         }

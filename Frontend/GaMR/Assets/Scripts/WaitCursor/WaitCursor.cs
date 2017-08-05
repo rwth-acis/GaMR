@@ -1,34 +1,41 @@
-﻿using System.Collections;
+﻿using HoloToolkit.Unity;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaitCursor : MonoBehaviour
+/// <summary>
+/// Contains the logic for the wait cursor
+/// </summary>
+public class WaitCursor : Singleton<WaitCursor>
 {
-    private static WaitCursor instance;
 
-    // Use this for initialization
+    /// <summary>
+    /// Initializes the singleton instance and disables the wait cursor
+    /// </summary>
     void Start()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
         gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// Displays the wait cursor
+    /// </summary>
     public static void Show()
     {
-        if (instance != null)
+        if (Instance != null)
         {
-            instance.gameObject.SetActive(true);
+            Instance.gameObject.SetActive(true);
         }
     }
 
+    /// <summary>
+    /// Hides the wait cursor
+    /// </summary>
     public static void Hide()
     {
-        if (instance != null)
+        if (Instance != null)
         {
-            instance.gameObject.SetActive(false);
+            Instance.gameObject.SetActive(false);
         }
     }
 }

@@ -18,6 +18,8 @@ public class AnnotationManager : MonoBehaviour
     protected string subPathLoad = "/resources/annotation/load/";
     protected string subPathSave = "/resources/annotation/save/";
 
+    protected float annotationSize = 5.5f;
+
     /// <summary>
     /// Initializes the annotation-manager
     /// Collects the necessary components and loads previously stored annotations if they exist
@@ -30,6 +32,9 @@ public class AnnotationManager : MonoBehaviour
         LoadAnnotations();
     }
 
+    /// <summary>
+    /// initializes and gets the necessary components
+    /// </summary>
     protected void Init()
     {
         annotations = new List<Annotation>();
@@ -40,6 +45,9 @@ public class AnnotationManager : MonoBehaviour
         objectInfo = GetComponent<ObjectInfo>();
     }
 
+    /// <summary>
+    /// loads the annotations
+    /// </summary>
     protected virtual void LoadAnnotations()
     {
         restManager.GET(infoManager.BackendAddress + subPathLoad, Load);
@@ -56,7 +64,8 @@ public class AnnotationManager : MonoBehaviour
             GameObject annotationObject = (GameObject)Instantiate(Resources.Load("AnnotationSphere"));
             annotationObject.transform.position = gazeManager.HitPosition;
             annotationObject.transform.parent = gameObject.transform;
-
+            annotationObject.transform.localScale = new Vector3(annotationSize, annotationSize, annotationSize);
+            
             // close currently opened annotation box
             if (AnnotationBox.currentlyOpenAnnotationBox != null)
             {
@@ -109,6 +118,10 @@ public class AnnotationManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// saves the current set of annotations as a quiz
+    /// </summary>
+    /// <param name="name">The name of the quiz</param>
     public void SaveAsQuiz(string name)
     {
         string subQuizPathName = "/resources/quiz/save/" + objectInfo.ModelName + "/";
@@ -124,6 +137,11 @@ public class AnnotationManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// loads the annotations
+    /// is called when the rest query has finished
+    /// </summary>
+    /// <param name="res">The result string of the rest-query (null if an error occured)</param>
     protected void Load(string res)
     {
         if (res != null)
@@ -134,6 +152,9 @@ public class AnnotationManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// hides all annotations
+    /// </summary>
     public void HideAllAnnotations()
     {
         foreach(AnnotationContainer container in annotationContainers)
@@ -144,6 +165,10 @@ public class AnnotationManager : MonoBehaviour
         annotationContainers.Clear();
     }
 
+    /// <summary>
+    /// shows all annotations
+    /// at first it clears all annotationContainers if some still existed
+    /// </summary>
     public void ShowAllAnnotations()
     {
         if (annotationContainers.Count != 0)
@@ -156,6 +181,8 @@ public class AnnotationManager : MonoBehaviour
             GameObject annotationObject = (GameObject)Instantiate(Resources.Load("AnnotationSphere"));
             annotationObject.transform.parent = gameObject.transform;
             annotationObject.transform.localPosition = annotation.Position;
+            annotationObject.transform.localScale = new Vector3(5, 5, 5);
+
 
             AnnotationContainer container = annotationObject.AddComponent<AnnotationContainer>();
             container.annotationManager = this;
@@ -165,17 +192,29 @@ public class AnnotationManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// whether the edit mode is enabled
+    /// </summary>
     public bool EditMode
     {
         get { return editMode; }
         set { editMode = value; }
     }
 
+    /// <summary>
+    /// called when the component is destroyed
+    /// saves the annotations
+    /// </summary>
     public virtual void OnDestroy()
     {
         Save();
     }
 
+    /// <summary>
+    /// called if the application focus changes
+    /// saves the annotations if the application is not focused anymore
+    /// </summary>
+    /// <param name="focus">true if application is now focused; false if not</param>
     public void OnApplicationFocus(bool focus)
     {
         if (focus == false)
@@ -184,6 +223,9 @@ public class AnnotationManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// the set of annotations
+    /// </summary>
     public List<Annotation> Annotations
     {
         get { return annotations; }

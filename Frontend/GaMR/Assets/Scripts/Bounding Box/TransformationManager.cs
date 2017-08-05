@@ -14,6 +14,12 @@ public class TransformationManager : MonoBehaviour
     public Vector3 maxSize;
     [Tooltip("The minimum size of the gameObject's bounds")]
     public Vector3 minSize;
+    private Rigidbody ridgidBody;
+
+    private void Start()
+    {
+        ridgidBody = GetComponent<Rigidbody>();
+    }
 
     public void Scale(Vector3 scaleVector)
     {
@@ -28,14 +34,6 @@ public class TransformationManager : MonoBehaviour
         {
             transform.localScale = newScale;
         }
-        else if (newScale.x < minSize.x && newScale.y < minSize.y && newScale.z < minSize.z)
-        {
-            transform.localScale = minSize;
-        }
-        else
-        {
-            transform.localScale = maxSize;
-        }
     }
 
     public void Rotate(Vector3 axis, float angle)
@@ -45,6 +43,74 @@ public class TransformationManager : MonoBehaviour
 
     internal void Translate(Vector3 movement)
     {
-        transform.Translate(movement, Space.World);
+        RaycastHit hitInfo;
+        // check if the object would collide with something
+        // if not => perform the movement
+        bool collidesWithSomething = ridgidBody.SweepTest(movement, out hitInfo, movement.magnitude);
+        if (!collidesWithSomething)
+        {
+            transform.Translate(movement, Space.World);
+        }
+    }
+
+    private IEnumerator SmoothRotate(Vector3 axis, float angle, float time)
+    {
+        Quaternion startingRotation = transform.localRotation;
+        Rotate(axis, angle);
+        Quaternion targetRotation = transform.localRotation;
+        transform.localRotation = startingRotation;
+
+        float elapsedTime = 0;
+
+        while (elapsedTime < time)
+        {
+            elapsedTime += Time.deltaTime;
+            transform.localRotation = Quaternion.Slerp(startingRotation, targetRotation, (elapsedTime / time));
+
+            yield return new WaitForEndOfFrame();
+        }
+        transform.localRotation = targetRotation;
+    }
+
+    private IEnumerator SmoothScale(Vector3 scaleVector, float time)
+    {
+        Vector3 startingScale = transform.localScale;
+        Scale(scaleVector);
+        Vector3 targetScale = transform.localScale;
+        transform.localScale = startingScale;
+
+        float elapsedTime = 0;
+        while(elapsedTime < time)
+        {
+            elapsedTime += Time.deltaTime;
+            transform.localScale = Vector3.Slerp(startingScale, targetScale, (elapsedTime / time));
+
+            yield return new WaitForEndOfFrame();
+        }
+
+        transform.localScale = targetScale;
+    }
+
+    // ---------------------------------
+    // quick commands for voice-control:
+
+    public void ScaleUp()
+    {
+        StartCoroutine(SmoothScale(new Vector3(1.1f, 1.1f, 1.1f), 1f));
+    }
+
+    public void ScaleDown()
+    {
+        StartCoroutine(SmoothScale(new Vector3(0.9f, 0.9f,0.9f), 1f));
+    }
+
+    public void RotateCW()
+    {
+        StartCoroutine(SmoothRotate(Vector3.up, 45, 1f));
+    }
+
+    public void RotateCCW()
+    {
+        StartCoroutine(SmoothRotate(Vector3.up, -45, 1f));
     }
 }

@@ -115,6 +115,38 @@
     {
       "key": "Enter the name of the quiz",
       "value": "Geben Sie den Quiz-Namen ein"
+    },
+    {
+      "key": "Change Language",
+      "value": "Sprache ändern"
+    },
+    {
+      "key": "New Quiz",
+      "value": "Neues Quiz"
+    },
+    {
+      "key": "From current annotations",
+      "value": "Aus aktuellen Anmerkungen"
+    },
+    {
+      "key": "There are no 3D models to show",
+      "value": "Es sind keine 3D-Modelle vorhanden"
+    },
+    {
+      "key": "There are no quizzes to show for this 3D model",
+      "value": "Es ist noch kein Quiz für dieses Modell vorhanden"
+    },
+    {
+      "key": "Log out",
+      "value": "Abmelden"
+    },
+    {
+      "key": "Name-Position",
+      "value": "Name-Position"
+    },
+    {
+      "key": "Position-Name",
+      "value": "Position-Name"
     }
   ]
 }

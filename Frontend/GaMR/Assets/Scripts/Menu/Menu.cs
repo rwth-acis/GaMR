@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Menu : MonoBehaviour {
+[Serializable]
+public class Menu : MonoBehaviour
+{
 
     public List<CustomMenuItem> rootMenu;
     public float padding = 0.1f;
@@ -19,10 +21,11 @@ public class Menu : MonoBehaviour {
     private CustomMenuItem markedItem;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         allMenuItems = new Dictionary<string, CustomMenuItem>();
         FillDictionary(rootMenu);
-        InstantiateMenu(Vector3.zero, Vector3.zero, rootMenu, null, false);
+        InstantiateMenu(Vector3.zero, Vector3.zero, rootMenu, null, false, alignment);
         if (externalInitialization != null)
         {
             externalInitialization.Invoke();
@@ -37,18 +40,28 @@ public class Menu : MonoBehaviour {
     {
         foreach (CustomMenuItem item in menuList)
         {
-            if (!allMenuItems.ContainsKey(item.menuItemName))
+            if (!allMenuItems.ContainsKey(item.MenuItemName))
             {
-                allMenuItems.Add(item.menuItemName, item);
+                allMenuItems.Add(item.MenuItemName, item);
             }
             else
             {
-                Debug.LogWarning("There are multiple menu items with the name: " + item.menuItemName + Environment.NewLine + "One or more could not be logged in the dictionary");
+                Debug.LogWarning("There are multiple menu items with the name: " + item.MenuItemName + Environment.NewLine + "One or more could not be logged in the dictionary");
             }
             if (item.subMenu != null && item.subMenu.Count > 0)
             {
                 FillDictionary(item.subMenu);
             }
+        }
+    }
+
+    public void UpdateItemName(string oldname, string newName)
+    {
+        if (allMenuItems.ContainsKey(oldname) && !allMenuItems.ContainsKey(newName))
+        {
+            CustomMenuItem value = allMenuItems[oldname];
+            allMenuItems.Remove(oldname);
+            allMenuItems.Add(newName, value);
         }
     }
 
@@ -69,7 +82,7 @@ public class Menu : MonoBehaviour {
         }
     }
 
-    [System.Obsolete("InitMenu is obsolte, please use InstantiateMenu instead")]
+    [System.Obsolete("InitMenu is obsolete, please use InstantiateMenu instead")]
     private void InitMenu()
     {
         Vector3 instantiatePosition = new Vector3(0, 0, 0);
@@ -107,11 +120,11 @@ public class Menu : MonoBehaviour {
     /// <param name="siblings">The menu item list which should be hidden</param>
     public void HideSiblings(CustomMenuItem current, List<CustomMenuItem> siblings)
     {
-        foreach(CustomMenuItem item in siblings)
+        foreach (CustomMenuItem item in siblings)
         {
-            if (item != current && item.GameObjectInstance != null)
+            if (item != current)
             {
-                item.GameObjectInstance.SetActive(false);
+                item.Hide();
             }
         }
     }
@@ -126,8 +139,7 @@ public class Menu : MonoBehaviour {
         {
             if (item.GameObjectInstance != null)
             {
-                item.GameObjectInstance.SetActive(true);
-                item.MenuSytleAdapter.UpdateContainerColor();
+                item.Show();
             }
         }
     }
@@ -138,15 +150,15 @@ public class Menu : MonoBehaviour {
     public void ResetMenu()
     {
         // the menu object should only contain menu items as children
-        foreach(Transform child in transform)
+        foreach (Transform child in transform)
         {
             GameObject.Destroy(child.gameObject);
         }
 
-        InstantiateMenu(Vector3.zero, Vector3.zero, rootMenu, null, false);
+        InstantiateMenu(Vector3.zero, Vector3.zero, rootMenu, null, false, alignment);
     }
 
-    public void InstantiateMenu(Vector3 instantiatePosition, Vector3 parentItemSize, List<CustomMenuItem> menu, CustomMenuItem parent, bool isSubMenu)
+    public void InstantiateMenu(Vector3 instantiatePosition, Vector3 parentItemSize, List<CustomMenuItem> menu, CustomMenuItem parent, bool isSubMenu, Direction alignment)
     {
         if (externalInitialization != null)
         {
@@ -161,7 +173,7 @@ public class Menu : MonoBehaviour {
         // instantiate the menu
         for (int i = 0; i < menu.Count; i++)
         {
-            if (menu[i].visibleTo == PlayerType.ALL || menu[i].visibleTo == InformationManager.instance.playerType)
+            if (menu[i].visibleTo == PlayerType.ALL || menu[i].visibleTo == InformationManager.Instance.playerType)
             {
                 menu[i].Create(this, parent);
                 if (i > 0)
@@ -216,6 +228,15 @@ public class Menu : MonoBehaviour {
                 }
                 menu[i].Position = instantiatePosition;
             }
+        }
+    }
+
+    public void UpdateTexts()
+    {
+        foreach (KeyValuePair<string, CustomMenuItem> item in allMenuItems)
+        {
+            // update the localization
+            item.Value.Text = item.Value.InitialText;
         }
     }
 

@@ -2,25 +2,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenuActions : MonoBehaviour
 {
 
     public GameObject carouselMenu;
     public GameObject carouselMenuStyle;
-    Menu menu;
-    InformationManager infoManager;
     RestManager restManager;
     ModelLoadManager modelLoadManager;
+    Menu menu;
     static GameObject carouselInstance;
-
-    public InformationManager InfoManager { get { return infoManager; } }
 
     public void Start()
     {
-        infoManager = ComponentGetter.GetComponentOnGameobject<InformationManager>("InformationManager");
         restManager = ComponentGetter.GetComponentOnGameobject<RestManager>("RestManager");
         modelLoadManager = ComponentGetter.GetComponentOnGameobject<ModelLoadManager>("ModelLoadManager");
+        menu = GetComponent<Menu>();
         if (carouselInstance != null)
         {
             Destroy(carouselInstance);
@@ -40,7 +38,7 @@ public class MainMenuActions : MonoBehaviour
         if (address != null)
         {
             Debug.Log("Set IP Address to " + address);
-            infoManager.ipAddressBackend = address;
+            InformationManager.Instance.ipAddressBackend = address;
             TestAddress();
         }
     }
@@ -48,7 +46,7 @@ public class MainMenuActions : MonoBehaviour
     private void TestAddress()
     {
         WaitCursor.Show();
-        restManager.GET(infoManager.BackendAddress + "/resources/model/overview", RestResult);
+        restManager.GET(InformationManager.Instance.BackendAddress + "/resources/model/overview", RestResult);
     }
 
     private void RestResult(string result)
@@ -68,7 +66,7 @@ public class MainMenuActions : MonoBehaviour
 
     public void EnterPort()
     {
-        Keyboard.Display(LocalizationManager.Instance.ResolveString("Enter the port"), SetIPAddress, false);
+        Keyboard.Display(LocalizationManager.Instance.ResolveString("Enter the port"), SetIPPort, false);
         gameObject.SetActive(false);
     }
 
@@ -82,7 +80,7 @@ public class MainMenuActions : MonoBehaviour
             if (int.TryParse(port, out iPort))
             {
                 Debug.Log("Set Port to " + port);
-                infoManager.portBackend = iPort;
+                InformationManager.Instance.portBackend = iPort;
                 TestAddress();
             }
             else
@@ -96,7 +94,7 @@ public class MainMenuActions : MonoBehaviour
     public void ShowCarouselMenu()
     {
         WaitCursor.Show();
-        restManager.GET(infoManager.BackendAddress + "/resources/model/overview", AvailableModelsLoaded);
+        restManager.GET(InformationManager.Instance.BackendAddress + "/resources/model/overview", AvailableModelsLoaded);
     }
 
     private void AvailableModelsLoaded(string res)
@@ -115,20 +113,27 @@ public class MainMenuActions : MonoBehaviour
         }
 
         JsonStringArray array = JsonUtility.FromJson<JsonStringArray>(res);
+
+        if (array.array.Count == 0)
+        {
+            MessageBox.Show(LocalizationManager.Instance.ResolveString("There are no 3D models to show"), MessageBoxType.INFORMATION);
+            return;
+        }
+
         array.array.Sort();
         List<CustomMenuItem> items = new List<CustomMenuItem>();
 
-        foreach(string modelName in array.array)
+        CarouselMenu carouselScript = carouselInstance.GetComponent<CarouselMenu>();
+
+        foreach (string modelName in array.array)
         {
             CustomMenuItem item = carouselInstance.AddComponent<CustomMenuItem>();
             item.Init(carouselMenuStyle, new List<CustomMenuItem>(), false);
             item.onClickEvent.AddListener(delegate { OnCarouselItemClicked(modelName); });
             item.Text = modelName;
-            item.menuItemName = modelName;
+            item.MenuItemName = modelName;
             items.Add(item);
         }
-
-        CarouselMenu carouselScript = carouselInstance.GetComponent<CarouselMenu>();
 
         if (carouselScript != null)
         {
@@ -143,5 +148,26 @@ public class MainMenuActions : MonoBehaviour
         modelLoadManager.Load(name);
         Destroy(carouselInstance);
         carouselInstance = null;
+    }
+
+    public void SetLangaugeGerman()
+    {
+        SetLanguage(Language.GERMAN);
+    }
+
+    public void SetLanguageEnglish()
+    {
+        SetLanguage(Language.ENGLISH);
+    }
+
+    private void SetLanguage(Language language)
+    {
+        InformationManager.Instance.Language = language;
+        menu.UpdateTexts();
+    }
+
+    public void LogOut()
+    {
+        SceneManager.LoadScene("Login", LoadSceneMode.Single);
     }
 }

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles text behavior of a TextMesh which has a textBackground and an overall background
+/// </summary>
 public class Caption : MonoBehaviour {
 
     private Transform textBackgroundPivot, textBackground;
@@ -15,6 +18,10 @@ public class Caption : MonoBehaviour {
         // not necessary, component is initialized by another component using Init()
     }
 
+    /// <summary>
+    /// Initializes the component
+    /// Gets all necessary transforms and calculates the initial sizes of the backgrounds
+    /// </summary>
     public void Init()
     {
         background = transform.parent.Find("Background");
@@ -33,6 +40,10 @@ public class Caption : MonoBehaviour {
         originalBackgroundHeight = Geometry.GetBoundsIndependentFromRotation(background).size.y;
     }
 
+
+    /// <summary>
+    /// Updates the sizes of the backgrounds based on the number of lines of the text
+    /// </summary>
     private void AdaptSizes()
     {
         float height = Geometry.GetBoundsIndependentFromRotation(textMesh.transform).size.y;
@@ -43,6 +54,12 @@ public class Caption : MonoBehaviour {
         ScaleToHeight(backgroundPivot, background, originalBackgroundHeight + heightDifference);
     }
 
+    /// <summary>
+    /// Scales a transform to match the specified absolute height
+    /// </summary>
+    /// <param name="pivot">The scaling pivot</param>
+    /// <param name="trans">The transform to scale</param>
+    /// <param name="height">The target height</param>
     private void ScaleToHeight(Transform pivot, Transform trans, float height)
     {
         Transform parent = pivot.parent;
@@ -59,6 +76,11 @@ public class Caption : MonoBehaviour {
         pivot.parent = parent;
     }
 
+    /// <summary>
+    /// Adds a scaling pivot at the upper edge of the gameobject
+    /// </summary>
+    /// <param name="trans">The transform which should get the pivot</param>
+    /// <returns>The positioned pivot transform</returns>
     private Transform CreateScalingPivot(Transform trans)
     {
         GameObject pivotPoint = new GameObject("BackgroundScalingPivot");
@@ -72,6 +94,10 @@ public class Caption : MonoBehaviour {
         return pivotPoint.transform;
     }
 
+    /// <summary>
+    /// The text which should be displayed by the TextMesh
+    /// Automatically handles size changes if set
+    /// </summary>
     public string Text
     {
         get { return text; }

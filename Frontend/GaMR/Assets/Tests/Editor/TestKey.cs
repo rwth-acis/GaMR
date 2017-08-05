@@ -27,7 +27,6 @@ public class TestKey {
         caption = captionObj.AddComponent<TextMesh>();
         InformationManager infoManager = parent.AddComponent<InformationManager>();
         LocalizationManager manager = parent.AddComponent<LocalizationManager>();
-        infoManager.Start();
         manager.Start();
         keyboard.Start();
         // due to localization 50 keys are expected but for simplicity this test case only provides one

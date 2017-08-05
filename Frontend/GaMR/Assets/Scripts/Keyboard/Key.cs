@@ -8,7 +8,8 @@ using System;
 /// represents one key on a keyboard
 /// </summary>
 [ExecuteInEditMode]
-public class Key : MonoBehaviour, IInputHandler {
+public class Key : MonoBehaviour, IInputHandler
+{
     [Tooltip("The type of the key. This determines its functionality if it is pressed")]
     public KeyType keyType = KeyType.LETTER;
     [Tooltip("If keyType is LETTER: the letter which is shown by the key")]
@@ -16,7 +17,7 @@ public class Key : MonoBehaviour, IInputHandler {
     private string letter;
     private Keyboard keyboard;
     private TextMesh caption;
-    private Transform capslockIndication; 
+    private Transform capslockIndication;
 
     /// <summary>
     /// get the necessary components:
@@ -57,7 +58,14 @@ public class Key : MonoBehaviour, IInputHandler {
     public string Letter
     {
         get { return letter; }
-        set { letter = value; caption.text = value; }
+        set
+        {
+            letter = value;
+            if (caption != null)
+            {
+                caption.text = value;
+            }
+        }
     }
 
     /// <summary>
@@ -77,11 +85,8 @@ public class Key : MonoBehaviour, IInputHandler {
         {
             if (keyType == KeyType.LETTER)
             {
-                if (caption != null)
-                {
-                    // add the caption to the text
-                    keyboard.Text += letter;
-                }
+                // add the letter to the text
+                keyboard.Text += letter;
             }
             else if (keyType == KeyType.BACK)
             {

@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
 
     private static GameObject staticMenuObject;
     private static GameObject instance;
+    private static Menu menu;
 
     public void Start()
     {
@@ -18,14 +19,25 @@ public class MainMenu : MonoBehaviour
 
     public static void Show()
     {
-        instance = GameObject.Instantiate(staticMenuObject);
+        if (instance == null)
+        {
+            instance = GameObject.Instantiate(staticMenuObject);
+            menu = instance.GetComponent<Menu>();
+        }
+        else
+        {
+            instance.SetActive(true);
+        }
         instance.transform.position = Camera.main.transform.position + new Vector3(-0.2f,0,0) + 2 * Camera.main.transform.forward;
     }
 
     public static void Close()
     {
-        Destroy(instance);
-        instance = null;
+        if (instance != null)
+        {
+            menu.ResetMenu();
+            instance.SetActive(false);
+        }
     }
 
     public static GameObject Instance

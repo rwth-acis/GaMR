@@ -1,26 +1,18 @@
-﻿using System;
+﻿using HoloToolkit.Unity;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LocalizationManager : MonoBehaviour
+public class LocalizationManager : Singleton<LocalizationManager>
 {
-    private static LocalizationManager instance;
-
     private Dictionary<string, string> dictionary;
     private List<string> keyboardLayout;
     private Language language;
 
     public void Start()
     {
-        language = InformationManager.instance.Language;
-        LoadDictionary();
-        LoadKeyboardLayout();
-
-        if (instance == null)
-        {
-            instance = this;
-        }
+        UpdateLanguage();
     }
 
     private void LoadDictionary()
@@ -66,11 +58,6 @@ public class LocalizationManager : MonoBehaviour
         }
     }
 
-    public static LocalizationManager Instance
-    {
-        get { return instance; }
-    }
-
     public string ResolveString(string text)
     {
         if (dictionary.ContainsKey(text))
@@ -82,6 +69,14 @@ public class LocalizationManager : MonoBehaviour
             Debug.LogWarning("Requested string could not be translated: " + text);
             return text;
         }
+    }
+
+    public void UpdateLanguage()
+    {
+        language = InformationManager.Instance.Language;
+        LoadDictionary();
+        LoadKeyboardLayout();
+
     }
 
     private string GetLanguageCode(Language language)

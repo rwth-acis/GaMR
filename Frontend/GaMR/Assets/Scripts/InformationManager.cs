@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using HoloToolkit.Unity;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 /// <summary>
 /// Manages important settings of the application
@@ -8,9 +10,7 @@ using UnityEngine;
 /// the port and a property which combines all into a http address which can be called
 /// also provides information about the user
 /// </summary>
-public class InformationManager : MonoBehaviour {
-
-    public static InformationManager instance;
+public class InformationManager : Singleton<InformationManager> {
 
     public string ipAddressBackend = "192.168.178.43";
     public int portBackend = 8080;
@@ -20,10 +20,7 @@ public class InformationManager : MonoBehaviour {
 
     public void Start()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
+        LoadValues();
     }
 
     /// <summary>
@@ -34,7 +31,46 @@ public class InformationManager : MonoBehaviour {
     public Language Language
     {
         get { return language; }
-        set { language = value; }
+        set { language = value; LocalizationManager.Instance.UpdateLanguage(); }
+    }
+
+    protected override void OnDestroy()
+    {
+        SaveValues();
+    }
+
+    public void OnApplicationFocus(bool focus)
+    {
+        if (!focus)
+        {
+            SaveValues();
+        }
+    }
+
+    public void OnApplicationPause(bool pause)
+    {
+        if (pause)
+        {
+            SaveValues();
+        }
+    }
+
+    private void SaveValues()
+    {
+        PlayerPrefs.SetString("ipAddress", ipAddressBackend);
+        PlayerPrefs.SetInt("port", portBackend);
+        PlayerPrefs.SetInt("language", (int)language);
+        PlayerPrefs.Save();
+        Debug.Log("Data saved");
+    }
+
+    private void LoadValues()
+    {
+        ipAddressBackend = PlayerPrefs.GetString("ipAddress", "192.0.0.0");
+        portBackend = PlayerPrefs.GetInt("port", 8080);
+        this.Language = (Language) PlayerPrefs.GetInt("language", 0);
+        Debug.Log("Loaded " + ipAddressBackend + ":" + portBackend);
+        Debug.Log("Language: " + language);
     }
 }
 

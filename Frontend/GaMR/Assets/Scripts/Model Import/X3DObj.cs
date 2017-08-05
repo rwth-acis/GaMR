@@ -89,6 +89,9 @@ public class X3DObj
         ObjectInfo objInfo = parent.AddComponent<ObjectInfo>();
         objInfo.ModelName = ModelName;
 
+        Rigidbody rigidBody = parent.AddComponent<Rigidbody>();
+        rigidBody.isKinematic = true;
+
         AttachementManager attachementManager = parent.AddComponent<AttachementManager>();
 
         parentBounds = new Bounds();
@@ -112,14 +115,19 @@ public class X3DObj
         attachementManager.Init();
 
 
-        // normalize size to fit height of one unit
-        float factor = 1 / parentBounds.size.z;
+        // normalize size so that maximum axis size is 1
+
+        float max = Math.Max(Math.Max(parentBounds.size.x, parentBounds.size.y), parentBounds.size.z);
+
+        float factor = 1 / max;
 
 
         parent.transform.localScale = new Vector3(
             parent.transform.localScale.x * factor,
             parent.transform.localScale.y * factor,
             parent.transform.localScale.z * factor);
+
+        parentBounds.size *= factor;
 
 
         // reset any offset so that the object is centered
