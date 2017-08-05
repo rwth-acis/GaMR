@@ -40,25 +40,6 @@ public class LoginForm : MonoBehaviour, IWindow
         }
     }
 
-    public bool WindowStackable
-    {
-        get
-        {
-            return false;
-        }
-    }
-
-    public bool WindowSingleton
-    {
-        get { return true; }
-    }
-
-    public float WindowDepth
-    {
-        get { return tagalongScript.TagalongDistance; }
-        set { tagalongScript.TagalongDistance = value; }
-    }
-
     private string DisplayPassword(string password)
     {
         string res = "";

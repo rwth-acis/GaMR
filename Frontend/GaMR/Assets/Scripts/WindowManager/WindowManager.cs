@@ -1,44 +1,36 @@
-﻿using System.Collections;
+﻿using HoloToolkit.Unity;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WindowManager : MonoBehaviour
+public class WindowManager : Singleton<WindowManager>
 {
     private static WindowManager instance;
 
-    public static WindowManager Instance
-    {
-        get { return instance; }
-    }
-
-    private List<IWindow> openWindows;
+    private List<Window> openWindows;
 
 
     // Use this for initialization
     void Start()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        openWindows = new List<IWindow>();
+        openWindows = new List<Window>();
     }
 
-    public void Add(IWindow window)
+    public void Add(Window window)
     {
-        if (window.WindowStackable)
+        if (window.stackable)
         {
-            foreach(IWindow w in openWindows)
+            foreach(Window w in openWindows)
             {
                 w.WindowDepth += 0.1f;
             }
         }
         else
         {
-            List<IWindow> tempCopy = openWindows;
-            foreach (IWindow w in tempCopy)
+            List<Window> tempCopy = openWindows;
+            foreach (Window w in tempCopy)
             {
-                w.CloseWindow();
+                w.Close();
             }
         }
 
@@ -46,9 +38,8 @@ public class WindowManager : MonoBehaviour
         window.WindowDepth = 2f;
     }
 
-    public void Close(IWindow window)
+    public void Remove(Window window)
     {
-        window.CloseWindow();
         int toDelete = openWindows.IndexOf(window);
         for (int i = 0; i < openWindows.Count; i++)
         {

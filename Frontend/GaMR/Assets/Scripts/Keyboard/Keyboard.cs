@@ -111,8 +111,6 @@ public class Keyboard : MonoBehaviour, IWindow
         UpdateHeights();
 
         tagalongScript = GetComponent<SimpleTagalong>();
-
-        WindowManager.Instance.Add(this);
     }
 
     /// <summary>
@@ -326,28 +324,6 @@ public class Keyboard : MonoBehaviour, IWindow
     {
         get;
         set;
-    }
-
-    public bool WindowStackable
-    {
-        get
-        {
-            return true;
-        }
-    }
-
-    public bool WindowSingleton
-    {
-        get
-        {
-            return true;
-        }
-    }
-
-    public float WindowDepth
-    {
-        get { return tagalongScript.TagalongDistance; }
-        set { tagalongScript.TagalongDistance = value; }
     }
 
     /// <summary>
