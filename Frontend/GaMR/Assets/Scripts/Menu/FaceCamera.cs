@@ -7,14 +7,10 @@ using UnityEngine;
 /// </summary>
 public class FaceCamera : MonoBehaviour
 {
-
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
+    /// <summary>
+    /// gets the vector between the transform's position and the camera's position
+    /// rotates the object according to this vector
+    /// </summary>
     public void Update()
     {
         transform.rotation = Quaternion.LookRotation(transform.position - Camera.main.transform.position);
