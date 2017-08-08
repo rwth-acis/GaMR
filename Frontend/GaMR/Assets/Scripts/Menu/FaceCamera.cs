@@ -8,12 +8,6 @@ using UnityEngine;
 public class FaceCamera : MonoBehaviour
 {
 
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     public void Update()
     {

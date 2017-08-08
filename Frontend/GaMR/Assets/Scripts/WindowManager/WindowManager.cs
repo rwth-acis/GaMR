@@ -9,6 +9,8 @@ public class WindowManager : Singleton<WindowManager>
 
     public float focusedDepth = 2f;
     private float originalFocusedDepth;
+    private bool overrideRotation;
+    private Vector3 windowNormal;
 
     private int layerMask;
 
@@ -93,6 +95,17 @@ public class WindowManager : Singleton<WindowManager>
         if (Physics.Raycast(Camera.main.transform.position, camForward, out hit, 2f, layerMask))
         {
             focusedDepth = hit.distance - 0.1f;
+
+
+
+            if (focusedDepth < Camera.main.nearClipPlane && !UIMessage.Instance.Active && openWindows.Count > 0)
+            {
+                UIMessage.Instance.Show(LocalizationManager.Instance.ResolveString("Your are too close to an obstacle. Step away so that windows can be displayed."));
+            }
+            else if (UIMessage.Instance.Active && (focusedDepth >= Camera.main.nearClipPlane || openWindows.Count == 0))
+            {
+                UIMessage.Instance.Hide();
+            }
             UpdateAlignment();
         }
         else
