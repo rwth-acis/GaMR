@@ -13,8 +13,11 @@ public class Window : MonoBehaviour
 
     private float windowDepth;
     private IWindow externalWindowLogic;
+    private bool overwriteRotation;
+    private Vector3 windowNormal;
 
     private SimpleTagalong tagalong;
+    private FaceCamera faceCamera;
 
     public float WindowDepth
     {
@@ -30,6 +33,29 @@ public class Window : MonoBehaviour
         }
     }
 
+    public bool OverwriteRotation
+    {
+        get { return overwriteRotation; }
+        set
+        {
+            if (!value)
+            {
+                Debug.Log("Unset");
+            }
+            overwriteRotation = value;
+            faceCamera.enabled = !overwriteRotation;
+        }
+    }
+
+    public Vector3 WindowNormal
+    {
+        get { return windowNormal; }
+        set
+        {
+            windowNormal = value;
+        }
+    }
+
     /// <summary>
     /// this is called when the component is created => register it in the window manager
     /// </summary>
@@ -37,6 +63,7 @@ public class Window : MonoBehaviour
     {
         externalWindowLogic = GetComponent<IWindow>();
         tagalong = GetComponent<SimpleTagalong>();
+        faceCamera = GetComponent<FaceCamera>();
         WindowManager.Instance.Add(this);
         started = true;
     }
@@ -77,6 +104,14 @@ public class Window : MonoBehaviour
         if (WindowManager.Instance != null)
         {
             WindowManager.Instance.Remove(this);
+        }
+    }
+
+    private void Update()
+    {
+        if (overwriteRotation)
+        {
+            transform.rotation = Quaternion.LookRotation(-windowNormal);
         }
     }
 }

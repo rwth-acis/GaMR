@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class WindowManager : Singleton<WindowManager>
 {
@@ -9,7 +10,7 @@ public class WindowManager : Singleton<WindowManager>
 
     public float focusedDepth = 2f;
     private float originalFocusedDepth;
-    private bool overrideRotation;
+    private bool overwriteRotation;
     private Vector3 windowNormal;
 
     private int layerMask;
@@ -65,6 +66,8 @@ public class WindowManager : Singleton<WindowManager>
         for (int i = 0; i < openWindows.Count; i++)
         {
             openWindows[i].WindowDepth = focusedDepth + (openWindows.Count - i - 1) * 0.1f;
+            openWindows[i].WindowNormal = windowNormal;
+            openWindows[i].OverwriteRotation = overwriteRotation;
         }
     }
 
@@ -87,30 +90,40 @@ public class WindowManager : Singleton<WindowManager>
 
     private void FixedUpdate()
     {
-        Vector3 camForward = Camera.main.transform.forward;
-
-        RaycastHit hit;
-
-
-        if (Physics.Raycast(Camera.main.transform.position, camForward, out hit, 2f, layerMask))
+        if (openWindows.Count > 0)
         {
-            focusedDepth = hit.distance - 0.1f;
+            Vector3 direction = openWindows[openWindows.Count - 1].transform.position - Camera.main.transform.position;
+
+            RaycastHit hit;
 
 
-
-            if (focusedDepth < Camera.main.nearClipPlane && !UIMessage.Instance.Active && openWindows.Count > 0)
+            if (Physics.Raycast(Camera.main.transform.position, direction, out hit, 2f, layerMask))
             {
-                UIMessage.Instance.Show(LocalizationManager.Instance.ResolveString("Your are too close to an obstacle. Step away so that windows can be displayed."));
+                focusedDepth = hit.distance - 0.1f;
+                overwriteRotation = true;
+                windowNormal = hit.normal;
+
+
+                if (focusedDepth < Camera.main.nearClipPlane && !UIMessage.Instance.Active)
+                {
+                    UIMessage.Instance.Show(LocalizationManager.Instance.ResolveString("Your are too close to an obstacle. Step away so that windows can be displayed."));
+                }
+                else if (UIMessage.Instance.Active && focusedDepth >= Camera.main.nearClipPlane)
+                {
+                    UIMessage.Instance.Hide();
+                }
             }
-            else if (UIMessage.Instance.Active && (focusedDepth >= Camera.main.nearClipPlane || openWindows.Count == 0))
+            else
             {
-                UIMessage.Instance.Hide();
+                focusedDepth = originalFocusedDepth;
+                overwriteRotation = false;
             }
+
             UpdateAlignment();
         }
         else
         {
-            focusedDepth = originalFocusedDepth;
+            UIMessage.Instance.Hide();
         }
     }
 }
