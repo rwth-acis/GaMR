@@ -33,6 +33,7 @@ GameObject:
   - component: {fileID: 114095078950388686}
   - component: {fileID: 114678792982612236}
   - component: {fileID: 114122386360709928}
+  - component: {fileID: 114432161570486440}
   m_Layer: 2
   m_Name: LoginMenu
   m_TagString: Untagged
@@ -214,6 +215,20 @@ MonoBehaviour:
   icon: {fileID: 0}
   text: Login
   menuItemName: Login
+--- !u!114 &114432161570486440
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1859928805744080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbf7cdd875647c2469b43b190fd5db9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stackable: 0
+  typeSingleton: 1
+  typeId: LoginMenu
 --- !u!114 &114481922604197128
 MonoBehaviour:
   m_ObjectHideFlags: 1

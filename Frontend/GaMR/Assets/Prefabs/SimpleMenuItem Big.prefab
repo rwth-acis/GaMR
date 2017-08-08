@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4592115481463392}
   - component: {fileID: 114490551506402778}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: SimpleMenuItem Big
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 33948032089386394}
   - component: {fileID: 65146082904927682}
   - component: {fileID: 23752131844751280}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 4314921592785076}
   - component: {fileID: 23602019933914916}
   - component: {fileID: 102713604180880492}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Caption
   m_TagString: Untagged
   m_Icon: {fileID: 0}

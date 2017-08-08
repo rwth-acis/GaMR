@@ -34,6 +34,7 @@ GameObject:
   - component: {fileID: 114795987222237594}
   - component: {fileID: 114552315029079580}
   - component: {fileID: 114795010765442410}
+  - component: {fileID: 114495385195375438}
   m_Layer: 2
   m_Name: MainMenu
   m_TagString: Untagged
@@ -252,6 +253,20 @@ MonoBehaviour:
   icon: {fileID: 0}
   text: Set Port Number
   menuItemName: PortNumber
+--- !u!114 &114495385195375438
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1859928805744080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbf7cdd875647c2469b43b190fd5db9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stackable: 0
+  typeSingleton: 0
+  typeId: Main Menu
 --- !u!114 &114542621868998812
 MonoBehaviour:
   m_ObjectHideFlags: 1

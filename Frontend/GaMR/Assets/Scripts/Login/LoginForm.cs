@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using HoloToolkit.Unity.InputModule;
 using UnityEngine;
+using HoloToolkit.Unity;
 
-public class LoginForm : MonoBehaviour
+public class LoginForm : MonoBehaviour, IWindow
 {
     [Tooltip("The gameobject with the textmesh that displays the user name")]
     public GameObject userNameInputText;
@@ -93,5 +94,15 @@ public class LoginForm : MonoBehaviour
         {
             UserName = name;
         }
+    }
+
+    public void Cancel()
+    {
+        Destroy(gameObject);
+    }
+
+    public void CloseWindow()
+    {
+        Cancel();
     }
 }

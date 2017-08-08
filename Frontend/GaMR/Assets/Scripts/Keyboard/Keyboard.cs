@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HoloToolkit.Unity;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine;
 /// <summary>
 /// represents and handles the logic of the 3D keyboard
 /// </summary>
-public class Keyboard : MonoBehaviour
+public class Keyboard : MonoBehaviour, IWindow
 {
     // public variables to set in the editor
     [Tooltip("The TextMesh which should show the text which is put in")]
@@ -355,5 +356,10 @@ public class Keyboard : MonoBehaviour
             }
             elapsedTimeSinceCursorToggle = 0;
         }
+    }
+
+    public void CloseWindow()
+    {
+        Cancel();
     }
 }

@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4944019993126158}
   - component: {fileID: 114770859816618220}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TextInput
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 33818288845805050}
   - component: {fileID: 65901952409872928}
   - component: {fileID: 23737003297282644}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 4830028059821782}
   - component: {fileID: 23080537055468978}
   - component: {fileID: 102162877381100328}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Caption
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -220,3 +220,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offset: {x: 0.06, y: 0.04}
   disabledColor: {r: 0.52205884, g: 0.52205884, b: 0.52205884, a: 1}
+  markedColor: {r: 1, g: 0, b: 0, a: 1}
+  focusedColor: {r: 0, g: 0, b: 1, a: 1}
