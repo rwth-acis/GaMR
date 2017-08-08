@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Window : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class Window : MonoBehaviour
 
     private SimpleTagalong tagalong;
     private FaceCamera faceCamera;
+
+    private Renderer[] renderers;
 
     public float WindowDepth
     {
@@ -38,10 +41,6 @@ public class Window : MonoBehaviour
         get { return overwriteRotation; }
         set
         {
-            if (!value)
-            {
-                Debug.Log("Unset");
-            }
             overwriteRotation = value;
             faceCamera.enabled = !overwriteRotation;
         }
@@ -65,6 +64,7 @@ public class Window : MonoBehaviour
         tagalong = GetComponent<SimpleTagalong>();
         faceCamera = GetComponent<FaceCamera>();
         WindowManager.Instance.Add(this);
+        renderers = GetComponentsInChildren<Renderer>();
         started = true;
     }
 
