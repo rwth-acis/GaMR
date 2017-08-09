@@ -4,10 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+/// <summary>
+/// Component marks the gameobject as a window
+/// and handles window behavior
+/// </summary>
 public class Window : MonoBehaviour
 {
+    [Tooltip("Can the window be stacked on top of existing windows?")]
     public bool stackable;
+    [Tooltip("If enabled, only one window of this type can exist")]
     public bool typeSingleton;
+    [Tooltip("The type of the window")]
     public string typeId;
 
     private bool started = false;
@@ -22,6 +29,9 @@ public class Window : MonoBehaviour
 
     private Renderer[] renderers;
 
+    /// <summary>
+    /// The depth of the window
+    /// </summary>
     public float WindowDepth
     {
         get { return windowDepth; }
@@ -36,6 +46,10 @@ public class Window : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// If true: the window will use WindowNormal to determine its rotation
+    /// if false: the window will get its rotation from the FaceCamera script
+    /// </summary>
     public bool OverwriteRotation
     {
         get { return overwriteRotation; }
@@ -46,6 +60,10 @@ public class Window : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// The normal vector of the window plane
+    /// It is applied to the window if OverwriteRotation is true
+    /// </summary>
     public Vector3 WindowNormal
     {
         get { return windowNormal; }
@@ -68,6 +86,11 @@ public class Window : MonoBehaviour
         started = true;
     }
 
+    /// <summary>
+    /// closes the window
+    /// If a custom close method was specified using IWindow IWindow.CloseWindow() will be executed
+    /// Else: the window will be destroyed
+    /// </summary>
     public void Close()
     {
         if (externalWindowLogic != null)
@@ -80,16 +103,25 @@ public class Window : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// called if the window is destroyed
+    /// </summary>
     private void OnDestroy()
     {
         NotifyWindowManager();
     }
 
+    /// <summary>
+    /// called if the window is disabled (closed)
+    /// </summary>
     private void OnDisable()
     {
         NotifyWindowManager();
     }
 
+    /// <summary>
+    /// called if the window is enabled (opened)
+    /// </summary>
     private void OnEnable()
     {
         if (started)
@@ -98,6 +130,9 @@ public class Window : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Notifies the window manager that this window is closed
+    /// </summary>
     private void NotifyWindowManager()
     {
         // if this is called when the scene is unloaded => Instance is null and it does not matter
@@ -107,6 +142,9 @@ public class Window : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Updates the rotation if overwriteRotation is enabled
+    /// </summary>
     private void Update()
     {
         if (overwriteRotation)
