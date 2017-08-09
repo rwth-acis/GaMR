@@ -223,6 +223,61 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Managers
+--- !u!1 &334289457
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 334289459}
+  - component: {fileID: 334289458}
+  - component: {fileID: 334289460}
+  m_Layer: 0
+  m_Name: SyncParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &334289458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 334289457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8bf2809f71b26946ab994e268099fb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KeepRoomAlive: 0
+  RoomName: DefaultRoom
+  AnchorDebugText: {fileID: 0}
+--- !u!4 &334289459
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 334289457}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.2873931, y: -0.4270953, z: 2.0150776}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &334289460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 334289457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f825d25df68b9e46b07d691fed7612c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &370446433 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4000013641020314, guid: dc138879450c80f438141cbe47938daf,
