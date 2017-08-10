@@ -14,6 +14,11 @@ public class Button : MonoBehaviour, IInputClickHandler {
     /// </summary>
     public Action OnPressed;
 
+    /// <summary>
+    /// Gets called if the user taps on the button
+    /// Executes OnPressed
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnInputClicked(InputClickedEventData eventData)
     {
         // redirect to the specified method
