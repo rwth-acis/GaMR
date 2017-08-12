@@ -13,6 +13,8 @@ using System;
 public class InformationManager : Singleton<InformationManager> {
 
     public string ipAddressBackend = "192.168.178.43";
+    [SerializeField]
+    private string ipAddressGamification = "192.168.178.75";
     public int portBackend = 8080;
     public PlayerType playerType = PlayerType.STUDENT;
     [SerializeField]
@@ -27,6 +29,10 @@ public class InformationManager : Singleton<InformationManager> {
     /// http address which combines the ip address and the port
     /// </summary>
     public string BackendAddress { get { return "http://" + ipAddressBackend + ":" + portBackend.ToString(); } }
+    public string IPAddressBackend { get { return "http://" + ipAddressBackend; } }
+    public string IPAddressGamification { get { return "http://" + ipAddressGamification; } }
+
+    public UserInfo UserInfo { get; set; }
 
     public Language Language
     {

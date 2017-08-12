@@ -62,6 +62,11 @@ public class RestManager : Singleton<RestManager> {
         StartCoroutine(PostWWW(url, formData.data, callback));
     }
 
+    public void POST(string url, System.Action<UnityWebRequest> callback)
+    {
+        StartCoroutine(PostWWW(url, null, callback));
+    }
+
     /// <summary>
     /// Called as a coroutine and posts the data to the url.
     /// </summary>
