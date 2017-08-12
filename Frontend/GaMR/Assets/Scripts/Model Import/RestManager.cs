@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HoloToolkit.Unity;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -8,16 +9,27 @@ using UnityEngine.Networking;
 /// <summary>
 /// Handles the requests to the backend REST-service
 /// </summary>
-public class RestManager : MonoBehaviour {
+public class RestManager : Singleton<RestManager> {
 
-    public static RestManager instance;
+    private Dictionary<string, string> standardHeader;
 
-    public void Start()
+    public Dictionary<string, string> StandardHeader
     {
-        if (instance == null)
+        get
         {
-            instance = this;
+            if (standardHeader == null)
+            {
+                standardHeader = new Dictionary<string, string>();
+            }
+
+            return standardHeader;
         }
+        set { standardHeader = value; }
+    }
+
+    private void Start()
+    {
+        StandardHeader.Add("Content-Type", "application/json");
     }
 
     /// <summary>
@@ -37,7 +49,17 @@ public class RestManager : MonoBehaviour {
     /// <param name="json">The body of the post</param>
     public void POST(string url, string json)
     {
-        StartCoroutine(PostWWW(url, json));
+        StartCoroutine(PostWWW(url, Encoding.UTF8.GetBytes(json), null));
+    }
+
+    public void POST(string url, string json, System.Action<UnityWebRequest> callback)
+    {
+        StartCoroutine(PostWWW(url, Encoding.UTF8.GetBytes(json), callback));
+    }
+
+    public void POST(string url, WWWForm formData, System.Action<UnityWebRequest> callback)
+    {
+        StartCoroutine(PostWWW(url, formData.data, callback));
     }
 
     /// <summary>
@@ -45,15 +67,22 @@ public class RestManager : MonoBehaviour {
     /// </summary>
     /// <param name="url">The url to post the data to</param>
     /// <param name="json">The body of the post</param>
+    /// <param name="callback">Called when the operation finished</param>
     /// <returns></returns>
-    private IEnumerator PostWWW(string url, string json)
+    private IEnumerator PostWWW(string url, byte[] bodyRaw, System.Action<UnityWebRequest> callback)
     {
         UnityWebRequest req = new UnityWebRequest(url, "POST");
-        req.SetRequestHeader("Content-Type", "application/json");
-        byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
+        foreach(KeyValuePair<string, string> header in StandardHeader)
+        {
+            req.SetRequestHeader(header.Key, header.Value);
+        }
         req.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         yield return req.Send();
-        Debug.Log(req.responseCode);
+
+        if (callback != null)
+        {
+            callback(req);
+        }
     }
 
     public void GetTexture(string url, System.Action<Texture> callback)
