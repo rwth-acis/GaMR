@@ -67,7 +67,7 @@ public class LoginForm : MonoBehaviour, IWindow
     private void Login()
     {
         Debug.Log("Logged in");
-        AuthorizationManager.Authorize(UserName, Password);
+        //AuthorizationManager.Authorize(UserName, Password);
     }
 
     private void InputPassword()
