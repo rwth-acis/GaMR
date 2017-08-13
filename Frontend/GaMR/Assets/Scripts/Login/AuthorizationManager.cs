@@ -11,6 +11,11 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
 
     private string accessToken;
 
+    public void Logout()
+    {
+        accessToken = "";
+    }
+
     private void StartedByProtocol(Uri uri)
     {
         if (uri.Fragment != null)

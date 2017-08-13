@@ -224,6 +224,8 @@ public class MainMenuActions : MonoBehaviour
     /// </summary>
     public void LogOut()
     {
+        InformationManager.Instance.UserInfo = null;
+        AuthorizationManager.Instance.Logout();
         SceneManager.LoadScene("Login", LoadSceneMode.Single);
     }
 }
