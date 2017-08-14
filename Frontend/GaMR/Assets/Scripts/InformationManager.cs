@@ -16,6 +16,7 @@ public class InformationManager : Singleton<InformationManager> {
     [SerializeField]
     private string ipAddressGamification = "192.168.178.75";
     public int portBackend = 8080;
+    public int portGamification = 8086;
     public PlayerType playerType = PlayerType.STUDENT;
     [SerializeField]
     private Language language = Language.ENGLISH;
@@ -31,6 +32,7 @@ public class InformationManager : Singleton<InformationManager> {
     public string BackendAddress { get { return "http://" + ipAddressBackend + ":" + portBackend.ToString(); } }
     public string IPAddressBackend { get { return "http://" + ipAddressBackend; } }
     public string IPAddressGamification { get { return "http://" + ipAddressGamification; } }
+    public string GamificationAddress { get { return IPAddressGamification + ":" + portGamification; } }
 
     public UserInfo UserInfo { get; set; }
 
