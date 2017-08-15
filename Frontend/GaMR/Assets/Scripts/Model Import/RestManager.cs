@@ -123,6 +123,12 @@ public class RestManager : Singleton<RestManager> {
     IEnumerator GetWWW(string url, System.Action<string, object[]> callback, object[] passOnArgs)
     {
         UnityWebRequest req = UnityWebRequest.Get(url);
+
+        foreach (KeyValuePair<string, string> header in StandardHeader)
+        {
+            req.SetRequestHeader(header.Key, header.Value);
+        }
+
         yield return req.Send();
 
         if (callback != null)
@@ -148,6 +154,12 @@ public class RestManager : Singleton<RestManager> {
     IEnumerator GetWWWTexture(string url, System.Action<Texture> callback)
     {
         UnityWebRequest req = UnityWebRequest.GetTexture(url);
+
+        foreach (KeyValuePair<string, string> header in StandardHeader)
+        {
+            req.SetRequestHeader(header.Key, header.Value);
+        }
+
         yield return req.Send();
 
         if (callback != null)

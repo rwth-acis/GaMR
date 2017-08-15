@@ -9,7 +9,19 @@ using UnityEngine.Networking;
 public class AuthorizationManager : Singleton<AuthorizationManager>
 {
 
+    [SerializeField]
+    private string debugToken;
     private string accessToken;
+
+    private void Start()
+    {
+        // skip the login by using the debug token
+        if (Application.isEditor && (accessToken == null || accessToken == ""))
+        {
+            accessToken = debugToken;
+            AddAccessTokenToHeader();
+        }
+    }
 
     public void Logout()
     {
@@ -35,10 +47,11 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
 
         Debug.Log("The access token is " + accessToken);
 
+        AddAccessTokenToHeader();
         CheckAccessToken();
     }
 
-    private void CheckAccessToken()
+    private void AddAccessTokenToHeader()
     {
         if (RestManager.Instance.StandardHeader.ContainsKey("access_token"))
         {
@@ -48,7 +61,10 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
         {
             RestManager.Instance.StandardHeader.Add("access_token", accessToken);
         }
+    }
 
+    private void CheckAccessToken()
+    {
         RestManager.Instance.GET("https://api.learning-layers.eu/o/oauth2/userinfo?access_token=" + accessToken, GetUserInfo, null);
     }
 

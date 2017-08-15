@@ -129,7 +129,11 @@ public class GamificationFramework : Singleton<GamificationFramework>
     private void Start()
     {
         // for testing:
-        Game game = new Game("testgame");
-        CreateGame(game);
+        GetGameDetails("testgame", Called);
+    }
+
+    private void Called(Game game)
+    {
+        Debug.Log(game.ID);
     }
 }

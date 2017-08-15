@@ -864,6 +864,7 @@ MonoBehaviour:
   ipAddressBackend: 192.168.178.48
   ipAddressGamification: 192.168.178.75
   portBackend: 8080
+  portGamification: 8086
   playerType: 1
   language: 1
 --- !u!1 &1622583214
@@ -1015,6 +1016,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba5679a6aba8bbb40aad0d20e67e411a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugToken: 
 --- !u!1 &1782103928
 GameObject:
   m_ObjectHideFlags: 0
