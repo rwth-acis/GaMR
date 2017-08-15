@@ -83,16 +83,16 @@ public class QuizManager : AnnotationManager
     /// </summary>
     protected override void LoadAnnotations()
     {
-        restManager.GET(infoManager.BackendAddress + subPathLoad + QuizName, QuizLoaded);
+        restManager.GET(infoManager.BackendAddress + subPathLoad + QuizName, QuizLoaded, null);
     }
 
     /// <summary>
     /// called when the quiz has finished loading
     /// </summary>
     /// <param name="res">The json string which is the result of the web request</param>
-    private void QuizLoaded(string res)
+    private void QuizLoaded(string res, object[] args)
     {
-        Load(res);
+        Load(res, null);
         if (InformationManager.Instance.playerType == PlayerType.STUDENT)
         {
             InitializeQuiz();

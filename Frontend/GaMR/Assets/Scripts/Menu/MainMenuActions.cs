@@ -64,14 +64,14 @@ public class MainMenuActions : MonoBehaviour
     private void TestAddress()
     {
         WaitCursor.Show();
-        restManager.GET(InformationManager.Instance.BackendAddress + "/resources/model/overview", RestResult);
+        restManager.GET(InformationManager.Instance.BackendAddress + "/resources/model/overview", RestResult, null);
     }
 
     /// <summary>
     /// Processes the result of the TestAddress web request
     /// </summary>
     /// <param name="result">The result of the request</param>
-    private void RestResult(string result)
+    private void RestResult(string result, object[] args)
     {
         WaitCursor.Hide();
         if (result != null)
@@ -127,7 +127,7 @@ public class MainMenuActions : MonoBehaviour
     public void ShowCarouselMenu()
     {
         WaitCursor.Show();
-        restManager.GET(InformationManager.Instance.BackendAddress + "/resources/model/overview", AvailableModelsLoaded);
+        restManager.GET(InformationManager.Instance.BackendAddress + "/resources/model/overview", AvailableModelsLoaded, null);
     }
 
     /// <summary>
@@ -135,7 +135,7 @@ public class MainMenuActions : MonoBehaviour
     /// called when the web request finished in ShowCarouselMenu
     /// </summary>
     /// <param name="res">The result of the web request</param>
-    private void AvailableModelsLoaded(string res)
+    private void AvailableModelsLoaded(string res, object[] args)
     {
         WaitCursor.Hide();
         if (res == null)

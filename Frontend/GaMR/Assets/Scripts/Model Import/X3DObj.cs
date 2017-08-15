@@ -51,7 +51,7 @@ public class X3DObj
         this.callback = callback;
         // only get the first piece of the X3D object
         // the first piece contains information if there are successive pieces
-        restManager.GET(url + "0", OnFinished);
+        restManager.GET(url + "0", OnFinished, null);
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ public class X3DObj
     /// </summary>
     /// <param name="requestResult">The resulting JSON string of the web request;
     /// it contains the information about the X3D piece</param>
-    private void OnFinished(string requestResult)
+    private void OnFinished(string requestResult, object[] args)
     {
         // de-serialize the json string
         X3DPiece obj = JsonUtility.FromJson<X3DPiece>(requestResult);
@@ -69,7 +69,7 @@ public class X3DObj
         // continue loading models if it is not the last one
         if (obj.PieceIndex < obj.PieceCount - 1)
         {
-            restManager.GET(url + (obj.PieceIndex + 1), OnFinished);
+            restManager.GET(url + (obj.PieceIndex + 1), OnFinished, null);
         }
         else
         {

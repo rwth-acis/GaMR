@@ -43,4 +43,21 @@ public class GameAction
         this.notificationMessage = notificationMessage;
     }
 
+    public WWWForm ToWWWForm()
+    {
+        WWWForm body = new WWWForm();
+        body.AddField("actionid", ID);
+        body.AddField("actionname", Name);
+        body.AddField("actiondesc", Description);
+        body.AddField("actionpointvalue", PointValue);
+        if (NotificationCheck)
+        {
+            // if the field exists, the bool variable will be set to true in the framework (no matter which value the www-field has)
+            body.AddField("actionnotificationcheck", "true");
+        }
+        body.AddField("actionnotificationmessage", NotificationMessage);
+
+        return body;
+    }
+
 }

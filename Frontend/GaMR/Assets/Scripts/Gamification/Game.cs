@@ -38,4 +38,31 @@ public class Game
         this.commtype = commtype;
     }
 
+    public WWWForm ToWWWForm()
+    {
+        WWWForm body = new WWWForm();
+        body.AddField("gameid", ID);
+        body.AddField("gamedesc", Description);
+        if (UseCommType)
+        {
+            body.AddField("commtype", CommType);
+        }
+
+        return body;
+    }
+
+    public static Game FromJson(string json)
+    {
+        JsonGame jsonGame = JsonUtility.FromJson<JsonGame>(json);
+
+        Game game = new Game(jsonGame.id, jsonGame.description, jsonGame.commType);
+        return game;
+    }
+}
+
+class JsonGame
+{
+    public string commType;
+    public string id;
+    public string description;
 }

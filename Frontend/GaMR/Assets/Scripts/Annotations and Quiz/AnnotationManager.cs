@@ -50,7 +50,7 @@ public class AnnotationManager : MonoBehaviour
     /// </summary>
     protected virtual void LoadAnnotations()
     {
-        restManager.GET(infoManager.BackendAddress + subPathLoad, Load);
+        restManager.GET(infoManager.BackendAddress + subPathLoad, Load, null);
     }
 
     /// <summary>
@@ -142,7 +142,7 @@ public class AnnotationManager : MonoBehaviour
     /// is called when the rest query has finished
     /// </summary>
     /// <param name="res">The result string of the rest-query (null if an error occured)</param>
-    protected void Load(string res)
+    protected void Load(string res, object[] args)
     {
         if (res != null)
         {

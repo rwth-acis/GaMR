@@ -40,4 +40,21 @@ public class Badge
         this.notificationCheck = notificationCheck;
         this.notificationMessage = notificationMessage;
     }
+
+    public WWWForm ToWWWForm()
+    {
+        WWWForm body = new WWWForm();
+        body.AddField("badgeid", ID);
+        body.AddField("badgename", Name);
+        body.AddField("badgedesc", Description);
+        if (NotificationCheck)
+        {
+            // if the field exists, the bool variable will be set to true in the framework (no matter which value the www-field has)
+            body.AddField("badgenotificationcheck", "true");
+        }
+        body.AddField("badgenotificationmessage", NotificationMessage);
+        body.AddBinaryData("badgeimageinput", Image.GetRawTextureData());
+
+        return body;
+    }
 }

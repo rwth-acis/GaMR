@@ -45,4 +45,22 @@ public class Achievement
         this.notificationMessage = notificationMessage;
     }
 
+    public WWWForm ToWWWForm()
+    {
+        WWWForm body = new WWWForm();
+        body.AddField("achievementid", ID);
+        body.AddField("achievementname", Name);
+        body.AddField("achievementdesc", Description);
+        body.AddField("achievementpointvalue", PointValue);
+        body.AddField("achievementbdageid", Badge.ID);
+        if (NotificationCheck)
+        {
+            // if the field exists, the bool variable will be set to true in the framework (no matter which value the www-field has)
+            body.AddField("achievementnotificationcheck", "true");
+        }
+        body.AddField("achievementnotificationmessage", NotificationMessage);
+
+        return body;
+    }
+
 }

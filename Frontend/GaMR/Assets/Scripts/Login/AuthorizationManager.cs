@@ -49,10 +49,10 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
             RestManager.Instance.StandardHeader.Add("access_token", accessToken);
         }
 
-        RestManager.Instance.GET("https://api.learning-layers.eu/o/oauth2/userinfo?access_token=" + accessToken, GetUserInfo);
+        RestManager.Instance.GET("https://api.learning-layers.eu/o/oauth2/userinfo?access_token=" + accessToken, GetUserInfo, null);
     }
 
-    private void GetUserInfo(string json)
+    private void GetUserInfo(string json, object[] args)
     {
         Debug.Log(json);
         UserInfo info = JsonUtility.FromJson<UserInfo>(json);

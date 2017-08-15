@@ -8,22 +8,47 @@ using UnityEngine.Networking;
 public class GamificationFramework : Singleton<GamificationFramework>
 {
 
+    // ---------------------------------------------------------------
+    // Games
+    // ---------------------------------------------------------------
+
     public void CreateGame(Game game)
     {
         if (game.ID == "")
         {
-            Debug.LogWarning("Tried to create a game without a name");
+            Debug.LogWarning("Tried to create a game without an id");
             return;
         }
 
-        WWWForm body = new WWWForm();
-        body.AddField("gameid", game.ID);
-        body.AddField("gamedesc", game.Description);
-        if (game.UseCommType)
-        {
-            body.AddField("commtype", game.CommType);
-        }
+        WWWForm body = game.ToWWWForm();
         RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/games/data", body, OperationFinished);
+    }
+
+    public void GetGameDetails(string gameId, Action<Game> callWithResult)
+    {
+        if (callWithResult != null)
+        {
+            object[] args = { callWithResult };
+            RestManager.Instance.GET(InformationManager.Instance.GamificationAddress + "/gamification/games/data/" + gameId, ConvertGameDetailsToGame, args);
+        }
+        else
+        {
+            Debug.LogWarning("Getting game details without providing callWithResult makes no sense");
+        }
+    }
+
+    private void ConvertGameDetailsToGame(string json, object[] args)
+    {
+        Game game = null;
+        if (json != null)
+        {
+            game = Game.FromJson(json);
+        }
+        Action<Game> secondaryCallback = ((Action<Game>)args[0]);
+        if (secondaryCallback != null)
+        {
+            secondaryCallback(game);
+        }
     }
 
     public void ValidateLogin(Action<UnityWebRequest> callback)
@@ -31,55 +56,67 @@ public class GamificationFramework : Singleton<GamificationFramework>
         RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/games/validation", callback);
     }
 
+    // ---------------------------------------------------------------
+    // Achievements
+    // ---------------------------------------------------------------
+
     public void CreateAchievement(Game game, Achievement achievement)
     {
-        WWWForm body = new WWWForm();
-        body.AddField("achievementid", achievement.ID);
-        body.AddField("achievementname", achievement.Name);
-        body.AddField("achievementdesc", achievement.Description);
-        body.AddField("achievementpointvalue", achievement.PointValue);
-        body.AddField("achievementbdageid", achievement.Badge.ID);
-        if (achievement.NotificationCheck)
-        {
-            // if the field exists, the bool variable will be set to true in the framework (no matter which value the www-field has)
-            body.AddField("achievementnotificationcheck", "true");
-        }
-        body.AddField("achievementnotificationmessage", achievement.NotificationMessage);
+        WWWForm body = achievement.ToWWWForm();
 
         RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/achievements/" + game.ID, body, OperationFinished);
     }
 
+    // ---------------------------------------------------------------
+    // Actions
+    // ---------------------------------------------------------------
+
     public void CreateAction(Game game, GameAction action)
     {
-        WWWForm body = new WWWForm();
-        body.AddField("actionid", action.ID);
-        body.AddField("actionname", action.Name);
-        body.AddField("actiondesc", action.Description);
-        body.AddField("actionpointvalue", action.PointValue);
-        if (action.NotificationCheck)
-        {
-            // if the field exists, the bool variable will be set to true in the framework (no matter which value the www-field has)
-            body.AddField("actionnotificationcheck", "true");
-        }
-        body.AddField("actionnotificationmessage", action.NotificationMessage);
+        WWWForm body = action.ToWWWForm();
 
-        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/actions/" + game.ID, body, OperationFinished)
+        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/actions/" + game.ID, body, OperationFinished);
     }
+
+    public void UpdateAction(Game game, GameAction action)
+    {
+        WWWForm body = action.ToWWWForm();
+
+        RestManager.Instance.PUT(InformationManager.Instance.GamificationAddress + "/gamification/actions/" + game.ID + "/" + action.ID, body, OperationFinished);
+    }
+
+    public void TriggerAction()
+    {
+
+    }
+
+    // ---------------------------------------------------------------
+    // Badges
+    // ---------------------------------------------------------------
 
     public void CreateBadge(Game game, Badge badge)
     {
-        WWWForm body = new WWWForm();
-        body.AddField("badgeid", badge.ID);
-        body.AddField("badgename", badge.Name);
-        body.AddField("badgedesc", badge.Description);
-        if (badge.NotificationCheck)
-        {
-            // if the field exists, the bool variable will be set to true in the framework (no matter which value the www-field has)
-            body.AddField("badgenotificationcheck", "true");
-        }
-        body.AddField("badgenotificationmessage", badge.NotificationMessage);
-        body.AddBinaryData("badgeimageinput", badge.Image.GetRawTextureData());
+        WWWForm body = badge.ToWWWForm();
+
+        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/badges/" + game.ID, body, OperationFinished);
     }
+
+    // ---------------------------------------------------------------
+    // Points
+    // ---------------------------------------------------------------
+
+    public void ChangePointUnitName(Game game, string newUnitName)
+    {
+        RestManager.Instance.PUT(InformationManager.Instance.GamificationAddress + "/gamification/points/" + game.ID + "/" + newUnitName, OperationFinished);
+    }
+
+    public void GetPointUnitName(Game game)
+    {
+
+    }
+
+    // -------------------------------------------------------------------------------
+    // Helper methods
 
     private void OperationFinished(UnityWebRequest req)
     {

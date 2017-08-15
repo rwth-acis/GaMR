@@ -37,9 +37,9 @@ public class RestManager : Singleton<RestManager> {
     /// </summary>
     /// <param name="url">The url to query</param>
     /// <param name="callback">The callback method which receives the downloaded data</param>
-	public void GET(string url, System.Action<string> callback)
+	public void GET(string url, System.Action<string, object[]> callback, object[] passOnArgs)
     {
-        StartCoroutine(GetWWW(url, callback));
+        StartCoroutine(GetWWW(url, callback, passOnArgs));
     }
 
     /// <summary>
@@ -49,34 +49,53 @@ public class RestManager : Singleton<RestManager> {
     /// <param name="json">The body of the post</param>
     public void POST(string url, string json)
     {
-        StartCoroutine(PostWWW(url, Encoding.UTF8.GetBytes(json), null));
+        StartCoroutine(UploadWWW(url, "POST", Encoding.UTF8.GetBytes(json), null));
     }
 
     public void POST(string url, string json, System.Action<UnityWebRequest> callback)
     {
-        StartCoroutine(PostWWW(url, Encoding.UTF8.GetBytes(json), callback));
+        StartCoroutine(UploadWWW(url, "POST", Encoding.UTF8.GetBytes(json), callback));
     }
 
     public void POST(string url, WWWForm formData, System.Action<UnityWebRequest> callback)
     {
-        StartCoroutine(PostWWW(url, formData.data, callback));
+        StartCoroutine(UploadWWW(url, "POST", formData.data, callback));
     }
 
     public void POST(string url, System.Action<UnityWebRequest> callback)
     {
-        StartCoroutine(PostWWW(url, null, callback));
+        StartCoroutine(UploadWWW(url, "POST", null, callback));
+    }
+
+    public void PUT(string url, string json)
+    {
+        StartCoroutine(UploadWWW(url, "PUT", Encoding.UTF8.GetBytes(json), null));
+    }
+
+    public void PUT(string url, string json, System.Action<UnityWebRequest> callback)
+    {
+        StartCoroutine(UploadWWW(url, "PUT", Encoding.UTF8.GetBytes(json), callback));
+    }
+
+    public void PUT(string url, WWWForm formData, System.Action<UnityWebRequest> callback)
+    {
+        StartCoroutine(UploadWWW(url, "PUT", formData.data, callback));
+    }
+
+    public void PUT(string url, System.Action<UnityWebRequest> callback)
+    {
+        StartCoroutine(UploadWWW(url, "PUT", null, callback));
     }
 
     /// <summary>
     /// Called as a coroutine and posts the data to the url.
     /// </summary>
     /// <param name="url">The url to post the data to</param>
-    /// <param name="json">The body of the post</param>
     /// <param name="callback">Called when the operation finished</param>
     /// <returns></returns>
-    private IEnumerator PostWWW(string url, byte[] bodyRaw, System.Action<UnityWebRequest> callback)
+    private IEnumerator UploadWWW(string url, string requestType, byte[] bodyRaw, System.Action<UnityWebRequest> callback)
     {
-        UnityWebRequest req = new UnityWebRequest(url, "POST");
+        UnityWebRequest req = new UnityWebRequest(url, requestType);
         foreach(KeyValuePair<string, string> header in StandardHeader)
         {
             req.SetRequestHeader(header.Key, header.Value);
@@ -101,7 +120,7 @@ public class RestManager : Singleton<RestManager> {
     /// <param name="url">The url to query</param>
     /// <param name="callback">The callback method which receives the downloaded data</param>
     /// <returns></returns>
-    IEnumerator GetWWW(string url, System.Action<string> callback)
+    IEnumerator GetWWW(string url, System.Action<string, object[]> callback, object[] passOnArgs)
     {
         UnityWebRequest req = UnityWebRequest.Get(url);
         yield return req.Send();
@@ -110,11 +129,11 @@ public class RestManager : Singleton<RestManager> {
         {
             if (req.responseCode == 200)
             {
-                callback(req.downloadHandler.text);
+                callback(req.downloadHandler.text, passOnArgs);
             }
             else
             {
-                callback(null);
+                callback(null, passOnArgs);
             }
         }
     }
