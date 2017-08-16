@@ -78,12 +78,12 @@ public class RestManager : Singleton<RestManager>
     /// <param name="json">The body of the post</param>
     public void POST(string url, string json)
     {
-        StartCoroutine(UploadWWW(url, "POST", Encoding.UTF8.GetBytes(json), null));
+        StartCoroutine(UploadWWW(url, "POST", json, null));
     }
 
     public void POST(string url, string json, System.Action<UnityWebRequest> callback)
     {
-        StartCoroutine(UploadWWW(url, "POST", Encoding.UTF8.GetBytes(json), callback));
+        StartCoroutine(UploadWWW(url, "POST", json, callback));
     }
 
     public void POST(string url, List<IMultipartFormSection> formData, System.Action<UnityWebRequest> callback)
@@ -93,18 +93,17 @@ public class RestManager : Singleton<RestManager>
 
     public void POST(string url, System.Action<UnityWebRequest> callback)
     {
-        byte[] body = { };
-        StartCoroutine(UploadWWW(url, "POST", body, callback));
+        StartCoroutine(UploadWWW(url, "POST", "", callback));
     }
 
     public void PUT(string url, string json)
     {
-        StartCoroutine(UploadWWW(url, "PUT", Encoding.UTF8.GetBytes(json), null));
+        StartCoroutine(UploadWWW(url, "PUT", json, null));
     }
 
     public void PUT(string url, string json, System.Action<UnityWebRequest> callback)
     {
-        StartCoroutine(UploadWWW(url, "PUT", Encoding.UTF8.GetBytes(json), callback));
+        StartCoroutine(UploadWWW(url, "PUT", json, callback));
     }
 
     public void PUT(string url, List<IMultipartFormSection> formData, System.Action<UnityWebRequest> callback)
@@ -114,8 +113,7 @@ public class RestManager : Singleton<RestManager>
 
     public void PUT(string url, System.Action<UnityWebRequest> callback)
     {
-        byte[] body = { };
-        StartCoroutine(UploadWWW(url, "PUT", body, callback));
+        StartCoroutine(UploadWWW(url, "PUT", "", callback));
     }
 
     /// <summary>
@@ -124,10 +122,11 @@ public class RestManager : Singleton<RestManager>
     /// <param name="url">The url to post the data to</param>
     /// <param name="callback">Called when the operation finished</param>
     /// <returns></returns>
-    private IEnumerator UploadWWW(string url, string requestType, byte[] bodyRaw, System.Action<UnityWebRequest> callback)
+    private IEnumerator UploadWWW(string url, string requestType, string body, System.Action<UnityWebRequest> callback)
     {
         UnityWebRequest req = new UnityWebRequest(url, requestType);
-        req.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        req.uploadHandler = new UploadHandlerRaw(Encoding.ASCII.GetBytes(body));
+        req.uploadHandler.contentType = "application/json";
         req.downloadHandler = new DownloadHandlerBuffer();
         foreach (KeyValuePair<string, string> header in StandardHeader)
         {
