@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
 /// <summary>
@@ -71,10 +72,10 @@ public class MainMenuActions : MonoBehaviour
     /// Processes the result of the TestAddress web request
     /// </summary>
     /// <param name="result">The result of the request</param>
-    private void RestResult(string result, object[] args)
+    private void RestResult(UnityWebRequest result, object[] args)
     {
         WaitCursor.Hide();
-        if (result != null)
+        if (result.responseCode != 200)
         {
             MessageBox.Show(LocalizationManager.Instance.ResolveString("Address successfully saved") + Environment.NewLine + 
                 LocalizationManager.Instance.ResolveString("The server is responding"), MessageBoxType.SUCCESS);
@@ -135,10 +136,10 @@ public class MainMenuActions : MonoBehaviour
     /// called when the web request finished in ShowCarouselMenu
     /// </summary>
     /// <param name="res">The result of the web request</param>
-    private void AvailableModelsLoaded(string res, object[] args)
+    private void AvailableModelsLoaded(UnityWebRequest res, object[] args)
     {
         WaitCursor.Hide();
-        if (res == null)
+        if (res.responseCode != 200)
         {
             MessageBox.Show(LocalizationManager.Instance.ResolveString("Server is not responding") + Environment.NewLine + 
                 LocalizationManager.Instance.ResolveString("Could not list available 3D models"), MessageBoxType.ERROR);
@@ -150,7 +151,7 @@ public class MainMenuActions : MonoBehaviour
             carouselInstance = Instantiate(carouselMenu);
         }
 
-        JsonStringArray array = JsonUtility.FromJson<JsonStringArray>(res);
+        JsonStringArray array = JsonUtility.FromJson<JsonStringArray>(res.downloadHandler.text);
 
         if (array.array.Count == 0)
         {

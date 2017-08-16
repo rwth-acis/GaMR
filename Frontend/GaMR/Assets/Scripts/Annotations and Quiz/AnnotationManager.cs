@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Networking;
 
 public class AnnotationManager : MonoBehaviour
 {
@@ -141,14 +142,19 @@ public class AnnotationManager : MonoBehaviour
     /// loads the annotations
     /// is called when the rest query has finished
     /// </summary>
-    /// <param name="res">The result string of the rest-query (null if an error occured)</param>
-    protected void Load(string res, object[] args)
+    /// <param name="res">The finished web request</param>
+    /// <param name="args">Additional arguments which have been passed through the rest-query</param>
+    protected void Load(UnityWebRequest res, object[] args)
     {
-        if (res != null)
+        if (res.responseCode == 200)
         {
-            JsonAnnotationArray array = JsonUtility.FromJson<JsonAnnotationArray>(res);
+            JsonAnnotationArray array = JsonUtility.FromJson<JsonAnnotationArray>(res.downloadHandler.text);
             annotations = array.array;
             ShowAllAnnotations();
+        }
+        else
+        {
+            MessageBox.Show(LocalizationManager.Instance.ResolveString("Could not load the annotations"), MessageBoxType.ERROR);
         }
     }
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class Achievement
 {
@@ -17,7 +18,7 @@ public class Achievement
     public string Description { get { return description; } }
     public int PointValue { get { return pointValue; } }
     public bool NotificationCheck { get { return notificationCheck; } }
-    public string NotificationMessage { get { return NotificationMessage; } }
+    public string NotificationMessage { get { return notificationMessage; } }
 
     public Badge Badge { get { return badge; } }
 
@@ -45,20 +46,31 @@ public class Achievement
         this.notificationMessage = notificationMessage;
     }
 
-    public WWWForm ToWWWForm()
+    public List<IMultipartFormSection> ToMultipartFormData()
     {
-        WWWForm body = new WWWForm();
-        body.AddField("achievementid", ID);
-        body.AddField("achievementname", Name);
-        body.AddField("achievementdesc", Description);
-        body.AddField("achievementpointvalue", PointValue);
-        body.AddField("achievementbdageid", Badge.ID);
+        List<IMultipartFormSection> body = new List<IMultipartFormSection>();
+        body.Add(new MultipartFormDataSection("achievementid", ID));
+        if (Name != "")
+        {
+            body.Add(new MultipartFormDataSection("achievementname", Name));
+        }
+        if (Description != "")
+        {
+            body.Add(new MultipartFormDataSection("achievementdesc", Description));
+        }
+        body.Add(new MultipartFormDataSection("achievementpointvalue", PointValue.ToString()));
+        if (Badge != null)
+        {
+            body.Add(new MultipartFormDataSection("achievementbadgeid", Badge.ID));
+        }
         if (NotificationCheck)
         {
-            // if the field exists, the bool variable will be set to true in the framework (no matter which value the www-field has)
-            body.AddField("achievementnotificationcheck", "true");
+            body.Add(new MultipartFormDataSection("achievementnotificationcheck", true.ToString()));
         }
-        body.AddField("achievementnotificationmessage", NotificationMessage);
+        if (NotificationMessage != "")
+        {
+            body.Add(new MultipartFormDataSection("achievementnotificationmessage", NotificationMessage));
+        }
 
         return body;
     }

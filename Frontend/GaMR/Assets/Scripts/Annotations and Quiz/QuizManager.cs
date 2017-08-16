@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 /// <summary>
 /// Administers the quiz and the quiz display
@@ -90,7 +91,7 @@ public class QuizManager : AnnotationManager
     /// called when the quiz has finished loading
     /// </summary>
     /// <param name="res">The json string which is the result of the web request</param>
-    private void QuizLoaded(string res, object[] args)
+    private void QuizLoaded(UnityWebRequest res, object[] args)
     {
         Load(res, null);
         if (InformationManager.Instance.playerType == PlayerType.STUDENT)

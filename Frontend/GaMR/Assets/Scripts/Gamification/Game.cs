@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class Game
 {
@@ -38,14 +39,17 @@ public class Game
         this.commtype = commtype;
     }
 
-    public WWWForm ToWWWForm()
+    public List<IMultipartFormSection> ToMultipartFormData()
     {
-        WWWForm body = new WWWForm();
-        body.AddField("gameid", ID);
-        body.AddField("gamedesc", Description);
-        if (UseCommType)
+        List<IMultipartFormSection> body = new List<IMultipartFormSection>();
+        body.Add(new MultipartFormDataSection("gameid", ID));
+        if (Description != "")
         {
-            body.AddField("commtype", CommType);
+            body.Add(new MultipartFormDataSection("gamedesc", Description));
+        }
+        if (UseCommType && CommType != null && CommType != "")
+        {
+            body.Add(new MultipartFormDataSection("commtype", CommType));
         }
 
         return body;

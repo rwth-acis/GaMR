@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class GameAction
 {
@@ -43,19 +46,27 @@ public class GameAction
         this.notificationMessage = notificationMessage;
     }
 
-    public WWWForm ToWWWForm()
+    public List<IMultipartFormSection> ToMultipartFormData()
     {
-        WWWForm body = new WWWForm();
-        body.AddField("actionid", ID);
-        body.AddField("actionname", Name);
-        body.AddField("actiondesc", Description);
-        body.AddField("actionpointvalue", PointValue);
+        List<IMultipartFormSection> body = new List<IMultipartFormSection>();
+        body.Add(new MultipartFormDataSection("actionid", ID));
+        if (Name != "")
+        {
+            body.Add(new MultipartFormDataSection("actionname", Name));
+        }
+        if (Description != "")
+        {
+            body.Add(new MultipartFormDataSection("actiondesc", Description));
+        }
+        body.Add(new MultipartFormDataSection("actionpointvalue", PointValue.ToString()));
         if (NotificationCheck)
         {
-            // if the field exists, the bool variable will be set to true in the framework (no matter which value the www-field has)
-            body.AddField("actionnotificationcheck", "true");
+            body.Add(new MultipartFormDataSection("actionnotificationcheck", true.ToString()));
         }
-        body.AddField("actionnotificationmessage", NotificationMessage);
+        if (NotificationMessage != "")
+        {
+            body.Add(new MultipartFormDataSection("actionnotificationmessage", NotificationMessage));
+        }
 
         return body;
     }

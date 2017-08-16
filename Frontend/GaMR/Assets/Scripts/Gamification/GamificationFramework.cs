@@ -20,7 +20,7 @@ public class GamificationFramework : Singleton<GamificationFramework>
             return;
         }
 
-        WWWForm body = game.ToWWWForm();
+        List<IMultipartFormSection> body = game.ToMultipartFormData();
         RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/games/data", body, OperationFinished);
     }
 
@@ -37,12 +37,16 @@ public class GamificationFramework : Singleton<GamificationFramework>
         }
     }
 
-    private void ConvertGameDetailsToGame(string json, object[] args)
+    private void ConvertGameDetailsToGame(UnityWebRequest result, object[] args)
     {
         Game game = null;
-        if (json != null)
+        if (result.responseCode == 200)
         {
-            game = Game.FromJson(json);
+            game = Game.FromJson(result.downloadHandler.text);
+        }
+        else
+        {
+            MessageBox.Show(LocalizationManager.Instance.ResolveString("Could not fetch the game details"), MessageBoxType.ERROR);
         }
         Action<Game> secondaryCallback = ((Action<Game>)args[0]);
         if (secondaryCallback != null)
@@ -60,29 +64,26 @@ public class GamificationFramework : Singleton<GamificationFramework>
     // Achievements
     // ---------------------------------------------------------------
 
-    public void CreateAchievement(Game game, Achievement achievement)
+    public void CreateAchievement(string gameId, Achievement achievement)
     {
-        WWWForm body = achievement.ToWWWForm();
-
-        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/achievements/" + game.ID, body, OperationFinished);
+        List<IMultipartFormSection> body = achievement.ToMultipartFormData();
+        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/achievements/" + gameId, body, OperationFinished);
     }
 
     // ---------------------------------------------------------------
     // Actions
     // ---------------------------------------------------------------
 
-    public void CreateAction(Game game, GameAction action)
+    public void CreateAction(string gameId, GameAction action)
     {
-        WWWForm body = action.ToWWWForm();
-
-        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/actions/" + game.ID, body, OperationFinished);
+        List<IMultipartFormSection> body = action.ToMultipartFormData();
+        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/actions/" + gameId, body, OperationFinished);
     }
 
-    public void UpdateAction(Game game, GameAction action)
+    public void UpdateAction(string gameId, GameAction action)
     {
-        WWWForm body = action.ToWWWForm();
-
-        RestManager.Instance.PUT(InformationManager.Instance.GamificationAddress + "/gamification/actions/" + game.ID + "/" + action.ID, body, OperationFinished);
+        List<IMultipartFormSection> body = action.ToMultipartFormData();
+        RestManager.Instance.PUT(InformationManager.Instance.GamificationAddress + "/gamification/actions/" + gameId + "/" + action.ID, body, OperationFinished);
     }
 
     public void TriggerAction()
@@ -94,23 +95,23 @@ public class GamificationFramework : Singleton<GamificationFramework>
     // Badges
     // ---------------------------------------------------------------
 
-    public void CreateBadge(Game game, Badge badge)
+    public void CreateBadge(string gameId, Badge badge)
     {
-        WWWForm body = badge.ToWWWForm();
-
-        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/badges/" + game.ID, body, OperationFinished);
+        //WWWForm body = badge.ToWWWForm();
+        //RestManager.Instance.ContentType = "multipart/form-data;";
+        //RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/badges/" + gameId, body, OperationFinished);
     }
 
     // ---------------------------------------------------------------
     // Points
     // ---------------------------------------------------------------
 
-    public void ChangePointUnitName(Game game, string newUnitName)
+    public void ChangePointUnitName(string gameId, string newUnitName)
     {
-        RestManager.Instance.PUT(InformationManager.Instance.GamificationAddress + "/gamification/points/" + game.ID + "/" + newUnitName, OperationFinished);
+        RestManager.Instance.PUT(InformationManager.Instance.GamificationAddress + "/gamification/points/" + gameId + "/" + newUnitName, OperationFinished);
     }
 
-    public void GetPointUnitName(Game game)
+    public void GetPointUnitName(string gameId)
     {
 
     }
@@ -129,11 +130,11 @@ public class GamificationFramework : Singleton<GamificationFramework>
     private void Start()
     {
         // for testing:
-        GetGameDetails("testgame", Called);
+        GetGameDetails("testgame2", Result);
     }
 
-    private void Called(Game game)
+    private void Result(Game obj)
     {
-        Debug.Log(game.ID);
+        
     }
 }

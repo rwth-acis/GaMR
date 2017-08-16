@@ -68,12 +68,20 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
         RestManager.Instance.GET("https://api.learning-layers.eu/o/oauth2/userinfo?access_token=" + accessToken, GetUserInfo, null);
     }
 
-    private void GetUserInfo(string json, object[] args)
+    private void GetUserInfo(UnityWebRequest result, object[] args)
     {
-        Debug.Log(json);
-        UserInfo info = JsonUtility.FromJson<UserInfo>(json);
-        InformationManager.Instance.UserInfo = info;
-        GamificationFramework.Instance.ValidateLogin(LoginValidated);
+        if (result.responseCode == 200)
+        {
+            string json = result.downloadHandler.text;
+            Debug.Log(json);
+            UserInfo info = JsonUtility.FromJson<UserInfo>(json);
+            InformationManager.Instance.UserInfo = info;
+            GamificationFramework.Instance.ValidateLogin(LoginValidated);
+        }
+        else
+        {
+            MessageBox.Show(LocalizationManager.Instance.ResolveString("Error while retrieving the user data. Login failed"), MessageBoxType.ERROR);
+        }
     }
 
     private void LoginValidated(UnityWebRequest req)

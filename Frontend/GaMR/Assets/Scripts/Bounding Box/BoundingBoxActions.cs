@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 /// <summary>
 /// Collection of actions which are performed on the bounding box and by the attached menu
@@ -90,9 +91,9 @@ public class BoundingBoxActions : MonoBehaviour
         attachementManager.SetAnnotationManager();
     }
 
-    private void AvailableQuizzesLoaded(string res, object[] args)
+    private void AvailableQuizzesLoaded(UnityWebRequest res, object[] args)
     {
-        if (res == null)
+        if (res.responseCode != 200)
         {
             MessageBox.Show(LocalizationManager.Instance.ResolveString("Server is not responding")
                 + Environment.NewLine + LocalizationManager.Instance.ResolveString("Could not list available quizzes"), MessageBoxType.ERROR);
@@ -100,7 +101,7 @@ public class BoundingBoxActions : MonoBehaviour
         }
         else
         {
-            JsonStringArray array = JsonUtility.FromJson<JsonStringArray>(res);
+            JsonStringArray array = JsonUtility.FromJson<JsonStringArray>(res.downloadHandler.text);
             if (array.array.Count == 0)
             {
                 MessageBox.Show(LocalizationManager.Instance.ResolveString("There are no quizzes to show for this 3D model"), MessageBoxType.INFORMATION);

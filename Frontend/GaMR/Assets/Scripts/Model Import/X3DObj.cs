@@ -59,22 +59,29 @@ public class X3DObj
     /// </summary>
     /// <param name="requestResult">The resulting JSON string of the web request;
     /// it contains the information about the X3D piece</param>
-    private void OnFinished(string requestResult, object[] args)
+    private void OnFinished(UnityWebRequest requestResult, object[] args)
     {
-        // de-serialize the json string
-        X3DPiece obj = JsonUtility.FromJson<X3DPiece>(requestResult);
-        obj.ModelName = name;
-        pieces.Add(obj);
-
-        // continue loading models if it is not the last one
-        if (obj.PieceIndex < obj.PieceCount - 1)
+        if (requestResult.responseCode == 200)
         {
-            restManager.GET(url + (obj.PieceIndex + 1), OnFinished, null);
+            // de-serialize the json string
+            X3DPiece obj = JsonUtility.FromJson<X3DPiece>(requestResult.downloadHandler.text);
+            obj.ModelName = name;
+            pieces.Add(obj);
+
+            // continue loading models if it is not the last one
+            if (obj.PieceIndex < obj.PieceCount - 1)
+            {
+                restManager.GET(url + (obj.PieceIndex + 1), OnFinished, null);
+            }
+            else
+            {
+                // if it is the last one => create the gameobject
+                callback();
+            }
         }
         else
         {
-            // if it is the last one => create the gameobject
-            callback();
+            MessageBox.Show(LocalizationManager.Instance.ResolveString("Could not load the 3D object"), MessageBoxType.ERROR);
         }
     }
 

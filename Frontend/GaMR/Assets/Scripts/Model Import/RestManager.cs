@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -9,7 +10,8 @@ using UnityEngine.Networking;
 /// <summary>
 /// Handles the requests to the backend REST-service
 /// </summary>
-public class RestManager : Singleton<RestManager> {
+public class RestManager : Singleton<RestManager>
+{
 
     private Dictionary<string, string> standardHeader;
 
@@ -29,7 +31,33 @@ public class RestManager : Singleton<RestManager> {
 
     private void Start()
     {
-        StandardHeader.Add("Content-Type", "application/json");
+        //ContentType = "application/json";
+    }
+
+    public string ContentType
+    {
+        get
+        {
+            if (StandardHeader.ContainsKey("Content-Type"))
+            {
+                return StandardHeader["Content-Type"];
+            }
+            else
+            {
+                return null;
+            }
+        }
+        set
+        {
+            if (StandardHeader.ContainsKey("Content-Type"))
+            {
+                StandardHeader["Content-Type"] = value;
+            }
+            else
+            {
+                StandardHeader.Add("Content-Type", value);
+            }
+        }
     }
 
     /// <summary>
@@ -37,7 +65,8 @@ public class RestManager : Singleton<RestManager> {
     /// </summary>
     /// <param name="url">The url to query</param>
     /// <param name="callback">The callback method which receives the downloaded data</param>
-	public void GET(string url, System.Action<string, object[]> callback, object[] passOnArgs)
+    /// <param name="passOnArgs">Further arguments which are passed on to the callback-method</param>
+	public void GET(string url, System.Action<UnityWebRequest, object[]> callback, object[] passOnArgs)
     {
         StartCoroutine(GetWWW(url, callback, passOnArgs));
     }
@@ -57,14 +86,15 @@ public class RestManager : Singleton<RestManager> {
         StartCoroutine(UploadWWW(url, "POST", Encoding.UTF8.GetBytes(json), callback));
     }
 
-    public void POST(string url, WWWForm formData, System.Action<UnityWebRequest> callback)
+    public void POST(string url, List<IMultipartFormSection> formData, System.Action<UnityWebRequest> callback)
     {
-        StartCoroutine(UploadWWW(url, "POST", formData.data, callback));
+        StartCoroutine(UploadWWW(url, "POST", formData, callback));
     }
 
     public void POST(string url, System.Action<UnityWebRequest> callback)
     {
-        StartCoroutine(UploadWWW(url, "POST", null, callback));
+        byte[] body = { };
+        StartCoroutine(UploadWWW(url, "POST", body, callback));
     }
 
     public void PUT(string url, string json)
@@ -77,14 +107,15 @@ public class RestManager : Singleton<RestManager> {
         StartCoroutine(UploadWWW(url, "PUT", Encoding.UTF8.GetBytes(json), callback));
     }
 
-    public void PUT(string url, WWWForm formData, System.Action<UnityWebRequest> callback)
+    public void PUT(string url, List<IMultipartFormSection> formData, System.Action<UnityWebRequest> callback)
     {
-        StartCoroutine(UploadWWW(url, "PUT", formData.data, callback));
+        StartCoroutine(UploadWWW(url, "PUT", formData, callback));
     }
 
     public void PUT(string url, System.Action<UnityWebRequest> callback)
     {
-        StartCoroutine(UploadWWW(url, "PUT", null, callback));
+        byte[] body = { };
+        StartCoroutine(UploadWWW(url, "PUT", body, callback));
     }
 
     /// <summary>
@@ -96,12 +127,81 @@ public class RestManager : Singleton<RestManager> {
     private IEnumerator UploadWWW(string url, string requestType, byte[] bodyRaw, System.Action<UnityWebRequest> callback)
     {
         UnityWebRequest req = new UnityWebRequest(url, requestType);
-        foreach(KeyValuePair<string, string> header in StandardHeader)
+        req.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        req.downloadHandler = new DownloadHandlerBuffer();
+        foreach (KeyValuePair<string, string> header in StandardHeader)
         {
             req.SetRequestHeader(header.Key, header.Value);
         }
-        req.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         yield return req.Send();
+
+        Debug.Log(req.downloadHandler.text);
+
+        if (callback != null)
+        {
+            callback(req);
+        }
+    }
+
+    private IEnumerator UploadWWW(string url, string requestType, List<IMultipartFormSection> body, System.Action<UnityWebRequest> callback)
+    {
+        byte[] byteBoundary = UnityWebRequest.GenerateBoundary();
+        byte[] generated = UnityWebRequest.SerializeFormSections(body, byteBoundary);
+
+        string strGenerated = Encoding.ASCII.GetString(generated);
+
+        // add end-boundary
+        strGenerated += "\r\n--" + Encoding.ASCII.GetString(byteBoundary) + "--";
+
+        Debug.Log(strGenerated);
+
+        byte[] bytes = Encoding.ASCII.GetBytes(strGenerated);
+
+
+        UnityWebRequest req = new UnityWebRequest(url);
+        req.method = requestType;
+
+        foreach (KeyValuePair<string, string> header in StandardHeader)
+        {
+            req.SetRequestHeader(header.Key, header.Value);
+        }
+
+        //string boundary = Encoding.ASCII.GetString(UnityWebRequest.GenerateBoundary());
+
+        //string strEndBoundary = "\r\n--" + boundary + "--";
+
+        //string formdataTemplate = "\r\n--" + boundary +
+        //                         "\r\nContent-Disposition: form-data; name=\"{0}\";\r\n\r\n{1}";
+
+        //Dictionary<string, string> fields = new Dictionary<string, string>();
+        //fields.Add("actionid", "testaction2");
+        //fields.Add("actionname", "testaction2");
+        //fields.Add("actiondesc", "a new action");
+
+        //string strBody = "";
+
+        //foreach (KeyValuePair<string, string> pair in fields)
+        //{
+        //    string formitem = string.Format(formdataTemplate, pair.Key, pair.Value);
+        //    strBody += formitem;
+        //}
+
+        //strBody += strEndBoundary;
+
+        //Debug.Log(strBody);
+
+        //byte[] bytes = Encoding.ASCII.GetBytes(strBody);
+
+        req.uploadHandler = new UploadHandlerRaw(bytes);
+        // req.uploadHandler.contentType = "multipart/form-data; boundary=" + boundary;
+        req.uploadHandler.contentType = "multipart/form-data; boundary=" + Encoding.ASCII.GetString(byteBoundary);
+
+        req.downloadHandler = new DownloadHandlerBuffer();
+
+        yield return req.Send();
+
+        Debug.Log(req.downloadHandler.text);
+
 
         if (callback != null)
         {
@@ -120,7 +220,7 @@ public class RestManager : Singleton<RestManager> {
     /// <param name="url">The url to query</param>
     /// <param name="callback">The callback method which receives the downloaded data</param>
     /// <returns></returns>
-    IEnumerator GetWWW(string url, System.Action<string, object[]> callback, object[] passOnArgs)
+    IEnumerator GetWWW(string url, System.Action<UnityWebRequest, object[]> callback, object[] passOnArgs)
     {
         UnityWebRequest req = UnityWebRequest.Get(url);
 
@@ -133,14 +233,7 @@ public class RestManager : Singleton<RestManager> {
 
         if (callback != null)
         {
-            if (req.responseCode == 200)
-            {
-                callback(req.downloadHandler.text, passOnArgs);
-            }
-            else
-            {
-                callback(null, passOnArgs);
-            }
+            callback(req, passOnArgs);
         }
     }
 
@@ -173,7 +266,5 @@ public class RestManager : Singleton<RestManager> {
                 MessageBox.Show(LocalizationManager.Instance.ResolveString("Could not fetch texture"), MessageBoxType.ERROR);
             }
         }
-
-
     }
 }
