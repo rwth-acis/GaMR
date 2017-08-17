@@ -98,7 +98,6 @@ public class GamificationFramework : Singleton<GamificationFramework>
     public void CreateBadge(string gameId, Badge badge)
     {
         //WWWForm body = badge.ToWWWForm();
-        //RestManager.Instance.ContentType = "multipart/form-data;";
         //RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/badges/" + gameId, body, OperationFinished);
     }
 
@@ -108,12 +107,30 @@ public class GamificationFramework : Singleton<GamificationFramework>
 
     public void ChangePointUnitName(string gameId, string newUnitName)
     {
-        RestManager.Instance.PUT(InformationManager.Instance.GamificationAddress + "/gamification/points/" + gameId + "/" + newUnitName, OperationFinished);
+        RestManager.Instance.PUT(InformationManager.Instance.GamificationAddress + "/gamification/points/" + gameId + "/name/" + newUnitName, OperationFinished);
     }
 
-    public void GetPointUnitName(string gameId)
+    public void GetPointUnitName(string gameId, Action<string> callback)
     {
+        object[] passOnArgs = { callback };
+        RestManager.Instance.GET(InformationManager.Instance.GamificationAddress + "/gamification/points/" + gameId + "/name", EvaluateGetPointUnitName, passOnArgs);
+    }
 
+    private void EvaluateGetPointUnitName(UnityWebRequest req, object[] passOnArgs)
+    {
+        if (req.responseCode != 200)
+        {
+            Debug.Log("Error code for request: " + req.responseCode + " " + req.error);
+            Debug.Log("Error: " + req.downloadHandler.text);
+        }
+        else
+        {
+            if (passOnArgs != null && passOnArgs.Length > 0)
+            {
+                JsonPointUnit unit = JsonUtility.FromJson<JsonPointUnit>(req.downloadHandler.text);
+                ((Action<string>)passOnArgs[0])(unit.pointUnitName);
+            }
+        }
     }
 
     // -------------------------------------------------------------------------------
@@ -124,17 +141,22 @@ public class GamificationFramework : Singleton<GamificationFramework>
         if (req.responseCode != 200)
         {
             Debug.Log("Error code for request: " + req.responseCode + " " + req.error);
+            Debug.Log("Error: " + req.downloadHandler.text);
+        }
+        else
+        {
+            Debug.Log(req.downloadHandler.text);
         }
     }
 
     private void Start()
     {
         // for testing:
-        GetGameDetails("testgame2", Result);
+        GetPointUnitName("testgame", Result);
     }
 
-    private void Result(Game obj)
+    private void Result(string obj)
     {
-        
+        Debug.Log(obj);
     }
 }

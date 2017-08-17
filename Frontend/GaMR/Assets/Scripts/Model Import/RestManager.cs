@@ -60,6 +60,25 @@ public class RestManager : Singleton<RestManager>
         }
     }
 
+    public void GET(string url, System.Action<UnityWebRequest> callback)
+    {
+        object[] passOnArgs = { callback };
+        GET(url, GetReduceCallback, passOnArgs);
+    }
+
+    /// <summary>
+    /// reduces the callback from an Action(UnityWebRequest, object[]) to an Action(UnityWebRequest)
+    /// </summary>
+    /// <param name="req">The finished web request</param>
+    /// <param name="passOnArgs">Contains the next callback</param>
+    private void GetReduceCallback(UnityWebRequest req, object[] passOnArgs)
+    {
+        if (passOnArgs != null && passOnArgs.Length > 0)
+        {
+            ((Action<UnityWebRequest>)passOnArgs[0])(req);
+        }
+    }
+
     /// <summary>
     /// creates a coroutine which will query the url and return the result to the callback function
     /// </summary>
@@ -125,16 +144,17 @@ public class RestManager : Singleton<RestManager>
     private IEnumerator UploadWWW(string url, string requestType, string body, System.Action<UnityWebRequest> callback)
     {
         UnityWebRequest req = new UnityWebRequest(url, requestType);
-        req.uploadHandler = new UploadHandlerRaw(Encoding.ASCII.GetBytes(body));
-        req.uploadHandler.contentType = "application/json";
+        if (body != "")
+        {
+            req.uploadHandler = new UploadHandlerRaw(Encoding.ASCII.GetBytes(body));
+            req.uploadHandler.contentType = "application/json";
+        }
         req.downloadHandler = new DownloadHandlerBuffer();
         foreach (KeyValuePair<string, string> header in StandardHeader)
         {
             req.SetRequestHeader(header.Key, header.Value);
         }
         yield return req.Send();
-
-        Debug.Log(req.downloadHandler.text);
 
         if (callback != null)
         {
@@ -198,8 +218,6 @@ public class RestManager : Singleton<RestManager>
         req.downloadHandler = new DownloadHandlerBuffer();
 
         yield return req.Send();
-
-        Debug.Log(req.downloadHandler.text);
 
 
         if (callback != null)
