@@ -686,7 +686,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba5679a6aba8bbb40aad0d20e67e411a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugToken: eyJhbGciOiJSUzI1NiJ9.eyJhdWQiOlsiYzc1ODhlZmMtZjgzMS00ZTMxLTkyOGUtMGY0NmE5MWZiMzExIl0sImlzcyI6Imh0dHBzOlwvXC9hcGkubGVhcm5pbmctbGF5ZXJzLmV1XC9vXC9vYXV0aDJcLyIsImV4cCI6MTUwMjk5NTQ1MCwiaWF0IjoxNTAyOTkxODUwLCJqdGkiOiJjOGI3ZjNmOS0yNTAyLTQ0NDMtYTc3OS1mMzQ5MTg2MzczOTQifQ.ckRcZzGTMCVhClEfi0CdOXInnFgZrD6xhoSBG2Xvlpjopm-e934RmCFQ0T6P6bTWWQyJ4vIdQHNVLJpMIZw-td9w2sX7OQQjjTYKqp5WRSEJemFg6eZ_zRoxfkU3dx3bgFQBmYkfjRcIRJW3fehtwe6LSOi-RlP0J_jtltT0D6Y
+  debugToken: 
 --- !u!1 &1490208454 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1000014098139846, guid: 022450106439a8946ae18a9e20cc92d8,

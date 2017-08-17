@@ -20,6 +20,18 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
         {
             accessToken = debugToken;
             AddAccessTokenToHeader();
+            RestManager.Instance.GET("https://api.learning-layers.eu/o/oauth2/userinfo?access_token=" + accessToken, GetUserInfoForDebugToken);
+        }
+    }
+
+    private void GetUserInfoForDebugToken(UnityWebRequest req)
+    {
+        if (req.responseCode == 200)
+        {
+            string json = req.downloadHandler.text;
+            Debug.Log(json);
+            UserInfo info = JsonUtility.FromJson<UserInfo>(json);
+            InformationManager.Instance.UserInfo = info;
         }
     }
 
@@ -65,10 +77,10 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
 
     private void CheckAccessToken()
     {
-        RestManager.Instance.GET("https://api.learning-layers.eu/o/oauth2/userinfo?access_token=" + accessToken, GetUserInfo, null);
+        RestManager.Instance.GET("https://api.learning-layers.eu/o/oauth2/userinfo?access_token=" + accessToken, Login, null);
     }
 
-    private void GetUserInfo(UnityWebRequest result, object[] args)
+    private void Login(UnityWebRequest result, object[] args)
     {
         if (result.responseCode == 200)
         {

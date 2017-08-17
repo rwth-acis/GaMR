@@ -61,6 +61,15 @@ public class GamificationFramework : Singleton<GamificationFramework>
     }
 
     // ---------------------------------------------------------------
+    // Quests
+    // ---------------------------------------------------------------
+
+    public void CreateQuest(string gameId, Quest quest)
+    {
+        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/quests/" + gameId, quest.ToJson(), OperationFinished);
+    }
+
+    // ---------------------------------------------------------------
     // Achievements
     // ---------------------------------------------------------------
 
@@ -86,9 +95,11 @@ public class GamificationFramework : Singleton<GamificationFramework>
         RestManager.Instance.PUT(InformationManager.Instance.GamificationAddress + "/gamification/actions/" + gameId + "/" + action.ID, body, OperationFinished);
     }
 
-    public void TriggerAction()
+    public void TriggerAction(string gameId, string actionId)
     {
-
+        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress
+            + "/visualization/actions/" + gameId + "/" + actionId + "/" + InformationManager.Instance.UserInfo.preferred_username,
+            OperationFinished);
     }
 
     // ---------------------------------------------------------------
@@ -110,9 +121,9 @@ public class GamificationFramework : Singleton<GamificationFramework>
         RestManager.Instance.PUT(InformationManager.Instance.GamificationAddress + "/gamification/points/" + gameId + "/name/" + newUnitName, OperationFinished);
     }
 
-    public void GetPointUnitName(string gameId, Action<string> callback)
+    public void GetPointUnitName(string gameId, Action<string> callWithResult)
     {
-        object[] passOnArgs = { callback };
+        object[] passOnArgs = { callWithResult };
         RestManager.Instance.GET(InformationManager.Instance.GamificationAddress + "/gamification/points/" + gameId + "/name", EvaluateGetPointUnitName, passOnArgs);
     }
 
@@ -145,6 +156,7 @@ public class GamificationFramework : Singleton<GamificationFramework>
         }
         else
         {
+            Debug.Log("Success");
             Debug.Log(req.downloadHandler.text);
         }
     }
@@ -152,7 +164,6 @@ public class GamificationFramework : Singleton<GamificationFramework>
     private void Start()
     {
         // for testing:
-        GetPointUnitName("testgame", Result);
     }
 
     private void Result(string obj)
