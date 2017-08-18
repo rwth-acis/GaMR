@@ -1,16 +1,19 @@
-﻿using System.Collections;
+﻿using HoloToolkit.Unity;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
 /// Loads the X3D models and handles their instantiation
 /// </summary>
-public class ModelLoadManager : MonoBehaviour {
+public class ModelLoadManager : Singleton<ModelLoadManager> {
 
     public string baseUrl = "/resources/model/";
     public Shader shader;
     public GameObject boundingBoxPrefab;
+    public Vector3 spawnPosition;
     public Vector3 spawnEulerAngles;
+    public Transform globalSpawnParent;
 
     private RestManager restCaller;
     private InformationManager infoManager;
@@ -33,8 +36,8 @@ public class ModelLoadManager : MonoBehaviour {
     public void Load(string name)
     {
         x3dObject = new X3DObj(restCaller, infoManager.BackendAddress + baseUrl, name, shader);
-        x3dObject.LoadGameObjects(OnFinished); // this automatically creates them
         WaitCursor.Show();
+        x3dObject.LoadGameObjects(OnFinished); // this automatically creates them
     }
 
     /// <summary>
@@ -67,5 +70,10 @@ public class ModelLoadManager : MonoBehaviour {
         // set the correct position and rotation
         box.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 2.5f;
         box.transform.localRotation = Quaternion.Euler(spawnEulerAngles);
+
+        if (globalSpawnParent != null)
+        {
+            box.transform.parent = globalSpawnParent;
+        }
     }
 }

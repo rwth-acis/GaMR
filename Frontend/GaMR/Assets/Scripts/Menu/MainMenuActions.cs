@@ -188,7 +188,7 @@ public class MainMenuActions : MonoBehaviour
     /// <param name="name">The name of the menu item</param>
     public void OnCarouselItemClicked(string name)
     {
-        modelLoadManager.Load(name);
+        ModelSynchronizer.Instance.LoadModelForAll(name);
         Destroy(carouselInstance);
         carouselInstance = null;
     }

@@ -22,6 +22,7 @@ namespace HoloToolkit.Sharing.Tests
         {
             HeadTransform = MessageID.UserMessageIDStart,
             BoundingBoxTransform,
+            ModelSpawn,
             Max
         }
 
@@ -153,6 +154,26 @@ namespace HoloToolkit.Sharing.Tests
                 AppendQuaternion(msg, rotation);
                 AppendVector3(msg, scale);
 
+
+                // Send the message as a broadcast, which will cause the server to forward it to all other users in the session.
+                serverConnection.Broadcast(
+                    msg,
+                    MessagePriority.Immediate,
+                    MessageReliability.UnreliableSequenced,
+                    MessageChannel.Default);
+            }
+        }
+
+        public void SendModelSpawn(string modelName, Vector3 position)
+        {
+            // If we are connected to a session, broadcast the bounding box transform
+            if (serverConnection != null && serverConnection.IsConnected())
+            {
+                // Create an outgoing network message to contain all the info we want to send
+                NetworkOutMessage msg = CreateMessage((byte)TestMessageID.ModelSpawn);
+
+                msg.Write(modelName);
+                AppendVector3(msg, position);
 
                 // Send the message as a broadcast, which will cause the server to forward it to all other users in the session.
                 serverConnection.Broadcast(
