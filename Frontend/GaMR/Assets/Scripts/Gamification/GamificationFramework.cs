@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+/// <summary>
+/// Contains the wrapper methods to access the API of the Gamfication Framework
+/// </summary>
 public class GamificationFramework : Singleton<GamificationFramework>
 {
 
@@ -12,6 +15,10 @@ public class GamificationFramework : Singleton<GamificationFramework>
     // Games
     // ---------------------------------------------------------------
 
+    /// <summary>
+    /// Create a new game
+    /// </summary>
+    /// <param name="game">The game data which are passed on to the Gamification Framework</param>
     public void CreateGame(Game game)
     {
         if (game.ID == "")
@@ -24,6 +31,11 @@ public class GamificationFramework : Singleton<GamificationFramework>
         RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/games/data", body, OperationFinished);
     }
 
+    /// <summary>
+    /// Gets the details about a specific game. The result is passed to the callback method.
+    /// </summary>
+    /// <param name="gameId">The game id of the game</param>
+    /// <param name="callWithResult">This method will be called with the resulting game object</param>
     public void GetGameDetails(string gameId, Action<Game> callWithResult)
     {
         if (callWithResult != null)
@@ -37,6 +49,11 @@ public class GamificationFramework : Singleton<GamificationFramework>
         }
     }
 
+    /// <summary>
+    /// Called when the GetGameDetails operation is finished. Checks if the request was successful and invokes the secondary callback.
+    /// </summary>
+    /// <param name="result">The result of the web request</param>
+    /// <param name="args">Additional arguments which have been passed through the request. This should contain a secondary callback method.</param>
     private void ConvertGameDetailsToGame(UnityWebRequest result, object[] args)
     {
         Game game = null;
@@ -55,6 +72,10 @@ public class GamificationFramework : Singleton<GamificationFramework>
         }
     }
 
+    /// <summary>
+    /// Validates the login credentials of the user
+    /// </summary>
+    /// <param name="callback">Method which gets called when the request is finished. The parameter of the method will contain the request result.</param>
     public void ValidateLogin(Action<UnityWebRequest> callback)
     {
         RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/games/validation", callback);
@@ -64,6 +85,11 @@ public class GamificationFramework : Singleton<GamificationFramework>
     // Quests
     // ---------------------------------------------------------------
 
+    /// <summary>
+    /// Creates a new quest
+    /// </summary>
+    /// <param name="gameId">The game id of the game that should contain the quest</param>
+    /// <param name="quest">The quest data to pass to the Gamification Framework</param>
     public void CreateQuest(string gameId, Quest quest)
     {
         RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/quests/" + gameId, quest.ToJson(), OperationFinished);

@@ -5,6 +5,9 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 
+/// <summary>
+/// Represents an action in the Gamification Framework
+/// </summary>
 public class GameAction
 {
     private string id;
@@ -46,6 +49,11 @@ public class GameAction
         this.notificationMessage = notificationMessage;
     }
 
+    /// <summary>
+    /// Converts the action to multipart/form-data in order to perform POST and PUT queries with the data
+    /// It is designed to be compatible with the Gamfication Framework.
+    /// </summary>
+    /// <returns>The multipart/form-data with the filled fields</returns>
     public List<IMultipartFormSection> ToMultipartFormData()
     {
         List<IMultipartFormSection> body = new List<IMultipartFormSection>();

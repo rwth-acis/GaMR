@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+/// <summary>
+/// Stores all data for a gamification game
+/// </summary>
 public class Game
 {
     private string id;
@@ -39,6 +42,11 @@ public class Game
         this.commtype = commtype;
     }
 
+    /// <summary>
+    /// Converts the game object to multipart/form-data for POST and PUT queries
+    /// It is designed to be compatible with the Gamification Framework
+    /// </summary>
+    /// <returns>The multipart/form-data with the filled fields</returns>
     public List<IMultipartFormSection> ToMultipartFormData()
     {
         List<IMultipartFormSection> body = new List<IMultipartFormSection>();
@@ -55,6 +63,11 @@ public class Game
         return body;
     }
 
+    /// <summary>
+    /// Parses a game from a json string
+    /// </summary>
+    /// <param name="json">The parsed game object</param>
+    /// <returns></returns>
     public static Game FromJson(string json)
     {
         JsonGame jsonGame = JsonUtility.FromJson<JsonGame>(json);
@@ -64,6 +77,10 @@ public class Game
     }
 }
 
+/// <summary>
+/// A json game object
+/// Used for parsing the json string of the Gamification Framework to a runtime object
+/// </summary>
 class JsonGame
 {
     public string commType;

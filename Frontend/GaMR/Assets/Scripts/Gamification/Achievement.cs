@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+/// <summary>
+/// Contains all necessary information for an achievement object
+/// </summary>
 public class Achievement
 {
     private string id;
@@ -46,6 +49,11 @@ public class Achievement
         this.notificationMessage = notificationMessage;
     }
 
+    /// <summary>
+    /// Converts the achievement to a multipart/form-data representation for POST and PUT queries
+    /// It is designed to be compatible with the Gamification Framework
+    /// </summary>
+    /// <returns>The multipart/form-data with the correct fields</returns>
     public List<IMultipartFormSection> ToMultipartFormData()
     {
         List<IMultipartFormSection> body = new List<IMultipartFormSection>();
