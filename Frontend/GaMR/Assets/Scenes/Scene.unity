@@ -281,6 +281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44552dacd2726814f9b33a987afbbe9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  worldAnchor: {fileID: 1684264512}
 --- !u!4 &370446433 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4000013641020314, guid: dc138879450c80f438141cbe47938daf,

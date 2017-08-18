@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class ModelSynchronizer : Singleton<ModelSynchronizer>
 {
+    public Transform worldAnchor;
 
     private void Start()
     {
@@ -18,8 +19,9 @@ public class ModelSynchronizer : Singleton<ModelSynchronizer>
     {
         Vector3 spawnPosition = Camera.main.transform.position + Camera.main.transform.forward * 2.5f;
         ModelLoadManager.Instance.spawnPosition = spawnPosition;
-        ModelLoadManager.Instance.Load(modelName);
+        Vector3 localSpawnPosition = spawnPosition - worldAnchor.position;
         CustomMessages.Instance.SendModelSpawn(modelName, spawnPosition);
+        ModelLoadManager.Instance.Load(modelName);
     }
 
     public void RemoteModelSpawned(NetworkInMessage msg)
