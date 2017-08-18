@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using HoloToolkit.Sharing.Tests;
+using HoloToolkit.Sharing;
 
 /// <summary>
 /// Transforms the attached gameobject
@@ -15,10 +17,58 @@ public class TransformationManager : MonoBehaviour
     [Tooltip("The minimum size of the gameObject's bounds")]
     public Vector3 minSize;
     private Rigidbody ridgidBody;
+    private BoundingBoxInfo boxInfo;
+    private static Dictionary<int, TransformationManager> instances;
 
     private void Start()
     {
         ridgidBody = GetComponent<Rigidbody>();
+        CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.BoundingBoxTransform] = ReceivedRemoteTransformChange;
+        boxInfo = GetComponentInChildren<BoundingBoxInfo>();
+        if (boxInfo == null)
+        {
+            Debug.LogError("Bounding Box needs to have a BoundingBoxInfo");
+        }
+        if (instances == null)
+        {
+            instances = new Dictionary<int, TransformationManager>();
+        }
+        instances.Add(boxInfo.BoxId, this);
+    }
+
+    private void OnDestroy()
+    {
+        instances.Remove(boxInfo.BoxId);
+    }
+
+    private static void ReceivedRemoteTransformChange(NetworkInMessage msg)
+    {
+        msg.ReadInt64(); // this is the user ID
+        int msgBoundingBoxId = msg.ReadInt32();
+        Vector3 newPosition = CustomMessages.Instance.ReadVector3(msg);
+        Quaternion newRotation = CustomMessages.Instance.ReadQuaternion(msg);
+        Vector3 newScale = CustomMessages.Instance.ReadVector3(msg);
+
+        if (instances.ContainsKey(msgBoundingBoxId))
+        {
+            instances[msgBoundingBoxId].OnRemoteTransformChanged(newPosition, newRotation, newScale);
+        }
+        else
+        {
+            Debug.LogError("Received transform from an unknown bounding box");
+        }
+    }
+
+    private void OnRemoteTransformChanged(Vector3 newPosition, Quaternion newRotation, Vector3 newScale)
+    {
+        transform.localPosition = newPosition;
+        transform.localRotation = newRotation;
+        transform.localScale = newScale;
+    }
+
+    private void UpdateTransformToRemote()
+    {
+        CustomMessages.Instance.SendBoundingBoxTransform(boxInfo.BoxId, transform.localPosition, transform.localRotation, transform.localScale);
     }
 
     public void Scale(Vector3 scaleVector)
@@ -33,12 +83,16 @@ public class TransformationManager : MonoBehaviour
             (newScale.x >= minSize.x && newScale.y >= minSize.y && newScale.z >= minSize.z))
         {
             transform.localScale = newScale;
+
         }
+
+        UpdateTransformToRemote();
     }
 
     public void Rotate(Vector3 axis, float angle)
     {
         transform.Rotate(axis, angle, Space.World);
+        UpdateTransformToRemote();
     }
 
     internal void Translate(Vector3 movement)
@@ -51,6 +105,8 @@ public class TransformationManager : MonoBehaviour
         {
             transform.Translate(movement, Space.World);
         }
+
+        UpdateTransformToRemote();
     }
 
     private IEnumerator SmoothRotate(Vector3 axis, float angle, float time)
@@ -70,6 +126,7 @@ public class TransformationManager : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         transform.localRotation = targetRotation;
+        UpdateTransformToRemote();
     }
 
     private IEnumerator SmoothScale(Vector3 scaleVector, float time)
@@ -89,6 +146,7 @@ public class TransformationManager : MonoBehaviour
         }
 
         transform.localScale = targetScale;
+        UpdateTransformToRemote();
     }
 
     // ---------------------------------

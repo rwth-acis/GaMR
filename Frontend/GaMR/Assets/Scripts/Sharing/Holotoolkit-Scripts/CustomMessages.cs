@@ -21,6 +21,7 @@ namespace HoloToolkit.Sharing.Tests
         public enum TestMessageID : byte
         {
             HeadTransform = MessageID.UserMessageIDStart,
+            BoundingBoxTransform,
             Max
         }
 
@@ -136,6 +137,29 @@ namespace HoloToolkit.Sharing.Tests
                     MessagePriority.Immediate,
                     MessageReliability.UnreliableSequenced,
                     MessageChannel.Avatar);
+            }
+        }
+
+        public void SendBoundingBoxTransform(int boundingBoxId, Vector3 position, Quaternion rotation, Vector3 scale)
+        {
+            // If we are connected to a session, broadcast the bounding box transform
+            if (serverConnection != null && serverConnection.IsConnected())
+            {
+                // Create an outgoing network message to contain all the info we want to send
+                NetworkOutMessage msg = CreateMessage((byte)TestMessageID.BoundingBoxTransform);
+
+                msg.Write(boundingBoxId);
+                AppendVector3(msg, position);
+                AppendQuaternion(msg, rotation);
+                AppendVector3(msg, scale);
+
+
+                // Send the message as a broadcast, which will cause the server to forward it to all other users in the session.
+                serverConnection.Broadcast(
+                    msg,
+                    MessagePriority.Immediate,
+                    MessageReliability.UnreliableSequenced,
+                    MessageChannel.Default);
             }
         }
 

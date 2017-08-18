@@ -24,24 +24,27 @@ public class BoundingBoxMenuInitialization : MonoBehaviour
     /// </summary>
     public void InitializeMenu()
     {
-        CustomMenuItem toggleEditMode = menu.GetItem("ToggleEditMode");
-        if (attachementManager.IsQuiz && InformationManager.Instance.playerType == PlayerType.STUDENT)
+        if (attachementManager != null)
         {
-            toggleEditMode.ItemEnabled = false;
-        }
-        else
-        {
-            toggleEditMode.ItemEnabled = true;
-        }
+            CustomMenuItem toggleEditMode = menu.GetItem("ToggleEditMode");
+            if (attachementManager.IsQuiz && InformationManager.Instance.playerType == PlayerType.STUDENT)
+            {
+                toggleEditMode.ItemEnabled = false;
+            }
+            else
+            {
+                toggleEditMode.ItemEnabled = true;
+            }
 
-        CustomMenuItem loadAnnotations = menu.GetItem("LoadAnnotations");
-        if (!attachementManager.IsQuiz)
-        {
-            loadAnnotations.ItemEnabled = false;
-        }
-        else
-        {
-            loadAnnotations.ItemEnabled = true;
+            CustomMenuItem loadAnnotations = menu.GetItem("LoadAnnotations");
+            if (!attachementManager.IsQuiz)
+            {
+                loadAnnotations.ItemEnabled = false;
+            }
+            else
+            {
+                loadAnnotations.ItemEnabled = true;
+            }
         }
     }
 }
