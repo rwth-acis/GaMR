@@ -63,20 +63,7 @@ public class RestManager : Singleton<RestManager>
     public void GET(string url, System.Action<UnityWebRequest> callback)
     {
         object[] passOnArgs = { callback };
-        GET(url, GetReduceCallback, passOnArgs);
-    }
-
-    /// <summary>
-    /// reduces the callback from an Action(UnityWebRequest, object[]) to an Action(UnityWebRequest)
-    /// </summary>
-    /// <param name="req">The finished web request</param>
-    /// <param name="passOnArgs">Contains the next callback</param>
-    private void GetReduceCallback(UnityWebRequest req, object[] passOnArgs)
-    {
-        if (passOnArgs != null && passOnArgs.Length > 0)
-        {
-            ((Action<UnityWebRequest>)passOnArgs[0])(req);
-        }
+        GET(url, ReduceCallback, passOnArgs);
     }
 
     /// <summary>
@@ -85,9 +72,33 @@ public class RestManager : Singleton<RestManager>
     /// <param name="url">The url to query</param>
     /// <param name="callback">The callback method which receives the downloaded data</param>
     /// <param name="passOnArgs">Further arguments which are passed on to the callback-method</param>
-	public void GET(string url, System.Action<UnityWebRequest, object[]> callback, object[] passOnArgs)
+    public void GET(string url, System.Action<UnityWebRequest, object[]> callback, object[] passOnArgs)
     {
-        StartCoroutine(GetWWW(url, callback, passOnArgs));
+        StartCoroutine(CallWWW(url, "GET", callback, passOnArgs));
+    }
+
+    /// <summary>
+    /// reduces the callback from an Action(UnityWebRequest, object[]) to an Action(UnityWebRequest)
+    /// </summary>
+    /// <param name="req">The finished web request</param>
+    /// <param name="passOnArgs">Contains the next callback</param>
+    private void ReduceCallback(UnityWebRequest req, object[] passOnArgs)
+    {
+        if (passOnArgs != null && passOnArgs.Length > 0)
+        {
+            ((Action<UnityWebRequest>)passOnArgs[0])(req);
+        }
+    }
+
+    public void DELETE(string url, Action<UnityWebRequest, object[]> callback, object[] passOnArgs)
+    {
+        StartCoroutine(CallWWW(url, "DELETE", callback, passOnArgs));
+    }
+
+    public void DELETE(string url, Action<UnityWebRequest> callback)
+    {
+        object[] passOnArgs = { callback };
+        DELETE(url, ReduceCallback, passOnArgs);
     }
 
     /// <summary>
@@ -237,9 +248,10 @@ public class RestManager : Singleton<RestManager>
     /// <param name="url">The url to query</param>
     /// <param name="callback">The callback method which receives the downloaded data</param>
     /// <returns></returns>
-    IEnumerator GetWWW(string url, System.Action<UnityWebRequest, object[]> callback, object[] passOnArgs)
+    IEnumerator CallWWW(string url, string requestType, System.Action<UnityWebRequest, object[]> callback, object[] passOnArgs)
     {
-        UnityWebRequest req = UnityWebRequest.Get(url);
+        UnityWebRequest req = new UnityWebRequest(url, requestType);
+        req.downloadHandler = new DownloadHandlerBuffer();
 
         foreach (KeyValuePair<string, string> header in StandardHeader)
         {

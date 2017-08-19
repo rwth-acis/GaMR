@@ -49,6 +49,11 @@ public class GamificationFramework : Singleton<GamificationFramework>
         }
     }
 
+    public void DeleteGame(string gameId)
+    {
+        RestManager.Instance.DELETE(InformationManager.Instance.GamificationAddress + "/gamification/games/data/" + gameId, OperationFinished);
+    }
+
     /// <summary>
     /// Called when the GetGameDetails operation is finished. Checks if the request was successful and invokes the secondary callback.
     /// </summary>
