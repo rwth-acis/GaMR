@@ -175,7 +175,7 @@ public class GamificationFramework : Singleton<GamificationFramework>
 
     private void OperationFinished(UnityWebRequest req)
     {
-        if (req.responseCode != 200)
+        if (req.responseCode != 200 || req.responseCode != 201)
         {
             Debug.Log("Error code for request: " + req.responseCode + " " + req.error);
             Debug.Log("Error: " + req.downloadHandler.text);
@@ -190,6 +190,12 @@ public class GamificationFramework : Singleton<GamificationFramework>
     private void Start()
     {
         // for testing:
+        Achievement achievement = new Achievement("testachievement", "testachievement", "testdescr", 5);
+        GameAction action = new GameAction("testaction2", "testaction2", "a test action", 2);
+        Quest quest = new Quest("testquest3", "testquest3", QuestStatus.REVEALED, achievement, false, false, 0, "a quest description");
+        quest.AddAction(action, 2);
+
+        CreateQuest("testgame2", quest);
     }
 
     private void Result(string obj)
