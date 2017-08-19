@@ -54,6 +54,16 @@ public class GamificationFramework : Singleton<GamificationFramework>
         RestManager.Instance.DELETE(InformationManager.Instance.GamificationAddress + "/gamification/games/data/" + gameId, OperationFinished);
     }
 
+    public void AddUserToGame(string gameId)
+    {
+        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/games/data" + gameId + "/" + InformationManager.Instance.UserInfo.preferred_username, OperationFinished);
+    }
+
+    public void RemoveUserFromGame(string gameId)
+    {
+        RestManager.Instance.DELETE(InformationManager.Instance.GamificationAddress + "/gamification/games/data" + gameId + "/" + InformationManager.Instance.UserInfo.preferred_username, OperationFinished);
+    }
+
     /// <summary>
     /// Called when the GetGameDetails operation is finished. Checks if the request was successful and invokes the secondary callback.
     /// </summary>
@@ -195,12 +205,6 @@ public class GamificationFramework : Singleton<GamificationFramework>
     private void Start()
     {
         // for testing:
-        Achievement achievement = new Achievement("testachievement", "testachievement", "testdescr", 5);
-        GameAction action = new GameAction("testaction2", "testaction2", "a test action", 2);
-        Quest quest = new Quest("testquest3", "testquest3", QuestStatus.REVEALED, achievement, false, false, 0, "a quest description");
-        quest.AddAction(action, 2);
-
-        CreateQuest("testgame2", quest);
     }
 
     private void Result(string obj)
