@@ -1,11 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 /// <summary>
 /// Loads the X3D models and handles their instantiation
 /// </summary>
-public class ModelLoadManager : MonoBehaviour {
+public class ModelLoadManager : MonoBehaviour
+{
 
     public string baseUrl = "/resources/model/";
     public Shader shader;
@@ -48,6 +51,8 @@ public class ModelLoadManager : MonoBehaviour {
         GameObject obj = x3dObject.CreateGameObjects();
         CreateBoundingBox(obj, x3dObject.Bounds);
 
+        CreateGamificationGame(x3dObject.ModelName);
+
     }
 
     /// <summary>
@@ -67,5 +72,37 @@ public class ModelLoadManager : MonoBehaviour {
         // set the correct position and rotation
         box.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 2.5f;
         box.transform.localRotation = Quaternion.Euler(spawnEulerAngles);
+    }
+
+    private void CreateGamificationGame(string modelName)
+    {
+        GamificationFramework.Instance.CreateGame(new Game(modelName),
+            (createdGame, createcode) =>
+            {
+                GamificationFramework.Instance.AddUserToGame(modelName, respondeCode =>
+                {
+                    if (respondeCode != 200)
+                    {
+                        Debug.Log("Could not add user to the game");
+                    }
+                    else
+                    {
+                        Debug.Log("User successfully added to game " + modelName);
+                    }
+                });
+            }
+            );
+    }
+
+    private void GameCreated(Game obj, long responseCode)
+    {
+        if (obj == null)
+        {
+            Debug.Log("something went wrong: Http code " + responseCode);
+        }
+        else
+        {
+            Debug.Log("ok: " + obj.ID);
+        }
     }
 }

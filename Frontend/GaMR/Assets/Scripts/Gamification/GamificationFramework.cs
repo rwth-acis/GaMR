@@ -19,7 +19,7 @@ public class GamificationFramework : Singleton<GamificationFramework>
     /// Create a new game
     /// </summary>
     /// <param name="game">The game data which are passed on to the Gamification Framework</param>
-    public void CreateGame(Game game)
+    public void CreateGame(Game game, Action<Game, long> callback)
     {
         if (game.ID == "")
         {
@@ -28,20 +28,45 @@ public class GamificationFramework : Singleton<GamificationFramework>
         }
 
         List<IMultipartFormSection> body = game.ToMultipartFormData();
-        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/games/data", body, OperationFinished);
+        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/games/data", body, reqRes =>
+        {
+            if (callback != null)
+            {
+                if (reqRes.responseCode == 200 || reqRes.responseCode == 201)
+                {
+                    callback(game, reqRes.responseCode);
+                }
+                else
+
+                {
+                    callback(null, reqRes.responseCode);
+                }
+            }
+        });
     }
 
     /// <summary>
     /// Gets the details about a specific game. The result is passed to the callback method.
     /// </summary>
     /// <param name="gameId">The game id of the game</param>
-    /// <param name="callWithResult">This method will be called with the resulting game object</param>
-    public void GetGameDetails(string gameId, Action<Game> callWithResult)
+    /// <param name="callWithResult">This method will be called with the resulting game object and the response code of the request</param>
+    public void GetGameDetails(string gameId, Action<Game, long> callWithResult)
     {
         if (callWithResult != null)
         {
             object[] args = { callWithResult };
-            RestManager.Instance.GET(InformationManager.Instance.GamificationAddress + "/gamification/games/data/" + gameId, ConvertGameDetailsToGame, args);
+            RestManager.Instance.GET(InformationManager.Instance.GamificationAddress + "/gamification/games/data/" + gameId, reqRes =>
+            {
+                Game game = null;
+                if (reqRes.responseCode == 200)
+                {
+                    game = Game.FromJson(reqRes.downloadHandler.text);
+                }
+                if (callWithResult != null)
+                {
+                    callWithResult(game, reqRes.responseCode);
+                }
+            });
         }
         else
         {
@@ -54,9 +79,17 @@ public class GamificationFramework : Singleton<GamificationFramework>
         RestManager.Instance.DELETE(InformationManager.Instance.GamificationAddress + "/gamification/games/data/" + gameId, OperationFinished);
     }
 
-    public void AddUserToGame(string gameId)
+    public void AddUserToGame(string gameId, Action<long> callback)
     {
-        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/games/data" + gameId + "/" + InformationManager.Instance.UserInfo.preferred_username, OperationFinished);
+        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/games/data/" + gameId + "/" + InformationManager.Instance.UserInfo.preferred_username,
+            reqRes =>
+            {
+                if (callback != null)
+                {
+                    callback(reqRes.responseCode);
+                }
+            }
+            );
     }
 
     public void RemoveUserFromGame(string gameId)
@@ -75,10 +108,6 @@ public class GamificationFramework : Singleton<GamificationFramework>
         if (result.responseCode == 200)
         {
             game = Game.FromJson(result.downloadHandler.text);
-        }
-        else
-        {
-            MessageBox.Show(LocalizationManager.Instance.ResolveString("Could not fetch the game details"), MessageBoxType.ERROR);
         }
         Action<Game> secondaryCallback = ((Action<Game>)args[0]);
         if (secondaryCallback != null)

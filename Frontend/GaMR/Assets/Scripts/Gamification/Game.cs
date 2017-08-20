@@ -38,6 +38,10 @@ public class Game
     private void InitializeParameters(string id, string description, string commtype)
     {
         this.id = id;
+        if (id.Length > 0)
+        {
+            id = id[0].ToString().ToLower() + id.Substring(1);
+        }
         this.description = description;
         this.commtype = commtype;
     }
