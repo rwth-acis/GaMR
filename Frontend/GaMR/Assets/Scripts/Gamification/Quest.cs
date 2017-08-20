@@ -8,41 +8,41 @@ public class Quest
     private string id;
     private string name;
     private QuestStatus status;
-    private Achievement achievement;
+    private string achievementId;
     private bool questflag;
     private bool pointflag;
     private int pointValue;
-    private Dictionary<GameAction, int> actions;
+    private Dictionary<string, int> actions;
     private string description;
     private bool notificationcheck;
     private string notificationmessage;
 
-    public Quest(string id, string name, QuestStatus status, Achievement achievement, bool questflag, bool pointflag,
-        int pointValue, Dictionary<GameAction, int> actions, string description) : this(id, name, status, achievement, questflag, pointflag, pointValue, actions, description, false, "")
+    public Quest(string id, string name, QuestStatus status, string achievementId, bool questflag, bool pointflag,
+        int pointValue, Dictionary<string, int> actions, string description) : this(id, name, status, achievementId, questflag, pointflag, pointValue, actions, description, false, "")
     {
         
     }
 
-    public Quest(string id, string name, QuestStatus status, Achievement achievement, bool questflag, bool pointflag,
-        int pointValue, string description) : this(id, name, status, achievement, questflag, pointflag, pointValue, new Dictionary<GameAction, int>(), description, false, "")
+    public Quest(string id, string name, QuestStatus status, string achievementId, bool questflag, bool pointflag,
+        int pointValue, string description) : this(id, name, status, achievementId, questflag, pointflag, pointValue, new Dictionary<string, int>(), description, false, "")
     {
 
     }
 
-    public Quest(string id, string name, QuestStatus status, Achievement achievement, bool questflag,
+    public Quest(string id, string name, QuestStatus status, string achievementId, bool questflag,
         bool pointflag, int pointValue, string description, bool notificationcheck, string notificationmessage)
-        : this(id, name, status, achievement, questflag, pointflag, pointValue, new Dictionary<GameAction, int>(), description, notificationcheck, notificationmessage)
+        : this(id, name, status, achievementId, questflag, pointflag, pointValue, new Dictionary<string, int>(), description, notificationcheck, notificationmessage)
     {
 
     }
 
-    public Quest(string id, string name, QuestStatus status, Achievement achievement, bool questflag,
-        bool pointflag, int pointValue, Dictionary<GameAction, int> actions, string description, bool notificationcheck, string notificationmessage)
+    public Quest(string id, string name, QuestStatus status, string achievementId, bool questflag,
+        bool pointflag, int pointValue, Dictionary<string, int> actions, string description, bool notificationcheck, string notificationmessage)
     {
         this.id = id;
         this.name = name;
         this.status = status;
-        this.achievement = achievement;
+        this.achievementId = achievementId;
         this.questflag = questflag;
         this.pointflag = pointflag;
         this.pointValue = pointValue;
@@ -54,7 +54,12 @@ public class Quest
 
     public void AddAction(GameAction action, int maxNumberOfTriggers)
     {
-        actions.Add(action, maxNumberOfTriggers);
+        AddAction(action.ID, maxNumberOfTriggers);
+    }
+
+    public void AddAction(string actionId, int maxNumberOfTriggers)
+    {
+        actions.Add(actionId, maxNumberOfTriggers);
     }
 
     public string ToJson()
@@ -63,14 +68,14 @@ public class Quest
         jsonObject.questid = id;
         jsonObject.questname = name;
         jsonObject.queststatus = status.ToString();
-        jsonObject.questachievementid = achievement.ID;
+        jsonObject.questachievementid = achievementId;
         jsonObject.questquestflag = questflag;
         jsonObject.questpointflag = pointflag;
         jsonObject.questpointvalue = pointValue;
         List<JsonAction> actionIds = new List<JsonAction>();
-        foreach(KeyValuePair<GameAction, int> action in actions)
+        foreach(KeyValuePair<string, int> action in actions)
         {
-            actionIds.Add(new JsonAction(action.Key.ID, action.Value));
+            actionIds.Add(new JsonAction(action.Key, action.Value));
         }
         jsonObject.questactionids = actionIds;
         jsonObject.questdescription = description;
@@ -81,6 +86,15 @@ public class Quest
 
         return json;
 
+    }
+
+    public static Quest FromJson(string json)
+    {
+        JsonQuest jsonQuest = JsonUtility.FromJson<JsonQuest>(json);
+        QuestStatus status = (QuestStatus)Enum.Parse(typeof(QuestStatus),jsonQuest.queststatus);
+        Quest quest = new Quest(jsonQuest.questid, jsonQuest.questname, status, jsonQuest.questachievementid, jsonQuest.questquestflag, jsonQuest.questpointflag, jsonQuest.questpointvalue, jsonQuest.questdescription, jsonQuest.questnotificationcheck, jsonQuest.questnotificationmessage);
+        // TODO: add actions
+        return quest;
     }
 }
 

@@ -74,12 +74,6 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void OnInputUp(InputEventData eventData)
     {
     }

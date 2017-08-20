@@ -33,6 +33,10 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
             UserInfo info = JsonUtility.FromJson<UserInfo>(json);
             InformationManager.Instance.UserInfo = info;
         }
+        else if (req.responseCode == 401)
+        {
+            Debug.LogError("Unauthorized: access token is wrong");
+        }
     }
 
     public void Logout()

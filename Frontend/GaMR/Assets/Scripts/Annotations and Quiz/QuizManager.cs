@@ -72,11 +72,18 @@ public class QuizManager : AnnotationManager
             {
                 restManager.POST(infoManager.BackendAddress + subPathSave + QuizName, jsonPost);
             }
+
+            // also save the gamification
+            SaveGamification();
         }
         else // if it is a student => save the achievements
         {
 
         }
+    }
+
+    private void SaveGamification()
+    {
     }
 
     /// <summary>
@@ -182,6 +189,39 @@ public class QuizManager : AnnotationManager
         {
             freeIndices.Add(i);
         }
+    }
+
+    public override void Add(AnnotationContainer annotationContainer)
+    {
+        base.Add(annotationContainer);
+
+        // handle gamification: add question as action
+        GameAction action = new GameAction(annotationContainer.Annotation.Position.ToString(), annotationContainer.Annotation.Text, "", 1);
+        GamificationFramework.Instance.CreateAction(objInfo.ModelName, action,
+            resCode =>
+            {
+                if (resCode != 200 || resCode != 201)
+                {
+                    Debug.Log("Could not gamify question (Code " + resCode + ")");
+                }
+            }
+            );
+    }
+
+    public override void Delete(AnnotationContainer annotationContainer)
+    {
+        base.Delete(annotationContainer);
+
+        // handle gamification: delete action which is related to the question
+        GamificationFramework.Instance.DeleteAction(objInfo.ModelName, annotationContainer.Annotation.Position.ToString(),
+            resCode =>
+            {
+                if (resCode != 200)
+                {
+                    Debug.Log("Could not delete gamified question (Code " + resCode + ")");
+                }
+            }
+            );
     }
 
     /// <summary>

@@ -610,6 +610,11 @@ Prefab:
       propertyPath: UseRailsNavigation
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114000012009196210, guid: 3eddd1c29199313478dd3f912bfab2ab,
+        type: 2}
+      propertyPath: RaycastLayerMasks.Array.data[0].m_Bits
+      value: 4294966779
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3eddd1c29199313478dd3f912bfab2ab, type: 2}
   m_IsPrefabParent: 0

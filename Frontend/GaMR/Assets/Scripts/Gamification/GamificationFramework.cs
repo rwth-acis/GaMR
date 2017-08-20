@@ -92,9 +92,17 @@ public class GamificationFramework : Singleton<GamificationFramework>
             );
     }
 
-    public void RemoveUserFromGame(string gameId)
+    public void RemoveUserFromGame(string gameId, Action<long> callback)
     {
-        RestManager.Instance.DELETE(InformationManager.Instance.GamificationAddress + "/gamification/games/data" + gameId + "/" + InformationManager.Instance.UserInfo.preferred_username, OperationFinished);
+        RestManager.Instance.DELETE(InformationManager.Instance.GamificationAddress + "/gamification/games/data" + gameId + "/" + InformationManager.Instance.UserInfo.preferred_username,
+            reqRes =>
+            {
+                if (callback != null)
+                {
+                    callback(reqRes.responseCode);
+                }
+            }
+            );
     }
 
     /// <summary>
@@ -139,6 +147,32 @@ public class GamificationFramework : Singleton<GamificationFramework>
         RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/quests/" + gameId, quest.ToJson(), OperationFinished);
     }
 
+    public void UpdateQuest(string gameId, Quest quest)
+    {
+        RestManager.Instance.PUT(InformationManager.Instance.GamificationAddress + "/gamification/quests/" + gameId, quest.ToJson(), OperationFinished);
+    }
+
+    public void GetQuestWithId(string gameId, string questId, Action<Quest, long> callback)
+    {
+        RestManager.Instance.GET(InformationManager.Instance.GamificationAddress + "/gamification/quests/" + gameId + "/" + questId,
+            reqRes =>
+            {
+                if (callback != null)
+                {
+                    if (reqRes.responseCode == 200)
+                    {
+                        Quest quest = Quest.FromJson(reqRes.downloadHandler.text);
+                        callback(quest, reqRes.responseCode);
+                    }
+                    else
+                    {
+                        callback(null, reqRes.responseCode);
+                    }
+                }
+            }
+            );
+    }
+
     // ---------------------------------------------------------------
     // Achievements
     // ---------------------------------------------------------------
@@ -153,16 +187,45 @@ public class GamificationFramework : Singleton<GamificationFramework>
     // Actions
     // ---------------------------------------------------------------
 
-    public void CreateAction(string gameId, GameAction action)
+    public void CreateAction(string gameId, GameAction action, Action<long> callback)
     {
         List<IMultipartFormSection> body = action.ToMultipartFormData();
-        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/actions/" + gameId, body, OperationFinished);
+        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/actions/" + gameId, body,
+            reqRes =>
+            {
+                if (callback != null)
+                {
+                    callback(reqRes.responseCode);
+                }
+            }
+            );
     }
 
-    public void UpdateAction(string gameId, GameAction action)
+    public void UpdateAction(string gameId, GameAction action, Action<long> callback)
     {
         List<IMultipartFormSection> body = action.ToMultipartFormData();
-        RestManager.Instance.PUT(InformationManager.Instance.GamificationAddress + "/gamification/actions/" + gameId + "/" + action.ID, body, OperationFinished);
+        RestManager.Instance.PUT(InformationManager.Instance.GamificationAddress + "/gamification/actions/" + gameId + "/" + action.ID, body,
+            reqRes =>
+            {
+                if (callback != null)
+                {
+                    callback(reqRes.responseCode);
+                }
+            }
+            );
+    }
+
+    public void DeleteAction(string gameId, string actionId, Action<long> callback)
+    {
+        RestManager.Instance.DELETE(InformationManager.Instance.GamificationAddress + "/gamification/actions/" + gameId + "/" + actionId,
+            reqRes =>
+            {
+                if (callback != null)
+                {
+                    callback(reqRes.responseCode);
+                }
+            }
+            );
     }
 
     public void TriggerAction(string gameId, string actionId)

@@ -88,7 +88,7 @@ public class AnnotationManager : MonoBehaviour
     /// adds a new annotation to the list
     /// </summary>
     /// <param name="annotation">The annotation to add</param>
-    public void Add(AnnotationContainer annotationContainer)
+    public virtual void Add(AnnotationContainer annotationContainer)
     {
         annotations.Add(annotationContainer.Annotation);
         annotationContainers.Add(annotationContainer);
@@ -98,7 +98,7 @@ public class AnnotationManager : MonoBehaviour
     /// Deletes an annotation from the list
     /// </summary>
     /// <param name="annotation">The annotation to delete</param>
-    public void Delete(AnnotationContainer annotationContainer)
+    public virtual void Delete(AnnotationContainer annotationContainer)
     {
         annotations.Remove(annotationContainer.Annotation);
         annotationContainers.Remove(annotationContainer);
