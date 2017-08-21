@@ -43,6 +43,8 @@ public class GamificationFramework : Singleton<GamificationFramework>
                 }
             }
         });
+
+        CreateAction(game.ID, new GameAction("pseudoaction", "a pseudo action", "pseudo action for all quests to avoid empty lists", 0), null);
     }
 
     /// <summary>
@@ -142,14 +144,57 @@ public class GamificationFramework : Singleton<GamificationFramework>
     /// </summary>
     /// <param name="gameId">The game id of the game that should contain the quest</param>
     /// <param name="quest">The quest data to pass to the Gamification Framework</param>
-    public void CreateQuest(string gameId, Quest quest)
+    public void CreateQuest(string gameId, Quest quest, Action<Quest, long> callback)
     {
-        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/quests/" + gameId, quest.ToJson(), OperationFinished);
+        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/quests/" + gameId, quest.ToJson(),
+            reqRes =>
+            {
+                if (callback != null)
+                {
+                    callback(quest, reqRes.responseCode);
+                }
+            }
+            );
     }
 
     public void UpdateQuest(string gameId, Quest quest)
     {
         RestManager.Instance.PUT(InformationManager.Instance.GamificationAddress + "/gamification/quests/" + gameId, quest.ToJson(), OperationFinished);
+    }
+
+    public void GetOrCreateQuest(string gameId, Quest quest, Action<Quest> callback)
+    {
+        GetQuestWithId(gameId, quest.ID,
+            (resQuest, resCode) =>
+            {
+                if (resCode == 200)
+                {
+                    if (callback != null)
+                    {
+                        callback(resQuest);
+                    }
+                }
+                else
+                {
+                    CreateQuest(gameId, quest,
+                        (createdQuest, createCode) =>
+                        {
+                            if (createCode == 200 || createCode == 201)
+                            {
+                                if (callback != null)
+                                {
+                                    callback(createdQuest);
+                                }
+                            }
+                            else
+                            {
+                                callback(null);
+                            }
+                        }
+                        );
+                }
+            }
+            );
     }
 
     public void GetQuestWithId(string gameId, string questId, Action<Quest, long> callback)

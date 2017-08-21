@@ -15,6 +15,7 @@ public class QuizManager : AnnotationManager
     private AnnotationContainer currentContainer;
     private CustomMenuItem currentMenuItem;
     private ObjectInfo objInfo;
+    private GamificationManager gamificationManager;
     private GameObject quizObject;
     private Menu availableNames; // only used in the mode "name to position"
     private ProgressBar progressBar;
@@ -40,6 +41,7 @@ public class QuizManager : AnnotationManager
     {
         Init();
         objInfo = GetComponent<ObjectInfo>();
+        gamificationManager = GetComponent<GamificationManager>();
         subPathLoad += objectInfo.ModelName + "/";
         subPathSave += objectInfo.ModelName + "/";
 
@@ -54,6 +56,21 @@ public class QuizManager : AnnotationManager
 
         // load the annotations/quiz questions
         LoadAnnotations();
+
+        Quest quest;
+        GamificationFramework.Instance.GetOrCreateQuest(objInfo.ModelName, quest,
+            resQuest =>
+            {
+                if (resQuest != null)
+                {
+                    gamificationManager.Quest = resQuest;
+                }
+                else
+                {
+                    MessageBox.Show("Could not load gamification of the quiz", MessageBoxType.ERROR);
+                }
+            }
+            );
     }
 
     /// <summary>
@@ -135,13 +152,13 @@ public class QuizManager : AnnotationManager
             quizObject = new GameObject("Quiz");
             quizObject.AddComponent<RotateToCameraOnYAxis>();
             quizObject.transform.parent = boundingBoxHook;
-            quizObject.transform.position = gameObject.transform.position + new Vector3(objInfo.Size.x,objInfo.Size.y/2, 0);
+            quizObject.transform.position = gameObject.transform.position + new Vector3(objInfo.Size.x, objInfo.Size.y / 2, 0);
 
             availableNames = quizObject.AddComponent<Menu>();
             availableNames.rootMenu = new List<CustomMenuItem>();
             availableNames.alignment = Direction.VERTICAL;
             availableNames.markOnlyOne = true;
-            availableNames.defaultMenuStyle = (GameObject) Resources.Load("QuizItem");
+            availableNames.defaultMenuStyle = (GameObject)Resources.Load("QuizItem");
 
             InitializeFreeIndices();
 
@@ -174,7 +191,7 @@ public class QuizManager : AnnotationManager
 
         progressBarObject.transform.parent = boundingBoxHook;
 
-        progressBarObject.transform.position = gameObject.transform.position + new Vector3(-objInfo.Size.x, - objInfo.Size.y/2f, 0);
+        progressBarObject.transform.position = gameObject.transform.position + new Vector3(-objInfo.Size.x, -objInfo.Size.y / 2f, 0);
 
         // set the rotation to the value it had before
         boundingBoxHook.localRotation = currentRotation;
@@ -203,6 +220,7 @@ public class QuizManager : AnnotationManager
                 if (resCode != 200 || resCode != 201)
                 {
                     Debug.Log("Could not gamify question (Code " + resCode + ")");
+                    gamificationManager.Quest.AddAction(action, 1);
                 }
             }
             );
@@ -219,6 +237,7 @@ public class QuizManager : AnnotationManager
                 if (resCode != 200)
                 {
                     Debug.Log("Could not delete gamified question (Code " + resCode + ")");
+                    gamificationManager.Quest.RemoveAction(annotationContainer.Annotation.Position.ToString());
                 }
             }
             );
@@ -303,6 +322,7 @@ public class QuizManager : AnnotationManager
     {
         base.OnDestroy();
         CleanUp();
+        gamificationManager.Commit();
     }
 
     /// <summary>

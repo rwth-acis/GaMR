@@ -17,6 +17,11 @@ public class Quest
     private bool notificationcheck;
     private string notificationmessage;
 
+    public string ID
+    {
+        get { return id; }
+    }
+
     public Quest(string id, string name, QuestStatus status, string achievementId, bool questflag, bool pointflag,
         int pointValue, Dictionary<string, int> actions, string description) : this(id, name, status, achievementId, questflag, pointflag, pointValue, actions, description, false, "")
     {
@@ -50,6 +55,8 @@ public class Quest
         this.description = description;
         this.notificationcheck = notificationcheck;
         this.notificationmessage = notificationmessage;
+
+        AddAction("pseudoaction", 0);
     }
 
     public void AddAction(GameAction action, int maxNumberOfTriggers)
@@ -60,6 +67,11 @@ public class Quest
     public void AddAction(string actionId, int maxNumberOfTriggers)
     {
         actions.Add(actionId, maxNumberOfTriggers);
+    }
+
+    public void RemoveAction(string actionId)
+    {
+        actions.Remove(actionId);
     }
 
     public string ToJson()
