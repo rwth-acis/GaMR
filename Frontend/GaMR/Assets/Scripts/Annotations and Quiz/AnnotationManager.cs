@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using HoloToolkit.Sharing.Tests;
+using HoloToolkit.Sharing;
 
 public class AnnotationManager : MonoBehaviour
 {
@@ -29,7 +31,20 @@ public class AnnotationManager : MonoBehaviour
         Init();
         subPathLoad += objectInfo.ModelName;
         subPathSave += objectInfo.ModelName;
+        CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.AnnotationsUpdated] = RemoteAnnotationsUpdated;
         LoadAnnotations();
+    }
+
+    private void RemoteAnnotationsUpdated(NetworkInMessage msg)
+    {
+        if (msg.ReadInt64() != SharingStage.Instance.Manager.GetLocalUser().GetID())
+        {
+            string modelName = msg.ReadString();
+            if (modelName == objectInfo.ModelName)
+            {
+                LoadAnnotations();
+            }
+        }
     }
 
     /// <summary>
@@ -51,6 +66,21 @@ public class AnnotationManager : MonoBehaviour
     protected virtual void LoadAnnotations()
     {
         restManager.GET(infoManager.BackendAddress + subPathLoad, Load);
+    }
+
+    /// <summary>
+    /// loads the annotations
+    /// is called when the rest query has finished
+    /// </summary>
+    /// <param name="res">The result string of the rest-query (null if an error occured)</param>
+    protected void Load(string res)
+    {
+        if (res != null)
+        {
+            JsonAnnotationArray array = JsonUtility.FromJson<JsonAnnotationArray>(res);
+            annotations = array.array;
+            ShowAllAnnotations();
+        }
     }
 
     /// <summary>
@@ -135,21 +165,6 @@ public class AnnotationManager : MonoBehaviour
             restManager.POST(infoManager.BackendAddress + subQuizPathName + name, jsonPost);
         }
 
-    }
-
-    /// <summary>
-    /// loads the annotations
-    /// is called when the rest query has finished
-    /// </summary>
-    /// <param name="res">The result string of the rest-query (null if an error occured)</param>
-    protected void Load(string res)
-    {
-        if (res != null)
-        {
-            JsonAnnotationArray array = JsonUtility.FromJson<JsonAnnotationArray>(res);
-            annotations = array.array;
-            ShowAllAnnotations();
-        }
     }
 
     /// <summary>
