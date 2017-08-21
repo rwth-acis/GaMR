@@ -121,6 +121,8 @@ public class AnnotationManager : MonoBehaviour
     {
         annotations.Add(annotationContainer.Annotation);
         annotationContainers.Add(annotationContainer);
+        Save();
+        CustomMessages.Instance.SendAnnotationsUpdated(objectInfo.ModelName);
     }
 
     /// <summary>
@@ -131,6 +133,8 @@ public class AnnotationManager : MonoBehaviour
     {
         annotations.Remove(annotationContainer.Annotation);
         annotationContainers.Remove(annotationContainer);
+        Save();
+        CustomMessages.Instance.SendAnnotationsUpdated(objectInfo.ModelName);
     }
 
     /// <summary>
