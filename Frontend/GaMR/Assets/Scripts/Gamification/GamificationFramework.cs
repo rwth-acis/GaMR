@@ -222,10 +222,74 @@ public class GamificationFramework : Singleton<GamificationFramework>
     // Achievements
     // ---------------------------------------------------------------
 
-    public void CreateAchievement(string gameId, Achievement achievement)
+    public void CreateAchievement(string gameId, Achievement achievement, Action<Achievement, long> callback)
     {
         List<IMultipartFormSection> body = achievement.ToMultipartFormData();
-        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/achievements/" + gameId, body, OperationFinished);
+        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/achievements/" + gameId, body, 
+            reqRes =>
+            {
+                if (callback != null)
+                {
+                    callback(achievement, reqRes.responseCode);
+                }
+            }
+            );
+    }
+
+    public void GetAchievementWithId(string gameId, string achievementId, Action<Achievement, long> callback)
+    {
+        RestManager.Instance.GET(InformationManager.Instance.GamificationAddress + "/gamification/achievements/" + gameId + "/" + achievementId,
+            reqRes =>
+            {
+                if (callback != null)
+                {
+                    if (reqRes.responseCode == 200)
+                    {
+                        Achievement resAchievement = Achievement.FromJson(reqRes.downloadHandler.text);
+                        callback(resAchievement, reqRes.responseCode);
+                    }
+                    else
+                    {
+                        callback(null, reqRes.responseCode);
+                    }
+                }
+            }
+            );
+    }
+
+    public void GetOrCreateAchievement(string gameId, Achievement achievement, Action<Achievement> callback)
+    {
+        GetAchievementWithId(gameId, achievement.ID,
+            (resAchievement, resCode) =>
+            {
+                if (resCode == 200)
+                {
+                    if (callback != null)
+                    {
+                        callback(resAchievement);
+                    }
+                }
+                else
+                {
+                    CreateAchievement(gameId, achievement,
+                        (createdAchievement, createCode) =>
+                        {
+                            if (createCode == 200 || createCode == 201)
+                            {
+                                if (callback != null)
+                                {
+                                    callback(createdAchievement);
+                                }
+                            }
+                            else
+                            {
+                                callback(null);
+                            }
+                        }
+                        );
+                }
+            }
+            );
     }
 
     // ---------------------------------------------------------------

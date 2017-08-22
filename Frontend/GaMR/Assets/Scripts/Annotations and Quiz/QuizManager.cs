@@ -57,20 +57,22 @@ public class QuizManager : AnnotationManager
         // load the annotations/quiz questions
         LoadAnnotations();
 
-        Quest quest;
-        GamificationFramework.Instance.GetOrCreateQuest(objInfo.ModelName, quest,
-            resQuest =>
-            {
-                if (resQuest != null)
-                {
-                    gamificationManager.Quest = resQuest;
-                }
-                else
-                {
-                    MessageBox.Show("Could not load gamification of the quiz", MessageBoxType.ERROR);
-                }
-            }
-            );
+
+
+        //Quest quest;
+        //GamificationFramework.Instance.GetOrCreateQuest(objInfo.ModelName, quest,
+        //    resQuest =>
+        //    {
+        //        if (resQuest != null)
+        //        {
+        //            gamificationManager.Quest = resQuest;
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show("Could not load gamification of the quiz", MessageBoxType.ERROR);
+        //        }
+        //    }
+        //    );
     }
 
     /// <summary>
@@ -101,6 +103,7 @@ public class QuizManager : AnnotationManager
 
     private void SaveGamification()
     {
+        gamificationManager.Commit();
     }
 
     /// <summary>

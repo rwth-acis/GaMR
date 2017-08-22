@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -12,7 +13,7 @@ public class Achievement
     private string name;
     private string description;
     private int pointValue;
-    private Badge badge;
+    private string badgeId;
     private bool notificationCheck;
     private string notificationMessage;
 
@@ -23,28 +24,28 @@ public class Achievement
     public bool NotificationCheck { get { return notificationCheck; } }
     public string NotificationMessage { get { return notificationMessage; } }
 
-    public Badge Badge { get { return badge; } }
+    public string BadgeId { get { return badgeId; } }
 
     public Achievement(string id, string name, string description, int pointValue) : this(id, name, description, pointValue, null, false, "")
     {
     }
 
-    public Achievement(string id, string name, string description, int pointValue, Badge badge) : this(id, name, description, pointValue, badge, false, "")
+    public Achievement(string id, string name, string description, int pointValue, string badgeId) : this(id, name, description, pointValue, badgeId, false, "")
     {
     }
 
-    private Achievement(string id, string name, string description, int pointValue, Badge badge, string notificationMessage)
-        : this(id, name, description, pointValue, badge, true, notificationMessage)
+    private Achievement(string id, string name, string description, int pointValue, string badgeId, string notificationMessage)
+        : this(id, name, description, pointValue, badgeId, true, notificationMessage)
     {
     }
 
-    private Achievement(string id, string name, string description, int pointValue, Badge badge, bool notificationCheck, string notificationMessage)
+    private Achievement(string id, string name, string description, int pointValue, string badgeId, bool notificationCheck, string notificationMessage)
     {
         this.id = id;
         this.name = name;
         this.description = description;
         this.pointValue = pointValue;
-        this.badge = badge;
+        this.badgeId = badgeId;
         this.notificationCheck = notificationCheck;
         this.notificationMessage = notificationMessage;
     }
@@ -67,9 +68,9 @@ public class Achievement
             body.Add(new MultipartFormDataSection("achievementdesc", Description));
         }
         body.Add(new MultipartFormDataSection("achievementpointvalue", PointValue.ToString()));
-        if (Badge != null)
+        if (BadgeId != null || BadgeId != "")
         {
-            body.Add(new MultipartFormDataSection("achievementbadgeid", Badge.ID));
+            body.Add(new MultipartFormDataSection("achievementbadgeid", BadgeId));
         }
         if (NotificationCheck)
         {
@@ -83,4 +84,22 @@ public class Achievement
         return body;
     }
 
+    public static Achievement FromJson(string json)
+    {
+        JsonAchievement jsonAchievement = JsonUtility.FromJson<JsonAchievement>(json);
+        Achievement achievement = new Achievement(jsonAchievement.id, jsonAchievement.name, jsonAchievement.description, jsonAchievement.pointValue, jsonAchievement.badgeId, jsonAchievement.useNotification, jsonAchievement.notificationMessage);
+        return achievement;
+    }
+}
+
+[Serializable]
+public class JsonAchievement
+{
+    public string id;
+    public string name;
+    public string description;
+    public int pointValue;
+    public string notificationMessage;
+    public bool useNotification;
+    public string badgeId;
 }
