@@ -236,6 +236,20 @@ public class GamificationFramework : Singleton<GamificationFramework>
             );
     }
 
+    public void UpdateAchievement(string gameId, Achievement achievement, Action<Achievement, long> callback)
+    {
+        List<IMultipartFormSection> body = achievement.ToMultipartFormData();
+        RestManager.Instance.PUT(InformationManager.Instance.GamificationAddress + "/gamification/achievements/" + gameId + "/" + achievement.ID, body,
+            reqRes =>
+            {
+                if (callback != null)
+                {
+                    callback(achievement, reqRes.responseCode);
+                }
+            }
+            );
+    }
+
     public void GetAchievementWithId(string gameId, string achievementId, Action<Achievement, long> callback)
     {
         RestManager.Instance.GET(InformationManager.Instance.GamificationAddress + "/gamification/achievements/" + gameId + "/" + achievementId,

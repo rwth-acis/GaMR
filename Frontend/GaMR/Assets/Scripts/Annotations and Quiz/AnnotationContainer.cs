@@ -135,6 +135,12 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
         Destroy(gameObject);
     }
 
+    public void EditAnnotation(string newText)
+    {
+        Annotation.Text = newText;
+        annotationManager.notif
+    }
+
     public void Select()
     {
         mat.color = new Color(selectedColor.r, selectedColor.g, selectedColor.b, mat.color.a);

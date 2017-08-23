@@ -28,6 +28,8 @@ public class QuizManager : AnnotationManager
     /// </summary>
     public string QuizName { get; set; }
 
+    public GamificationManager GamificiationManager { get { return gamificationManager; } }
+
     /// <summary>
     /// if true: quiz is in the mode where the position is given and the user has to enter the name
     /// if false: quiz is in the mode where the names are given and the user has to find the position
@@ -58,21 +60,38 @@ public class QuizManager : AnnotationManager
         LoadAnnotations();
 
 
+        Achievement achievementOfQuiz = new Achievement(QuizName, QuizName, "", annotations.Count);
 
-        //Quest quest;
-        //GamificationFramework.Instance.GetOrCreateQuest(objInfo.ModelName, quest,
-        //    resQuest =>
-        //    {
-        //        if (resQuest != null)
-        //        {
-        //            gamificationManager.Quest = resQuest;
-        //        }
-        //        else
-        //        {
-        //            MessageBox.Show("Could not load gamification of the quiz", MessageBoxType.ERROR);
-        //        }
-        //    }
-        //    );
+        // create or load quiz with achievement
+
+        GamificationFramework.Instance.GetOrCreateAchievement(objInfo.ModelName, achievementOfQuiz,
+            resAchievement =>
+            {
+                if (resAchievement != null)
+                {
+                    achievementOfQuiz = resAchievement;
+                }
+                else
+                {
+                    MessageBox.Show("Could not load or create an achievement for the quiz", MessageBoxType.ERROR);
+                }
+            }
+            );
+
+        Quest quizQuest = new Quest(QuizName, QuizName, QuestStatus.REVEALED, achievementOfQuiz.ID, false, false, 0, "");
+        GamificationFramework.Instance.GetOrCreateQuest(objInfo.ModelName, quizQuest,
+            resQuest =>
+            {
+                if (resQuest != null)
+                {
+                    gamificationManager.Quest = resQuest;
+                }
+                else
+                {
+                    MessageBox.Show("Could not load gamification of the quiz", MessageBoxType.ERROR);
+                }
+            }
+            );
     }
 
     /// <summary>
@@ -94,10 +113,6 @@ public class QuizManager : AnnotationManager
 
             // also save the gamification
             SaveGamification();
-        }
-        else // if it is a student => save the achievements
-        {
-
         }
     }
 
@@ -217,6 +232,7 @@ public class QuizManager : AnnotationManager
 
         // handle gamification: add question as action
         GameAction action = new GameAction(annotationContainer.Annotation.Position.ToString(), annotationContainer.Annotation.Text, "", 1);
+        gamificationManager.Quest.AddAction(action, 1);
         GamificationFramework.Instance.CreateAction(objInfo.ModelName, action,
             resCode =>
             {
@@ -227,6 +243,10 @@ public class QuizManager : AnnotationManager
                 }
             }
             );
+
+        // also increase target for achievement
+        gamificationManager.AchievementOfQuest.PointValue = annotations.Count;
+        GamificationFramework.Instance.UpdateAchievement(objInfo.ModelName, gamificationManager.AchievementOfQuest, null);
     }
 
     public override void Delete(AnnotationContainer annotationContainer)
@@ -244,6 +264,16 @@ public class QuizManager : AnnotationManager
                 }
             }
             );
+
+        // also decrease target for achievement
+        gamificationManager.AchievementOfQuest.PointValue = annotations.Count;
+        GamificationFramework.Instance.UpdateAchievement(objInfo.ModelName, gamificationManager.AchievementOfQuest, null);
+    }
+
+    public override void NotifyAnnotationEdited(Annotation updatedAnnotation)
+    {
+        base.NotifyAnnotationEdited(updatedAnnotation);
+        GamificationFramework.Instance.UpdateAction(objInfo.ModelName, new GameAction(updatedAnnotation.Position.ToString(), updatedAnnotation.Text, "", 1), null);
     }
 
     /// <summary>

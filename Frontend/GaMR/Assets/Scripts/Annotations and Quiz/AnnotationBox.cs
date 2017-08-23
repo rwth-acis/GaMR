@@ -60,7 +60,7 @@ public class AnnotationBox : MonoBehaviour
     {
         if (input != null)
         {
-            container.Annotation.Text = input;
+            container.EditAnnotation(input);
             caption.Text = input;
         }
         gameObject.SetActive(true);

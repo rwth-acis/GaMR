@@ -104,6 +104,11 @@ public class AnnotationManager : MonoBehaviour
         annotationContainers.Remove(annotationContainer);
     }
 
+    public virtual void NotifyAnnotationEdited(Annotation updatedAnnotation)
+    {
+
+    }
+
     /// <summary>
     /// saves all annotations by communicating the list of annotations to the backend
     /// </summary>
