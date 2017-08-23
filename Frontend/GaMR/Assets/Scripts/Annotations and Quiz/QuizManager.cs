@@ -337,6 +337,7 @@ public class QuizManager : AnnotationManager
             MessageBox.Show(LocalizationManager.Instance.ResolveString("Correct"), MessageBoxType.SUCCESS);
             correctlyAnswered++;
             progressBar.Progress = (float)correctlyAnswered / annotations.Count;
+            GamificationFramework.Instance.TriggerAction(objInfo.ModelName, annotation.Position.ToString());
             return true;
         }
         else
