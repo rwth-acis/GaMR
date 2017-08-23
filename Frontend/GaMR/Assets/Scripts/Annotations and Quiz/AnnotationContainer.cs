@@ -137,8 +137,10 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
 
     public void EditAnnotation(string newText)
     {
+        // set text
         Annotation.Text = newText;
-        annotationManager.notif
+        // notify annotation manager that a change happened
+        annotationManager.NotifyAnnotationEdited(Annotation);
     }
 
     public void Select()
