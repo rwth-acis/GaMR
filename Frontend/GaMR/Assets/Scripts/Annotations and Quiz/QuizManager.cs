@@ -140,6 +140,27 @@ public class QuizManager : AnnotationManager
         {
             InitializeQuiz();
         }
+        else
+        {
+            InitializeBadgeCreation();
+        }
+    }
+
+    private void InitializeBadgeCreation()
+    {
+        Transform badgeHook = gameObject.transform.parent.parent.Find("FacePlayer");
+        Quaternion currentRotation = badgeHook.localRotation;
+        badgeHook.localRotation = Quaternion.identity;
+
+        GameObject badgeObject = (GameObject)Instantiate(Resources.Load("Badge"));
+        badgeObject.transform.parent = badgeHook;
+        badgeObject.transform.position = gameObject.transform.position + new Vector3(-objInfo.Size.x, -objInfo.Size.y / 2f, 0);
+        badgeHook.localRotation = currentRotation;
+
+        
+
+
+
     }
 
     /// <summary>

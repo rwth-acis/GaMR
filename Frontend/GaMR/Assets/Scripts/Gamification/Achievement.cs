@@ -68,7 +68,7 @@ public class Achievement
             body.Add(new MultipartFormDataSection("achievementdesc", Description));
         }
         body.Add(new MultipartFormDataSection("achievementpointvalue", PointValue.ToString()));
-        if (BadgeId != null || BadgeId != "")
+        if (BadgeId != null && BadgeId != "")
         {
             body.Add(new MultipartFormDataSection("achievementbadgeid", BadgeId));
         }
