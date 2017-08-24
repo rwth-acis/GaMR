@@ -14,7 +14,6 @@ import java.util.Scanner;
 @Path("/resources")
 public class Resources {
 
-    private String modelPath = "3DModels";
 
     @GET
     @Path("model/{name}/{no}")
@@ -23,7 +22,7 @@ public class Resources {
     {
         try {
             System.out.println("Request for " + App.modelPath + File.separatorChar + name + File.separatorChar + no + ".json");
-            String json =  ReadFile(App.modelPath + File.separatorChar + modelPath + File.separatorChar + name + File.separatorChar + no + ".json");
+            String json =  ReadFile(App.modelPath + File.separatorChar + name + File.separatorChar + no + ".json");
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         }
         catch (IOException ioEx)
