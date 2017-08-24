@@ -147,7 +147,7 @@ public class Menu : MonoBehaviour
     /// <summary>
     /// resets the complete menu and displays the root menu again
     /// </summary>
-    public void ResetMenu()
+    public virtual void ResetMenu()
     {
         // the menu object should only contain menu items as children
         foreach (Transform child in transform)

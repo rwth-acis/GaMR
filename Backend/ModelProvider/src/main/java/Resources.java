@@ -1,5 +1,6 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -13,14 +14,16 @@ import java.util.Scanner;
 @Path("/resources")
 public class Resources {
 
+    private String modelPath = "3DModels";
+
     @GET
     @Path("model/{name}/{no}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getModel(@PathParam("name") String name, @PathParam("no") int no)
     {
         try {
-            System.out.println("Request for " + App.path + File.separatorChar + name + File.separatorChar + no + ".json");
-            String json =  ReadFile(App.path + File.separatorChar + name + File.separatorChar + no + ".json");
+            System.out.println("Request for " + App.modelPath + File.separatorChar + name + File.separatorChar + no + ".json");
+            String json =  ReadFile(App.modelPath + File.separatorChar + modelPath + File.separatorChar + name + File.separatorChar + no + ".json");
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         }
         catch (IOException ioEx)
@@ -39,7 +42,7 @@ public class Resources {
     public Response getOverview()
     {
         try {
-            File[] dirs = new File(App.path).listFiles(new FileFilter() {
+            File[] dirs = new File(App.modelPath).listFiles(new FileFilter() {
                                                                          public boolean accept(File pathname) {
                                                                              return pathname.isDirectory();
                                                                          }
@@ -64,7 +67,7 @@ public class Resources {
     @Produces("image/jpg")
     public Response getTexture(@PathParam("modelName") String modelName, @PathParam("name") String name)
     {
-            File file = new File(App.path + File.separatorChar + modelName + File.separatorChar + name);
+            File file = new File(App.modelPath + File.separatorChar + modelName + File.separatorChar + name);
             if (file.exists()) {
                 return Response.ok(file, "image/jpg").header("Inline", "filename=\"" + file.getName() + "\"")
                         .build();
@@ -81,7 +84,7 @@ public class Resources {
     public Response storeAnnotations( @PathParam("modelName") String modelName, String json )
     {
         System.out.println(modelName + ": " + json);
-        File file = new File(App.path + File.separatorChar + modelName + File.separatorChar + "annotations.json");
+        File file = new File(App.modelPath + File.separatorChar + modelName + File.separatorChar + "annotations.json");
         try {
             FileWriter writer = new FileWriter(file);
             writer.write(json);
@@ -100,7 +103,7 @@ public class Resources {
     public Response getAnnotations(@PathParam("modelName") String modelName)
     {
         try {
-            String json =  ReadFile(App.path + File.separatorChar + modelName + File.separatorChar + "annotations.json");
+            String json =  ReadFile(App.modelPath + File.separatorChar + modelName + File.separatorChar + "annotations.json");
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         }
         catch (IOException ioEx)
@@ -115,7 +118,7 @@ public class Resources {
     public Response getQuizOverview(@PathParam("modelName") String modelName)
     {
         try {
-            File file = new File(App.path + File.separatorChar + modelName + File.separatorChar + "Quizzes"
+            File file = new File(App.modelPath + File.separatorChar + modelName + File.separatorChar + "Quizzes"
                     + File.separatorChar);
             if (file.exists()) {
                 File[] files = file.listFiles(new FileFilter() {
@@ -152,7 +155,7 @@ public class Resources {
     public Response getQuiz(@PathParam("modelName") String modelName, @PathParam("quizName") String quizName)
     {
         try {
-            String json = ReadFile(App.path + File.separatorChar + modelName + File.separatorChar
+            String json = ReadFile(App.modelPath + File.separatorChar + modelName + File.separatorChar
                     + "Quizzes" + File.separatorChar + quizName + ".json");
             return Response.ok(json, MediaType.APPLICATION_JSON).build();
         }
@@ -170,7 +173,7 @@ public class Resources {
                                String json )
     {
         System.out.println("Quiz: " + modelName + ": " + json);
-        File file = new File(App.path + File.separatorChar + modelName + File.separatorChar + "Quizzes" +
+        File file = new File(App.modelPath + File.separatorChar + modelName + File.separatorChar + "Quizzes" +
                 File.separatorChar + quizName + ".json");
         try {
             file.getParentFile().mkdirs();
@@ -185,6 +188,45 @@ public class Resources {
             return  Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    @GET
+    @Path("/badges/overview")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getBadgeImageOverview() {
+        try {
+            File[] images = new File(App.path + File.separatorChar + "BadgeImages" + File.separatorChar)
+                    .listFiles(new FilenameFilter() {
+                                   public boolean accept(File pathname, String name) {
+                                       return  name.toLowerCase().endsWith(".jpg");
+                                   }
+                               });
+                            CustomJSONArray jsonArray = new CustomJSONArray(images.length);
+            for (int i = 0; i < images.length; i++) {
+                jsonArray.array[i] = images[i].getName().replaceAll(".jpg", "");
+            }
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(jsonArray);
+            return Response.ok(json, MediaType.APPLICATION_JSON).build();
+        } catch (IOException ioEx) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
+    @GET
+    @Path("/badges/{badgeName}")
+    @Produces("image/jpg")
+    public Response getBadgeTexture(@PathParam("badgeName") String badgeName)
+    {
+        File file = new File(App.path + File.separatorChar + "BadgeImages" + File.separatorChar + badgeName + ".jpg");
+        if (file.exists()) {
+            return Response.ok(file, "image/jpg").header("Inline", "filename=\"" + file.getName() + "\"")
+                    .build();
+        }
+        else {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
 
 
     public static String ReadFile(String path) throws IOException

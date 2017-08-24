@@ -74,7 +74,13 @@ public class CustomMenuItem : MonoBehaviour
     /// <summary>
     /// the icon of the menu item
     /// </summary>
-    public Texture Icon { get { return icon; } set { menuStyleAdapter.UpdateIcon(value); icon = value; } }
+    public Texture Icon
+    {
+        get
+        { return icon; }
+        set
+        { menuStyleAdapter.UpdateIcon(value); icon = value; }
+    }
 
     /// <summary>
     /// the text-content of the menu item
@@ -179,7 +185,10 @@ public class CustomMenuItem : MonoBehaviour
     /// </summary>
     public void Destroy()
     {
-        GameObject.Destroy(containerInstance);
+        if (containerInstance != null)
+        {
+            GameObject.Destroy(containerInstance);
+        }
     }
 
     /// <summary>

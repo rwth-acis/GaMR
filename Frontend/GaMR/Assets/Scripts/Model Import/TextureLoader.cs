@@ -34,9 +34,13 @@ public class TextureLoader : MonoBehaviour
     /// Applies the texture to the main material
     /// </summary>
     /// <param name="requestResult">The downloaded texture</param>
-    private void OnFinished(Texture requestResult)
+    private void OnFinished(UnityWebRequest req, Texture requestResult)
     {
         WaitCursor.Hide();
+        if (req.responseCode != 200)
+        {
+            MessageBox.Show(LocalizationManager.Instance.ResolveString("Could not fetch texture"), MessageBoxType.ERROR);
+        }
         rend.material.SetTexture("_MainTex", requestResult);
     }
 }

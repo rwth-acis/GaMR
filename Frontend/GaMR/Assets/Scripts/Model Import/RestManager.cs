@@ -237,7 +237,7 @@ public class RestManager : Singleton<RestManager>
         }
     }
 
-    public void GetTexture(string url, System.Action<Texture> callback)
+    public void GetTexture(string url, System.Action<UnityWebRequest, Texture> callback)
     {
         StartCoroutine(GetWWWTexture(url, callback));
     }
@@ -273,7 +273,7 @@ public class RestManager : Singleton<RestManager>
     /// <param name="url">The url to query</param>
     /// <param name="callback">The callback method which receives the downloaded image</param>
     /// <returns></returns>
-    IEnumerator GetWWWTexture(string url, System.Action<Texture> callback)
+    IEnumerator GetWWWTexture(string url, System.Action<UnityWebRequest, Texture> callback)
     {
         UnityWebRequest req = UnityWebRequest.GetTexture(url);
 
@@ -288,11 +288,11 @@ public class RestManager : Singleton<RestManager>
         {
             if (req.responseCode == 200)
             {
-                callback(DownloadHandlerTexture.GetContent(req));
+                callback(req, DownloadHandlerTexture.GetContent(req));
             }
             else
             {
-                MessageBox.Show(LocalizationManager.Instance.ResolveString("Could not fetch texture"), MessageBoxType.ERROR);
+                callback(req, null);
             }
         }
     }

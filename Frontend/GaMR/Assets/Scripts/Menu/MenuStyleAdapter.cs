@@ -20,15 +20,15 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
     private Renderer textRenderer;
     private Renderer iconRenderer;
     private Renderer containerRenderer;
-    private bool itemEnabled;
+    protected bool itemEnabled;
     private Color enabledColor;
-    private bool marked;
+    protected bool marked;
 
     public Color disabledColor = new Color(0.7f,0.7f,0.7f);
     public Color markedColor = Color.red;
     public Color focusedColor = Color.blue;
 
-    private List<System.Action> clickListeners;
+    protected List<System.Action> clickListeners;
 
     /// <summary>
     /// whether or not the item is (logically) enabled
@@ -52,7 +52,7 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
     /// <summary>
     /// Initializes the MenuStyleAdapter
     /// </summary>
-    public void Initialize()
+    public virtual void Initialize()
     {
         // get the components
         container = transform.Find("Container");
@@ -104,7 +104,7 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
     /// also scales the menu item to fit the text
     /// </summary>
     /// <param name="newText">The new text to display on the menu item</param>
-    public void UpdateText(string newText)
+    public virtual void UpdateText(string newText)
     {
         if (textMesh != null)
         {
@@ -128,7 +128,7 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
     /// sets the icon texture on the iconRenderer-object
     /// </summary>
     /// <param name="newIcon">the icon to set</param>
-    public void UpdateIcon(Texture newIcon)
+    public virtual void UpdateIcon(Texture newIcon)
     {
         if (iconRenderer != null)
         {
@@ -175,7 +175,7 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
     /// <summary>
     /// called when the user focuses the item
     /// </summary>
-    public void OnFocusEnter()
+    public virtual void OnFocusEnter()
     {
         if (itemEnabled)
         {
@@ -186,7 +186,7 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
     /// <summary>
     /// called when the user stops focusing the item
     /// </summary>
-    public void OnFocusExit()
+    public virtual void OnFocusExit()
     {
         UpdateContainerColor();
     }

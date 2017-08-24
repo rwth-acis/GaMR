@@ -110,6 +110,20 @@ public class CarouselMenu : Menu
         btnRight.OnLongPressed = ScrollRightFast;
     }
 
+    public override void ResetMenu()
+    {
+        DestroyAll();
+        InstantiateCarouselMenu(currentIndex);
+    }
+
+    private void DestroyAll()
+    {
+        for (int i=0;i<rootMenu.Count;i++)
+        {
+            rootMenu[i].Destroy();
+        }
+    }
+
     public void ScrollLeftNormal()
     {
         ScrollLeft(normalMoveTime);

@@ -18,12 +18,15 @@ import java.util.List;
 public class App {
 
     public static String path;
+    public static String modelPath;
 
     public static void main(String[] args) throws Exception {
 
         try {
             path = Resources.ReadFile("config.conf");
-            System.out.println("3D models at " + path);
+            System.out.println("Base path: " + path);
+            modelPath = path + File.separatorChar + "3DModels";
+            System.out.println("3D Models at " + modelPath);
         }
         catch (IOException e)
         {

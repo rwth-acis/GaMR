@@ -21,6 +21,8 @@ public class QuizManager : AnnotationManager
     private ProgressBar progressBar;
     List<int> freeIndices;
 
+    BadgeManager badgeManager;
+
     private int correctlyAnswered = 0;
 
     /// <summary>
@@ -157,10 +159,9 @@ public class QuizManager : AnnotationManager
         badgeObject.transform.position = gameObject.transform.position + new Vector3(-objInfo.Size.x, -objInfo.Size.y / 2f, 0);
         badgeHook.localRotation = currentRotation;
 
-        
+        badgeManager = badgeObject.GetComponent<BadgeManager>();
 
-
-
+        badgeManager.Badge = null;
     }
 
     /// <summary>
