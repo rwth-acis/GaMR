@@ -96,6 +96,9 @@ public class ModelLoadManager : MonoBehaviour
                 defaultBadge.Image = (Texture2D)Resources.Load("DefaultBadge");
                 // create a default badge
                 GamificationFramework.Instance.CreateBadge(modelName, defaultBadge);
+
+                GameAction defaultAction = new GameAction("defaultAction", "default action", "a default action", 0);
+                GamificationFramework.Instance.CreateAction(modelName, defaultAction, null);
             }
             );
     }

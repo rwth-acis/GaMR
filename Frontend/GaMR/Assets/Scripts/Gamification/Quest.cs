@@ -55,8 +55,6 @@ public class Quest
         this.description = description;
         this.notificationcheck = notificationcheck;
         this.notificationmessage = notificationmessage;
-
-        AddAction("pseudoaction", 0);
     }
 
     public void AddAction(GameAction action, int maxNumberOfTriggers)
@@ -96,16 +94,21 @@ public class Quest
 
         string json = JsonUtility.ToJson(jsonObject);
 
+        Debug.Log(json);
+
         return json;
 
     }
 
     public static Quest FromJson(string json)
     {
-        JsonQuest jsonQuest = JsonUtility.FromJson<JsonQuest>(json);
-        QuestStatus status = (QuestStatus)Enum.Parse(typeof(QuestStatus),jsonQuest.queststatus);
-        Quest quest = new Quest(jsonQuest.questid, jsonQuest.questname, status, jsonQuest.questachievementid, jsonQuest.questquestflag, jsonQuest.questpointflag, jsonQuest.questpointvalue, jsonQuest.questdescription, jsonQuest.questnotificationcheck, jsonQuest.questnotificationmessage);
-        // TODO: add actions
+        JsonResponseQuest jsonQuest = JsonUtility.FromJson<JsonResponseQuest>(json);
+        QuestStatus status = (QuestStatus)Enum.Parse(typeof(QuestStatus),jsonQuest.status);
+        Quest quest = new Quest(jsonQuest.id, jsonQuest.name, status, jsonQuest.achievementId, jsonQuest.questFlag, jsonQuest.pointFlag, jsonQuest.pointValue, jsonQuest.description, jsonQuest.useNotification, jsonQuest.notificationMessage);
+        foreach(JsonResponseAction action in jsonQuest.actionIds)
+        {
+            quest.AddAction(action.key, action.value);
+        }
         return quest;
     }
 }
@@ -132,6 +135,23 @@ public class JsonQuest
 }
 
 [Serializable]
+public class JsonResponseQuest
+{
+    public string name;
+    public string description;
+    public string status;
+    public string id;
+    public List<JsonResponseAction> actionIds;
+    public string achievementId;
+    public bool questFlag;
+    public bool pointFlag;
+    public string questIdCompleted;
+    public int pointValue;
+    public string notificationMessage;
+    public bool useNotification;
+}
+
+[Serializable]
 public class JsonAction
 {
     public string action;
@@ -142,4 +162,13 @@ public class JsonAction
         this.action = action;
         this.times = times;
     }
+}
+
+[Serializable]
+public class JsonResponseAction
+{
+    public string left;
+    public int right;
+    public int value;
+    public string key;
 }

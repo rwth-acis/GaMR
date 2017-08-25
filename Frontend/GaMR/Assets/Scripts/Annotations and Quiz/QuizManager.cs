@@ -106,6 +106,9 @@ public class QuizManager : AnnotationManager
             );
 
         Quest quizQuest = new Quest(QuizName, QuizName, QuestStatus.REVEALED, achievementOfQuiz.ID, false, false, 0, "");
+
+        quizQuest.AddAction("defaultAction", 1);
+
         GamificationFramework.Instance.GetOrCreateQuest(objInfo.ModelName, quizQuest,
             resQuest =>
             {
