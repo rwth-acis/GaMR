@@ -464,15 +464,6 @@ public class GamificationFramework : Singleton<GamificationFramework>
     private void Start()
     {
         // for testing:
-        //Quest quest = new Quest("Generated Quest", "Generated Quest", QuestStatus.REVEALED, "Gamified", false, false, 0, "test description");
-        //quest.AddAction("defaultAction", 1);
-        //CreateQuest("Brain", quest,
-        //    (resQuest, resCode) => { }
-        //    );
-
-        GetQuestWithId("Brain", "Generated Quest",
-            (resQuest, code) => { }
-            );
     }
 
     private void Result(string obj)

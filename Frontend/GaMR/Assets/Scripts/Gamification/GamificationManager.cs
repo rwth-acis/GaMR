@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GamificationManager : MonoBehaviour
 {
-    public Game Game { get; set; }
+    public string gameId{ get; set; }
 
     public Quest Quest { get; set; }
 
@@ -15,6 +15,6 @@ public class GamificationManager : MonoBehaviour
 
     public void Commit()
     {
-        GamificationFramework.Instance.UpdateQuest(Game.ID, Quest);
+        GamificationFramework.Instance.UpdateQuest(gameId, Quest);
     }
 }

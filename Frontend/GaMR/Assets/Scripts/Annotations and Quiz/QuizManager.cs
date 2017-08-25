@@ -63,6 +63,8 @@ public class QuizManager : AnnotationManager
 
         Achievement achievementOfQuiz = new Achievement(QuizName, QuizName, "", annotations.Count, "defaultBadge");
 
+        gamificationManager.gameId = objInfo.ModelName;
+
         // create or load quiz with achievement
 
         GamificationFramework.Instance.GetOrCreateAchievement(objInfo.ModelName, achievementOfQuiz,
