@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using HoloToolkit.Unity.InputModule;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class BadgeManager : MonoBehaviour
+public class BadgeManager : MonoBehaviour, IInputClickHandler
 {
 
     private Badge badge;
@@ -47,5 +49,13 @@ public class BadgeManager : MonoBehaviour
     public void WinBadge()
     {
         // move badge in front of the user
+    }
+
+    public void OnInputClicked(InputClickedEventData eventData)
+    {
+        if (InformationManager.Instance.playerType != PlayerType.STUDENT)
+        {
+            BadgeEditor.ShowBadges();
+        }
     }
 }

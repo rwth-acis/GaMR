@@ -1021,51 +1021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba5679a6aba8bbb40aad0d20e67e411a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugToken: eyJhbGciOiJSUzI1NiJ9.eyJhdWQiOlsiYzc1ODhlZmMtZjgzMS00ZTMxLTkyOGUtMGY0NmE5MWZiMzExIl0sImlzcyI6Imh0dHBzOlwvXC9hcGkubGVhcm5pbmctbGF5ZXJzLmV1XC9vXC9vYXV0aDJcLyIsImV4cCI6MTUwMzUwNzI1MywiaWF0IjoxNTAzNTAzNjUzLCJqdGkiOiJjNjExNzYwMC1jZDNmLTQwOTAtODY3YS0xMmMxNGVhNmFhYzAifQ.HiR-Fi2Twmj_URKchmIMArPUThqs7Yuhv8XPnIVCAYp1Jl1shEbbyqA2h92ZC3e69db-9zt_k8BxODnMhfUWp5xk6rnHnqhO16lRflglndhNXP8OK-h34zkQ2Iu_eqhZiAnWxZGZtD2srXzy1qOq6nsO0qLMufMRrIMAX64YUYg
---- !u!1 &1706198255
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1706198257}
-  - component: {fileID: 1706198256}
-  m_Layer: 0
-  m_Name: BadgeEditor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1706198256
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1706198255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 769539cccea4a4c429f2aa77e201360c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textMenuItem: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4,
-    type: 2}
-  badgeMenuItem: {fileID: 1708411826720780, guid: 0388bc87865bf7f4594a587c45611e32,
-    type: 2}
---- !u!4 &1706198257
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1706198255}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.005340576, y: -0.017944336, z: 0.06591797}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  debugToken: eyJhbGciOiJSUzI1NiJ9.eyJhdWQiOlsiYzc1ODhlZmMtZjgzMS00ZTMxLTkyOGUtMGY0NmE5MWZiMzExIl0sImlzcyI6Imh0dHBzOlwvXC9hcGkubGVhcm5pbmctbGF5ZXJzLmV1XC9vXC9vYXV0aDJcLyIsImV4cCI6MTUwMzYwNjQ0MiwiaWF0IjoxNTAzNjAyODQyLCJqdGkiOiJmOTlmMzg2Yy0xMzA0LTRiZTItYTZlOC1hNzYwZmZlMDBlMmQifQ.gj_kAOUj7rKHzgjeLs-_A3JTsq4xGI7MGiDugwHVCHPYM5cN_X3qCnJsYwG3wLFhRPtM8_doT9HOudsG8iuL3OH4z69vBm0SodKB6UdiowrfmLyQXBqdgj_B4eOJpQtejhAF3jrXpCH2VfX-FxeoTTvEPR_sc997zIk4Htzuoxc
 --- !u!1 &1782103928
 GameObject:
   m_ObjectHideFlags: 0

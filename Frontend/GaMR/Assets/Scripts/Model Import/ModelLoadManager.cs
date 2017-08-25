@@ -90,6 +90,12 @@ public class ModelLoadManager : MonoBehaviour
                         Debug.Log("User successfully added to game " + modelName);
                     }
                 });
+
+
+                Badge defaultBadge = new Badge("defaultBadge", "default badge", "a default badge which is assigned if no other badge was selected");
+                defaultBadge.Image = (Texture2D)Resources.Load("DefaultBadge");
+                // create a default badge
+                GamificationFramework.Instance.CreateBadge(modelName, defaultBadge);
             }
             );
     }

@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33308611795415166}
   - component: {fileID: 23115746132119510}
   - component: {fileID: 114204480987172568}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Badge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 4628176253728366}
   - component: {fileID: 114069640422638846}
   - component: {fileID: 65386978408254930}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BadgeMenuItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}

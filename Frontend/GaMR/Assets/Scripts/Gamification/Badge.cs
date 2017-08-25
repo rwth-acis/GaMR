@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class Badge
 {
@@ -18,9 +19,9 @@ public class Badge
 
     public bool NotificationCheck { get { return notificationCheck; } }
 
-    public string NotificationMessage { get { return NotificationMessage; } }
+    public string NotificationMessage { get { return notificationMessage; } }
 
-    public Texture2D Image { get { return image; } }
+    public Texture2D Image { get { return image; } set { image = value; } }
 
     public Badge(string id, string name, string description, string notificationMessage) : this(id, name, description, true, notificationMessage)
     {
@@ -41,19 +42,31 @@ public class Badge
         this.notificationMessage = notificationMessage;
     }
 
-    public WWWForm ToWWWForm()
+    public List<IMultipartFormSection> ToMultipartForm()
     {
-        WWWForm body = new WWWForm();
-        body.AddField("badgeid", ID);
-        body.AddField("badgename", Name);
-        body.AddField("badgedesc", Description);
+        List<IMultipartFormSection> body = new List<IMultipartFormSection>();
+        body.Add(new MultipartFormDataSection("badgeid", ID));
+        if (Name != "")
+        {
+            body.Add(new MultipartFormDataSection("badgename", Name));
+        }
+        if (Description != "")
+        {
+            body.Add(new MultipartFormDataSection("badgedesc", Description));
+        }
         if (NotificationCheck)
         {
-            // if the field exists, the bool variable will be set to true in the framework (no matter which value the www-field has)
-            body.AddField("badgenotificationcheck", "true");
+            body.Add(new MultipartFormDataSection("badgenotificationcheck", "true"));
         }
-        body.AddField("badgenotificationmessage", NotificationMessage);
-        body.AddBinaryData("badgeimageinput", Image.GetRawTextureData());
+        if (NotificationMessage != "")
+        {
+            body.Add(new MultipartFormDataSection("badgenotificationmessage", NotificationMessage));
+        }
+        if (Image != null)
+        {
+            body.Add(new MultipartFormFileSection("badgeimageinput", Image.GetRawTextureData(), Name + ".jpg", "file"));
+        }
+        body.Add(new MultipartFormDataSection("dev", "true")); // this is needed so that the Gamification Framework accepts the image
 
         return body;
     }

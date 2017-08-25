@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4432901578639036}
   - component: {fileID: 33614042236002828}
   - component: {fileID: 23289450454271858}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 4809022833344006}
   - component: {fileID: 33366600797762276}
   - component: {fileID: 23340073464640466}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4092219590041736}
   - component: {fileID: 65997949796280064}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Button Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   - component: {fileID: 4108168020710986}
   - component: {fileID: 33289777760790108}
   - component: {fileID: 23384688329992636}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,7 +87,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4906923375202434}
   - component: {fileID: 65203795281778012}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Button Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4959204714367358}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RightPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +127,8 @@ GameObject:
   - component: {fileID: 114316696734214404}
   - component: {fileID: 114104101975355870}
   - component: {fileID: 114546546707484992}
-  m_Layer: 0
+  - component: {fileID: 114441647713954886}
+  m_Layer: 8
   m_Name: Carousel Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144,7 +145,7 @@ GameObject:
   - component: {fileID: 4369274218423766}
   - component: {fileID: 33841357455766708}
   - component: {fileID: 23419977377623040}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,7 +160,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4047808264716392}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RightBackPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -174,7 +175,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4813871705281654}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LeftBackPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,7 +190,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4319786362307038}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LeftPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -638,6 +639,20 @@ MonoBehaviour:
   SmoothPositionLerpRatio: 0.5
   SmoothRotationLerpRatio: 0.5
   SmoothScaleLerpRatio: 0.5
+--- !u!114 &114441647713954886
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1471216540306718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbf7cdd875647c2469b43b190fd5db9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stackable: 0
+  typeSingleton: 1
+  typeId: Carousel Menu
 --- !u!114 &114546472459864302
 MonoBehaviour:
   m_ObjectHideFlags: 1

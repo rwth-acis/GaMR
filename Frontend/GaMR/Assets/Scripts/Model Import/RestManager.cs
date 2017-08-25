@@ -183,6 +183,8 @@ public class RestManager : Singleton<RestManager>
         // add end-boundary
         strGenerated += "\r\n--" + Encoding.ASCII.GetString(byteBoundary) + "--";
 
+        strGenerated = strGenerated.Replace("; filename=", "; src=\"" + "D:\\Test\\test.jpg\"" + "; filename=");
+
         Debug.Log(strGenerated);
 
         byte[] bytes = Encoding.ASCII.GetBytes(strGenerated);

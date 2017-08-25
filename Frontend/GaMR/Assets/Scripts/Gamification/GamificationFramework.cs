@@ -364,8 +364,21 @@ public class GamificationFramework : Singleton<GamificationFramework>
 
     public void CreateBadge(string gameId, Badge badge)
     {
-        //WWWForm body = badge.ToWWWForm();
-        //RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/badges/" + gameId, body, OperationFinished);
+        List<IMultipartFormSection> body = badge.ToMultipartForm();
+
+        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/badges/" + gameId, body, OperationFinished);
+    }
+
+    public void GetBadge(string gameId, string badgeId, Action<Badge, long> callback)
+    {
+        RestManager.Instance.GET(InformationManager.Instance.GamificationAddress + "/gamification/badges/" + gameId + "/" + badgeId,
+            reqRes =>
+            {
+                if (callback != null)
+                {
+                }
+            }
+            );
     }
 
     // ---------------------------------------------------------------

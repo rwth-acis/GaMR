@@ -20,11 +20,6 @@ public class BadgeEditor : MonoBehaviour
         sbadgeMenuItem = badgeMenuItem;
     }
 
-    private void Start()
-    {
-        ShowBadges();
-    }
-
     public static void ShowBadges()
     {
         RestManager.Instance.GET(InformationManager.Instance.BackendAddress + "/resources/badges/overview", BadgeOverviewLoaded);

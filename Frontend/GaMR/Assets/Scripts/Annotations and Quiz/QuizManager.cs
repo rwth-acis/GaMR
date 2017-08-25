@@ -45,7 +45,7 @@ public class QuizManager : AnnotationManager
     {
         Init();
         objInfo = GetComponent<ObjectInfo>();
-        gamificationManager = GetComponent<GamificationManager>();
+        gamificationManager = transform.parent.parent.GetComponent<GamificationManager>();
         subPathLoad += objectInfo.ModelName + "/";
         subPathSave += objectInfo.ModelName + "/";
 
@@ -61,8 +61,7 @@ public class QuizManager : AnnotationManager
         // load the annotations/quiz questions
         LoadAnnotations();
 
-
-        Achievement achievementOfQuiz = new Achievement(QuizName, QuizName, "", annotations.Count);
+        Achievement achievementOfQuiz = new Achievement(QuizName, QuizName, "", annotations.Count, "defaultBadge");
 
         // create or load quiz with achievement
 
@@ -72,6 +71,7 @@ public class QuizManager : AnnotationManager
                 if (resAchievement != null)
                 {
                     achievementOfQuiz = resAchievement;
+
                 }
                 else
                 {
@@ -253,7 +253,7 @@ public class QuizManager : AnnotationManager
         base.Add(annotationContainer);
 
         // handle gamification: add question as action
-        GameAction action = new GameAction(annotationContainer.Annotation.Position.ToString(), annotationContainer.Annotation.Text, "", 1);
+        GameAction action = new GameAction(annotationContainer.Annotation.Position.ToString() + "_" + QuizName, annotationContainer.Annotation.Text, "", 1);
         gamificationManager.Quest.AddAction(action, 1);
         GamificationFramework.Instance.CreateAction(objInfo.ModelName, action,
             resCode =>
@@ -276,13 +276,13 @@ public class QuizManager : AnnotationManager
         base.Delete(annotationContainer);
 
         // handle gamification: delete action which is related to the question
-        GamificationFramework.Instance.DeleteAction(objInfo.ModelName, annotationContainer.Annotation.Position.ToString(),
+        GamificationFramework.Instance.DeleteAction(objInfo.ModelName, annotationContainer.Annotation.Position.ToString() + "_" + QuizName,
             resCode =>
             {
                 if (resCode != 200)
                 {
                     Debug.Log("Could not delete gamified question (Code " + resCode + ")");
-                    gamificationManager.Quest.RemoveAction(annotationContainer.Annotation.Position.ToString());
+                    gamificationManager.Quest.RemoveAction(annotationContainer.Annotation.Position.ToString() + "_" + QuizName);
                 }
             }
             );
@@ -295,7 +295,7 @@ public class QuizManager : AnnotationManager
     public override void NotifyAnnotationEdited(Annotation updatedAnnotation)
     {
         base.NotifyAnnotationEdited(updatedAnnotation);
-        GamificationFramework.Instance.UpdateAction(objInfo.ModelName, new GameAction(updatedAnnotation.Position.ToString(), updatedAnnotation.Text, "", 1), null);
+        GamificationFramework.Instance.UpdateAction(objInfo.ModelName, new GameAction(updatedAnnotation.Position.ToString() + "_" + QuizName, updatedAnnotation.Text, "", 1), null);
     }
 
     /// <summary>
@@ -359,7 +359,7 @@ public class QuizManager : AnnotationManager
             MessageBox.Show(LocalizationManager.Instance.ResolveString("Correct"), MessageBoxType.SUCCESS);
             correctlyAnswered++;
             progressBar.Progress = (float)correctlyAnswered / annotations.Count;
-            GamificationFramework.Instance.TriggerAction(objInfo.ModelName, annotation.Position.ToString());
+            GamificationFramework.Instance.TriggerAction(objInfo.ModelName, annotation.Position.ToString() + "_" + QuizName);
             return true;
         }
         else
@@ -377,8 +377,8 @@ public class QuizManager : AnnotationManager
     public override void OnDestroy()
     {
         base.OnDestroy();
-        CleanUp();
         gamificationManager.Commit();
+        CleanUp();
     }
 
     /// <summary>
@@ -393,6 +393,10 @@ public class QuizManager : AnnotationManager
         if (progressBar != null)
         {
             Destroy(progressBar.gameObject);
+        }
+        if (badgeManager != null)
+        {
+            Destroy(badgeManager.gameObject);
         }
     }
 }
