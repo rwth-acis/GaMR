@@ -149,6 +149,11 @@ public class GamificationFramework : Singleton<GamificationFramework>
         RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/quests/" + gameId, quest.ToJson(),
             reqRes =>
             {
+                if (reqRes.responseCode == 201)
+                {
+                    Debug.Log("Created Quest " + quest.ID + " (" + gameId + ")");
+                }
+
                 if (callback != null)
                 {
                     callback(quest, reqRes.responseCode);
@@ -207,6 +212,10 @@ public class GamificationFramework : Singleton<GamificationFramework>
                     if (reqRes.responseCode == 200)
                     {
                         Quest quest = Quest.FromJson(reqRes.downloadHandler.text);
+                        if (quest != null)
+                        {
+                            Debug.Log("Sucessfully loaded quest " + quest.ID);
+                        }
                         callback(quest, reqRes.responseCode);
                     }
                     else
@@ -369,13 +378,35 @@ public class GamificationFramework : Singleton<GamificationFramework>
         RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/badges/" + gameId, body, OperationFinished);
     }
 
-    public void GetBadge(string gameId, string badgeId, Action<Badge, long> callback)
+    public void GetBadgeWithId(string gameId, string badgeId, Action<Badge, long> callback)
     {
         RestManager.Instance.GET(InformationManager.Instance.GamificationAddress + "/gamification/badges/" + gameId + "/" + badgeId,
             reqRes =>
             {
                 if (callback != null)
                 {
+                    if (reqRes.responseCode == 200)
+                    {
+                        Badge res = Badge.FromJson(reqRes.downloadHandler.text);
+                        callback(res, reqRes.responseCode);
+                    }
+                    else
+                    {
+                        callback(null, reqRes.responseCode);
+                    }
+                }
+            }
+            );
+    }
+
+    public void GetBadgeImage(string gameId, string badgeId, Action<Texture, long> callback)
+    {
+        RestManager.Instance.GetTexture(InformationManager.Instance.GamificationAddress + "/gamification/badges/" + gameId + "/" + badgeId + "/img",
+            (reqRes, texture) =>
+            {
+                if (callback != null)
+                {
+                    callback(texture, reqRes.responseCode);
                 }
             }
             );

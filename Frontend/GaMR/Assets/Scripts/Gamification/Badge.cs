@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -21,7 +22,17 @@ public class Badge
 
     public string NotificationMessage { get { return notificationMessage; } }
 
-    public Texture2D Image { get { return image; } set { image = value; } }
+    public Texture2D Image
+    {
+        get
+        {
+            return image;
+        }
+        set
+        {
+            image = value;
+        }
+    }
 
     public Badge(string id, string name, string description, string notificationMessage) : this(id, name, description, true, notificationMessage)
     {
@@ -70,4 +81,20 @@ public class Badge
 
         return body;
     }
+
+    public static Badge FromJson(string json)
+    {
+        JsonBadge jsonBadge = JsonUtility.FromJson<JsonBadge>(json);
+        Badge badge = new Badge(jsonBadge.id, jsonBadge.name, jsonBadge.description, jsonBadge.useNotification, jsonBadge.notificationMessage);
+        return badge;
+    }
+}
+
+public class JsonBadge
+{
+    public string id;
+    public string name;
+    public string description;
+    public string notificationMessage;
+    public bool useNotification;
 }

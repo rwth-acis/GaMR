@@ -70,8 +70,33 @@ public class QuizManager : AnnotationManager
             {
                 if (resAchievement != null)
                 {
+                    Debug.Log("Achievement loaded or created");
                     achievementOfQuiz = resAchievement;
 
+                    // also load the badge
+                    GamificationFramework.Instance.GetBadgeWithId(objInfo.ModelName, achievementOfQuiz.BadgeId,
+                        (resBadge, resCode) =>
+                        {
+                            if (resCode == 200)
+                            {
+                                Debug.Log("Badge loaded");
+                                gamificationManager.Badge = resBadge;
+
+                                // load the image of the badge
+
+                                GamificationFramework.Instance.GetBadgeImage(objInfo.ModelName, resBadge.ID,
+                                    (texture, resImageCode) =>
+                                    {
+                                        Debug.Log("Badge image loaded");
+                                        if (resImageCode == 200)
+                                        {
+                                            gamificationManager.Badge.Image = (Texture2D)texture;
+                                        }
+                                    }
+                                    );
+                            }
+                        }
+                        );
                 }
                 else
                 {
@@ -86,6 +111,7 @@ public class QuizManager : AnnotationManager
             {
                 if (resQuest != null)
                 {
+                    Debug.Log("Quest loaded");
                     gamificationManager.Quest = resQuest;
                 }
                 else
@@ -161,7 +187,7 @@ public class QuizManager : AnnotationManager
 
         badgeManager = badgeObject.GetComponent<BadgeManager>();
 
-        badgeManager.Badge = null;
+        badgeManager.Badge = gamificationManager.Badge;
     }
 
     /// <summary>

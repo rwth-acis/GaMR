@@ -11,6 +11,8 @@ public class GamificationManager : MonoBehaviour
 
     public Achievement AchievementOfQuest { get; set; }
 
+    public Badge Badge { get; set; }
+
     public void Commit()
     {
         GamificationFramework.Instance.UpdateQuest(Game.ID, Quest);
