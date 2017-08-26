@@ -13,11 +13,20 @@ public class BadgeEditor : MonoBehaviour
     public GameObject textMenuItem;
     public GameObject badgeMenuItem;
 
+    private static BadgeManager badgeManager;
+    private static GamificationManager gamificationManager;
+
 
     private void Awake()
     {
         stextMenuItem = textMenuItem;
         sbadgeMenuItem = badgeMenuItem;
+    }
+
+    private void Start()
+    {
+        badgeManager = GetComponentInChildren<BadgeManager>();
+        gamificationManager = GetComponentInChildren<GamificationManager>();
     }
 
     public static void ShowBadges()
@@ -35,11 +44,11 @@ public class BadgeEditor : MonoBehaviour
 
             List<CustomMenuItem> items = new List<CustomMenuItem>();
 
-            for (int i=0;i<array.array.Count;i++)
+            for (int i = 0; i < array.array.Count; i++)
             {
                 CustomMenuItem item = carouselMenuInstance.gameObject.AddComponent<CustomMenuItem>();
                 item.Init(stextMenuItem, new List<CustomMenuItem>(), false);
-                //item.onClickEvent.AddListener(delegate { OnCarouselItemClicked(modelName); });
+                item.onClickEvent.AddListener(OnCarouselItemClicked);
                 item.Text = array.array[i];
                 item.MenuItemName = array.array[i];
                 items.Add(item);
@@ -47,25 +56,100 @@ public class BadgeEditor : MonoBehaviour
 
             carouselMenuInstance.rootMenu = items;
 
-            ReplaceWithImages(carouselMenuInstance);
+            ReplaceWithImages();
         }
     }
 
-    private static void ReplaceWithImages(CarouselMenu menu)
+    private static void OnCarouselItemClicked(string badgeId)
     {
-        for (int i =0;i < menu.rootMenu.Count;i++)
+        Badge selectedBadge = null;
+
+        // try to find the badge
+        // if the badge does not exist => create it
+        GamificationFramework.Instance.GetBadgeWithId(gamificationManager.gameId, badgeId,
+            (resBadge, resCode) =>
+            {
+                if (resCode == 200)
+                {
+                    selectedBadge = resBadge;
+                }
+                else
+                {
+                    // create the new badge
+                    Badge newBadge = new Badge(badgeId, badgeId, badgeId);
+                    // first: load the image of the badge
+                    RestManager.Instance.GetTexture(InformationManager.Instance.BackendAddress + "/resources/badges/" + badgeId,
+                        (reqRes, badgeTexture) =>
+                        {
+                            if (reqRes.responseCode == 200)
+                            {
+                                newBadge.Image = (Texture2D)badgeTexture;
+
+                                GamificationFramework.Instance.CreateBadge(gamificationManager.gameId, newBadge,
+                                    createCode =>
+                                    {
+                                        if (createCode == 200 || createCode == 201)
+                                        {
+                                            selectedBadge = newBadge;
+                                        }
+                                    }
+                                    );
+                            }
+                        }
+                        );
+                }
+
+                // check if the badge was loaded and if it has an image
+                if (selectedBadge != null)
+                {
+                    if (selectedBadge.Image != null)
+                    {
+                        gamificationManager.Badge = selectedBadge;
+                    }
+                    else
+                    {
+                        GamificationFramework.Instance.GetBadgeImage(gamificationManager.gameId, badgeId,
+                            (badgeTexture, imageCode) =>
+                            {
+                                if (imageCode == 200)
+                                {
+                                    selectedBadge.Image = (Texture2D)badgeTexture;
+
+                                    gamificationManager.Badge = selectedBadge;
+                                }
+                                else
+                                {
+                                    MessageBox.Show(LocalizationManager.Instance.ResolveString("Error while getting badge image.\nBadge was not saved"), MessageBoxType.ERROR);
+                                }
+                            }
+                            );
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(LocalizationManager.Instance.ResolveString("Error while getting or creating badge.\nBadge was not saved"), MessageBoxType.ERROR);
+                }
+
+            });
+
+    }
+
+    private static void ReplaceWithImages()
+    {
+        for (int i = 0; i < carouselMenuInstance.rootMenu.Count; i++)
         {
-            RestManager.Instance.GetTexture(InformationManager.Instance.BackendAddress + "/resources/badges/" + menu.rootMenu[i].MenuItemName, Replace
-                );
+            object[] arg = { i };
+            RestManager.Instance.GetTexture(InformationManager.Instance.BackendAddress + "/resources/badges/" + carouselMenuInstance.rootMenu[i].MenuItemName, Replace, arg);
         }
     }
 
-    private static void Replace(UnityWebRequest req, Texture tex)
+    private static void Replace(UnityWebRequest req, Texture tex, object[] passOnArgs)
     {
         if (req.responseCode == 200)
         {
-            carouselMenuInstance.rootMenu[0].menuStyle = sbadgeMenuItem;
-            carouselMenuInstance.rootMenu[0].Icon = tex;
+            int i = (int)passOnArgs[0];
+            carouselMenuInstance.rootMenu[i].menuStyle = sbadgeMenuItem;
+            carouselMenuInstance.rootMenu[i].Icon = tex;
             carouselMenuInstance.ResetMenu();
         }
     }

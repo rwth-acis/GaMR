@@ -247,6 +247,11 @@ public class RestManager : Singleton<RestManager>
         StartCoroutine(GetWWWTexture(url, callback));
     }
 
+    public void GetTexture(string url, System.Action<UnityWebRequest, Texture, object[]> callback, object[] passOnArgs)
+    {
+        StartCoroutine(GetWWWTexture(url, callback, passOnArgs));
+    }
+
     /// <summary>
     /// Called as a coroutine and queries the url. When data are downloaded, they are returned to the callback-method
     /// </summary>
@@ -300,5 +305,18 @@ public class RestManager : Singleton<RestManager>
                 callback(req, null);
             }
         }
+    }
+
+    IEnumerator GetWWWTexture(string url, Action<UnityWebRequest, Texture, object[]> callback, object[] passOnArgs)
+    {
+        yield return GetWWWTexture(url,
+            (req, tex) =>
+            {
+                if (callback != null)
+                {
+                    callback(req, tex, passOnArgs);
+                }
+            }
+            );
     }
 }

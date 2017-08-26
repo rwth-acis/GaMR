@@ -164,7 +164,7 @@ public class GamificationFramework : Singleton<GamificationFramework>
 
     public void UpdateQuest(string gameId, Quest quest)
     {
-        RestManager.Instance.PUT(InformationManager.Instance.GamificationAddress + "/gamification/quests/" + gameId, quest.ToJson(), OperationFinished);
+        RestManager.Instance.PUT(InformationManager.Instance.GamificationAddress + "/gamification/quests/" + gameId + "/" + quest.ID, quest.ToJson(), OperationFinished);
     }
 
     public void GetOrCreateQuest(string gameId, Quest quest, Action<Quest> callback)
@@ -371,11 +371,19 @@ public class GamificationFramework : Singleton<GamificationFramework>
     // Badges
     // ---------------------------------------------------------------
 
-    public void CreateBadge(string gameId, Badge badge)
+    public void CreateBadge(string gameId, Badge badge, Action<long> callback)
     {
         List<IMultipartFormSection> body = badge.ToMultipartForm();
 
-        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/badges/" + gameId, body, OperationFinished);
+        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/badges/" + gameId, body, 
+            reqRes =>
+            {
+                if (callback != null)
+                {
+                    callback(reqRes.responseCode);
+                }
+            }
+            );
     }
 
     public void GetBadgeWithId(string gameId, string badgeId, Action<Badge, long> callback)
@@ -464,9 +472,6 @@ public class GamificationFramework : Singleton<GamificationFramework>
     private void Start()
     {
         // for testing:
-        Badge badge = new Badge("generatedBadge", "generated badge", "a generated badge");
-        badge.Image = (Texture2D)Resources.Load("DefaultBadge");
-        CreateBadge("testgame", badge);
     }
 
     private void Result(string obj)
