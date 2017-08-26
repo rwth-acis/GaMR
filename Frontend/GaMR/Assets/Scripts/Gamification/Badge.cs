@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -75,7 +76,8 @@ public class Badge
         }
         if (Image != null)
         {
-            body.Add(new MultipartFormFileSection("badgeimageinput", Image.GetRawTextureData(), Name + ".jpg", "file"));
+            byte[] array = Image.EncodeToPNG();
+            body.Add(new MultipartFormDataSection("badgeimageinput", array, "Image/png"));
         }
         body.Add(new MultipartFormDataSection("dev", "true")); // this is needed so that the Gamification Framework accepts the image
 

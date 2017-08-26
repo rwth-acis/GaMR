@@ -18,7 +18,8 @@ public class BadgeManager : MonoBehaviour, IInputClickHandler
             badge = value;
             if (badge != null)
             {
-                Mat.SetTexture(badge.Name, badge.Image);
+                //Mat.SetTexture(badge.Name, badge.Image);
+                Mat.mainTexture = badge.Image;
             }
         }
     }
@@ -37,6 +38,7 @@ public class BadgeManager : MonoBehaviour, IInputClickHandler
 
     private void Start()
     {
+        // if there is no badge assigned => don't show the badge
         if (badge == null)
         {
             if (InformationManager.Instance.playerType == PlayerType.STUDENT)

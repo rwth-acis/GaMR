@@ -464,6 +464,9 @@ public class GamificationFramework : Singleton<GamificationFramework>
     private void Start()
     {
         // for testing:
+        Badge badge = new Badge("generatedBadge", "generated badge", "a generated badge");
+        badge.Image = (Texture2D)Resources.Load("DefaultBadge");
+        CreateBadge("testgame", badge);
     }
 
     private void Result(string obj)

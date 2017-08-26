@@ -82,7 +82,6 @@ public class QuizManager : AnnotationManager
                             if (resCode == 200)
                             {
                                 Debug.Log("Badge loaded");
-                                gamificationManager.Badge = resBadge;
 
                                 // load the image of the badge
 
@@ -92,7 +91,8 @@ public class QuizManager : AnnotationManager
                                         Debug.Log("Badge image loaded");
                                         if (resImageCode == 200)
                                         {
-                                            gamificationManager.Badge.Image = (Texture2D)texture;
+                                            resBadge.Image = (Texture2D)texture;
+                                            gamificationManager.Badge = resBadge;
                                         }
                                     }
                                     );
@@ -192,7 +192,7 @@ public class QuizManager : AnnotationManager
 
         badgeManager = badgeObject.GetComponent<BadgeManager>();
 
-        badgeManager.Badge = gamificationManager.Badge;
+        gamificationManager.BadgeManager = badgeManager;
     }
 
     /// <summary>
@@ -407,8 +407,8 @@ public class QuizManager : AnnotationManager
     /// </summary>
     public override void OnDestroy()
     {
-        base.OnDestroy();
         gamificationManager.Commit();
+        base.OnDestroy();
         CleanUp();
     }
 

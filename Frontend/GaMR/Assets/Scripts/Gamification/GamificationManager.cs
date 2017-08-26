@@ -5,13 +5,31 @@ using UnityEngine;
 
 public class GamificationManager : MonoBehaviour
 {
-    public string gameId{ get; set; }
+    private Badge badge;
+
+    public string gameId { get; set; }
 
     public Quest Quest { get; set; }
 
     public Achievement AchievementOfQuest { get; set; }
 
-    public Badge Badge { get; set; }
+    public Badge Badge
+    {
+        get
+        {
+            return badge;
+        }
+        set
+        {
+            badge = value;
+            if (BadgeManager != null)
+            {
+                BadgeManager.Badge = badge;
+            }
+        }
+    }
+
+    public BadgeManager BadgeManager { get; set; }
 
     public void Commit()
     {

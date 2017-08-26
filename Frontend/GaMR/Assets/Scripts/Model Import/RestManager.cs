@@ -178,16 +178,19 @@ public class RestManager : Singleton<RestManager>
         byte[] byteBoundary = UnityWebRequest.GenerateBoundary();
         byte[] generated = UnityWebRequest.SerializeFormSections(body, byteBoundary);
 
-        string strGenerated = Encoding.ASCII.GetString(generated);
+        List<byte> generatedList = new List<byte>();
+
+        for (int i=0;i<generated.Length; i++)
+        {
+            generatedList.Add(generated[i]);
+        }
 
         // add end-boundary
-        strGenerated += "\r\n--" + Encoding.ASCII.GetString(byteBoundary) + "--";
-
-        strGenerated = strGenerated.Replace("; filename=", "; src=\"" + "D:\\Test\\test.jpg\"" + "; filename=");
-
-        Debug.Log(strGenerated);
-
-        byte[] bytes = Encoding.ASCII.GetBytes(strGenerated);
+        byte[] endBoundary = Encoding.ASCII.GetBytes("\r\n--" + Encoding.ASCII.GetString(byteBoundary) + "--");
+        for (int i=0;i<endBoundary.Length; i++)
+        {
+            generatedList.Add(endBoundary[i]);
+        }
 
 
         UnityWebRequest req = new UnityWebRequest(url);
@@ -224,7 +227,7 @@ public class RestManager : Singleton<RestManager>
 
         //byte[] bytes = Encoding.ASCII.GetBytes(strBody);
 
-        req.uploadHandler = new UploadHandlerRaw(bytes);
+        req.uploadHandler = new UploadHandlerRaw(generatedList.ToArray());
         // req.uploadHandler.contentType = "multipart/form-data; boundary=" + boundary;
         req.uploadHandler.contentType = "multipart/form-data; boundary=" + Encoding.ASCII.GetString(byteBoundary);
 
