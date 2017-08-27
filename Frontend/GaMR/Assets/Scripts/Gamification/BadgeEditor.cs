@@ -72,6 +72,7 @@ public class BadgeEditor : MonoBehaviour
                 if (resCode == 200)
                 {
                     selectedBadge = resBadge;
+                    SetBadgeAndLoadImage(selectedBadge);
                 }
                 else
                 {
@@ -91,6 +92,7 @@ public class BadgeEditor : MonoBehaviour
                                         if (createCode == 200 || createCode == 201)
                                         {
                                             selectedBadge = newBadge;
+                                            SetBadgeAndLoadImage(selectedBadge);
                                         }
                                     }
                                     );
@@ -98,40 +100,42 @@ public class BadgeEditor : MonoBehaviour
                         }
                         );
                 }
-
-                // check if the badge was loaded and if it has an image
-                if (selectedBadge != null)
-                {
-                    if (selectedBadge.Image != null)
-                    {
-                        gamificationManager.Badge = selectedBadge;
-                    }
-                    else
-                    {
-                        GamificationFramework.Instance.GetBadgeImage(gamificationManager.gameId, badgeId,
-                            (badgeTexture, imageCode) =>
-                            {
-                                if (imageCode == 200)
-                                {
-                                    selectedBadge.Image = (Texture2D)badgeTexture;
-
-                                    gamificationManager.Badge = selectedBadge;
-                                }
-                                else
-                                {
-                                    MessageBox.Show(LocalizationManager.Instance.ResolveString("Error while getting badge image.\nBadge was not saved"), MessageBoxType.ERROR);
-                                }
-                            }
-                            );
-                    }
-                }
-                else
-                {
-                    MessageBox.Show(LocalizationManager.Instance.ResolveString("Error while getting or creating badge.\nBadge was not saved"), MessageBoxType.ERROR);
-                }
-
             });
+    }
 
+    private static void SetBadgeAndLoadImage(Badge selectedBadge)
+    {
+        // check if the badge was loaded and if it has an image
+        if (selectedBadge != null)
+        {
+            // if image already loaded => just set the badge as current badge
+            if (selectedBadge.Image != null)
+            {
+                gamificationManager.Badge = selectedBadge;
+            }
+            else // load the image and then set the badge as current badge
+            {
+                GamificationFramework.Instance.GetBadgeImage(gamificationManager.gameId, selectedBadge.ID,
+                    (badgeTexture, imageCode) =>
+                    {
+                        if (imageCode == 200)
+                        {
+                            selectedBadge.Image = (Texture2D)badgeTexture;
+
+                            gamificationManager.Badge = selectedBadge;
+                        }
+                        else
+                        {
+                            MessageBox.Show(LocalizationManager.Instance.ResolveString("Error while getting badge image.\nBadge was not saved"), MessageBoxType.ERROR);
+                        }
+                    }
+                    );
+            }
+        }
+        else // if selectedBadge is null, loading and creating of the badge failed
+        {
+            MessageBox.Show(LocalizationManager.Instance.ResolveString("Error while getting or creating badge.\nBadge was not saved"), MessageBoxType.ERROR);
+        }
     }
 
     private static void ReplaceWithImages()

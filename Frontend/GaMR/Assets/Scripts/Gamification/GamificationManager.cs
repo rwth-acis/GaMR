@@ -26,12 +26,23 @@ public class GamificationManager : MonoBehaviour
             {
                 BadgeManager.Badge = badge;
             }
+            AchievementOfQuest.BadgeId = Badge.ID;
+
+            GamificationFramework.Instance.UpdateAchievement(gameId, AchievementOfQuest,
+                (resAchievement, resCode) =>
+                {
+                    if (resCode != 200)
+                    {
+                        Debug.Log("Could not update the achievement");
+                    }
+                }
+                );
         }
     }
 
     public BadgeManager BadgeManager { get; set; }
 
-    public void Commit()
+    public void CommitQuest()
     {
         GamificationFramework.Instance.UpdateQuest(gameId, Quest);
     }

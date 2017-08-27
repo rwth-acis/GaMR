@@ -457,7 +457,7 @@ public class GamificationFramework : Singleton<GamificationFramework>
 
     private void OperationFinished(UnityWebRequest req)
     {
-        if (req.responseCode != 200 || req.responseCode != 201)
+        if (req.responseCode != 200 && req.responseCode != 201)
         {
             Debug.Log("Error code for request: " + req.responseCode + " " + req.error);
             Debug.Log("Error: " + req.downloadHandler.text);

@@ -61,22 +61,22 @@ public class QuizManager : AnnotationManager
         // load the annotations/quiz questions
         LoadAnnotations();
 
-        Achievement achievementOfQuiz = new Achievement(QuizName, QuizName, "", annotations.Count, "defaultBadge");
+        Achievement createAchievement = new Achievement(QuizName, QuizName, "", annotations.Count, "defaultBadge");
 
         gamificationManager.gameId = objInfo.ModelName;
 
         // create or load quiz with achievement
 
-        GamificationFramework.Instance.GetOrCreateAchievement(objInfo.ModelName, achievementOfQuiz,
+        GamificationFramework.Instance.GetOrCreateAchievement(objInfo.ModelName, createAchievement,
             resAchievement =>
             {
                 if (resAchievement != null)
                 {
                     Debug.Log("Achievement loaded or created");
-                    achievementOfQuiz = resAchievement;
+                    gamificationManager.AchievementOfQuest = resAchievement;
 
                     // also load the badge
-                    GamificationFramework.Instance.GetBadgeWithId(objInfo.ModelName, achievementOfQuiz.BadgeId,
+                    GamificationFramework.Instance.GetBadgeWithId(objInfo.ModelName, resAchievement.BadgeId,
                         (resBadge, resCode) =>
                         {
                             if (resCode == 200)
@@ -99,29 +99,30 @@ public class QuizManager : AnnotationManager
                             }
                         }
                         );
+
+                    // get or create the quest
+                    Quest quizQuest = new Quest(QuizName, QuizName, QuestStatus.REVEALED, gamificationManager.AchievementOfQuest.ID, false, false, 0, "");
+
+                    quizQuest.AddAction("defaultAction", 1);
+
+                    GamificationFramework.Instance.GetOrCreateQuest(objInfo.ModelName, quizQuest,
+                        resQuest =>
+                        {
+                            if (resQuest != null)
+                            {
+                                Debug.Log("Quest loaded");
+                                gamificationManager.Quest = resQuest;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Could not load gamification of the quiz", MessageBoxType.ERROR);
+                            }
+                        }
+                        );
                 }
                 else
                 {
                     MessageBox.Show("Could not load or create an achievement for the quiz", MessageBoxType.ERROR);
-                }
-            }
-            );
-
-        Quest quizQuest = new Quest(QuizName, QuizName, QuestStatus.REVEALED, achievementOfQuiz.ID, false, false, 0, "");
-
-        quizQuest.AddAction("defaultAction", 1);
-
-        GamificationFramework.Instance.GetOrCreateQuest(objInfo.ModelName, quizQuest,
-            resQuest =>
-            {
-                if (resQuest != null)
-                {
-                    Debug.Log("Quest loaded");
-                    gamificationManager.Quest = resQuest;
-                }
-                else
-                {
-                    MessageBox.Show("Could not load gamification of the quiz", MessageBoxType.ERROR);
                 }
             }
             );
@@ -151,7 +152,7 @@ public class QuizManager : AnnotationManager
 
     private void SaveGamification()
     {
-        gamificationManager.Commit();
+        gamificationManager.CommitQuest();
     }
 
     /// <summary>
@@ -407,7 +408,6 @@ public class QuizManager : AnnotationManager
     /// </summary>
     public override void OnDestroy()
     {
-        gamificationManager.Commit();
         base.OnDestroy();
         CleanUp();
     }

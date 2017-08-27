@@ -24,7 +24,7 @@ public class Achievement
     public bool NotificationCheck { get { return notificationCheck; } }
     public string NotificationMessage { get { return notificationMessage; } }
 
-    public string BadgeId { get { return badgeId; } }
+    public string BadgeId { get { return badgeId; } set { badgeId = value; } }
 
     public Achievement(string id, string name, string description, int pointValue) : this(id, name, description, pointValue, null, false, "")
     {
