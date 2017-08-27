@@ -79,4 +79,21 @@ public class GameAction
         return body;
     }
 
+    public static GameAction FromAnnotation(Annotation annotation, string quizName)
+    {
+        string actionId = CreateActionId(annotation, quizName);
+        GameAction action = new GameAction(actionId,
+            annotation.Text.Substring(0, Math.Min(annotation.Text.Length, 20)),
+            annotation.Text.Substring(0, Math.Min(annotation.Text.Length, 100)),
+            1);
+        return action;
+    }
+
+    public static string CreateActionId(Annotation annotation, string quizName)
+    {
+        string actionId = annotation.Position.x.ToString().Substring(0, 5) + "," + annotation.Position.y.ToString().Substring(0, 5) + "," + annotation.Position.z.ToString().Substring(0,5) + quizName;
+        actionId = actionId.Substring(0, Math.Min(actionId.Length, 20));
+        return actionId;
+    }
+
 }

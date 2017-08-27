@@ -97,6 +97,8 @@ public class ModelLoadManager : MonoBehaviour
                 // create a default badge
                 GamificationFramework.Instance.CreateBadge(modelName, defaultBadge, null);
 
+                // default action which is created so that the list of quest actions can never be empty
+                // if a quest with an emtpy action list exists in the Gamification Framework, the quest becomes inaccessible
                 GameAction defaultAction = new GameAction("defaultAction", "default action", "a default action", 0);
                 GamificationFramework.Instance.CreateAction(modelName, defaultAction, null);
             }

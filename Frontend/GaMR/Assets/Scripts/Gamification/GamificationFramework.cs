@@ -43,8 +43,6 @@ public class GamificationFramework : Singleton<GamificationFramework>
                 }
             }
         });
-
-        CreateAction(game.ID, new GameAction("pseudoaction", "a pseudo action", "pseudo action for all quests to avoid empty lists", 0), null);
     }
 
     /// <summary>
@@ -325,6 +323,10 @@ public class GamificationFramework : Singleton<GamificationFramework>
         RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/actions/" + gameId, body,
             reqRes =>
             {
+                if (reqRes.responseCode != 201)
+                {
+                    Debug.Log("Action creation error (" + reqRes.responseCode + ") " + reqRes.downloadHandler.text);
+                }
                 if (callback != null)
                 {
                     callback(reqRes.responseCode);
