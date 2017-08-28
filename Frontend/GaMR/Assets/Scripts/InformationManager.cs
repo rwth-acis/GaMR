@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using HoloToolkit.Sharing;
 
 /// <summary>
 /// Manages important settings of the application
@@ -12,7 +13,9 @@ using System;
 /// </summary>
 public class InformationManager : Singleton<InformationManager> {
 
-    public string ipAddressBackend = "192.168.178.43";
+    public string ipAddressBackend = "192.168.178.48";
+    [SerializeField]
+    private string sharingIpAddress = "192.168.178.48";
     public int portBackend = 8080;
     public PlayerType playerType = PlayerType.STUDENT;
     [SerializeField]
@@ -27,6 +30,15 @@ public class InformationManager : Singleton<InformationManager> {
     /// http address which combines the ip address and the port
     /// </summary>
     public string BackendAddress { get { return "http://" + ipAddressBackend + ":" + portBackend.ToString(); } }
+
+    public string SharingBackendAdress { get { return sharingIpAddress; } set {
+            sharingIpAddress = value;
+            if (SharingStage.Instance != null)
+            {
+                SharingStage.Instance.ServerAddress = sharingIpAddress;
+            }
+        }
+    }
 
     public Language Language
     {
@@ -59,6 +71,7 @@ public class InformationManager : Singleton<InformationManager> {
     {
         PlayerPrefs.SetString("ipAddress", ipAddressBackend);
         PlayerPrefs.SetInt("port", portBackend);
+        PlayerPrefs.SetString("sharingAddress", sharingIpAddress);
         PlayerPrefs.SetInt("language", (int)language);
         PlayerPrefs.Save();
         Debug.Log("Data saved");
@@ -67,6 +80,7 @@ public class InformationManager : Singleton<InformationManager> {
     private void LoadValues()
     {
         ipAddressBackend = PlayerPrefs.GetString("ipAddress", "192.0.0.0");
+        SharingBackendAdress = PlayerPrefs.GetString("sharingAddress", "192.0.0.0");
         portBackend = PlayerPrefs.GetInt("port", 8080);
         this.Language = (Language) PlayerPrefs.GetInt("language", 0);
         Debug.Log("Loaded " + ipAddressBackend + ":" + portBackend);

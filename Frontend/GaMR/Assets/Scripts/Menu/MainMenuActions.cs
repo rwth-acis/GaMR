@@ -41,6 +41,12 @@ public class MainMenuActions : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public void EnterSharingIPAddress()
+    {
+        Keyboard.Display(LocalizationManager.Instance.ResolveString("IP-address for the sharing service"), InformationManager.Instance.sharingIpAddress, SetSharingIpAddress, false);
+        gameObject.SetActive(false);
+    }
+
     /// <summary>
     /// Sets the ip address which was entered before
     /// called by the keyboard which was created in EnterIPAddress
@@ -55,6 +61,15 @@ public class MainMenuActions : MonoBehaviour
             Debug.Log("Set IP Address to " + address);
             InformationManager.Instance.ipAddressBackend = address;
             TestAddress();
+        }
+    }
+
+    public void SetSharingIpAddress(string address)
+    {
+        gameObject.SetActive(true);
+        if (address != null)
+        {
+            InformationManager.Instance.SharingBackendAdress = address;
         }
     }
 
