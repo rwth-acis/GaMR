@@ -6,6 +6,7 @@ using UnityEngine;
 public class GamificationManager : MonoBehaviour
 {
     private Badge badge;
+    private BadgeManager badgeManager;
 
     public string gameId { get; set; }
 
@@ -40,7 +41,21 @@ public class GamificationManager : MonoBehaviour
         }
     }
 
-    public BadgeManager BadgeManager { get; set; }
+    public BadgeManager BadgeManager
+    {
+        get
+        {
+            return badgeManager;
+        }
+        set
+        {
+            badgeManager = value;
+            if (badgeManager != null)
+            {
+                badgeManager.Badge = badge;
+            }
+        }
+    }
 
     public void CommitQuest()
     {

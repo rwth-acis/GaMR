@@ -60,7 +60,10 @@ public class QuizManager : AnnotationManager
 
         // load the annotations/quiz questions
         LoadAnnotations();
+    }
 
+    private void EnsureQuizGamification()
+    {
         Achievement createAchievement = new Achievement(QuizName, QuizName, "", annotations.Count, "defaultBadge");
 
         gamificationManager.gameId = objInfo.ModelName.ToLower();
@@ -194,6 +197,7 @@ public class QuizManager : AnnotationManager
     private void QuizLoaded(UnityWebRequest res, object[] args)
     {
         Load(res, null);
+        EnsureQuizGamification();
         if (InformationManager.Instance.playerType == PlayerType.STUDENT)
         {
             InitializeQuiz();
@@ -293,6 +297,9 @@ public class QuizManager : AnnotationManager
         boundingBoxHook.localRotation = currentRotation;
 
         progressBar = progressBarObject.GetComponent<ProgressBar>();
+
+        badgeManager = progressBar.Badge.GetComponent<BadgeManager>();
+        gamificationManager.BadgeManager = badgeManager;
     }
 
     private void InitializeFreeIndices()

@@ -25,6 +25,12 @@ public class BadgeEditor : MonoBehaviour
 
     private void Start()
     {
+        // disable the component if the player is a student
+        // ensures that students may not edit badges
+        if (InformationManager.Instance.playerType == PlayerType.STUDENT)
+        {
+            this.enabled = false;
+        }
         badgeManager = GetComponentInChildren<BadgeManager>();
         gamificationManager = GetComponentInChildren<GamificationManager>();
     }
@@ -62,6 +68,7 @@ public class BadgeEditor : MonoBehaviour
 
     private static void OnCarouselItemClicked(string badgeId)
     {
+        Destroy(carouselMenuInstance);
         Badge selectedBadge = null;
 
         // try to find the badge

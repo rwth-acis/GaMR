@@ -36,18 +36,6 @@ public class BadgeManager : MonoBehaviour, IInputClickHandler
         }
     }
 
-    private void Start()
-    {
-        // if there is no badge assigned => don't show the badge
-        if (badge == null)
-        {
-            if (InformationManager.Instance.playerType == PlayerType.STUDENT)
-            {
-                gameObject.SetActive(false);
-            }
-        }
-    }
-
     public void WinBadge()
     {
         // move badge in front of the user

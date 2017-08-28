@@ -31,11 +31,16 @@ public class ProgressBar : MonoBehaviour {
         set { progress = value; }
     }
 
+    public GameObject Badge
+    {
+        get; private set;
+    }
+
     /// <summary>
     /// sets the progress bar to 0 without smoothing
     /// places the badge
     /// </summary>
-    private void Start()
+    private void Awake()
     {
         progressBar.transform.localScale = new Vector3(
             progressBar.transform.localScale.x,
@@ -52,10 +57,16 @@ public class ProgressBar : MonoBehaviour {
             targetHeight * 2 + 0.05f,
             upperCap.transform.localPosition.z);
 
+        CreateBadge();
+    }
+
+    private void CreateBadge()
+    {
         GameObject badge = (GameObject)Instantiate(Resources.Load("Badge"));
         Bounds badgeBounds = Geometry.GetBoundsIndependentFromRotation(badge.transform);
         badge.transform.parent = transform;
         badge.transform.localPosition = upperCap.transform.localPosition + new Vector3(0, badgeBounds.size.x + 0.25f, 0);
+        Badge = badge;
     }
 
     /// <summary>
