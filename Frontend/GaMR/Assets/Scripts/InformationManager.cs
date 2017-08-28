@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Events;
+using HoloToolkit.Unity.SpatialMapping;
 
 /// <summary>
 /// Manages important settings of the application
@@ -10,9 +12,11 @@ using System;
 /// the port and a property which combines all into a http address which can be called
 /// also provides information about the user
 /// </summary>
-public class InformationManager : Singleton<InformationManager> {
+public class InformationManager : Singleton<InformationManager>
+{
 
-    public string ipAddressBackend = "192.168.178.43";
+    [SerializeField]
+    private string ipAddressBackend = "192.168.178.43";
     [SerializeField]
     private string ipAddressGamification = "192.168.178.75";
     public int portBackend = 8080;
@@ -20,6 +24,8 @@ public class InformationManager : Singleton<InformationManager> {
     public PlayerType playerType = PlayerType.STUDENT;
     [SerializeField]
     private Language language = Language.ENGLISH;
+
+    private bool collisionEnabled = true;
 
     public void Start()
     {
@@ -29,10 +35,20 @@ public class InformationManager : Singleton<InformationManager> {
     /// <summary>
     /// http address which combines the ip address and the port
     /// </summary>
-    public string BackendAddress { get { return "http://" + ipAddressBackend + ":" + portBackend.ToString(); } }
-    public string IPAddressBackend { get { return "http://" + ipAddressBackend; } }
+    public string FullBackendAddress { get { return "http://" + ipAddressBackend + ":" + portBackend.ToString(); } }
+    public string IPAddressBackend { get { return ipAddressBackend; } set { ipAddressBackend = value; ipAddressGamification = value; } }
     public string IPAddressGamification { get { return "http://" + ipAddressGamification; } }
     public string GamificationAddress { get { return IPAddressGamification + ":" + portGamification; } }
+
+    public bool CollisionEnabled
+    {
+        get { return collisionEnabled; }
+        set
+        {
+            collisionEnabled = value;
+            SpatialMappingManager.Instance.gameObject.SetActive(value);
+        }
+    }
 
     public UserInfo UserInfo { get; set; }
 
@@ -74,9 +90,9 @@ public class InformationManager : Singleton<InformationManager> {
 
     private void LoadValues()
     {
-        ipAddressBackend = PlayerPrefs.GetString("ipAddress", "192.0.0.0");
+        IPAddressBackend = PlayerPrefs.GetString("ipAddress", "192.0.0.0");
         portBackend = PlayerPrefs.GetInt("port", 8080);
-        this.Language = (Language) PlayerPrefs.GetInt("language", 0);
+        this.Language = (Language)PlayerPrefs.GetInt("language", 0);
         Debug.Log("Loaded " + ipAddressBackend + ":" + portBackend);
         Debug.Log("Language: " + language);
     }

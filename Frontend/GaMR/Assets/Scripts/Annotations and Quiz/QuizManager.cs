@@ -169,7 +169,7 @@ public class QuizManager : AnnotationManager
             string jsonPost = JsonUtility.ToJson(array);
             if (restManager != null)
             {
-                restManager.POST(infoManager.BackendAddress + subPathSave + QuizName, jsonPost);
+                restManager.POST(infoManager.FullBackendAddress + subPathSave + QuizName, jsonPost);
             }
 
             // also save the gamification
@@ -187,7 +187,7 @@ public class QuizManager : AnnotationManager
     /// </summary>
     protected override void LoadAnnotations()
     {
-        restManager.GET(infoManager.BackendAddress + subPathLoad + QuizName, QuizLoaded, null);
+        restManager.GET(infoManager.FullBackendAddress + subPathLoad + QuizName, QuizLoaded, null);
     }
 
     /// <summary>

@@ -41,7 +41,7 @@ public class TransformationManager : MonoBehaviour
         transform.Rotate(axis, angle, Space.World);
     }
 
-    internal void Translate(Vector3 movement)
+    public void Translate(Vector3 movement)
     {
         RaycastHit hitInfo;
         // check if the object would collide with something

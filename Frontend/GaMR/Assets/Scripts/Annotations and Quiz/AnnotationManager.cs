@@ -51,7 +51,7 @@ public class AnnotationManager : MonoBehaviour
     /// </summary>
     protected virtual void LoadAnnotations()
     {
-        restManager.GET(infoManager.BackendAddress + subPathLoad, Load, null);
+        restManager.GET(infoManager.FullBackendAddress + subPathLoad, Load, null);
     }
 
     /// <summary>
@@ -120,7 +120,7 @@ public class AnnotationManager : MonoBehaviour
         string jsonPost = JsonUtility.ToJson(array);
         if (restManager != null)
         {
-            restManager.POST(infoManager.BackendAddress + subPathSave, jsonPost);
+            restManager.POST(infoManager.FullBackendAddress + subPathSave, jsonPost);
         }
     }
 
@@ -138,7 +138,7 @@ public class AnnotationManager : MonoBehaviour
         string jsonPost = JsonUtility.ToJson(array);
         if (restManager != null)
         {
-            restManager.POST(infoManager.BackendAddress + subQuizPathName + name, jsonPost);
+            restManager.POST(infoManager.FullBackendAddress + subQuizPathName + name, jsonPost);
         }
 
     }

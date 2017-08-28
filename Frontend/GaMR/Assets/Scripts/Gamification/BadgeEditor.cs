@@ -37,7 +37,7 @@ public class BadgeEditor : MonoBehaviour
 
     public static void ShowBadges()
     {
-        RestManager.Instance.GET(InformationManager.Instance.BackendAddress + "/resources/badges/overview", BadgeOverviewLoaded);
+        RestManager.Instance.GET(InformationManager.Instance.FullBackendAddress + "/resources/badges/overview", BadgeOverviewLoaded);
     }
 
     private static void BadgeOverviewLoaded(UnityWebRequest req)
@@ -86,7 +86,7 @@ public class BadgeEditor : MonoBehaviour
                     // create the new badge
                     Badge newBadge = new Badge(badgeId, badgeId, badgeId);
                     // first: load the image of the badge
-                    RestManager.Instance.GetTexture(InformationManager.Instance.BackendAddress + "/resources/badges/" + badgeId,
+                    RestManager.Instance.GetTexture(InformationManager.Instance.FullBackendAddress + "/resources/badges/" + badgeId,
                         (reqRes, badgeTexture) =>
                         {
                             if (reqRes.responseCode == 200)
@@ -150,7 +150,7 @@ public class BadgeEditor : MonoBehaviour
         for (int i = 0; i < carouselMenuInstance.rootMenu.Count; i++)
         {
             object[] arg = { i };
-            RestManager.Instance.GetTexture(InformationManager.Instance.BackendAddress + "/resources/badges/" + carouselMenuInstance.rootMenu[i].MenuItemName, Replace, arg);
+            RestManager.Instance.GetTexture(InformationManager.Instance.FullBackendAddress + "/resources/badges/" + carouselMenuInstance.rootMenu[i].MenuItemName, Replace, arg);
         }
     }
 

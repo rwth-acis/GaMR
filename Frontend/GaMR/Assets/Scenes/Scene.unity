@@ -613,7 +613,7 @@ Prefab:
     - target: {fileID: 114000012009196210, guid: 3eddd1c29199313478dd3f912bfab2ab,
         type: 2}
       propertyPath: RaycastLayerMasks.Array.data[0].m_Bits
-      value: 4294966779
+      value: 4294965755
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3eddd1c29199313478dd3f912bfab2ab, type: 2}
@@ -1322,9 +1322,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PhysicsLayer: 31
-  surfaceMaterial: {fileID: 15303, guid: 0000000000000000f000000000000000, type: 3}
+  surfaceMaterial: {fileID: 2100000, guid: df172103f5fba4a4d8636aeca60cb0d7, type: 2}
   autoStartObserver: 1
-  drawVisualMeshes: 0
+  drawVisualMeshes: 1
   castShadows: 0
 --- !u!114 &2035823019
 MonoBehaviour:

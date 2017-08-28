@@ -35,7 +35,7 @@ public class ModelLoadManager : MonoBehaviour
     /// <param name="name">The name of the X3D object</param>
     public void Load(string name)
     {
-        x3dObject = new X3DObj(restCaller, infoManager.BackendAddress + baseUrl, name, shader);
+        x3dObject = new X3DObj(restCaller, infoManager.FullBackendAddress + baseUrl, name, shader);
         x3dObject.LoadGameObjects(OnFinished); // this automatically creates them
         WaitCursor.Show();
     }

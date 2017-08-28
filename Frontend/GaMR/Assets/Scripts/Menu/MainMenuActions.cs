@@ -38,7 +38,7 @@ public class MainMenuActions : MonoBehaviour
     /// </summary>
     public void EnterIPAddress()
     {
-        Keyboard.Display(LocalizationManager.Instance.ResolveString("Enter the IP-Address"), InformationManager.Instance.ipAddressBackend, SetIPAddress, false);
+        Keyboard.Display(LocalizationManager.Instance.ResolveString("Enter the IP-Address"), InformationManager.Instance.IPAddressBackend, SetIPAddress, false);
         gameObject.SetActive(false);
     }
 
@@ -54,7 +54,7 @@ public class MainMenuActions : MonoBehaviour
         if (address != null)
         {
             Debug.Log("Set IP Address to " + address);
-            InformationManager.Instance.ipAddressBackend = address;
+            InformationManager.Instance.IPAddressBackend = address;
             TestAddress();
         }
     }
@@ -65,7 +65,7 @@ public class MainMenuActions : MonoBehaviour
     private void TestAddress()
     {
         WaitCursor.Show();
-        restManager.GET(InformationManager.Instance.BackendAddress + "/resources/model/overview", RestResult, null);
+        restManager.GET(InformationManager.Instance.FullBackendAddress + "/resources/model/overview", RestResult, null);
     }
 
     /// <summary>
@@ -128,7 +128,7 @@ public class MainMenuActions : MonoBehaviour
     public void ShowCarouselMenu()
     {
         WaitCursor.Show();
-        restManager.GET(InformationManager.Instance.BackendAddress + "/resources/model/overview", AvailableModelsLoaded, null);
+        restManager.GET(InformationManager.Instance.FullBackendAddress + "/resources/model/overview", AvailableModelsLoaded, null);
     }
 
     /// <summary>
@@ -228,5 +228,10 @@ public class MainMenuActions : MonoBehaviour
         InformationManager.Instance.UserInfo = null;
         AuthorizationManager.Instance.Logout();
         SceneManager.LoadScene("Login", LoadSceneMode.Single);
+    }
+
+    public void ToggleCollision()
+    {
+        InformationManager.Instance.CollisionEnabled = !InformationManager.Instance.CollisionEnabled;
     }
 }

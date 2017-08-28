@@ -24,7 +24,7 @@ public class ExecuteOnStart : MonoBehaviour {
     void Start () {
         infoManager = GameObject.Find("InformationManager").GetComponent<InformationManager>();
         restCaller = GetComponent<RestManager>();
-        x3dObject = new X3DObj(restCaller, infoManager.BackendAddress + baseUrl, "Skull", shader);
+        x3dObject = new X3DObj(restCaller, infoManager.FullBackendAddress + baseUrl, "Skull", shader);
         x3dObject.LoadGameObjects(OnFinished); // this automatically creates them
     }
 
