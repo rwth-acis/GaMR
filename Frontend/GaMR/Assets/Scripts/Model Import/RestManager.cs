@@ -154,6 +154,7 @@ public class RestManager : Singleton<RestManager>
     /// <returns></returns>
     private IEnumerator UploadWWW(string url, string requestType, string body, System.Action<UnityWebRequest> callback)
     {
+        WaitCursor.Show();
         UnityWebRequest req = new UnityWebRequest(url, requestType);
         if (body != "")
         {
@@ -167,6 +168,7 @@ public class RestManager : Singleton<RestManager>
         }
         yield return req.Send();
 
+        WaitCursor.Hide();
         if (callback != null)
         {
             callback(req);
@@ -175,6 +177,7 @@ public class RestManager : Singleton<RestManager>
 
     private IEnumerator UploadWWW(string url, string requestType, List<IMultipartFormSection> body, System.Action<UnityWebRequest> callback)
     {
+        WaitCursor.Show();
         byte[] byteBoundary = UnityWebRequest.GenerateBoundary();
         byte[] generated = UnityWebRequest.SerializeFormSections(body, byteBoundary);
 
@@ -235,6 +238,7 @@ public class RestManager : Singleton<RestManager>
 
         yield return req.Send();
 
+        WaitCursor.Hide();
 
         if (callback != null)
         {
@@ -260,6 +264,7 @@ public class RestManager : Singleton<RestManager>
     /// <returns></returns>
     IEnumerator CallWWW(string url, string requestType, System.Action<UnityWebRequest, object[]> callback, object[] passOnArgs)
     {
+        WaitCursor.Show();
         UnityWebRequest req = new UnityWebRequest(url, requestType);
         req.downloadHandler = new DownloadHandlerBuffer();
 
@@ -269,6 +274,8 @@ public class RestManager : Singleton<RestManager>
         }
 
         yield return req.Send();
+
+        WaitCursor.Hide();
 
         if (callback != null)
         {
@@ -285,6 +292,7 @@ public class RestManager : Singleton<RestManager>
     /// <returns></returns>
     IEnumerator GetWWWTexture(string url, System.Action<UnityWebRequest, Texture> callback)
     {
+        WaitCursor.Show();
         UnityWebRequest req = UnityWebRequest.GetTexture(url);
 
         foreach (KeyValuePair<string, string> header in StandardHeader)
@@ -293,6 +301,8 @@ public class RestManager : Singleton<RestManager>
         }
 
         yield return req.Send();
+
+        WaitCursor.Hide();
 
         if (callback != null)
         {
