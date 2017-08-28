@@ -91,9 +91,10 @@ public class GameAction
 
     public static string CreateActionId(Annotation annotation, string quizName)
     {
-        string actionId = annotation.Position.x.ToString().Substring(0, 5) + "," + annotation.Position.y.ToString().Substring(0, 5) + "," + annotation.Position.z.ToString().Substring(0,5) + quizName;
+        string actionId = annotation.Position.x.ToString().Substring(0, 5) + "," + annotation.Position.y.ToString().Substring(0, 5) + "," + annotation.Position.z.ToString().Substring(0, 5) + quizName.ToLower();
         actionId = actionId.Substring(0, Math.Min(actionId.Length, 20));
+
+        //        string actionId = annotation.Text.ToLower().Substring(0, Math.Min(annotation.Text.Length, 20));
         return actionId;
     }
-
 }

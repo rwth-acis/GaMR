@@ -51,7 +51,7 @@ public class ModelLoadManager : MonoBehaviour
         GameObject obj = x3dObject.CreateGameObjects();
         CreateBoundingBox(obj, x3dObject.Bounds);
 
-        CreateGamificationGame(x3dObject.ModelName);
+        CreateGamificationGame(x3dObject.ModelName.ToLower());
 
     }
 

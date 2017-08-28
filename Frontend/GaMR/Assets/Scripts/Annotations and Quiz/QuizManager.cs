@@ -63,11 +63,11 @@ public class QuizManager : AnnotationManager
 
         Achievement createAchievement = new Achievement(QuizName, QuizName, "", annotations.Count, "defaultBadge");
 
-        gamificationManager.gameId = objInfo.ModelName;
+        gamificationManager.gameId = objInfo.ModelName.ToLower();
 
         // create or load quiz with achievement
 
-        GamificationFramework.Instance.GetOrCreateAchievement(objInfo.ModelName, createAchievement,
+        GamificationFramework.Instance.GetOrCreateAchievement(gamificationManager.gameId, createAchievement,
             resAchievement =>
             {
                 if (resAchievement != null)
@@ -76,7 +76,7 @@ public class QuizManager : AnnotationManager
                     gamificationManager.AchievementOfQuest = resAchievement;
 
                     // also load the badge
-                    GamificationFramework.Instance.GetBadgeWithId(objInfo.ModelName, resAchievement.BadgeId,
+                    GamificationFramework.Instance.GetBadgeWithId(gamificationManager.gameId, resAchievement.BadgeId,
                         (resBadge, resCode) =>
                         {
                             if (resCode == 200)
@@ -85,7 +85,7 @@ public class QuizManager : AnnotationManager
 
                                 // load the image of the badge
 
-                                GamificationFramework.Instance.GetBadgeImage(objInfo.ModelName, resBadge.ID,
+                                GamificationFramework.Instance.GetBadgeImage(gamificationManager.gameId, resBadge.ID,
                                     (texture, resImageCode) =>
                                     {
                                         Debug.Log("Badge image loaded");
@@ -107,7 +107,7 @@ public class QuizManager : AnnotationManager
 
                     quizQuest.AddAction("defaultAction", 1);
 
-                    GamificationFramework.Instance.GetOrCreateQuest(objInfo.ModelName, quizQuest,
+                    GamificationFramework.Instance.GetOrCreateQuest(gamificationManager.gameId, quizQuest,
                         resQuest =>
                         {
                             if (resQuest != null)
@@ -136,14 +136,14 @@ public class QuizManager : AnnotationManager
         {
             int indexForLambda = i;
             GameAction action = GameAction.FromAnnotation(annotations[i], QuizName);
-            GamificationFramework.Instance.CreateAction(objInfo.ModelName, action,
+            quest.AddAction(action, 1);
+            GamificationFramework.Instance.CreateAction(gamificationManager.gameId, action,
                 resCode =>
                 {
                     if (resCode != 201)
                     {
                         Debug.Log("Could not create action for " + annotations[indexForLambda].Text + "\nCode: " +resCode);
                     }
-                    quest.AddAction(action, 1);
                 }
                 );
         }
@@ -310,7 +310,7 @@ public class QuizManager : AnnotationManager
 
         // handle gamification: add question as action
         GameAction action = GameAction.FromAnnotation(annotationContainer.Annotation, QuizName);
-        GamificationFramework.Instance.CreateAction(objInfo.ModelName, action,
+        GamificationFramework.Instance.CreateAction(gamificationManager.gameId, action,
             resCode =>
             {
                 if (resCode != 200 && resCode != 201)
@@ -328,7 +328,7 @@ public class QuizManager : AnnotationManager
     private void UpdateAchievementPoints()
     {
         gamificationManager.AchievementOfQuest.PointValue = annotations.Count;
-        GamificationFramework.Instance.UpdateAchievement(objInfo.ModelName, gamificationManager.AchievementOfQuest, null);
+        GamificationFramework.Instance.UpdateAchievement(gamificationManager.gameId, gamificationManager.AchievementOfQuest, null);
     }
 
     public override void Delete(AnnotationContainer annotationContainer)
@@ -336,7 +336,7 @@ public class QuizManager : AnnotationManager
         base.Delete(annotationContainer);
 
         // handle gamification: delete action which is related to the question
-        GamificationFramework.Instance.DeleteAction(objInfo.ModelName, GameAction.CreateActionId(annotationContainer.Annotation, QuizName),
+        GamificationFramework.Instance.DeleteAction(gamificationManager.gameId, GameAction.CreateActionId(annotationContainer.Annotation, QuizName),
             resCode =>
             {
                 if (resCode != 200)
@@ -355,7 +355,7 @@ public class QuizManager : AnnotationManager
     {
         base.NotifyAnnotationEdited(updatedAnnotation);
         GameAction updatedAction = GameAction.FromAnnotation(updatedAnnotation, QuizName);
-        GamificationFramework.Instance.UpdateAction(objInfo.ModelName, updatedAction, null);
+        GamificationFramework.Instance.UpdateAction(gamificationManager.gameId, updatedAction, null);
     }
 
     /// <summary>
@@ -419,7 +419,7 @@ public class QuizManager : AnnotationManager
             MessageBox.Show(LocalizationManager.Instance.ResolveString("Correct"), MessageBoxType.SUCCESS);
             correctlyAnswered++;
             progressBar.Progress = (float)correctlyAnswered / annotations.Count;
-            GamificationFramework.Instance.TriggerAction(objInfo.ModelName, GameAction.CreateActionId(annotation, QuizName));
+            GamificationFramework.Instance.TriggerAction(gamificationManager.gameId, GameAction.CreateActionId(annotation, QuizName));
             return true;
         }
         else
