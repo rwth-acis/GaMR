@@ -31,7 +31,7 @@ public class InformationManager : Singleton<InformationManager> {
     /// </summary>
     public string BackendAddress { get { return "http://" + ipAddressBackend + ":" + portBackend.ToString(); } }
 
-    public string SharingBackendAdress { get { return sharingIpAddress; } set {
+    public string SharingBackendAddress { get { return sharingIpAddress; } set {
             sharingIpAddress = value;
             if (SharingStage.Instance != null)
             {
@@ -67,6 +67,14 @@ public class InformationManager : Singleton<InformationManager> {
         }
     }
 
+    public void OnLevelWasLoaded(int level)
+    {
+        if (SharingStage.Instance != null)
+        {
+            SharingStage.Instance.ServerAddress = SharingBackendAddress;
+        }
+    }
+
     private void SaveValues()
     {
         PlayerPrefs.SetString("ipAddress", ipAddressBackend);
@@ -80,7 +88,7 @@ public class InformationManager : Singleton<InformationManager> {
     private void LoadValues()
     {
         ipAddressBackend = PlayerPrefs.GetString("ipAddress", "192.0.0.0");
-        SharingBackendAdress = PlayerPrefs.GetString("sharingAddress", "192.0.0.0");
+        SharingBackendAddress = PlayerPrefs.GetString("sharingAddress", "192.0.0.0");
         portBackend = PlayerPrefs.GetInt("port", 8080);
         this.Language = (Language) PlayerPrefs.GetInt("language", 0);
         Debug.Log("Loaded " + ipAddressBackend + ":" + portBackend);

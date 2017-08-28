@@ -43,7 +43,7 @@ public class MainMenuActions : MonoBehaviour
 
     public void EnterSharingIPAddress()
     {
-        Keyboard.Display(LocalizationManager.Instance.ResolveString("IP-address for the sharing service"), InformationManager.Instance.sharingIpAddress, SetSharingIpAddress, false);
+        Keyboard.Display(LocalizationManager.Instance.ResolveString("IP-address for the sharing service"), InformationManager.Instance.SharingBackendAddress, SetSharingIpAddress, false);
         gameObject.SetActive(false);
     }
 
@@ -69,7 +69,7 @@ public class MainMenuActions : MonoBehaviour
         gameObject.SetActive(true);
         if (address != null)
         {
-            InformationManager.Instance.SharingBackendAdress = address;
+            InformationManager.Instance.SharingBackendAddress = address;
         }
     }
 
