@@ -427,6 +427,12 @@ public class QuizManager : AnnotationManager
             correctlyAnswered++;
             progressBar.Progress = (float)correctlyAnswered / annotations.Count;
             GamificationFramework.Instance.TriggerAction(gamificationManager.gameId, GameAction.CreateActionId(annotation, QuizName));
+
+            if (progressBar.Progress == 1)
+            {
+                badgeManager.WinBadge();
+            }
+
             return true;
         }
         else

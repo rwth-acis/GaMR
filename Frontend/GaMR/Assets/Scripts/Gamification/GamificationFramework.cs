@@ -105,6 +105,26 @@ public class GamificationFramework : Singleton<GamificationFramework>
             );
     }
 
+    public void GetSeparateGameInfos(Action<JsonGameWithUserInfo[], long> callback)
+    {
+        RestManager.Instance.GET(InformationManager.Instance.GamificationAddress + "/gamification/games/list/separated",
+            req =>
+            {
+                if (callback != null)
+                {
+                    if (req.responseCode == 200)
+                    {
+                        string jsonAnswer = req.downloadHandler.text;
+                        // the json needs to be modified in order to work with JsonUtility
+                        jsonAnswer = "{\"array\":" + jsonAnswer + "}";
+                        JsonUserGameArray array = JsonUtility.FromJson<JsonUserGameArray>(jsonAnswer);
+                        callback(array.array, req.responseCode);
+                    }
+                }
+            }
+            );
+    }
+
     /// <summary>
     /// Called when the GetGameDetails operation is finished. Checks if the request was successful and invokes the secondary callback.
     /// </summary>
@@ -474,6 +494,12 @@ public class GamificationFramework : Singleton<GamificationFramework>
     private void Start()
     {
         // for testing:
+        GetSeparateGameInfos(
+            (gameList, code) =>
+            {
+
+            }
+            );
     }
 
     private void Result(string obj)

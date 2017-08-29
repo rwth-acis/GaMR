@@ -10,6 +10,8 @@ public class ConstantRotation : MonoBehaviour {
     [Tooltip("The rotation speed in degrees per second")]
     public float degreesPerSecond = 50;
 	
+
+
 	/// <summary>
     /// Rotates the object with repsect to the time which has passed since the last update call
     /// </summary>

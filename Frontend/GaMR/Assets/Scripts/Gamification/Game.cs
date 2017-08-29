@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -77,6 +78,7 @@ public class Game
     }
 }
 
+[Serializable]
 /// <summary>
 /// A json game object
 /// Used for parsing the json string of the Gamification Framework to a runtime object
@@ -86,4 +88,13 @@ class JsonGame
     public string commType;
     public string id;
     public string description;
+}
+
+[Serializable]
+public class JsonGameWithUserInfo
+{
+    public bool memberHas;
+    public string description;
+    public string community_type;
+    public string game_id;
 }
