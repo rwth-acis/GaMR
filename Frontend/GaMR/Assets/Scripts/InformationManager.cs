@@ -36,6 +36,8 @@ public class InformationManager : Singleton<InformationManager> {
             if (SharingStage.Instance != null)
             {
                 SharingStage.Instance.ServerAddress = sharingIpAddress;
+                Debug.Log("Sharing ip set to " + sharingIpAddress);
+                SharingStage.Instance.ConnectToServer();
             }
         }
     }
