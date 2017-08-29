@@ -42,6 +42,11 @@ public class MainMenuActions : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public void EnterGamificationIPAddress()
+    {
+        Keyboard.Display(LocalizationManager.Instance.ResolveString("Enter Gamification IP-Address"), InformationManager.Instance.IPAddressGamification, SetGamificationIPAddress, false);
+    }
+
     /// <summary>
     /// Sets the ip address which was entered before
     /// called by the keyboard which was created in EnterIPAddress
@@ -57,6 +62,18 @@ public class MainMenuActions : MonoBehaviour
             InformationManager.Instance.IPAddressBackend = address;
             TestAddress();
         }
+    }
+
+    public void SetGamificationIPAddress(string address)
+    {
+        gameObject.SetActive(true);
+        // if not null => input was accepted by user
+        if (address != null)
+        {
+            Debug.Log("Set Gamification IP Address to " + address);
+            InformationManager.Instance.IPAddressGamification = address;
+        }
+
     }
 
     /// <summary>

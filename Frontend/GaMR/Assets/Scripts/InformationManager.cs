@@ -36,9 +36,9 @@ public class InformationManager : Singleton<InformationManager>
     /// http address which combines the ip address and the port
     /// </summary>
     public string FullBackendAddress { get { return "http://" + ipAddressBackend + ":" + portBackend.ToString(); } }
-    public string IPAddressBackend { get { return ipAddressBackend; } set { ipAddressBackend = value; ipAddressGamification = value; } }
-    public string IPAddressGamification { get { return "http://" + ipAddressGamification; } }
-    public string GamificationAddress { get { return IPAddressGamification + ":" + portGamification; } }
+    public string IPAddressBackend { get { return ipAddressBackend; } set { ipAddressBackend = value; } }
+    public string IPAddressGamification { get { return ipAddressGamification; } set { ipAddressGamification = value; } }
+    public string GamificationAddress { get { return "http://" + IPAddressGamification + ":" + portGamification; } }
 
     public bool CollisionEnabled
     {
@@ -82,6 +82,7 @@ public class InformationManager : Singleton<InformationManager>
     private void SaveValues()
     {
         PlayerPrefs.SetString("ipAddress", ipAddressBackend);
+        PlayerPrefs.SetString("gamificationAddress", ipAddressGamification);
         PlayerPrefs.SetInt("port", portBackend);
         PlayerPrefs.SetInt("language", (int)language);
         PlayerPrefs.Save();
@@ -91,6 +92,7 @@ public class InformationManager : Singleton<InformationManager>
     private void LoadValues()
     {
         IPAddressBackend = PlayerPrefs.GetString("ipAddress", "192.0.0.0");
+        ipAddressGamification = PlayerPrefs.GetString("gamificationAddress", "192.0.0.0");
         portBackend = PlayerPrefs.GetInt("port", 8080);
         this.Language = (Language)PlayerPrefs.GetInt("language", 0);
         Debug.Log("Loaded " + ipAddressBackend + ":" + portBackend);
