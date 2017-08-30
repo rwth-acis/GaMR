@@ -68,7 +68,7 @@ public class BadgeEditor : MonoBehaviour
 
     private static void OnCarouselItemClicked(string badgeId)
     {
-        Destroy(carouselMenuInstance);
+        Destroy(carouselMenuInstance.gameObject);
         Badge selectedBadge = null;
 
         // try to find the badge

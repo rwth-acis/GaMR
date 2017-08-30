@@ -42,6 +42,7 @@ public class Achievement
     private Achievement(string id, string name, string description, int pointValue, string badgeId, bool notificationCheck, string notificationMessage)
     {
         this.id = id;
+        this.id = this.id.Substring(0, Math.Min(this.id.Length, 20));
         this.name = name;
         this.description = description;
         this.pointValue = pointValue;

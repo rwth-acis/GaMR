@@ -64,7 +64,7 @@ public class QuizManager : AnnotationManager
 
     private void EnsureQuizGamification()
     {
-        Achievement createAchievement = new Achievement(QuizName, QuizName, "", annotations.Count, "defaultBadge");
+        Achievement createAchievement = new Achievement("Achi" + QuizName, QuizName, "", annotations.Count, "defaultBadge");
 
         gamificationManager.gameId = objInfo.ModelName.ToLower();
 
@@ -430,6 +430,8 @@ public class QuizManager : AnnotationManager
 
             if (progressBar.Progress == 1)
             {
+                // also trigger the default action
+                GamificationFramework.Instance.TriggerAction(gamificationManager.gameId, "defaultAction");
                 badgeManager.WinBadge();
             }
 

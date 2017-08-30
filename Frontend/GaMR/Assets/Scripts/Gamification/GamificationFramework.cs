@@ -442,6 +442,11 @@ public class GamificationFramework : Singleton<GamificationFramework>
             );
     }
 
+    public void GetBadgesOfUser(string gameId, Action<Badge[], long> callback)
+    {
+
+    }
+
     // ---------------------------------------------------------------
     // Points
     // ---------------------------------------------------------------
