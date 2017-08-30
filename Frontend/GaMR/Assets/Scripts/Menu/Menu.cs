@@ -170,6 +170,8 @@ public class Menu : MonoBehaviour
             instantiatePosition.y -= parentItemSize.y + padding;
         }
 
+        MenuStyleAdapter lastMenuStyleAdapter = null;
+
         // instantiate the menu
         for (int i = 0; i < menu.Count; i++)
         {
@@ -182,10 +184,10 @@ public class Menu : MonoBehaviour
                     if (alignment == Direction.HORIZONTAL)
                     {
                         // if the previous item was created => move to the next position to place the current item there
-                        if (menu[i - 1].MenuSytleAdapter != null)
+                        if (lastMenuStyleAdapter != null)
                         {
                             // get to the middle between the previous and the current item
-                            instantiatePosition.x += (menu[i - 1].MenuSytleAdapter.Size.x + padding) / 2;
+                            instantiatePosition.x += (lastMenuStyleAdapter.Size.x + padding) / 2;
                             // get to the center of the current item
                             instantiatePosition.x += (menu[i].MenuSytleAdapter.Size.x + padding) / 2;
                         }
@@ -193,10 +195,10 @@ public class Menu : MonoBehaviour
                     else if (alignment == Direction.VERTICAL)
                     {
                         // if the previous item was created => move to the next position to place the current item there
-                        if (menu[i - 1].MenuSytleAdapter != null)
+                        if (lastMenuStyleAdapter != null)
                         {
                             // get to the middle between the previous and the current item
-                            instantiatePosition.y -= (menu[i - 1].MenuSytleAdapter.Size.y + padding) / 2;
+                            instantiatePosition.y -= (lastMenuStyleAdapter.Size.y + padding) / 2;
                             // get to the center of the current item
                             instantiatePosition.y -= (menu[i].MenuSytleAdapter.Size.y + padding) / 2;
                         }
@@ -204,19 +206,19 @@ public class Menu : MonoBehaviour
                     else if (alignment == Direction.GRID)
                     {
                         // if the previous item was created => move to the next position to place the current item there
-                        if (menu[i - 1].MenuSytleAdapter != null)
+                        if (lastMenuStyleAdapter != null)
                         {
                             // get to the middle between the previous and the current item
-                            instantiatePosition.x += (menu[i - 1].MenuSytleAdapter.Size.x + padding) / 2;
+                            instantiatePosition.x += (lastMenuStyleAdapter.Size.x + padding) / 2;
                             // get to the center of the current item
                             instantiatePosition.x += (menu[i].MenuSytleAdapter.Size.x + padding) / 2;
                             // if one line is filled => move to next line
                             if (i % itemsInOneLine == 0)
                             {
                                 // get to the middle between the previous and the current item
-                                if (menu[i - 1].MenuSytleAdapter != null)
+                                if (lastMenuStyleAdapter != null)
                                 {
-                                    instantiatePosition.y -= (menu[i - 1].MenuSytleAdapter.Size.y + padding) / 2;
+                                    instantiatePosition.y -= (lastMenuStyleAdapter.Size.y + padding) / 2;
                                 }
                                 // get to the center of the current item
                                 instantiatePosition.y -= (menu[i].MenuSytleAdapter.Size.y + padding) / 2;
@@ -227,6 +229,7 @@ public class Menu : MonoBehaviour
                     }
                 }
                 menu[i].Position = instantiatePosition;
+                lastMenuStyleAdapter = menu[i].MenuSytleAdapter;
             }
         }
     }

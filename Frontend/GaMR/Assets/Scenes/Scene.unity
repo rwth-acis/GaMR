@@ -910,7 +910,7 @@ MonoBehaviour:
   ipAddressGamification: 192.168.178.75
   portBackend: 8080
   portGamification: 8086
-  playerType: 2
+  playerType: 1
   language: 1
 --- !u!1 &1622583214
 GameObject:
