@@ -444,7 +444,30 @@ public class GamificationFramework : Singleton<GamificationFramework>
 
     public void GetBadgesOfUser(string gameId, Action<Badge[], long> callback)
     {
-
+        RestManager.Instance.GET(InformationManager.Instance.GamificationAddress + "/visualization/badges/" + gameId + "/" + InformationManager.Instance.UserInfo.preferred_username,
+            reqRes =>
+            {
+                if (callback != null)
+                {
+                    if (reqRes.responseCode == 200)
+                    {
+                        string jsonResponse = reqRes.downloadHandler.text;
+                        jsonResponse = "{\"array\":" + jsonResponse + "}"; // json array needs to be packed into an array object in order to work with JsonUtility
+                        JsonBadgeArray array = JsonUtility.FromJson<JsonBadgeArray>(jsonResponse);
+                        Badge[] badgeArray = new Badge[array.array.Length];
+                        for(int i=0;i<array.array.Length;i++)
+                        {
+                            badgeArray[i] = Badge.FromJsonBadge(array.array[i]);
+                        }
+                        callback(badgeArray, reqRes.responseCode);
+                    }
+                    else
+                    {
+                        callback(null, reqRes.responseCode);
+                    }
+                }
+            }
+            );
     }
 
     // ---------------------------------------------------------------

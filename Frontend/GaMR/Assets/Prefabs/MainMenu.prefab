@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 114006120379836286}
   - component: {fileID: 114658325160767692}
   - component: {fileID: 114356606660762470}
+  - component: {fileID: 114453192650950332}
   m_Layer: 2
   m_Name: MainMenu
   m_TagString: Untagged
@@ -240,8 +241,8 @@ MonoBehaviour:
   onClickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114549317331441724}
-        m_MethodName: EnterGamificationIPAddress
+      - m_Target: {fileID: 114453192650950332}
+        m_MethodName: GenerateOverview
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -331,6 +332,17 @@ MonoBehaviour:
   icon: {fileID: 0}
   text: Change Language
   menuItemName: ChangeLanguage
+--- !u!114 &114453192650950332
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1859928805744080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdbc73a147b4bfe4ea84fbe6e7ab9c78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114481922604197128
 MonoBehaviour:
   m_ObjectHideFlags: 1

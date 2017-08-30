@@ -21,7 +21,10 @@ public class BadgeManager : MonoBehaviour, IInputClickHandler
             if (badge != null)
             {
                 //Mat.SetTexture(badge.Name, badge.Image);
-                Mat.mainTexture = badge.Image;
+                if (badge.Image != null)
+                {
+                    Mat.mainTexture = badge.Image;
+                }
             }
         }
     }

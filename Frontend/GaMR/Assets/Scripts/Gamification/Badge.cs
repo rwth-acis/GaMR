@@ -87,11 +87,18 @@ public class Badge
     public static Badge FromJson(string json)
     {
         JsonBadge jsonBadge = JsonUtility.FromJson<JsonBadge>(json);
+        Badge badge = FromJsonBadge(jsonBadge);
+        return badge;
+    }
+
+    public static Badge FromJsonBadge(JsonBadge jsonBadge)
+    {
         Badge badge = new Badge(jsonBadge.id, jsonBadge.name, jsonBadge.description, jsonBadge.useNotification, jsonBadge.notificationMessage);
         return badge;
     }
 }
 
+[Serializable]
 public class JsonBadge
 {
     public string id;
