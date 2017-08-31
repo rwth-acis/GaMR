@@ -21,6 +21,7 @@ public class LongPressButton : Button, IInputHandler {
     public void OnInputDown(InputEventData eventData)
     {
         pressed = true;
+        InputManager.Instance.OverrideFocusedObject = gameObject;
     }
 
     /// <summary>
@@ -31,6 +32,7 @@ public class LongPressButton : Button, IInputHandler {
     public void OnInputUp(InputEventData eventData)
     {
         pressed = false;
+        InputManager.Instance.OverrideFocusedObject = null;
         clickedTime = 0;
     }
 
