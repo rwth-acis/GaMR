@@ -28,7 +28,7 @@ public class GamificationFramework : Singleton<GamificationFramework>
         }
 
         List<IMultipartFormSection> body = game.ToMultipartFormData();
-        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/games/data", body, reqRes =>
+        RestManager.Instance.POST(InformationManager.Instance.FullGamificationAddress + "/gamification/games/data", body, reqRes =>
         {
             if (callback != null)
             {
@@ -55,7 +55,7 @@ public class GamificationFramework : Singleton<GamificationFramework>
         if (callWithResult != null)
         {
             object[] args = { callWithResult };
-            RestManager.Instance.GET(InformationManager.Instance.GamificationAddress + "/gamification/games/data/" + gameId, reqRes =>
+            RestManager.Instance.GET(InformationManager.Instance.FullGamificationAddress + "/gamification/games/data/" + gameId, reqRes =>
             {
                 Game game = null;
                 if (reqRes.responseCode == 200)
@@ -76,12 +76,12 @@ public class GamificationFramework : Singleton<GamificationFramework>
 
     public void DeleteGame(string gameId)
     {
-        RestManager.Instance.DELETE(InformationManager.Instance.GamificationAddress + "/gamification/games/data/" + gameId, OperationFinished);
+        RestManager.Instance.DELETE(InformationManager.Instance.FullGamificationAddress + "/gamification/games/data/" + gameId, OperationFinished);
     }
 
     public void AddUserToGame(string gameId, Action<long> callback)
     {
-        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/games/data/" + gameId + "/" + InformationManager.Instance.UserInfo.preferred_username,
+        RestManager.Instance.POST(InformationManager.Instance.FullGamificationAddress + "/gamification/games/data/" + gameId + "/" + InformationManager.Instance.UserInfo.preferred_username,
             reqRes =>
             {
                 if (callback != null)
@@ -94,7 +94,7 @@ public class GamificationFramework : Singleton<GamificationFramework>
 
     public void RemoveUserFromGame(string gameId, Action<long> callback)
     {
-        RestManager.Instance.DELETE(InformationManager.Instance.GamificationAddress + "/gamification/games/data" + gameId + "/" + InformationManager.Instance.UserInfo.preferred_username,
+        RestManager.Instance.DELETE(InformationManager.Instance.FullGamificationAddress + "/gamification/games/data" + gameId + "/" + InformationManager.Instance.UserInfo.preferred_username,
             reqRes =>
             {
                 if (callback != null)
@@ -107,7 +107,7 @@ public class GamificationFramework : Singleton<GamificationFramework>
 
     public void GetSeparateGameInfos(Action<JsonGameWithUserInfo[], long> callback)
     {
-        RestManager.Instance.GET(InformationManager.Instance.GamificationAddress + "/gamification/games/list/separated",
+        RestManager.Instance.GET(InformationManager.Instance.FullGamificationAddress + "/gamification/games/list/separated",
             req =>
             {
                 if (callback != null)
@@ -150,7 +150,7 @@ public class GamificationFramework : Singleton<GamificationFramework>
     /// <param name="callback">Method which gets called when the request is finished. The parameter of the method will contain the request result.</param>
     public void ValidateLogin(Action<UnityWebRequest> callback)
     {
-        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/games/validation", callback);
+        RestManager.Instance.POST(InformationManager.Instance.FullGamificationAddress + "/gamification/games/validation", callback);
     }
 
     // ---------------------------------------------------------------
@@ -164,7 +164,7 @@ public class GamificationFramework : Singleton<GamificationFramework>
     /// <param name="quest">The quest data to pass to the Gamification Framework</param>
     public void CreateQuest(string gameId, Quest quest, Action<Quest, long> callback)
     {
-        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/quests/" + gameId, quest.ToJson(),
+        RestManager.Instance.POST(InformationManager.Instance.FullGamificationAddress + "/gamification/quests/" + gameId, quest.ToJson(),
             reqRes =>
             {
                 if (reqRes.responseCode == 201)
@@ -182,7 +182,7 @@ public class GamificationFramework : Singleton<GamificationFramework>
 
     public void UpdateQuest(string gameId, Quest quest)
     {
-        RestManager.Instance.PUT(InformationManager.Instance.GamificationAddress + "/gamification/quests/" + gameId + "/" + quest.ID, quest.ToJson(), OperationFinished);
+        RestManager.Instance.PUT(InformationManager.Instance.FullGamificationAddress + "/gamification/quests/" + gameId + "/" + quest.ID, quest.ToJson(), OperationFinished);
     }
 
     public void GetOrCreateQuest(string gameId, Quest quest, Action<Quest> callback)
@@ -222,7 +222,7 @@ public class GamificationFramework : Singleton<GamificationFramework>
 
     public void GetQuestWithId(string gameId, string questId, Action<Quest, long> callback)
     {
-        RestManager.Instance.GET(InformationManager.Instance.GamificationAddress + "/gamification/quests/" + gameId + "/" + questId,
+        RestManager.Instance.GET(InformationManager.Instance.FullGamificationAddress + "/gamification/quests/" + gameId + "/" + questId,
             reqRes =>
             {
                 if (callback != null)
@@ -252,7 +252,7 @@ public class GamificationFramework : Singleton<GamificationFramework>
     public void CreateAchievement(string gameId, Achievement achievement, Action<Achievement, long> callback)
     {
         List<IMultipartFormSection> body = achievement.ToMultipartFormData();
-        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/achievements/" + gameId, body, 
+        RestManager.Instance.POST(InformationManager.Instance.FullGamificationAddress + "/gamification/achievements/" + gameId, body, 
             reqRes =>
             {
                 if (callback != null)
@@ -266,7 +266,7 @@ public class GamificationFramework : Singleton<GamificationFramework>
     public void UpdateAchievement(string gameId, Achievement achievement, Action<Achievement, long> callback)
     {
         List<IMultipartFormSection> body = achievement.ToMultipartFormData();
-        RestManager.Instance.PUT(InformationManager.Instance.GamificationAddress + "/gamification/achievements/" + gameId + "/" + achievement.ID, body,
+        RestManager.Instance.PUT(InformationManager.Instance.FullGamificationAddress + "/gamification/achievements/" + gameId + "/" + achievement.ID, body,
             reqRes =>
             {
                 if (callback != null)
@@ -279,7 +279,7 @@ public class GamificationFramework : Singleton<GamificationFramework>
 
     public void GetAchievementWithId(string gameId, string achievementId, Action<Achievement, long> callback)
     {
-        RestManager.Instance.GET(InformationManager.Instance.GamificationAddress + "/gamification/achievements/" + gameId + "/" + achievementId,
+        RestManager.Instance.GET(InformationManager.Instance.FullGamificationAddress + "/gamification/achievements/" + gameId + "/" + achievementId,
             reqRes =>
             {
                 if (callback != null)
@@ -340,7 +340,7 @@ public class GamificationFramework : Singleton<GamificationFramework>
     public void CreateAction(string gameId, GameAction action, Action<long> callback)
     {
         List<IMultipartFormSection> body = action.ToMultipartFormData();
-        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/actions/" + gameId, body,
+        RestManager.Instance.POST(InformationManager.Instance.FullGamificationAddress + "/gamification/actions/" + gameId, body,
             reqRes =>
             {
                 if (reqRes.responseCode != 201)
@@ -358,7 +358,7 @@ public class GamificationFramework : Singleton<GamificationFramework>
     public void UpdateAction(string gameId, GameAction action, Action<long> callback)
     {
         List<IMultipartFormSection> body = action.ToMultipartFormData();
-        RestManager.Instance.PUT(InformationManager.Instance.GamificationAddress + "/gamification/actions/" + gameId + "/" + action.ID, body,
+        RestManager.Instance.PUT(InformationManager.Instance.FullGamificationAddress + "/gamification/actions/" + gameId + "/" + action.ID, body,
             reqRes =>
             {
                 if (callback != null)
@@ -371,7 +371,7 @@ public class GamificationFramework : Singleton<GamificationFramework>
 
     public void DeleteAction(string gameId, string actionId, Action<long> callback)
     {
-        RestManager.Instance.DELETE(InformationManager.Instance.GamificationAddress + "/gamification/actions/" + gameId + "/" + actionId,
+        RestManager.Instance.DELETE(InformationManager.Instance.FullGamificationAddress + "/gamification/actions/" + gameId + "/" + actionId,
             reqRes =>
             {
                 if (callback != null)
@@ -384,7 +384,7 @@ public class GamificationFramework : Singleton<GamificationFramework>
 
     public void TriggerAction(string gameId, string actionId)
     {
-        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress
+        RestManager.Instance.POST(InformationManager.Instance.FullGamificationAddress
             + "/visualization/actions/" + gameId + "/" + actionId + "/" + InformationManager.Instance.UserInfo.preferred_username,
             OperationFinished);
     }
@@ -397,7 +397,7 @@ public class GamificationFramework : Singleton<GamificationFramework>
     {
         List<IMultipartFormSection> body = badge.ToMultipartForm();
 
-        RestManager.Instance.POST(InformationManager.Instance.GamificationAddress + "/gamification/badges/" + gameId, body, 
+        RestManager.Instance.POST(InformationManager.Instance.FullGamificationAddress + "/gamification/badges/" + gameId, body, 
             reqRes =>
             {
                 if (callback != null)
@@ -410,7 +410,7 @@ public class GamificationFramework : Singleton<GamificationFramework>
 
     public void GetBadgeWithId(string gameId, string badgeId, Action<Badge, long> callback)
     {
-        RestManager.Instance.GET(InformationManager.Instance.GamificationAddress + "/gamification/badges/" + gameId + "/" + badgeId,
+        RestManager.Instance.GET(InformationManager.Instance.FullGamificationAddress + "/gamification/badges/" + gameId + "/" + badgeId,
             reqRes =>
             {
                 if (callback != null)
@@ -431,7 +431,7 @@ public class GamificationFramework : Singleton<GamificationFramework>
 
     public void GetBadgeImage(string gameId, string badgeId, Action<Texture, long> callback)
     {
-        RestManager.Instance.GetTexture(InformationManager.Instance.GamificationAddress + "/gamification/badges/" + gameId + "/" + badgeId + "/img",
+        RestManager.Instance.GetTexture(InformationManager.Instance.FullGamificationAddress + "/gamification/badges/" + gameId + "/" + badgeId + "/img",
             (reqRes, texture) =>
             {
                 if (callback != null)
@@ -444,7 +444,7 @@ public class GamificationFramework : Singleton<GamificationFramework>
 
     public void GetBadgesOfUser(string gameId, Action<Badge[], long> callback)
     {
-        RestManager.Instance.GET(InformationManager.Instance.GamificationAddress + "/visualization/badges/" + gameId + "/" + InformationManager.Instance.UserInfo.preferred_username,
+        RestManager.Instance.GET(InformationManager.Instance.FullGamificationAddress + "/visualization/badges/" + gameId + "/" + InformationManager.Instance.UserInfo.preferred_username,
             reqRes =>
             {
                 if (callback != null)
@@ -476,13 +476,13 @@ public class GamificationFramework : Singleton<GamificationFramework>
 
     public void ChangePointUnitName(string gameId, string newUnitName)
     {
-        RestManager.Instance.PUT(InformationManager.Instance.GamificationAddress + "/gamification/points/" + gameId + "/name/" + newUnitName, OperationFinished);
+        RestManager.Instance.PUT(InformationManager.Instance.FullGamificationAddress + "/gamification/points/" + gameId + "/name/" + newUnitName, OperationFinished);
     }
 
     public void GetPointUnitName(string gameId, Action<string> callWithResult)
     {
         object[] passOnArgs = { callWithResult };
-        RestManager.Instance.GET(InformationManager.Instance.GamificationAddress + "/gamification/points/" + gameId + "/name", EvaluateGetPointUnitName, passOnArgs);
+        RestManager.Instance.GET(InformationManager.Instance.FullGamificationAddress + "/gamification/points/" + gameId + "/name", EvaluateGetPointUnitName, passOnArgs);
     }
 
     private void EvaluateGetPointUnitName(UnityWebRequest req, object[] passOnArgs)

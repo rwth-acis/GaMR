@@ -9,10 +9,6 @@
       "value": "Einstellungen"
     },
     {
-      "key": "Set IP Address",
-      "value": "IP Adresse einstellen"
-    },
-    {
       "key": "Set Port Number",
       "value": "Port einstellen"
     },
@@ -101,8 +97,8 @@
       "value": "Konnte Textur nicht laden"
     },
     {
-      "key": "Enter the IP-Address",
-      "value": "IP-Adresse eingeben"
+      "key": "Enter the Server",
+      "value": "Server eingeben"
     },
     {
       "key": "Enter the text of the annotation",

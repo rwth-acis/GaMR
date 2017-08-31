@@ -16,11 +16,13 @@ public class InformationManager : Singleton<InformationManager>
 {
 
     [SerializeField]
-    private string ipAddressBackend = "192.168.178.43";
+    private string backendServer = "192.168.178.43";
     [SerializeField]
-    private string ipAddressGamification = "192.168.178.75";
-    public int portBackend = 8080;
-    public int portGamification = 8086;
+    private string gamificationServer = "192.168.178.75";
+    [SerializeField]
+    private int portBackend = 8080;
+    [SerializeField]
+    private int portGamification = 8086;
     public PlayerType playerType = PlayerType.STUDENT;
     [SerializeField]
     private Language language = Language.ENGLISH;
@@ -35,10 +37,10 @@ public class InformationManager : Singleton<InformationManager>
     /// <summary>
     /// http address which combines the ip address and the port
     /// </summary>
-    public string FullBackendAddress { get { return "http://" + ipAddressBackend + ":" + portBackend.ToString(); } }
-    public string IPAddressBackend { get { return ipAddressBackend; } set { ipAddressBackend = value; } }
-    public string IPAddressGamification { get { return ipAddressGamification; } set { ipAddressGamification = value; } }
-    public string GamificationAddress { get { return "http://" + IPAddressGamification + ":" + portGamification; } }
+    public string FullBackendAddress { get { return "http://" + backendServer + ":" + portBackend.ToString(); } }
+    public string BackendServer { get { return backendServer; } set { backendServer = value; } }
+    public string GamificationServer { get { return gamificationServer; } set { gamificationServer = value; } }
+    public string FullGamificationAddress { get { return "http://" + gamificationServer + ":" + portGamification; } }
 
     public bool CollisionEnabled
     {
@@ -81,9 +83,8 @@ public class InformationManager : Singleton<InformationManager>
 
     private void SaveValues()
     {
-        PlayerPrefs.SetString("ipAddress", ipAddressBackend);
-        PlayerPrefs.SetString("gamificationAddress", ipAddressGamification);
-        PlayerPrefs.SetInt("port", portBackend);
+        PlayerPrefs.SetString("backendServer", backendServer);
+        PlayerPrefs.SetString("gamificationServer", gamificationServer);
         PlayerPrefs.SetInt("language", (int)language);
         PlayerPrefs.Save();
         Debug.Log("Data saved");
@@ -91,11 +92,10 @@ public class InformationManager : Singleton<InformationManager>
 
     private void LoadValues()
     {
-        IPAddressBackend = PlayerPrefs.GetString("ipAddress", "192.0.0.0");
-        ipAddressGamification = PlayerPrefs.GetString("gamificationAddress", "192.0.0.0");
-        portBackend = PlayerPrefs.GetInt("port", 8080);
+        BackendServer = PlayerPrefs.GetString("backendServer", "localhost");
+        gamificationServer = PlayerPrefs.GetString("gamificationServer", "localhost");
         this.Language = (Language)PlayerPrefs.GetInt("language", 0);
-        Debug.Log("Loaded " + ipAddressBackend + ":" + portBackend);
+        Debug.Log("Loaded " + backendServer + ":" + portBackend);
         Debug.Log("Language: " + language);
     }
 }

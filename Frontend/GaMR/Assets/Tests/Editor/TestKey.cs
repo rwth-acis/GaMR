@@ -28,7 +28,7 @@ public class TestKey {
         InformationManager infoManager = parent.AddComponent<InformationManager>();
         LocalizationManager manager = parent.AddComponent<LocalizationManager>();
         manager.Start();
-        keyboard.Start();
+        keyboard.Awake();
         // due to localization 50 keys are expected but for simplicity this test case only provides one
         LogAssert.Expect(LogType.Error, "Keyboard-layout file has the wrong number of keys: Should be 1 but is 50");
         key.Awake();

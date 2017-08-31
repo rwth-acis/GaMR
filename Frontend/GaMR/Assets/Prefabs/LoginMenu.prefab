@@ -25,8 +25,6 @@ GameObject:
   - component: {fileID: 114542621868998812}
   - component: {fileID: 114367800701407598}
   - component: {fileID: 114852617649403874}
-  - component: {fileID: 114632834833330776}
-  - component: {fileID: 114481922604197128}
   - component: {fileID: 114549317331441724}
   - component: {fileID: 114135506855412898}
   - component: {fileID: 114872079562857364}
@@ -35,6 +33,8 @@ GameObject:
   - component: {fileID: 114122386360709928}
   - component: {fileID: 114432161570486440}
   - component: {fileID: 114635859060184380}
+  - component: {fileID: 114534721882269818}
+  - component: {fileID: 114288041460879434}
   m_Layer: 2
   m_Name: LoginMenu
   m_TagString: Untagged
@@ -179,6 +179,43 @@ MonoBehaviour:
   PositionUpdateSpeed: 9.8
   SmoothMotion: 1
   SmoothingFactor: 0.75
+--- !u!114 &114288041460879434
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1859928805744080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
+  subMenu: []
+  overrideMenuDirection: 0
+  subMenuDirection: 0
+  closeOnClick: 0
+  markOnClick: 0
+  marked: 0
+  visibleTo: 0
+  onClickEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114549317331441724}
+        m_MethodName: EnterGamificationServer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  icon: {fileID: 0}
+  text: Set Gamification Server
+  menuItemName: GamificationServer
 --- !u!114 &114367800701407598
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -230,7 +267,7 @@ MonoBehaviour:
   stackable: 0
   typeSingleton: 1
   typeId: LoginMenu
---- !u!114 &114481922604197128
+--- !u!114 &114534721882269818
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -245,7 +282,7 @@ MonoBehaviour:
   subMenu: []
   overrideMenuDirection: 0
   subMenuDirection: 0
-  closeOnClick: 1
+  closeOnClick: 0
   markOnClick: 0
   marked: 0
   visibleTo: 0
@@ -253,7 +290,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114549317331441724}
-        m_MethodName: EnterPort
+        m_MethodName: EnterServer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -265,8 +302,8 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   icon: {fileID: 0}
-  text: Set Port Number
-  menuItemName: SetPortNumber
+  text: Set Server
+  menuItemName: SetServer
 --- !u!114 &114542621868998812
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -293,43 +330,6 @@ MonoBehaviour:
     type: 2}
   carouselMenuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4,
     type: 2}
---- !u!114 &114632834833330776
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1859928805744080}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
-  subMenu: []
-  overrideMenuDirection: 0
-  subMenuDirection: 0
-  closeOnClick: 1
-  markOnClick: 0
-  marked: 0
-  visibleTo: 0
-  onClickEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114549317331441724}
-        m_MethodName: EnterIPAddress
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  icon: {fileID: 0}
-  text: Set IP Address
-  menuItemName: SetIpAddress
 --- !u!114 &114635859060184380
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -343,8 +343,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
   subMenu:
-  - {fileID: 114632834833330776, guid: 21061c7777b35d14a87764208fd33be2, type: 2}
-  - {fileID: 114481922604197128, guid: 21061c7777b35d14a87764208fd33be2, type: 2}
+  - {fileID: 114534721882269818}
   - {fileID: 114006120379836286, guid: 21061c7777b35d14a87764208fd33be2, type: 2}
   overrideMenuDirection: 0
   subMenuDirection: 0
@@ -357,8 +356,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   icon: {fileID: 0}
-  text: Set IP Addresses
-  menuItemName: SetAddresses
+  text: Set Servers
+  menuItemName: SetServers
 --- !u!114 &114678792982612236
 MonoBehaviour:
   m_ObjectHideFlags: 1

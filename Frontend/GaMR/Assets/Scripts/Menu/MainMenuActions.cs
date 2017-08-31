@@ -34,15 +34,16 @@ public class MainMenuActions : MonoBehaviour
     /// <summary>
     /// Displays a keyboard in order to enter the ip address
     /// </summary>
-    public void EnterIPAddress()
+    public void EnterServer()
     {
-        Keyboard.Display(LocalizationManager.Instance.ResolveString("Enter the IP-Address"), InformationManager.Instance.IPAddressBackend, SetIPAddress, false);
+        Keyboard.Display(LocalizationManager.Instance.ResolveString("Enter the Server"), InformationManager.Instance.BackendServer, SetServer, true);
         gameObject.SetActive(false);
     }
 
-    public void EnterGamificationIPAddress()
+    public void EnterGamificationServer()
     {
-        Keyboard.Display(LocalizationManager.Instance.ResolveString("Enter Gamification IP-Address"), InformationManager.Instance.IPAddressGamification, SetGamificationIPAddress, false);
+        Keyboard.Display(LocalizationManager.Instance.ResolveString("Enter Gamification Server"), InformationManager.Instance.GamificationServer, SetGamificationServer, true);
+        gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -50,26 +51,26 @@ public class MainMenuActions : MonoBehaviour
     /// called by the keyboard which was created in EnterIPAddress
     /// </summary>
     /// <param name="address">The address which has been typed by the user (null if cancelled)</param>
-    public void SetIPAddress(string address)
+    public void SetServer(string address)
     {
         gameObject.SetActive(true);
         // if not null => input was accepted by user
         if (address != null)
         {
-            Debug.Log("Set IP Address to " + address);
-            InformationManager.Instance.IPAddressBackend = address;
-            TestAddress();
+            Debug.Log("Set Server to " + address);
+            InformationManager.Instance.BackendServer = address;
+            TestServer();
         }
     }
 
-    public void SetGamificationIPAddress(string address)
+    public void SetGamificationServer(string address)
     {
         gameObject.SetActive(true);
         // if not null => input was accepted by user
         if (address != null)
         {
-            Debug.Log("Set Gamification IP Address to " + address);
-            InformationManager.Instance.IPAddressGamification = address;
+            Debug.Log("Set Gamification Server to " + address);
+            InformationManager.Instance.GamificationServer = address;
         }
 
     }
@@ -77,7 +78,7 @@ public class MainMenuActions : MonoBehaviour
     /// <summary>
     /// Test if the server is responding by requesting the model overview
     /// </summary>
-    private void TestAddress()
+    private void TestServer()
     {
         WaitCursor.Show();
         RestManager.Instance.GET(InformationManager.Instance.FullBackendAddress + "/resources/model/overview", RestResult, null);
@@ -99,41 +100,6 @@ public class MainMenuActions : MonoBehaviour
         {
             MessageBox.Show(LocalizationManager.Instance.ResolveString("Address successfully saved") + Environment.NewLine + 
                 LocalizationManager.Instance.ResolveString("However, the server does not respond"), MessageBoxType.WARNING);
-        }
-    }
-
-    /// <summary>
-    /// Displays a keyboard so that the user can enter the port
-    /// </summary>
-    public void EnterPort()
-    {
-        Keyboard.Display(LocalizationManager.Instance.ResolveString("Enter the port"), SetIPPort, false);
-        gameObject.SetActive(false);
-    }
-
-    /// <summary>
-    /// Sets the port which has been entered by the user
-    /// Called by the keyboard which has been created in EnterPort
-    /// </summary>
-    /// <param name="port">The user input (null if canceled)</param>
-    public void SetIPPort(string port)
-    {
-        gameObject.SetActive(true);
-        // if not null => input was accepted by user
-        if (port != null)
-        {
-            int iPort;
-            if (int.TryParse(port, out iPort))
-            {
-                Debug.Log("Set Port to " + port);
-                InformationManager.Instance.portBackend = iPort;
-                TestAddress();
-            }
-            else
-            {
-                MessageBox.Show(LocalizationManager.Instance.ResolveString("Input was not a number") + Environment.NewLine + 
-                    LocalizationManager.Instance.ResolveString("Could not set port"), MessageBoxType.ERROR);
-            }
         }
     }
 

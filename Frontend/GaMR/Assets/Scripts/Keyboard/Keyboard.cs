@@ -51,14 +51,12 @@ public class Keyboard : MonoBehaviour, IWindow
     /// and keys of type LETTER
     /// Also sets the scaling pivots of the background and text-field and scales them to their initial size
     /// </summary>
-    public void Start()
+    public void Awake()
     {
         // get necessary components
         inputBackground = inputField.transform.parent.Find("Background");
         background = transform.Find("Background");
         coll = GetComponent<BoxCollider>();
-
-        maxWidth = Geometry.GetBoundsIndependentFromRotation(inputBackground).size.x;
 
         letterKeys = new List<Key>();
 
@@ -91,14 +89,12 @@ public class Keyboard : MonoBehaviour, IWindow
             }
         }
 
-
-
         // geometry calcuations:
         // set the scaling pivots for the backgrounds
         if (inputBackground != null)
         {
             inputBackgroundPivot = CreateScalingPivot(inputBackground);
-            maxWidth = Geometry.GetBoundsIndependentFromRotation(inputBackground).size.x;
+            maxWidth = maxWidth != 0.0f ? maxWidth: Geometry.GetBoundsIndependentFromRotation(inputBackground).size.x;
         }
         if (background != null)
         {
@@ -183,6 +179,7 @@ public class Keyboard : MonoBehaviour, IWindow
         }
         set
         {
+            maxWidth = maxWidth != 0.0f ? maxWidth : Geometry.GetBoundsIndependentFromRotation(inputBackground).size.x;
             string wrappedText = AutoLineBreak.StringWithLineBreaks(inputField, value, maxWidth);
             numberOfNewLines = wrappedText.Split('\n').Length;
             if (numberOfNewLines <= maxNumberOfLines)

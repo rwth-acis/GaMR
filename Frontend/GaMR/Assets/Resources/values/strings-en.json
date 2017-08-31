@@ -9,10 +9,6 @@
       "value": "Settings"
     },
     {
-      "key": "Set IP Address",
-      "value": "Set IP Address"
-    },
-    {
       "key": "Set Port Number",
       "value": "Set Port Number"
     },
@@ -101,8 +97,8 @@
       "value": "Could not fetch texture"
     },
     {
-      "key": "Enter the IP-Address",
-      "value": "Enter the IP-Address"
+      "key": "Enter the Server",
+      "value": "Enter the Server"
     },
     {
       "key": "Enter the text of the annotation",

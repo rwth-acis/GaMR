@@ -16,7 +16,7 @@ public class TestKeyboard {
         keyboard = go.AddComponent<Keyboard>();
 
 
-        keyboard.Start();
+        keyboard.Awake();
     }
 
     //[Test]

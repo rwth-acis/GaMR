@@ -1061,7 +1061,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba5679a6aba8bbb40aad0d20e67e411a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugToken: 
+  debugToken: eyJhbGciOiJSUzI1NiJ9.eyJhdWQiOlsiYzc1ODhlZmMtZjgzMS00ZTMxLTkyOGUtMGY0NmE5MWZiMzExIl0sImlzcyI6Imh0dHBzOlwvXC9hcGkubGVhcm5pbmctbGF5ZXJzLmV1XC9vXC9vYXV0aDJcLyIsImV4cCI6MTUwNDIwMDY1MywiaWF0IjoxNTA0MTk3MDUzLCJqdGkiOiI0OTYwNGJkMS04ODIyLTQxODAtODk1My0xOTc5NjZiNTA1NjMifQ.KUzH0kdqo5GS-89VaPVWg6uGXpHzydTJFWAfm2s7WKQgAegjF4YCcYWtSlAguhgclZz8pNz_naBsK4ou5FbI3Mgy2Dga-Dm-xp5vsES8F4JXxhYd3z_OCGKog0F3da-_61Xh1jfMrrhLteu7NpgQdjtQpuJxusGuKnvn5U1RB58
 --- !u!1 &1782103928
 GameObject:
   m_ObjectHideFlags: 0
