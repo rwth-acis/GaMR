@@ -160,6 +160,8 @@ public class Menu : MonoBehaviour
 
     public void InstantiateMenu(Vector3 instantiatePosition, Vector3 parentItemSize, List<CustomMenuItem> menu, CustomMenuItem parent, bool isSubMenu, Direction alignment)
     {
+        // invoke the external initialization if it exists
+        // this can e.g. disable certain buttons based on other states of the application
         if (externalInitialization != null)
         {
             externalInitialization.Invoke();

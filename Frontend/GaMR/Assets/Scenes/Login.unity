@@ -335,17 +335,17 @@ Prefab:
     - target: {fileID: 224000011042862180, guid: 022450106439a8946ae18a9e20cc92d8,
         type: 2}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224000011042862180, guid: 022450106439a8946ae18a9e20cc92d8,
         type: 2}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224000011042862180, guid: 022450106439a8946ae18a9e20cc92d8,
         type: 2}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224000011042862180, guid: 022450106439a8946ae18a9e20cc92d8,
         type: 2}
@@ -370,12 +370,12 @@ Prefab:
     - target: {fileID: 224000011042862180, guid: 022450106439a8946ae18a9e20cc92d8,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224000011042862180, guid: 022450106439a8946ae18a9e20cc92d8,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224000011042862180, guid: 022450106439a8946ae18a9e20cc92d8,
         type: 2}
@@ -400,12 +400,12 @@ Prefab:
     - target: {fileID: 224000011042862180, guid: 022450106439a8946ae18a9e20cc92d8,
         type: 2}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224000011042862180, guid: 022450106439a8946ae18a9e20cc92d8,
         type: 2}
       propertyPath: m_Pivot.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 223000013180475572, guid: 022450106439a8946ae18a9e20cc92d8,
         type: 2}
@@ -429,6 +429,21 @@ Prefab:
         type: 2}
       propertyPath: m_FontData.m_FontSize
       value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000011042862180, guid: 022450106439a8946ae18a9e20cc92d8,
+        type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000011042862180, guid: 022450106439a8946ae18a9e20cc92d8,
+        type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000011042862180, guid: 022450106439a8946ae18a9e20cc92d8,
+        type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 022450106439a8946ae18a9e20cc92d8, type: 2}

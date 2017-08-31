@@ -15,6 +15,8 @@ public class CustomMenuItem : MonoBehaviour
     /// the style of the menu item (which GameObject will be instantiated)
     /// </summary>
     public GameObject menuStyle;
+
+    private GameObject origMenuStyle;
     /// <summary>
     /// list of child menu items
     /// </summary>
@@ -68,7 +70,8 @@ public class CustomMenuItem : MonoBehaviour
     public void Start()
     {
         InitialText = text;
-        Text = text; // this is for automatic translation on starup
+        origMenuStyle = menuStyle;
+        Text = text; // this is for automatic translation on startup
     }
 
     /// <summary>
@@ -180,6 +183,14 @@ public class CustomMenuItem : MonoBehaviour
         }
     }
 
+    public void Refresh()
+    {
+        Vector3 position = Position;
+        Destroy();
+        Create(parentMenu, parentMenuItem);
+        containerInstance.transform.localPosition = position;
+    }
+
     /// <summary>
     /// destroys the gameobject representation of the menu item
     /// </summary>
@@ -224,6 +235,8 @@ public class CustomMenuItem : MonoBehaviour
             // also spawn the sub menu if it exists
             if (subMenu.Count > 0 && !subMenuOpened)
             {
+                menuStyle = (GameObject)Resources.Load("SimpleMenuItem Parent Icon");
+                Refresh();
                 //InstantiateSubMenus();
                 Direction dir = parentMenu.alignment;
                 if (overrideMenuDirection)
@@ -234,7 +247,7 @@ public class CustomMenuItem : MonoBehaviour
                 if (parentMenuItem != null)
                 {
                     parentMenu.HideSiblings(this, parentMenuItem.subMenu);
-                    parentMenuItem.Hide();
+                    parentMenuItem.Hide(); // this is for hiding parents of parents
                 }
                 else
                 {
@@ -244,6 +257,8 @@ public class CustomMenuItem : MonoBehaviour
             }
             else if (subMenu.Count > 0)
             {
+                menuStyle = origMenuStyle;
+                Refresh();
                 // destroy the sub menu
                 DestroySubmenus();
                 // if parentMenuItem is null => it is the root
