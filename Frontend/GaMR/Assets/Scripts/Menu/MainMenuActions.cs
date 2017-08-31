@@ -13,7 +13,6 @@ public class MainMenuActions : MonoBehaviour
 
     public GameObject carouselMenu;
     public GameObject carouselMenuStyle;
-    RestManager restManager;
     ModelLoadManager modelLoadManager;
     Menu menu;
     static GameObject carouselInstance;
@@ -24,7 +23,6 @@ public class MainMenuActions : MonoBehaviour
     /// </summary>
     public void Start()
     {
-        restManager = ComponentGetter.GetComponentOnGameobject<RestManager>("RestManager");
         modelLoadManager = ComponentGetter.GetComponentOnGameobject<ModelLoadManager>("ModelLoadManager");
         menu = GetComponent<Menu>();
         if (carouselInstance != null)
@@ -82,7 +80,7 @@ public class MainMenuActions : MonoBehaviour
     private void TestAddress()
     {
         WaitCursor.Show();
-        restManager.GET(InformationManager.Instance.FullBackendAddress + "/resources/model/overview", RestResult, null);
+        RestManager.Instance.GET(InformationManager.Instance.FullBackendAddress + "/resources/model/overview", RestResult, null);
     }
 
     /// <summary>
@@ -145,7 +143,7 @@ public class MainMenuActions : MonoBehaviour
     public void ShowCarouselMenu()
     {
         WaitCursor.Show();
-        restManager.GET(InformationManager.Instance.FullBackendAddress + "/resources/model/overview", AvailableModelsLoaded, null);
+        RestManager.Instance.GET(InformationManager.Instance.FullBackendAddress + "/resources/model/overview", AvailableModelsLoaded, null);
     }
 
     /// <summary>

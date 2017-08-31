@@ -34,6 +34,7 @@ GameObject:
   - component: {fileID: 114678792982612236}
   - component: {fileID: 114122386360709928}
   - component: {fileID: 114432161570486440}
+  - component: {fileID: 114635859060184380}
   m_Layer: 2
   m_Name: LoginMenu
   m_TagString: Untagged
@@ -329,6 +330,35 @@ MonoBehaviour:
   icon: {fileID: 0}
   text: Set IP Address
   menuItemName: SetIpAddress
+--- !u!114 &114635859060184380
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1859928805744080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
+  subMenu:
+  - {fileID: 114632834833330776, guid: 21061c7777b35d14a87764208fd33be2, type: 2}
+  - {fileID: 114481922604197128, guid: 21061c7777b35d14a87764208fd33be2, type: 2}
+  - {fileID: 114006120379836286, guid: 21061c7777b35d14a87764208fd33be2, type: 2}
+  overrideMenuDirection: 0
+  subMenuDirection: 0
+  closeOnClick: 0
+  markOnClick: 0
+  marked: 0
+  visibleTo: 0
+  onClickEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  icon: {fileID: 0}
+  text: Set IP Addresses
+  menuItemName: SetAddresses
 --- !u!114 &114678792982612236
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -403,8 +433,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
   subMenu:
-  - {fileID: 114632834833330776}
-  - {fileID: 114481922604197128}
+  - {fileID: 114635859060184380}
   - {fileID: 114095078950388686}
   overrideMenuDirection: 0
   subMenuDirection: 0

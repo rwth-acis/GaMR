@@ -81,10 +81,10 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
 
     private void CheckAccessToken()
     {
-        RestManager.Instance.GET("https://api.learning-layers.eu/o/oauth2/userinfo?access_token=" + accessToken, Login, null);
+        RestManager.Instance.GET("https://api.learning-layers.eu/o/oauth2/userinfo?access_token=" + accessToken, Login);
     }
 
-    private void Login(UnityWebRequest result, object[] args)
+    private void Login(UnityWebRequest result)
     {
         if (result.responseCode == 200)
         {
@@ -112,7 +112,7 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
         }
         else
         {
-            MessageBox.Show(LocalizationManager.Instance.ResolveString("An error concerning the user data occured. The login failed."), MessageBoxType.ERROR);
+            MessageBox.Show(LocalizationManager.Instance.ResolveString("An error concerning the user data occured. The login failed.\nCode: ") + req.responseCode + "\n" + req.downloadHandler.text, MessageBoxType.ERROR);
         }
     }
 }
