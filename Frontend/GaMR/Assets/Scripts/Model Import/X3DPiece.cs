@@ -55,7 +55,7 @@ public class X3DPiece
         // if it is not textured => use the unmodified imported mesh
         if (string.IsNullOrEmpty(textureName) || textureCoords == null || textureIndex == null ||textureCoords.Length == 0 ||textureIndex.Length == 0)
         {
-            subMeshes.Add(CreateMesh());
+            subMeshes = CreateMeshes();
         }
         else
         {
@@ -92,14 +92,47 @@ public class X3DPiece
     /// Creates an untextured mesh from the vertex data of the X3DPiece
     /// </summary>
     /// <returns>the Unity mesh with correct normals</returns>
-    private Mesh CreateMesh()
+    private List<Mesh> CreateMeshes()
     {
-        // create a mesh and upload the data it
-        Mesh mesh = new Mesh();
-        mesh.SetVertices(vertexCoords);
-        mesh.SetTriangles(vertexIndex, 0);
-        mesh.RecalculateNormals();
-        return mesh;
+        List<Mesh> res = new List<Mesh>();
+        if (vertexCoords.Count > 64998)
+        {
+            // use mutliple meshes if there are more than 65000 vertices
+            for (int j = 0; j < vertexIndex.Length / 64998 + 1; j++)
+            {
+                int offset = j * 64998;
+                int length = Math.Min(64998, vertexIndex.Length - j * 64998);
+                int[] newIndex = new int[length];
+                Vector3[] newCoordinates = new Vector3[length];
+
+                // unshare the vertices so that the UV-data can be used by Unity
+                for (int i = 0; i < length; i++)
+                {
+                    newIndex[i] = i;
+                    newCoordinates[i] = vertexCoords[vertexIndex[i + offset]];
+                }
+
+                // create the mesh
+                Mesh mesh = new Mesh();
+                mesh.vertices = newCoordinates;
+                mesh.triangles = newIndex;
+
+                mesh.RecalculateNormals();
+
+                res.Add(mesh);
+            }
+        }
+        else
+        {
+            // create a mesh and upload the data it
+            Mesh mesh = new Mesh();
+            mesh.SetVertices(vertexCoords);
+            mesh.SetTriangles(vertexIndex, 0);
+            mesh.RecalculateNormals();
+            res.Add(mesh);
+        }
+
+        return res;
     }
 
     /// <summary>
@@ -108,38 +141,42 @@ public class X3DPiece
     /// <returns>the Unity mesh</returns>
     private List<Mesh> CreateUVMeshes()
     {
-        // first create the untextured mesh in order to get the correct normals
-        Mesh untextured = CreateMesh();
-        Vector3[] normals = untextured.normals;
+        List<Mesh> untexturedMeshes = CreateMeshes();
         List<Mesh> res = new List<Mesh>();
-        // use mutliple meshes if there are more than 65000 vertices
-        for (int j = 0; j < vertexIndex.Length / 64998 + 1; j++)
+
+        // first create the untextured mesh in order to get the correct normals
+        foreach (Mesh untextured in untexturedMeshes)
         {
-            int offset = j * 64998;
-            int length = Math.Min(64998, vertexIndex.Length - j * 64998);
-            int[] newIndex = new int[length];
-            Vector3[] newCoordinates = new Vector3[length];
-            Vector2[] newUVCoordinates = new Vector2[length];
-            Vector3[] newNormals = new Vector3[length];
-
-            // unshare the vertices so that the UV-data can be used by Unity
-            for (int i = 0; i < length; i++)
+            Vector3[] normals = untextured.normals;
+            // use mutliple meshes if there are more than 65000 vertices
+            for (int j = 0; j < vertexIndex.Length / 64998 + 1; j++)
             {
-                newIndex[i] = i;
-                newCoordinates[i] = vertexCoords[vertexIndex[i + offset]];
-                newUVCoordinates[i] = textureCoords[textureIndex[i + offset]];
-                newNormals[i] = normals[vertexIndex[i + offset]];
+                int offset = j * 64998;
+                int length = Math.Min(64998, vertexIndex.Length - j * 64998);
+                int[] newIndex = new int[length];
+                Vector3[] newCoordinates = new Vector3[length];
+                Vector2[] newUVCoordinates = new Vector2[length];
+                Vector3[] newNormals = new Vector3[length];
+
+                // unshare the vertices so that the UV-data can be used by Unity
+                for (int i = 0; i < length; i++)
+                {
+                    newIndex[i] = i;
+                    newCoordinates[i] = vertexCoords[vertexIndex[i + offset]];
+                    newUVCoordinates[i] = textureCoords[textureIndex[i + offset]];
+                    newNormals[i] = normals[vertexIndex[i + offset]];
+                }
+
+                // create the mesh
+                Mesh mesh = new Mesh();
+                mesh.vertices = newCoordinates;
+                mesh.uv = newUVCoordinates;
+                mesh.triangles = newIndex;
+
+                mesh.normals = newNormals;
+
+                res.Add(mesh);
             }
-
-            // create the mesh
-            Mesh mesh = new Mesh();
-            mesh.vertices = newCoordinates;
-            mesh.uv = newUVCoordinates;
-            mesh.triangles = newIndex;
-
-            mesh.normals = newNormals;
-
-            res.Add(mesh);
         }
 
 
