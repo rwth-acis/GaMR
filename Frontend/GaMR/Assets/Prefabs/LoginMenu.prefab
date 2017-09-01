@@ -123,7 +123,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 0
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  icon: {fileID: 0}
+  icon: {fileID: 2800000, guid: fb10a77de9782ab4ebba5a7105d545b4, type: 3}
   text: Change Language
   menuItemName: ChangeLanguage
 --- !u!114 &114122386360709928
@@ -160,7 +160,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  icon: {fileID: 0}
+  icon: {fileID: 2800000, guid: fdd6bc521349cab4eb9b9fea4757665d, type: 3}
   text: English
   menuItemName: English
 --- !u!114 &114135506855412898
@@ -213,7 +213,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  icon: {fileID: 0}
+  icon: {fileID: 2800000, guid: 5c910eb898c5ac846999704e1f9868ba, type: 3}
   text: Set Gamification Server
   menuItemName: GamificationServer
 --- !u!114 &114367800701407598
@@ -301,7 +301,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  icon: {fileID: 0}
+  icon: {fileID: 2800000, guid: d465545c2d8c9b446aecd900a3142911, type: 3}
   text: Set Server
   menuItemName: SetServer
 --- !u!114 &114542621868998812
@@ -392,7 +392,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  icon: {fileID: 0}
+  icon: {fileID: 2800000, guid: fb80fbc7a55ad114f8f4e8a8b2ea8574, type: 3}
   text: Deutsch
   menuItemName: German
 --- !u!114 &114781139826200458

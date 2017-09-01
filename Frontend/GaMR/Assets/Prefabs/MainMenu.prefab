@@ -82,7 +82,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuStyle: {fileID: 0}
+  menuStyle: {fileID: 1036029510115268, guid: c2629c3899b67d7498e806f14aba8138, type: 2}
   subMenu: []
   overrideMenuDirection: 0
   subMenuDirection: 0
@@ -105,7 +105,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  icon: {fileID: 0}
+  icon: {fileID: 2800000, guid: 5c910eb898c5ac846999704e1f9868ba, type: 3}
   text: Set Gamification Server
   menuItemName: GamificationServer
 --- !u!114 &114006986200316374
@@ -178,7 +178,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  icon: {fileID: 0}
+  icon: {fileID: 2800000, guid: a6de7d0276b127d429ebcacb087c68b2, type: 3}
   text: Toggle Collision
   menuItemName: ToggleCollision
 --- !u!114 &114195293521763746
@@ -215,7 +215,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  icon: {fileID: 0}
+  icon: {fileID: 2800000, guid: fdd6bc521349cab4eb9b9fea4757665d, type: 3}
   text: English
   menuItemName: English
 --- !u!114 &114356606660762470
@@ -252,7 +252,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  icon: {fileID: 0}
+  icon: {fileID: 2800000, guid: 4b89815df2c6898489f74d2d16550beb, type: 3}
   text: Show Badges
   menuItemName: Show Badges
 --- !u!114 &114367800701407598
@@ -289,7 +289,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  icon: {fileID: 0}
+  icon: {fileID: 2800000, guid: 707bf1bf5d805e14d9596938083b9238, type: 3}
   text: Load 3D Model
   menuItemName: Load
 --- !u!114 &114387031185171422
@@ -328,7 +328,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 0
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  icon: {fileID: 0}
+  icon: {fileID: 2800000, guid: fb10a77de9782ab4ebba5a7105d545b4, type: 3}
   text: Change Language
   menuItemName: ChangeLanguage
 --- !u!114 &114453192650950332
@@ -479,7 +479,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  icon: {fileID: 0}
+  icon: {fileID: 2800000, guid: d465545c2d8c9b446aecd900a3142911, type: 3}
   text: Set Server
   menuItemName: SetServer
 --- !u!114 &114658325160767692
@@ -571,7 +571,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  icon: {fileID: 0}
+  icon: {fileID: 2800000, guid: cd886ffa5f1b5154195dc163d0d0bc4c, type: 3}
   text: Log out
   menuItemName: Logout
 --- !u!114 &114795987222237594
@@ -608,7 +608,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  icon: {fileID: 0}
+  icon: {fileID: 2800000, guid: fb80fbc7a55ad114f8f4e8a8b2ea8574, type: 3}
   text: Deutsch
   menuItemName: Deutsch
 --- !u!114 &114852617649403874
