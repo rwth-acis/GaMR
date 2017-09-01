@@ -223,26 +223,26 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
         }
     }
 
-    /// <summary>
-    /// this is called if a drag gesture is recognized
-    /// it is used to make the menu item more sensitive to user input
-    /// it handles the case where the user taps for too long on the menu item
-    /// </summary>
-    /// <param name="eventData">Data of the click event</param>
     public void OnNavigationStarted(NavigationEventData eventData)
     {
-        //foreach (Action action in clickListeners)
-        //        {
-        //            action();
-        //        }
     }
 
     public void OnNavigationUpdated(NavigationEventData eventData)
     {
     }
 
+    /// <summary>
+    /// this is called if a drag gesture is recognized
+    /// it is used to make the menu item more sensitive to user input
+    /// it handles the case where the user taps for too long on the menu item
+    /// </summary>
+    /// <param name="eventData">Data of the click event</param>
     public void OnNavigationCompleted(NavigationEventData eventData)
     {
+        foreach (Action action in clickListeners)
+        {
+            action();
+        }
     }
 
     public void OnNavigationCanceled(NavigationEventData eventData)

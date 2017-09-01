@@ -3488,8 +3488,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootMenu:
   - {fileID: 114690426633322592}
-  padding: 0.05
-  alignment: 0
+  padding: 0.02
+  alignment: 2
   itemsInOneLine: 3
   defaultMenuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4,
     type: 2}

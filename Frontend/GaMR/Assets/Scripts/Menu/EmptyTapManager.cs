@@ -39,6 +39,10 @@ public class EmptyTapManager : MonoBehaviour, IInputHandler
 
     public void OnInputUp(InputEventData eventData)
     {
+        if (GazeManager.Instance.HitObject == null || GazeManager.Instance.HitObject.transform.parent == spatialMappingObject)
+        {
+            EmptyTapDetected();
+        }
     }
 
     /// <summary>
@@ -48,9 +52,5 @@ public class EmptyTapManager : MonoBehaviour, IInputHandler
     /// <param name="eventData"></param>
     public void OnInputDown(InputEventData eventData)
     {
-        if (GazeManager.Instance.HitObject == null || GazeManager.Instance.HitObject.transform.parent == spatialMappingObject)
-        {
-            EmptyTapDetected();
-        }
     }
 }
