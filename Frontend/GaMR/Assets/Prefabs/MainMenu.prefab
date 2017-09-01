@@ -82,7 +82,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
+  menuStyle: {fileID: 0}
   subMenu: []
   overrideMenuDirection: 0
   subMenuDirection: 0
@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
+  menuStyle: {fileID: 0}
   subMenu: []
   overrideMenuDirection: 0
   subMenuDirection: 0
@@ -192,7 +192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
+  menuStyle: {fileID: 0}
   subMenu: []
   overrideMenuDirection: 0
   subMenuDirection: 0
@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
+  menuStyle: {fileID: 0}
   subMenu: []
   overrideMenuDirection: 0
   subMenuDirection: 0
@@ -266,7 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
+  menuStyle: {fileID: 0}
   subMenu: []
   overrideMenuDirection: 0
   subMenuDirection: 0
@@ -303,7 +303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
+  menuStyle: {fileID: 0}
   subMenu:
   - {fileID: 114795987222237594}
   - {fileID: 114195293521763746}
@@ -456,7 +456,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
+  menuStyle: {fileID: 0}
   subMenu: []
   overrideMenuDirection: 0
   subMenuDirection: 0
@@ -493,7 +493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
+  menuStyle: {fileID: 0}
   subMenu:
   - {fileID: 114632834833330776}
   - {fileID: 114006120379836286}
@@ -507,7 +507,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  icon: {fileID: 0}
+  icon: {fileID: 2800000, guid: 0611bc83c02284245bf580f77b14b15a, type: 3}
   text: Set Servers
   menuItemName: SetServers
 --- !u!114 &114781139826200458
@@ -529,7 +529,8 @@ MonoBehaviour:
   padding: 0.1
   alignment: 1
   itemsInOneLine: 3
-  defaultMenuStyle: {fileID: 0}
+  defaultMenuStyle: {fileID: 1036029510115268, guid: c2629c3899b67d7498e806f14aba8138,
+    type: 2}
   externalInitialization:
     m_PersistentCalls:
       m_Calls: []
@@ -547,7 +548,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
+  menuStyle: {fileID: 0}
   subMenu: []
   overrideMenuDirection: 0
   subMenuDirection: 0
@@ -584,7 +585,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
+  menuStyle: {fileID: 0}
   subMenu: []
   overrideMenuDirection: 0
   subMenuDirection: 0
@@ -621,7 +622,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
+  menuStyle: {fileID: 0}
   subMenu:
   - {fileID: 114658325160767692}
   - {fileID: 114387031185171422}
@@ -636,6 +637,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  icon: {fileID: 0}
+  icon: {fileID: 2800000, guid: adeef05ead9727540b733464aed4b544, type: 3}
   text: Settings
   menuItemName: Settings

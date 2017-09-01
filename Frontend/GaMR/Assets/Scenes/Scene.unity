@@ -906,8 +906,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e742aed9073fa604ba3c5ed2543a4a39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ipAddressBackend: 192.168.178.48
-  ipAddressGamification: 192.168.178.75
+  backendServer: 192.168.178.43
+  gamificationServer: 192.168.178.75
   portBackend: 8080
   portGamification: 8086
   playerType: 1

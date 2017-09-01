@@ -13,6 +13,8 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
     [Tooltip("The offset of the container border to the text")]
     public Vector2 offset;
 
+    public bool adaptToContent = true;
+
     private Transform caption;
     private Transform container;
     private TextMesh textMesh;
@@ -20,11 +22,11 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
     private Renderer textRenderer;
     private Renderer iconRenderer;
     private Renderer containerRenderer;
-    protected bool itemEnabled;
+    private bool itemEnabled;
     private Color enabledColor;
     protected bool marked;
 
-    public Color disabledColor = new Color(0.7f,0.7f,0.7f);
+    public Color disabledColor = new Color(0.7f, 0.7f, 0.7f);
     public Color markedColor = Color.red;
     public Color focusedColor = Color.blue;
 
@@ -109,7 +111,7 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
         if (textMesh != null)
         {
             textMesh.text = newText;
-            if (container != null)
+            if (container != null && adaptToContent)
             {
                 Quaternion oldRotation = textRenderer.transform.rotation;
                 textRenderer.transform.rotation = Quaternion.identity;
@@ -132,7 +134,15 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
     {
         if (iconRenderer != null)
         {
-            iconRenderer.material.SetTexture("_MainTex", newIcon);
+            if (newIcon != null)
+            {
+                iconRenderer.gameObject.SetActive(true);
+                iconRenderer.material.SetTexture("_MainTex", newIcon);
+            }
+            else
+            {
+                iconRenderer.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -221,10 +231,10 @@ public class MenuStyleAdapter : MonoBehaviour, IInputClickHandler, INavigationHa
     /// <param name="eventData">Data of the click event</param>
     public void OnNavigationStarted(NavigationEventData eventData)
     {
-        foreach (Action action in clickListeners)
-        {
-            action();
-        }
+        //foreach (Action action in clickListeners)
+        //        {
+        //            action();
+        //        }
     }
 
     public void OnNavigationUpdated(NavigationEventData eventData)

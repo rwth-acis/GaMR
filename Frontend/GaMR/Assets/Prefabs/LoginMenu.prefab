@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
+  menuStyle: {fileID: 0}
   subMenu:
   - {fileID: 114678792982612236}
   - {fileID: 114122386360709928}
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
+  menuStyle: {fileID: 0}
   subMenu: []
   overrideMenuDirection: 0
   subMenuDirection: 0
@@ -190,7 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
+  menuStyle: {fileID: 0}
   subMenu: []
   overrideMenuDirection: 0
   subMenuDirection: 0
@@ -227,7 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
+  menuStyle: {fileID: 0}
   subMenu: []
   overrideMenuDirection: 0
   subMenuDirection: 0
@@ -250,7 +250,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  icon: {fileID: 0}
+  icon: {fileID: 2800000, guid: 236e0050ad93c964aa4d6ac9e0ca9749, type: 3}
   text: Login
   menuItemName: Login
 --- !u!114 &114432161570486440
@@ -278,7 +278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
+  menuStyle: {fileID: 0}
   subMenu: []
   overrideMenuDirection: 0
   subMenuDirection: 0
@@ -341,7 +341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
+  menuStyle: {fileID: 0}
   subMenu:
   - {fileID: 114534721882269818}
   - {fileID: 114006120379836286, guid: 21061c7777b35d14a87764208fd33be2, type: 2}
@@ -355,7 +355,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  icon: {fileID: 0}
+  icon: {fileID: 2800000, guid: 0611bc83c02284245bf580f77b14b15a, type: 3}
   text: Set Servers
   menuItemName: SetServers
 --- !u!114 &114678792982612236
@@ -369,7 +369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
+  menuStyle: {fileID: 0}
   subMenu: []
   overrideMenuDirection: 0
   subMenuDirection: 0
@@ -412,7 +412,8 @@ MonoBehaviour:
   padding: 0.1
   alignment: 1
   itemsInOneLine: 3
-  defaultMenuStyle: {fileID: 0}
+  defaultMenuStyle: {fileID: 1036029510115268, guid: c2629c3899b67d7498e806f14aba8138,
+    type: 2}
   externalInitialization:
     m_PersistentCalls:
       m_Calls: []
@@ -430,7 +431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuStyle: {fileID: 1036029510115268, guid: 7e05cb12c2673c8489161c6311ae36a4, type: 2}
+  menuStyle: {fileID: 0}
   subMenu:
   - {fileID: 114635859060184380}
   - {fileID: 114095078950388686}
@@ -444,7 +445,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  icon: {fileID: 0}
+  icon: {fileID: 2800000, guid: adeef05ead9727540b733464aed4b544, type: 3}
   text: Settings
   menuItemName: Settings
 --- !u!114 &114872079562857364
