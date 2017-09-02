@@ -40,7 +40,8 @@ PlayerSettings:
   m_SplashScreenLogos: []
   m_SplashScreenBackgroundLandscape: {fileID: 0}
   m_SplashScreenBackgroundPortrait: {fileID: 0}
-  m_VirtualRealitySplashScreen: {fileID: 0}
+  m_VirtualRealitySplashScreen: {fileID: 2800000, guid: f6068d96f2834c24a8376504651d0f78,
+    type: 3}
   m_HolographicTrackingLossScreen: {fileID: 0}
   defaultScreenWidth: 1024
   defaultScreenHeight: 768
@@ -513,8 +514,35 @@ PlayerSettings:
   metroCertificateIssuer: DefaultCompany
   metroCertificateNotAfter: 80e8dd10cd05d401
   metroApplicationDescription: GaMR
-  wsaImages: {}
-  metroTileShortName: 
+  wsaImages:
+    2031664: Assets/Textures/Logo/Logo_48px.png
+    2031716: Assets/Textures/Logo/Logo_44px.png
+    2031741: Assets/Textures/Logo/Logo_55px.png
+    2031766: Assets/Textures/Logo/Logo_66px.png
+    2031816: Assets/Textures/Logo/Logo_88px.png
+    2031872: Assets/Textures/Logo/Logo_256px.png
+    2032016: Assets/Textures/Logo/Logo_176px.png
+    2097252: Assets/Textures/Logo/Logo_71px.png
+    2097277: Assets/Textures/Logo/Logo_89px.png
+    2097302: Assets/Textures/Logo/Logo_107px.png
+    2097352: Assets/Textures/Logo/Logo_142px.png
+    2097552: Assets/Textures/Logo/Logo_284px.png
+    2162788: Assets/Textures/Logo/Logo_150px.png
+    2162813: Assets/Textures/Logo/Logo_188px.png
+    2162838: Assets/Textures/Logo/Logo_225px.png
+    2162888: Assets/Textures/Logo/Logo_300px.png
+    2163088: Assets/Textures/Logo/Logo_600px.png
+    2228324: Assets/Textures/Logo/Logo_310px.png
+    2228349: Assets/Textures/Logo/Logo_388px.png
+    2228374: Assets/Textures/Logo/Logo_465px.png
+    2228424: Assets/Textures/Logo/Logo_620px.png
+    2228624: Assets/Textures/Logo/Logo_1240px.png
+    2293860: Assets/Textures/Logo/Logo_310x150px.png
+    2293885: Assets/Textures/Logo/Logo_388x188px.png
+    2293910: Assets/Textures/Logo/Logo_465x225px.png
+    2293960: Assets/Textures/Logo/Logo_620x300px.png
+    2294160: Assets/Textures/Logo/Logo_1240x600px.png
+  metroTileShortName: GaMR
   metroCommandLineArgsFile: 
   metroTileShowName: 0
   metroMediumTileShowName: 0
