@@ -68,7 +68,7 @@ public class ModelLoadManager : Singleton<ModelLoadManager> {
         content.transform.parent = contentHolder;
 
         // set the correct position and rotation
-        box.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 2.5f;
+        box.transform.position = spawnPosition;
         box.transform.localRotation = Quaternion.Euler(spawnEulerAngles);
 
         if (globalSpawnParent != null)

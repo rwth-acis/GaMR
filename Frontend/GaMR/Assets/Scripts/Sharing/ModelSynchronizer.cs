@@ -21,6 +21,7 @@ public class ModelSynchronizer : Singleton<ModelSynchronizer>
         ModelLoadManager.Instance.spawnPosition = spawnPosition;
         Vector3 localSpawnPosition = spawnPosition - worldAnchor.position;
         CustomMessages.Instance.SendModelSpawn(modelName, spawnPosition);
+        ModelLoadManager.Instance.spawnPosition = localSpawnPosition;
         ModelLoadManager.Instance.Load(modelName);
     }
 
