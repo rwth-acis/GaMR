@@ -12,7 +12,7 @@ public class BoundingBoxInfo : MonoBehaviour
     private int localId;
     private ObjectInfo objectInfo;
 
-    private void Start()
+    private void Awake()
     {
         localId = id;
         id++;
