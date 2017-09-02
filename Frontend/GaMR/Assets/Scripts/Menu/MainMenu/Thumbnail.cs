@@ -4,28 +4,34 @@ using UnityEngine;
 using HoloToolkit.Unity.InputModule;
 using System;
 
-public class Thumbnail : MonoBehaviour
+public class Thumbnail : FocusableButton
 {
-    private Renderer rend;
     private TextMesh textMesh;
     private bool visible;
     private GameObject frameObject;
 
     private string modelName;
 
+    public ThumbnailInstantiation InstantiationParent
+    {
+        get; set;
+    }    
+
     private void Start()
     {
-        rend = GetComponent<Renderer>();
         textMesh = transform.Find("Caption").GetComponent<TextMesh>();
         frameObject = transform.Find("Thumbnail Frame").gameObject;
-        FocusableButton btn = gameObject.AddComponent<FocusableButton>();
-        btn.FocusHighlight = frameObject;
-        btn.OnPressed = OnClicked;
+        FocusHighlight = frameObject;
+        OnPressed = OnClicked;
     }
 
     private void OnClicked()
     {
         Debug.Log("Pressed " + modelName);
+        if (InstantiationParent != null)
+        {
+            InstantiationParent.OnThumbnailClicked(modelName);
+        }
     }
 
     public bool Visible
@@ -42,6 +48,7 @@ public class Thumbnail : MonoBehaviour
     {
         this.modelName = modelName;
         textMesh.text = modelName;
+        rend.material.mainTexture = null;
         RestManager.Instance.GET(InformationManager.Instance.FullBackendAddress + "/resources/model/" + modelName + "/thumbnail",
             reqRes =>
             {

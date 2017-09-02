@@ -9,7 +9,7 @@ public class FocusableButton : Button, IFocusable, IInputHandler
     private GameObject focusHighlight;
     private const float pressDepth = 0.008f;
     private bool pressed;
-    private Renderer rend;
+    protected Renderer rend;
     private bool buttonEnabled = true;
     private Color defaultColor;
 

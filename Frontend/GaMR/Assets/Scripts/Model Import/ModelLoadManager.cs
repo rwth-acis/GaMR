@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HoloToolkit.Unity;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,26 +8,21 @@ using UnityEngine.Networking;
 /// <summary>
 /// Loads the X3D models and handles their instantiation
 /// </summary>
-public class ModelLoadManager : MonoBehaviour
+public class ModelLoadManager
 {
 
     public string baseUrl = "/resources/model/";
-    public Shader shader;
-    public GameObject boundingBoxPrefab;
+    private Shader shader;
+    private GameObject boundingBoxPrefab;
     public Vector3 spawnEulerAngles;
-
-    private RestManager restCaller;
-    private InformationManager infoManager;
     private X3DObj x3dObject;
 
-    /// <summary>
-    /// Called when the script is created
-    /// Gets the necessary components
-    /// </summary>
-    public void Start()
+    private Action callback;
+
+    public ModelLoadManager()
     {
-        restCaller = ComponentGetter.GetComponentOnGameobject<RestManager>("RestManager");
-        infoManager = ComponentGetter.GetComponentOnGameobject<InformationManager>("InformationManager");
+        shader = ModelLoadSettings.Instance.shader;
+        boundingBoxPrefab = ModelLoadSettings.Instance.boundingBox;
     }
 
     /// <summary>
@@ -35,9 +31,15 @@ public class ModelLoadManager : MonoBehaviour
     /// <param name="name">The name of the X3D object</param>
     public void Load(string name)
     {
-        x3dObject = new X3DObj(restCaller, infoManager.FullBackendAddress + baseUrl, name, shader);
+        x3dObject = new X3DObj(RestManager.Instance, InformationManager.Instance.FullBackendAddress + baseUrl, name, shader);
         x3dObject.LoadGameObjects(OnFinished); // this automatically creates them
         WaitCursor.Show();
+    }
+
+    public void Load(string name, Action callback)
+    {
+        this.callback = callback;
+        Load(name);
     }
 
     /// <summary>
@@ -53,6 +55,7 @@ public class ModelLoadManager : MonoBehaviour
 
         CreateGamificationGame(x3dObject.ModelName.ToLower());
 
+        callback();
     }
 
     /// <summary>
@@ -64,7 +67,7 @@ public class ModelLoadManager : MonoBehaviour
     void CreateBoundingBox(GameObject content, Bounds bounds)
     {
         // create a bounding-box around the object
-        GameObject box = Instantiate(boundingBoxPrefab);
+        GameObject box = GameObject.Instantiate(boundingBoxPrefab);
         box.transform.localScale = bounds.size;
         Transform contentHolder = box.transform.Find("Content");
         content.transform.parent = contentHolder;
@@ -103,17 +106,5 @@ public class ModelLoadManager : MonoBehaviour
                 GamificationFramework.Instance.CreateAction(modelName, defaultAction, null);
             }
             );
-    }
-
-    private void GameCreated(Game obj, long responseCode)
-    {
-        if (obj == null)
-        {
-            Debug.Log("something went wrong: Http code " + responseCode);
-        }
-        else
-        {
-            Debug.Log("ok: " + obj.ID);
-        }
     }
 }

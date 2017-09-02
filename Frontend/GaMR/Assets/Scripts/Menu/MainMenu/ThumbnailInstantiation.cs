@@ -14,6 +14,32 @@ public class ThumbnailInstantiation : MonoBehaviour
     private FocusableButton upButton;
     private FocusableButton downButton;
 
+    private List<string> models;
+    private bool menuEnabled = true;
+
+
+    public bool MenuEnabled
+    {
+        get { return menuEnabled; }
+        set
+        {
+            menuEnabled = value;
+            foreach (Thumbnail t in thumbnails)
+            {
+                t.ButtonEnabled = menuEnabled;
+            }
+            if (menuEnabled)
+            {
+                SetButtonStates();
+            }
+            else
+            {
+                upButton.ButtonEnabled = false;
+                downButton.ButtonEnabled = false;
+            }
+        }
+    }
+
     private void Start()
     {
         thumbnails = new List<Thumbnail>();
@@ -61,6 +87,7 @@ public class ThumbnailInstantiation : MonoBehaviour
         if (res.responseCode == 200)
         {
             JsonStringArray array = JsonUtility.FromJson<JsonStringArray>(res.downloadHandler.text);
+            models = array.array;
             for(int i=0;i<thumbnails.Count;i++)
             {
                 int iModel = i + startIndex;
@@ -75,23 +102,28 @@ public class ThumbnailInstantiation : MonoBehaviour
                 }
             }
 
-            if (array.array.Count > startIndex + thumbnails.Count)
-            {
-                downButton.ButtonEnabled = true;
-            }
-            else
-            {
-                downButton.ButtonEnabled = false;
-            }
+            SetButtonStates();
+        }
+    }
 
-            if (startIndex > 0)
-            {
-                upButton.ButtonEnabled = true;
-            }
-            else
-            {
-                upButton.ButtonEnabled = false;
-            }
+    private void SetButtonStates()
+    {
+        if (models.Count > startIndex + thumbnails.Count)
+        {
+            downButton.ButtonEnabled = true;
+        }
+        else
+        {
+            downButton.ButtonEnabled = false;
+        }
+
+        if (startIndex > 0)
+        {
+            upButton.ButtonEnabled = true;
+        }
+        else
+        {
+            upButton.ButtonEnabled = false;
         }
     }
 
@@ -112,8 +144,21 @@ public class ThumbnailInstantiation : MonoBehaviour
                 thumbnailObj.transform.localScale = new Vector3(9, 9, 9);
 
                 Thumbnail thumbnailScript = thumbnailObj.GetComponent<Thumbnail>();
+                thumbnailScript.InstantiationParent = this;
                 thumbnails.Add(thumbnailScript);
             }
         }
+    }
+
+    public void OnThumbnailClicked(string modelName)
+    {
+        MenuEnabled = false;
+        ModelLoadManager mln = new ModelLoadManager();
+        mln.Load(modelName, OnModelLoadReady);
+    }
+
+    private void OnModelLoadReady()
+    {
+        MenuEnabled = true;
     }
 }

@@ -23,7 +23,7 @@ public class MainMenuActions : MonoBehaviour
     /// </summary>
     public void Start()
     {
-        modelLoadManager = ComponentGetter.GetComponentOnGameobject<ModelLoadManager>("ModelLoadManager");
+        modelLoadManager = new ModelLoadManager();
         menu = GetComponent<Menu>();
         if (carouselInstance != null)
         {
