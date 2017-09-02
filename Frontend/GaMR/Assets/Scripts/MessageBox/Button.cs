@@ -19,7 +19,7 @@ public class Button : MonoBehaviour, IInputClickHandler {
     /// Executes OnPressed
     /// </summary>
     /// <param name="eventData"></param>
-    public void OnInputClicked(InputClickedEventData eventData)
+    public virtual void OnInputClicked(InputClickedEventData eventData)
     {
         // redirect to the specified method
         if (OnPressed != null)

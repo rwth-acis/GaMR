@@ -36,7 +36,7 @@ GameObject:
   - component: {fileID: 114534721882269818}
   - component: {fileID: 114288041460879434}
   m_Layer: 2
-  m_Name: LoginMenu
+  m_Name: LoginMenu_old
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -32,6 +32,21 @@ public class Resources {
     }
 
     @GET
+   @Path("/model/{name}/thumbnail")
+    @Produces("image/png")
+    public Response getThumbnail(@PathParam("name") String modelName)
+    {
+        File file = new File(App.modelPath + File.separatorChar + modelName + File.separatorChar + "Thumbnail.png");
+        if (file.exists()) {
+            return Response.ok(file, "image/png").header("Inline", "filename=\"" + file.getName() + "\"")
+                    .build();
+        }
+        else {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
+    @GET
     @Path("model/overview")
     @Produces(MediaType.APPLICATION_JSON)
     /**
@@ -63,12 +78,12 @@ public class Resources {
 
     @GET
     @Path("/texture/{modelName}/{name}")
-    @Produces("image/jpg")
+    @Produces("image/*")
     public Response getTexture(@PathParam("modelName") String modelName, @PathParam("name") String name)
     {
             File file = new File(App.modelPath + File.separatorChar + modelName + File.separatorChar + name);
             if (file.exists()) {
-                return Response.ok(file, "image/jpg").header("Inline", "filename=\"" + file.getName() + "\"")
+                return Response.ok(file, "image/*").header("Inline", "filename=\"" + file.getName() + "\"")
                         .build();
             }
             else {
