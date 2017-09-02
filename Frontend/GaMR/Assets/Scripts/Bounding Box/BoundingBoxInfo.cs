@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using HoloToolkit.Sharing.Tests;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using HoloToolkit.Sharing;
+using System;
 
 public class BoundingBoxInfo : MonoBehaviour
 {
@@ -32,4 +35,8 @@ public class BoundingBoxInfo : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        CustomMessages.Instance.SendModelDelete(localId);
+    }
 }

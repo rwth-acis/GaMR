@@ -18,12 +18,11 @@ public class TransformationManager : MonoBehaviour
     public Vector3 minSize;
     private Rigidbody ridgidBody;
     private BoundingBoxInfo boxInfo;
-    private static Dictionary<int, TransformationManager> instances;
+    public static Dictionary<int, TransformationManager> instances;
 
     private void Start()
     {
         ridgidBody = GetComponent<Rigidbody>();
-        CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.BoundingBoxTransform] = ReceivedRemoteTransformChange;
         boxInfo = GetComponentInChildren<BoundingBoxInfo>();
         if (boxInfo == null)
         {
@@ -41,25 +40,7 @@ public class TransformationManager : MonoBehaviour
         instances.Remove(boxInfo.BoxId);
     }
 
-    private static void ReceivedRemoteTransformChange(NetworkInMessage msg)
-    {
-        msg.ReadInt64(); // this is the user ID
-        int msgBoundingBoxId = msg.ReadInt32();
-        Vector3 newPosition = CustomMessages.Instance.ReadVector3(msg);
-        Quaternion newRotation = CustomMessages.Instance.ReadQuaternion(msg);
-        Vector3 newScale = CustomMessages.Instance.ReadVector3(msg);
-
-        if (instances.ContainsKey(msgBoundingBoxId))
-        {
-            instances[msgBoundingBoxId].OnRemoteTransformChanged(newPosition, newRotation, newScale);
-        }
-        else
-        {
-            Debug.LogError("Received transform from an unknown bounding box");
-        }
-    }
-
-    private void OnRemoteTransformChanged(Vector3 newPosition, Quaternion newRotation, Vector3 newScale)
+    public void OnRemoteTransformChanged(Vector3 newPosition, Quaternion newRotation, Vector3 newScale)
     {
         transform.localPosition = newPosition;
         transform.localRotation = newRotation;
