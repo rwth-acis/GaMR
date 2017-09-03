@@ -13,6 +13,9 @@ public class ThumbnailInstantiation : MonoBehaviour
     private int startIndex = 0;
     private FocusableButton upButton;
     private FocusableButton downButton;
+    private FocusableButton settingsButton;
+    private FocusableButton logoutButton;
+    private FocusableButton badgeButton;
 
     private List<string> models;
     private bool menuEnabled = true;
@@ -54,18 +57,45 @@ public class ThumbnailInstantiation : MonoBehaviour
     {
         upButton = transform.Find("Up Button").gameObject.AddComponent<FocusableButton>();
         downButton = transform.Find("Down Button").gameObject.AddComponent<FocusableButton>();
-
-        upButton.FocusHighlight = upButton.transform.Find("Up Frame").gameObject;
-        downButton.FocusHighlight = downButton.transform.Find("Down Frame").gameObject;
+        settingsButton = transform.Find("Settings Button").gameObject.AddComponent<FocusableButton>();
+        logoutButton = transform.Find("Logout Button").gameObject.AddComponent<FocusableButton>();
+        badgeButton = transform.Find("Badges Button").gameObject.AddComponent<FocusableButton>();
 
         upButton.OnPressed = PageUp;
         downButton.OnPressed = PageDown;
+        settingsButton.OnPressed = ShowSettings;
+        logoutButton.OnPressed = Logout;
 
-        upButton.ButtonEnabled = false;
 
         // localization:
-        upButton.transform.Find("Caption").GetComponent<TextMesh>().text = LocalizationManager.Instance.ResolveString("Page up");
-        downButton.transform.Find("Caption").GetComponent<TextMesh>().text = LocalizationManager.Instance.ResolveString("Page down");
+        upButton.Text = LocalizationManager.Instance.ResolveString("Page up");
+        downButton.Text = LocalizationManager.Instance.ResolveString("Page down");
+        settingsButton.Text = LocalizationManager.Instance.ResolveString("Settings");
+        logoutButton.Text = LocalizationManager.Instance.ResolveString("Logout");
+        badgeButton.Text = LocalizationManager.Instance.ResolveString("Badges");
+
+
+        // determine badge button visibility and fill the gap
+        bool showBadgeButton = InformationManager.Instance.playerType != PlayerType.AUTHOR;
+
+        badgeButton.gameObject.SetActive(showBadgeButton);
+        GameObject topMenu = transform.Find("Top Menu").gameObject;
+        topMenu.SetActive(!showBadgeButton);
+        GameObject topMenuShort = transform.Find("Top Menu Short").gameObject;
+        topMenuShort.SetActive(showBadgeButton);
+
+
+        MenuEnabled = false;
+    }
+
+    private void Logout()
+    {
+        AuthorizationManager.Instance.Logout();
+    }
+
+    private void ShowSettings()
+    {
+        
     }
 
     private void PageDown()
@@ -93,8 +123,8 @@ public class ThumbnailInstantiation : MonoBehaviour
                 int iModel = i + startIndex;
                 if (iModel < array.array.Count)
                 {
-                    thumbnails[i].LoadImage(array.array[iModel]);
                     thumbnails[i].Visible = true;
+                    thumbnails[i].LoadImage(array.array[iModel]);
                 }
                 else
                 {
@@ -145,6 +175,7 @@ public class ThumbnailInstantiation : MonoBehaviour
 
                 Thumbnail thumbnailScript = thumbnailObj.GetComponent<Thumbnail>();
                 thumbnailScript.InstantiationParent = this;
+                thumbnailScript.Visible = false;
                 thumbnails.Add(thumbnailScript);
             }
         }

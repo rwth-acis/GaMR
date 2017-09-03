@@ -6,6 +6,7 @@ using System;
 
 public class FocusableButton : Button, IFocusable, IInputHandler
 {
+    [SerializeField]
     private GameObject focusHighlight;
     private const float pressDepth = 0.008f;
     private bool pressed;
@@ -17,12 +18,13 @@ public class FocusableButton : Button, IFocusable, IInputHandler
     {
         rend = GetComponent<Renderer>();
         defaultColor = rend.material.color;
+        FocusHighlight = transform.Find("Frame").gameObject;
     }
 
     public GameObject FocusHighlight
     {
         get { return focusHighlight; }
-        set
+        private set
         {
             focusHighlight = value;
             OnFocusExit();
@@ -41,7 +43,7 @@ public class FocusableButton : Button, IFocusable, IInputHandler
             else
             {
                 OnFocusExit();
-                rend.material.color = new Color(0.9f,0.9f,0.9f);
+                rend.material.color = new Color(0.95f,0.95f,0.95f);
             }
             buttonEnabled = value;
         }
@@ -74,11 +76,12 @@ public class FocusableButton : Button, IFocusable, IInputHandler
     {
         if (!pressed && buttonEnabled)
         {
-            transform.localPosition = new Vector3(
-                transform.localPosition.x + pressDepth,
-                transform.localPosition.y,
-                transform.localPosition.z
-                );
+            transform.Translate(new Vector3(pressDepth, 0, 0));
+            //transform.localPosition = new Vector3(
+            //    transform.localPosition.x + pressDepth,
+            //    transform.localPosition.y,
+            //    transform.localPosition.z
+            //    );
             pressed = true;
         }
     }
@@ -87,11 +90,12 @@ public class FocusableButton : Button, IFocusable, IInputHandler
     {
         if (pressed && buttonEnabled)
         {
-            transform.localPosition = new Vector3(
-                transform.localPosition.x - pressDepth,
-                transform.localPosition.y,
-                transform.localPosition.z
-                );
+            transform.Translate(new Vector3(-pressDepth, 0, 0));
+            //transform.localPosition = new Vector3(
+            //    transform.localPosition.x - pressDepth,
+            //    transform.localPosition.y,
+            //    transform.localPosition.z
+            //    );
             pressed = false;
         }
     }

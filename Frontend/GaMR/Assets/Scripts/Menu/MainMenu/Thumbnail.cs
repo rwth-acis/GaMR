@@ -6,7 +6,6 @@ using System;
 
 public class Thumbnail : FocusableButton
 {
-    private TextMesh textMesh;
     private bool visible;
     private GameObject frameObject;
 
@@ -15,13 +14,10 @@ public class Thumbnail : FocusableButton
     public ThumbnailInstantiation InstantiationParent
     {
         get; set;
-    }    
+    }
 
     private void Start()
     {
-        textMesh = transform.Find("Caption").GetComponent<TextMesh>();
-        frameObject = transform.Find("Thumbnail Frame").gameObject;
-        FocusHighlight = frameObject;
         OnPressed = OnClicked;
     }
 
@@ -47,7 +43,7 @@ public class Thumbnail : FocusableButton
     public void LoadImage(string modelName)
     {
         this.modelName = modelName;
-        textMesh.text = modelName;
+        Text = modelName;
         rend.material.mainTexture = null;
         RestManager.Instance.GET(InformationManager.Instance.FullBackendAddress + "/resources/model/" + modelName + "/thumbnail",
             reqRes =>

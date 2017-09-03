@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 33358303036105996}
   - component: {fileID: 23877358057427860}
   m_Layer: 0
-  m_Name: Thumbnail Frame
+  m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -234,7 +234,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1486006891089804}
-  m_Text: 3D Text Prefab
+  m_Text: '...'
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
@@ -259,3 +259,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 490ea22b7400ab241a8b760ac496397e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  focusHighlight: {fileID: 0}

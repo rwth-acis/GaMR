@@ -10,6 +10,8 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
 {
 
     [SerializeField]
+    private string clientId = "c4ced10f-ce0f-4155-b6f7-a4c40ffa410c";
+    [SerializeField]
     private string debugToken;
     private string accessToken;
 
@@ -39,9 +41,15 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
         }
     }
 
+    public void Login()
+    {
+        Application.OpenURL("https://api.learning-layers.eu/o/oauth2/authorize?response_type=token&scope=openid%20profile%20email&client_id=" + clientId + "&redirect_uri=gamr://");
+    }
+
     public void Logout()
     {
         accessToken = "";
+        SceneManager.LoadScene("Login", LoadSceneMode.Single);
     }
 
     private void StartedByProtocol(Uri uri)
@@ -81,10 +89,10 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
 
     private void CheckAccessToken()
     {
-        RestManager.Instance.GET("https://api.learning-layers.eu/o/oauth2/userinfo?access_token=" + accessToken, Login);
+        RestManager.Instance.GET("https://api.learning-layers.eu/o/oauth2/userinfo?access_token=" + accessToken, OnLogin);
     }
 
-    private void Login(UnityWebRequest result)
+    private void OnLogin(UnityWebRequest result)
     {
         if (result.responseCode == 200)
         {

@@ -23,8 +23,6 @@ GameObject:
   - component: {fileID: 114006986200316374}
   - component: {fileID: 114781139826200458}
   - component: {fileID: 114542621868998812}
-  - component: {fileID: 114367800701407598}
-  - component: {fileID: 114852617649403874}
   - component: {fileID: 114549317331441724}
   - component: {fileID: 114135506855412898}
   - component: {fileID: 114872079562857364}
@@ -216,43 +214,6 @@ MonoBehaviour:
   icon: {fileID: 2800000, guid: 5c910eb898c5ac846999704e1f9868ba, type: 3}
   text: Set Gamification Server
   menuItemName: GamificationServer
---- !u!114 &114367800701407598
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1859928805744080}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menuStyle: {fileID: 0}
-  subMenu: []
-  overrideMenuDirection: 0
-  subMenuDirection: 0
-  closeOnClick: 0
-  markOnClick: 0
-  marked: 0
-  visibleTo: 0
-  onClickEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114872079562857364}
-        m_MethodName: ShowLoginForm
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  icon: {fileID: 2800000, guid: 236e0050ad93c964aa4d6ac9e0ca9749, type: 3}
-  text: Login
-  menuItemName: Login
 --- !u!114 &114432161570486440
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -344,7 +305,7 @@ MonoBehaviour:
   menuStyle: {fileID: 0}
   subMenu:
   - {fileID: 114534721882269818}
-  - {fileID: 114006120379836286, guid: 21061c7777b35d14a87764208fd33be2, type: 2}
+  - {fileID: 114288041460879434}
   overrideMenuDirection: 0
   subMenuDirection: 0
   closeOnClick: 0
@@ -407,8 +368,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootMenu:
-  - {fileID: 114367800701407598}
-  - {fileID: 114852617649403874}
+  - {fileID: 114635859060184380}
+  - {fileID: 114095078950388686}
   padding: 0.1
   alignment: 1
   itemsInOneLine: 3
@@ -420,34 +381,6 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   markOnlyOne: 0
---- !u!114 &114852617649403874
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1859928805744080}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7799f95abfdc7f74097dd81e0411f2f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menuStyle: {fileID: 0}
-  subMenu:
-  - {fileID: 114635859060184380}
-  - {fileID: 114095078950388686}
-  overrideMenuDirection: 0
-  subMenuDirection: 0
-  closeOnClick: 0
-  markOnClick: 0
-  marked: 0
-  visibleTo: 0
-  onClickEvent:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: StringEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  icon: {fileID: 2800000, guid: adeef05ead9727540b733464aed4b544, type: 3}
-  text: Settings
-  menuItemName: Settings
 --- !u!114 &114872079562857364
 MonoBehaviour:
   m_ObjectHideFlags: 1
