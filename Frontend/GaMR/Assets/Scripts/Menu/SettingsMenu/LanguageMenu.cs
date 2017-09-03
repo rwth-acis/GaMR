@@ -3,11 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LanguageMenu : MonoBehaviour
+public class LanguageMenu : BaseMenu
 {
+    FocusableContentButton englishButton;
+    FocusableContentButton germanButton;
+    FocusableContentButton dutchButton;
+
     // Use this for initialization
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         InitializeButtons();
     }
 
@@ -16,9 +21,9 @@ public class LanguageMenu : MonoBehaviour
     private void InitializeButtons()
     {
         // get/create buttons
-        FocusableContentButton englishButton = transform.Find("English Button").gameObject.AddComponent<FocusableContentButton>();
-        FocusableContentButton germanButton = transform.Find("German Button").gameObject.AddComponent<FocusableContentButton>();
-        FocusableContentButton dutchButton = transform.Find("Dutch Button").gameObject.AddComponent<FocusableContentButton>();
+        englishButton = transform.Find("English Button").gameObject.AddComponent<FocusableContentButton>();
+        germanButton = transform.Find("German Button").gameObject.AddComponent<FocusableContentButton>();
+        dutchButton = transform.Find("Dutch Button").gameObject.AddComponent<FocusableContentButton>();
 
         SettingsActions actions = gameObject.AddComponent<SettingsActions>();
 
@@ -27,15 +32,12 @@ public class LanguageMenu : MonoBehaviour
         germanButton.Data = (int) Language.GERMAN;
         dutchButton.Data = (int)Language.DUTCH;
 
+        OnUpdateLanguage();
+
         // set button actions
         englishButton.OnButtonPressed = ChangeLanguage;
         germanButton.OnButtonPressed = ChangeLanguage;
         dutchButton.OnButtonPressed = ChangeLanguage;
-
-        // set captions
-        englishButton.Text = LocalizationManager.Instance.ResolveString("English");
-        germanButton.Text = LocalizationManager.Instance.ResolveString("German");
-        dutchButton.Text = LocalizationManager.Instance.ResolveString("Dutch");
     }
 
     private void ChangeLanguage(Button sender)
@@ -46,5 +48,13 @@ public class LanguageMenu : MonoBehaviour
             OnCloseAction();
         }
         Destroy(gameObject);
+    }
+
+    public override void OnUpdateLanguage()
+    {
+        // set captions
+        englishButton.Text = LocalizationManager.Instance.ResolveString("English");
+        germanButton.Text = LocalizationManager.Instance.ResolveString("German");
+        dutchButton.Text = LocalizationManager.Instance.ResolveString("Dutch");
     }
 }

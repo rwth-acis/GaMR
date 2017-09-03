@@ -992,7 +992,7 @@ MonoBehaviour:
   sharingServer: 192.168.178.48
   portBackend: 8080
   portGamification: 8086
-  playerType: 1
+  playerType: 2
   language: 1
 --- !u!1 &1622583214
 GameObject:

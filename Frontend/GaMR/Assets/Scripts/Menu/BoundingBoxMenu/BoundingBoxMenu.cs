@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoundingBoxMenu : MonoBehaviour
+public class BoundingBoxMenu : BaseMenu
 {
     private FocusableButton deleteButton;
     private FocusableCheckButton editModeButton;
@@ -14,13 +14,31 @@ public class BoundingBoxMenu : MonoBehaviour
 
     private BoundingBoxActions actions;
 
+
+    private bool menuEnabled = true;
+
+    public bool MenuEnabled
+    {
+        get { return menuEnabled; }
+        set
+        {
+            menuEnabled = value;
+            deleteButton.ButtonEnabled = value;
+            editModeButton.ButtonEnabled = value;
+            boundingBoxButton.ButtonEnabled = value;
+            quizButton.ButtonEnabled = value;
+            createQuizButton.ButtonEnabled = value;
+            closeButton.ButtonEnabled = value;
+        }
+    }
     public GameObject BoundingBox { get; set; }
 
     public Action OnCloseAction
     { get; set; }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         actions = BoundingBox.GetComponent<BoundingBoxActions>();
         InitializeButtons();
     }
@@ -34,27 +52,51 @@ public class BoundingBoxMenu : MonoBehaviour
         createQuizButton = transform.Find("CreateQuiz Button").gameObject.AddComponent<FocusableButton>();
         closeButton = transform.Find("Close Button").gameObject.AddComponent<FocusableButton>();
 
+        deleteButton.OnPressed = () => { actions.DeleteObject(); Close(); };
         editModeButton.OnPressed = ToggleEditMode;
         boundingBoxButton.OnPressed = ToggleBoundingBox;
-        deleteButton.OnPressed = () => { actions.DeleteObject(); Close(); };
+        quizButton.OnPressed = SelectQuiz;
         closeButton.OnPressed = Close;
 
         boundingBoxButton.ButtonChecked = true;
         editModeButton.ButtonChecked = true;
         quizButton.ButtonChecked = false;
 
-        deleteButton.Text = LocalizationManager.Instance.ResolveString("Delete");
-        editModeButton.Text = LocalizationManager.Instance.ResolveString("Edit Mode");
-        boundingBoxButton.Text = LocalizationManager.Instance.ResolveString("Bounding Box");
-        quizButton.Text = LocalizationManager.Instance.ResolveString("Quiz");
-        createQuizButton.Text = LocalizationManager.Instance.ResolveString("Create Quiz");
-        closeButton.Text = LocalizationManager.Instance.ResolveString("Close");
+        OnUpdateLanguage();
 
+    }
+
+    private void SelectQuiz()
+    {
+        if (quizButton.ButtonChecked)
+        {
+            MenuEnabled = false;
+            QuizStyleMenu styleMenu = transform.Find("QuizStyle Menu").GetComponent<QuizStyleMenu>();
+            styleMenu.OnCloseAction = (selectionSuccessful) =>
+            {
+                quizButton.ButtonChecked = selectionSuccessful;
+                actions.EnableBoundingBox(false);
+                boundingBoxButton.ButtonChecked = false;
+
+                actions.EnableEditMode(false);
+                editModeButton.ButtonChecked = false;
+
+                editModeButton.ButtonEnabled = false;
+            };
+            styleMenu.gameObject.SetActive(true);
+        }
+        else
+        {
+            actions.LoadAnnotations();
+            editModeButton.ButtonEnabled = true;
+            editModeButton.ButtonChecked = true;
+            actions.EnableEditMode(true);
+        }
     }
 
     private void ToggleBoundingBox()
     {
-        actions.EnableBoundingBox(!boundingBoxButton.ButtonChecked);
+        actions.EnableBoundingBox(boundingBoxButton.ButtonChecked);
     }
 
     private void ToggleEditMode()
@@ -69,5 +111,15 @@ public class BoundingBoxMenu : MonoBehaviour
             OnCloseAction();
         }
         gameObject.SetActive(false);
+    }
+
+    public override void OnUpdateLanguage()
+    {
+        deleteButton.Text = LocalizationManager.Instance.ResolveString("Delete");
+        editModeButton.Text = LocalizationManager.Instance.ResolveString("Edit Mode");
+        boundingBoxButton.Text = LocalizationManager.Instance.ResolveString("Bounding Box");
+        quizButton.Text = LocalizationManager.Instance.ResolveString("Quiz");
+        createQuizButton.Text = LocalizationManager.Instance.ResolveString("Create Quiz");
+        closeButton.Text = LocalizationManager.Instance.ResolveString("Close");
     }
 }

@@ -1,148 +1,128 @@
 ﻿{
   "strings": [
     {
-      "key": "Load 3D Model",
-      "value": "Load"
+      "key": "Page up",
+      "value": "Page up"
+    },
+    {
+      "key": "Page down",
+      "value": "Page down"
+    },
+    {
+      "key": "Logout",
+      "value": "Logout"
+    },
+    {
+      "key": "Badges",
+      "value": "Badges"
+    },
+    {
+      "key": "Close",
+      "value": "Close"
+    },
+    {
+      "key": "Language",
+      "value": "Language"
+    },
+    {
+      "key": "Model Server",
+      "value": "Model Server"
+    },
+    {
+      "key": "Gamification Server",
+      "value": "Gamification Server"
+    },
+    {
+      "key": "Sharing Server",
+      "value": "Sharing Server"
+    },
+    {
+      "key": "German",
+      "value": "German"
+    },
+    {
+      "key": "On",
+      "value": "On"
+    },
+    {
+      "key": "English",
+      "value": "English"
+    },
+    {
+      "key": "Dutch",
+      "value": "Dutch"
     },
     {
       "key": "Settings",
       "value": "Settings"
     },
     {
-      "key": "Set Port Number",
-      "value": "Set Port Number"
+      "key": "Collision Detection",
+      "value": "Collision Detection"
     },
     {
-      "key": "Enter the port",
-      "value": "Enter the port"
+      "key": "Off",
+      "value": "Off"
     },
     {
-      "key": "Toggle Box",
-      "value": "Toggle Box"
-    },
-    {
-      "key": "Toggle EditMode",
-      "value": "Toggle EditMode"
+      "key": "Edit Mode",
+      "value": "Edit Mode"
     },
     {
       "key": "Quiz",
       "value": "Quiz"
     },
     {
-      "key": "Take Quiz",
-      "value": "Take Quiz"
+      "key": "Create Quiz",
+      "value": "Create Quiz"
     },
     {
-      "key": "Edit Quiz",
-      "value": "Edit Quiz"
+      "key": "Position - Name",
+      "value": "Position - Name"
     },
     {
-      "key": "Add Quiz",
-      "value": "Add Quiz"
+      "key": "Name - Position",
+      "value": "Name - Position"
     },
     {
-      "key": "Load Annotations",
-      "value": "Load Annotations"
+      "key": "Random",
+      "value": "Random"
     },
     {
       "key": "Click on the annotations and enter the name of the corresponding part",
       "value": "Click on the annotations and enter the name of the corresponding part"
     },
     {
-      "key": "Connect the names with their corresponding position",
-      "value": "Connect the names with their corresponding position"
-    },
-    {
-      "key": "Correct",
-      "value": "Correct"
-    },
-    {
-      "key": "Incorrect",
-      "value": "Incorrect"
-    },
-    {
-      "key": "Server is not responding",
-      "value": "Server is not responding"
-    },
-    {
-      "key": "Could not list available quizzes",
-      "value": "Could not list available quizzes"
-    },
-    {
-      "key": "Address successfully saved",
-      "value": "Address successfully saved"
-    },
-    {
-      "key": "The server is responding",
-      "value": "The server is responding"
-    },
-    {
-      "key": "However, the server does not respond",
-      "value": "However, the server does not respond"
-    },
-    {
-      "key": "Could not list available 3D models",
-      "value": "Could not list available 3D models"
-    },
-    {
-      "key": "Input was not a number",
-      "value": "Input was not a number"
-    },
-    {
-      "key": "Could not set port",
-      "value": "Could not set port"
-    },
-    {
-      "key": "Could not fetch texture",
-      "value": "Could not fetch texture"
-    },
-    {
-      "key": "Enter the Server",
-      "value": "Enter the Server"
-    },
-    {
       "key": "Enter the text of the annotation",
       "value": "Enter the text of the annotation"
     },
     {
-      "key": "How is this part called?",
-      "value": "How is this part called?"
+      "key": "Login",
+      "value": "Login"
     },
     {
-      "key": "Enter the name of the quiz",
-      "value": "Enter the name of the quiz"
+      "key": "ENGLISH",
+      "value": "English"
     },
     {
-      "key": "Change Language",
-      "value": "Change Language"
+      "key": "GERMAN",
+      "value": "German"
     },
     {
-      "key": "New Quiz",
-      "value": "New Quiz"
+      "key": "Bounding Box",
+      "value": "Bounding Box"
     },
     {
-      "key": "From current annotations",
-      "value": "From current annotations"
+      "key": "Delete",
+      "value": "Delete"
     },
     {
-      "key": "There are no 3D models to show",
-      "value": "There are no 3D models to show"
+      "key": "Cancel",
+      "value": "Cancel"
     },
     {
-      "key": "There are no quizzes to show for this 3D model",
-      "value": "There are no quizzes to show for this 3D model"
-    },
-    {
-      "key": "Log out",
-      "value": "Log out"
-    },
-    {
-      "key": "Name-Position",
-      "value": "Name-Position"
-    },
-    {
-      "key": "Position-Name",
-      "value": "Position-Name"
+      "key": "DUTCH",
+      "value": "Dutch"
     }
   ]
 }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StartMenu : MonoBehaviour
+public class StartMenu : BaseMenu
 {
 
     [SerializeField]
@@ -11,6 +11,17 @@ public class StartMenu : MonoBehaviour
     private FocusableButton settingsButton;
     private FocusableButton loginButton;
     private bool menuEnabled = true;
+
+
+    public static Vector3 LastPosition
+    {
+        get; private set;
+    }
+
+    public static Quaternion LastRotation
+    {
+        get; private set;
+    }
 
     public bool MenuEnabled
     {
@@ -24,8 +35,9 @@ public class StartMenu : MonoBehaviour
     }
 
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         InitializeButtons();
     }
 
@@ -37,8 +49,7 @@ public class StartMenu : MonoBehaviour
         settingsButton.OnPressed = ShowSettings;
         loginButton.OnPressed = Login;
 
-        settingsButton.Text = LocalizationManager.Instance.ResolveString("Settings");
-        loginButton.Text = LocalizationManager.Instance.ResolveString("Login");
+        OnUpdateLanguage();
     }
 
     private void Login()
@@ -60,5 +71,17 @@ public class StartMenu : MonoBehaviour
         settingsInstance.transform.Translate(new Vector3(-0.1f, 0.01f, 0.01f));
         MenuEnabled = false;
 
+    }
+
+    public override void OnUpdateLanguage()
+    {
+        settingsButton.Text = LocalizationManager.Instance.ResolveString("Settings");
+        loginButton.Text = LocalizationManager.Instance.ResolveString("Login");
+    }
+
+    private void OnDestroy()
+    {
+        LastPosition = transform.parent.position;
+        LastRotation = transform.parent.rotation;
     }
 }

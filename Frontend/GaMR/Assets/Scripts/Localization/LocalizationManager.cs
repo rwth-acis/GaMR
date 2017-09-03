@@ -9,10 +9,31 @@ public class LocalizationManager : Singleton<LocalizationManager>
     private Dictionary<string, string> dictionary;
     private List<string> keyboardLayout;
     private Language language;
+    private List<ILanguageUpdater> updateReceivers = new List<ILanguageUpdater>();
 
     public void Start()
     {
         UpdateLanguage();
+    }
+
+    public void AddUpdateReceiver(ILanguageUpdater receiver)
+    {
+        updateReceivers.Add(receiver);
+    }
+
+    public void RemoveUpdateReceiver(ILanguageUpdater receiver)
+    {
+        updateReceivers.Remove(receiver);
+    }
+    
+
+
+    private void InformReceivers()
+    {
+        foreach(ILanguageUpdater receiver in updateReceivers)
+        {
+            receiver.OnUpdateLanguage();
+        }
     }
 
     private void LoadDictionary()
@@ -76,6 +97,8 @@ public class LocalizationManager : Singleton<LocalizationManager>
         language = InformationManager.Instance.Language;
         LoadDictionary();
         LoadKeyboardLayout();
+
+        InformReceivers();
 
     }
 

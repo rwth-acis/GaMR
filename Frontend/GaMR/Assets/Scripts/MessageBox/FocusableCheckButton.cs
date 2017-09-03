@@ -34,7 +34,10 @@ public class FocusableCheckButton : FocusableButton
 
     public override void OnInputClicked(InputClickedEventData eventData)
     {
+        if (ButtonEnabled)
+        {
+            ButtonChecked = !ButtonChecked;
+        }
         base.OnInputClicked(eventData);
-        ButtonChecked = !ButtonChecked;
     }
 }

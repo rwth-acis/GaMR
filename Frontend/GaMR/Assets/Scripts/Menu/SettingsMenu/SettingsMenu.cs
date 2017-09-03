@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SettingsMenu : MonoBehaviour
+public class SettingsMenu : BaseMenu
 {
     [SerializeField]
     private GameObject languageMenu;
@@ -36,8 +36,9 @@ public class SettingsMenu : MonoBehaviour
     }
 
     // Use this for initialization
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         InitializeButtons();
     }
 
@@ -65,13 +66,7 @@ public class SettingsMenu : MonoBehaviour
             SetButtonContents();
         };
 
-        // set captions
-        closeButton.Text = LocalizationManager.Instance.ResolveString("Close");
-        languageButton.Text = LocalizationManager.Instance.ResolveString("Language");
-        modelServerButton.Text = LocalizationManager.Instance.ResolveString("Model Server");
-        gamificationServerButton.Text = LocalizationManager.Instance.ResolveString("Gamification Server");
-        sharingServerButton.Text = LocalizationManager.Instance.ResolveString("Sharing Server");
-        collisionButton.Text = LocalizationManager.Instance.ResolveString("Collision Detection");
+        OnUpdateLanguage();
 
         // set contents
         SetButtonContents();
@@ -119,5 +114,16 @@ public class SettingsMenu : MonoBehaviour
             OnCloseAction();
         }
         Destroy(gameObject);
+    }
+
+    public override void OnUpdateLanguage()
+    {
+        // set captions
+        closeButton.Text = LocalizationManager.Instance.ResolveString("Close");
+        languageButton.Text = LocalizationManager.Instance.ResolveString("Language");
+        modelServerButton.Text = LocalizationManager.Instance.ResolveString("Model Server");
+        gamificationServerButton.Text = LocalizationManager.Instance.ResolveString("Gamification Server");
+        sharingServerButton.Text = LocalizationManager.Instance.ResolveString("Sharing Server");
+        collisionButton.Text = LocalizationManager.Instance.ResolveString("Collision Detection");
     }
 }

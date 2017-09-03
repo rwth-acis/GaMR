@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class ThumbnailInstantiation : MonoBehaviour
+public class ThumbnailInstantiation : BaseMenu
 {
     public GameObject thumbnail;
     public GameObject startPosition;
@@ -46,8 +46,19 @@ public class ThumbnailInstantiation : MonoBehaviour
         }
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+
+        //if (StartMenu.LastPosition != null)
+        //{
+        //    transform.parent.position = StartMenu.LastPosition;
+        //}
+        //if (StartMenu.LastRotation != null)
+        //{
+        //    transform.parent.rotation = StartMenu.LastRotation;
+        //}
+
         thumbnails = new List<Thumbnail>();
         BoxCollider coll = startPosition.GetComponent<BoxCollider>();
         size = coll.size;
@@ -69,13 +80,7 @@ public class ThumbnailInstantiation : MonoBehaviour
         settingsButton.OnPressed = ShowSettings;
         logoutButton.OnPressed = Logout;
 
-
-        // localization:
-        upButton.Text = LocalizationManager.Instance.ResolveString("Page up");
-        downButton.Text = LocalizationManager.Instance.ResolveString("Page down");
-        settingsButton.Text = LocalizationManager.Instance.ResolveString("Settings");
-        logoutButton.Text = LocalizationManager.Instance.ResolveString("Logout");
-        badgeButton.Text = LocalizationManager.Instance.ResolveString("Badges");
+        OnUpdateLanguage();
 
 
         // determine badge button visibility and fill the gap
@@ -89,6 +94,16 @@ public class ThumbnailInstantiation : MonoBehaviour
 
 
         MenuEnabled = false;
+    }
+
+    public override void OnUpdateLanguage()
+    {
+        // localization:
+        upButton.Text = LocalizationManager.Instance.ResolveString("Page up");
+        downButton.Text = LocalizationManager.Instance.ResolveString("Page down");
+        settingsButton.Text = LocalizationManager.Instance.ResolveString("Settings");
+        logoutButton.Text = LocalizationManager.Instance.ResolveString("Logout");
+        badgeButton.Text = LocalizationManager.Instance.ResolveString("Badges");
     }
 
     private void Logout()
@@ -205,4 +220,10 @@ public class ThumbnailInstantiation : MonoBehaviour
     {
         MenuEnabled = true;
     }
+
+    private void OnDestroy()
+    {
+        LocalizationManager.Instance.RemoveUpdateReceiver(this);
+    }
+
 }

@@ -2,15 +2,15 @@
   "strings": [
     {
       "key": "Page up",
-      "value": "Seite zurück"
+      "value": "Pagina omhoog"
     },
     {
       "key": "Page down",
-      "value": "Seite vor"
+      "value": "Pagina omlaag"
     },
     {
       "key": "Logout",
-      "value": "Logout"
+      "value": "Uitloggen"
     },
     {
       "key": "Badges",
@@ -18,11 +18,11 @@
     },
     {
       "key": "Close",
-      "value": "Schließen"
+      "value": "Dichtbij"
     },
     {
       "key": "Language",
-      "value": "Sprache"
+      "value": "Taal"
     },
     {
       "key": "Model Server",
@@ -38,35 +38,35 @@
     },
     {
       "key": "German",
-      "value": "Deutsch"
+      "value": "Duits"
     },
     {
       "key": "On",
-      "value": "Ein"
+      "value": "Op"
     },
     {
       "key": "English",
-      "value": "Englisch"
+      "value": "Engels"
     },
     {
       "key": "Dutch",
-      "value": "Niederländisch"
+      "value": "Nederlands"
     },
     {
       "key": "Settings",
-      "value": "Einstellungen"
+      "value": "Instellingen"
     },
     {
       "key": "Collision Detection",
-      "value": "Kollisionserkennung"
+      "value": "Botsingsdetectie"
     },
     {
       "key": "Off",
-      "value": "Aus"
+      "value": "Uit"
     },
     {
       "key": "Edit Mode",
-      "value": "Bearbeiten"
+      "value": "Bewerkingsmodus"
     },
     {
       "key": "Quiz",
@@ -74,55 +74,55 @@
     },
     {
       "key": "Create Quiz",
-      "value": "Quiz erstellen"
+      "value": "Maak een quiz"
     },
     {
       "key": "Position - Name",
-      "value": "Position - Name"
+      "value": "Positie - Naam"
     },
     {
       "key": "Name - Position",
-      "value": "Name - Position"
+      "value": "Naam - Positie"
     },
     {
       "key": "Random",
-      "value": "Zufällig"
+      "value": "Toevallig"
     },
     {
       "key": "Click on the annotations and enter the name of the corresponding part",
-      "value": "Tippe auf die Annotationen und gebe den zugehörigen Namen ein."
+      "value": "Klik op de annotaties en voer de naam van het bijbehorende deel in"
     },
     {
       "key": "Enter the text of the annotation",
-      "value": "Gebe den Namen zu der Annotation ein."
+      "value": "Voer de tekst van de annotatie in"
     },
     {
       "key": "Login",
-      "value": "Login"
+      "value": "Log in"
     },
     {
       "key": "ENGLISH",
-      "value": "Englisch"
+      "value": "Engels"
     },
     {
       "key": "GERMAN",
-      "value": "Deutsch"
+      "value": "Duits"
     },
     {
       "key": "Bounding Box",
-      "value": "Positionierung"
+      "value": "Positionering"
     },
     {
       "key": "Delete",
-      "value": "Löschen"
+      "value": "Verwijderen"
     },
     {
       "key": "Cancel",
-      "value": "Abbrechen"
+      "value": "Annuleer"
     },
     {
       "key": "DUTCH",
-      "value": "Niederländisch"
+      "value": "Nederlands"
     }
   ]
 }
