@@ -87,6 +87,8 @@ public class LocalizationManager : Singleton<LocalizationManager>
                 return "en";
             case Language.GERMAN:
                 return "de";
+            case Language.DUTCH:
+                return "nl";
             default:
                 return "en";
         }

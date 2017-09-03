@@ -14,8 +14,11 @@ public class Button : MonoBehaviour, IInputClickHandler
     /// The method which should be called if the button is pressed
     /// </summary>
     public Action OnPressed;
+    public Action<Button> OnButtonPressed;
     protected string text;
     private TextMesh textMesh;
+
+    public int Data { get; set; } // custom data
 
     private void Start()
     {
@@ -37,6 +40,11 @@ public class Button : MonoBehaviour, IInputClickHandler
         if (OnPressed != null)
         {
             OnPressed();
+        }
+
+        if (OnButtonPressed != null)
+        {
+            OnButtonPressed(this);
         }
     }
 

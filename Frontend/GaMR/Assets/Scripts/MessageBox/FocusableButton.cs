@@ -117,4 +117,9 @@ public class FocusableButton : Button, IFocusable, IInputHandler
             base.OnInputClicked(eventData);
         }
     }
+
+    private void OnEnable()
+    {
+        OnFocusExit();
+    }
 }

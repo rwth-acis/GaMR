@@ -20,6 +20,8 @@ public class InformationManager : Singleton<InformationManager>
     [SerializeField]
     private string gamificationServer = "192.168.178.75";
     [SerializeField]
+    private string sharingServer = "192.168.178.48";
+    [SerializeField]
     private int portBackend = 8080;
     [SerializeField]
     private int portGamification = 8086;
@@ -41,6 +43,15 @@ public class InformationManager : Singleton<InformationManager>
     public string BackendServer { get { return backendServer; } set { backendServer = value; } }
     public string GamificationServer { get { return gamificationServer; } set { gamificationServer = value; } }
     public string FullGamificationAddress { get { return "http://" + gamificationServer + ":" + portGamification; } }
+    public string SharingServer
+    {
+        get { return sharingServer; }
+        set
+        {
+            sharingServer = value;
+            // TODO synchronize the value with the sharing prefab
+        }
+    }
 
     public bool CollisionEnabled
     {

@@ -7,5 +7,5 @@ using UnityEngine;
 /// </summary>
 public enum Language
 {
-    ENGLISH, GERMAN
+    ENGLISH, GERMAN, DUTCH
 }

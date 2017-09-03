@@ -27,7 +27,7 @@ public class StartMenu : MonoBehaviour
         InitializeButtons();
     }
 
-    public void InitializeButtons()
+    private void InitializeButtons()
     {
         settingsButton = transform.Find("Settings Button").gameObject.AddComponent<FocusableButton>();
         loginButton = transform.Find("Login Button").gameObject.AddComponent<FocusableButton>();
