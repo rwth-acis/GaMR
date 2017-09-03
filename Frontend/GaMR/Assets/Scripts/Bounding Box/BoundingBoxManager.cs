@@ -31,7 +31,6 @@ public class BoundingBoxManager : MonoBehaviour
         xAxis = gameObject.transform.Find("X");
         yAxis = gameObject.transform.Find("Y");
         zAxis = gameObject.transform.Find("Z");
-        menu = gameObject.transform.Find("MenuCenter");
 
         // get all widgets
         widgets = new List<Transform>();
@@ -56,7 +55,6 @@ public class BoundingBoxManager : MonoBehaviour
         {
             CompensateParentScale(trans, widgetSize);
         }
-        CompensateParentScale(menu, menuSize);
     }
 
     /// <summary>

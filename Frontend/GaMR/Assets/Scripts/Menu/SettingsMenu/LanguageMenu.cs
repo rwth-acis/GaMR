@@ -11,6 +11,8 @@ public class LanguageMenu : MonoBehaviour
         InitializeButtons();
     }
 
+    public Action OnCloseAction { get; set; }
+
     private void InitializeButtons()
     {
         // get/create buttons
@@ -39,6 +41,10 @@ public class LanguageMenu : MonoBehaviour
     private void ChangeLanguage(Button sender)
     {
         InformationManager.Instance.Language = (Language)sender.Data;
+        if (OnCloseAction != null)
+        {
+            OnCloseAction();
+        }
         Destroy(gameObject);
     }
 }

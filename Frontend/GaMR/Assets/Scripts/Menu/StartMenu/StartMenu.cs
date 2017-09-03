@@ -6,9 +6,11 @@ using UnityEngine;
 public class StartMenu : MonoBehaviour
 {
 
+    [SerializeField]
+    private GameObject settingsMenu;
     private FocusableButton settingsButton;
     private FocusableButton loginButton;
-    private bool menuEnabled;
+    private bool menuEnabled = true;
 
     public bool MenuEnabled
     {
@@ -16,8 +18,8 @@ public class StartMenu : MonoBehaviour
         set
         {
             menuEnabled = value;
-            settingsButton.ButtonEnabled = false;
-            loginButton.ButtonEnabled = false;
+            settingsButton.ButtonEnabled = value;
+            loginButton.ButtonEnabled = value;
         }
     }
 
@@ -46,6 +48,17 @@ public class StartMenu : MonoBehaviour
 
     private void ShowSettings()
     {
-        throw new NotImplementedException();
+        GameObject settingsInstance = Instantiate(settingsMenu);
+        SettingsMenu settings = settingsInstance.GetComponent<SettingsMenu>();
+        settings.OnCloseAction = () =>
+        {
+            MenuEnabled = true;
+        };
+        settingsInstance.transform.parent = transform;
+        settingsInstance.transform.rotation = transform.rotation;
+        settingsInstance.transform.localPosition = Vector3.zero;
+        settingsInstance.transform.Translate(new Vector3(-0.1f, 0.01f, 0.01f));
+        MenuEnabled = false;
+
     }
 }

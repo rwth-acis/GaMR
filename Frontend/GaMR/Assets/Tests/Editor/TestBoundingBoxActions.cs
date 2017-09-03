@@ -27,11 +27,11 @@ public class TestBoundingBoxActions
     [Test]
     public void TestToggleBoundingBox()
     {
-        actions.ToggleBoundingBox();
+        actions.EnableBoundingBox(false);
         Assert.IsFalse(coll.enabled);
         Assert.IsFalse(boundingBoxPiece.gameObject.activeSelf);
 
-        actions.ToggleBoundingBox();
+        actions.EnableBoundingBox(true);
         Assert.IsTrue(coll.enabled);
         Assert.IsTrue(boundingBoxPiece.gameObject.activeSelf);
     }

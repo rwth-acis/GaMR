@@ -8,7 +8,7 @@ using System;
 /// represents one key on a keyboard
 /// </summary>
 [ExecuteInEditMode]
-public class Key : MonoBehaviour, IInputHandler
+public class Key : MonoBehaviour, IInputHandler, IInputClickHandler
 {
     [Tooltip("The type of the key. This determines its functionality if it is pressed")]
     public KeyType keyType = KeyType.LETTER;
@@ -126,6 +126,7 @@ public class Key : MonoBehaviour, IInputHandler
 
     public void OnInputUp(InputEventData eventData)
     {
+
     }
 
     /// <summary>
@@ -134,9 +135,14 @@ public class Key : MonoBehaviour, IInputHandler
     /// <param name="eventData"></param>
     public void OnInputDown(InputEventData eventData)
     {
-        KeyPressed();
-        Debug.Log("Key Pressed");
+        if (keyType != KeyType.ACCEPT && keyType != KeyType.CANCEL)
+        {
+            KeyPressed();
+            Debug.Log("Key Pressed");
+        }
     }
+
+
 
     /// <summary>
     /// method which applies the shift-setting of the keyboard to the letter and to the caption text-mesh
@@ -155,6 +161,14 @@ public class Key : MonoBehaviour, IInputHandler
                 letter = letter.ToLower();
             }
             caption.text = letter;
+        }
+    }
+
+    public void OnInputClicked(InputClickedEventData eventData)
+    {
+        if (keyType== KeyType.ACCEPT || keyType == KeyType.CANCEL)
+        {
+            KeyPressed();
         }
     }
 }

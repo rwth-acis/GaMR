@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class SettingsMenu : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject languageMenu;
+
     FocusableButton closeButton;
     FocusableContentButton languageButton;
     FocusableContentButton modelServerButton;
@@ -12,8 +15,25 @@ public class SettingsMenu : MonoBehaviour
     FocusableContentButton sharingServerButton;
     FocusableContentButton collisionButton;
 
+    private bool menuEnabled = true;
+
     public Action OnCloseAction
     { get; set; }
+
+    public bool MenuEnabled
+    {
+        get { return menuEnabled; }
+        set
+        {
+            menuEnabled = value;
+            closeButton.ButtonEnabled = value;
+            languageButton.ButtonEnabled = value;
+            modelServerButton.ButtonEnabled = value;
+            gamificationServerButton.ButtonEnabled = value;
+            sharingServerButton.ButtonEnabled = value;
+            collisionButton.ButtonEnabled = value;
+        }
+    }
 
     // Use this for initialization
     void Start()
@@ -59,7 +79,18 @@ public class SettingsMenu : MonoBehaviour
 
     private void ChangeLanguage()
     {
-        
+        GameObject languageInstance = Instantiate(languageMenu);
+        LanguageMenu languageScript = languageInstance.GetComponent<LanguageMenu>();
+        languageScript.OnCloseAction = () =>
+        {
+            SetButtonContents();
+            MenuEnabled = true;
+        };
+        languageInstance.transform.parent = transform;
+        languageInstance.transform.rotation = transform.rotation;
+        languageInstance.transform.localPosition = Vector3.zero;
+        languageInstance.transform.Translate(-0.1f, 0.01f, 0.01f);
+        MenuEnabled = false;
     }
 
     private void OnEnable()

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HoloToolkit.Unity.InputModule;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,8 @@ public class BoundingBoxActions : MonoBehaviour
     private Transform x3dParent;
     private CarouselMenu carouselInstance;
     private bool nextQuizPositionToName;
+    private TapToPlace tapToPlace;
+    private TransformationManager transformationManager;
 
     /// <summary>
     /// Get the necessary components: the collider of the bounding box and its annotationManager
@@ -33,38 +36,34 @@ public class BoundingBoxActions : MonoBehaviour
         {
             objectInfo = x3dParent.GetComponent<ObjectInfo>();
         }
+        tapToPlace = GetComponent<TapToPlace>();
+        transformationManager = GetComponent<TransformationManager>();
     }
 
     /// <summary>
     /// toggles the visibility of the bounding boxx and whether or not its collider should be active
     /// </summary>
-    public void ToggleBoundingBox()
+    public void EnableBoundingBox(bool enable)
     {
-        if (boundingBoxVisible)
-        {
-            ToggleControls(false);
-            boundingBoxVisible = false;
-        }
-        else
-        {
-            ToggleControls(true);
-            boundingBoxVisible = true;
-        }
+            EnableControls(enable);
+            boundingBoxVisible = enable;
+            tapToPlace.enabled = enable;
+            transformationManager.enabled = enable;
     }
 
     /// <summary>
     /// toggles whether or not it is possible to add new annotations to the model by tapping on it
     /// </summary>
-    public void ToogleEditMode()
+    public void EnableEditMode(bool enable)
     {
-        attachementManager.EditMode = !attachementManager.EditMode;
+        attachementManager.EditMode = enable;
     }
 
     /// <summary>
     /// Shows or hides all control handles which are attached to the bounding box
     /// </summary>
     /// <param name="active">The target visibility</param>
-    private void ToggleControls(bool active)
+    private void EnableControls(bool active)
     {
         coll.enabled = active;
         foreach(Transform boxPart in boundingBoxPieces)

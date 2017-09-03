@@ -43,6 +43,11 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
 
     public void Login()
     {
+        if (Application.isEditor)
+        {
+            SceneManager.LoadScene("Scene", LoadSceneMode.Single);
+            return;
+        }
         Application.OpenURL("https://api.learning-layers.eu/o/oauth2/authorize?response_type=token&scope=openid%20profile%20email&client_id=" + clientId + "&redirect_uri=gamr://");
     }
 

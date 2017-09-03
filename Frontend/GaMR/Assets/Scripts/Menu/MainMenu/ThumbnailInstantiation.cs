@@ -8,6 +8,9 @@ public class ThumbnailInstantiation : MonoBehaviour
 {
     public GameObject thumbnail;
     public GameObject startPosition;
+    [SerializeField]
+    private GameObject settingsMenu;
+
     private Vector3 size;
     private List<Thumbnail> thumbnails;
     private int startIndex = 0;
@@ -95,7 +98,17 @@ public class ThumbnailInstantiation : MonoBehaviour
 
     private void ShowSettings()
     {
-        
+        GameObject settingsInstance = Instantiate(settingsMenu);
+        SettingsMenu settings = settingsInstance.GetComponent<SettingsMenu>();
+        settings.OnCloseAction = () =>
+        {
+            MenuEnabled = true;
+        };
+        settingsInstance.transform.parent = transform;
+        settingsInstance.transform.rotation = transform.rotation;
+        settingsInstance.transform.localPosition = Vector3.zero;
+        settingsInstance.transform.Translate(new Vector3(-0.1f, 0.01f, 0.01f));
+        MenuEnabled = false;
     }
 
     private void PageDown()
