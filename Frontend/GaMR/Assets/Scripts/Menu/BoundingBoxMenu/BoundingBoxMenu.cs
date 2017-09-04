@@ -61,7 +61,7 @@ public class BoundingBoxMenu : BaseMenu
         createQuizButton = transform.Find("CreateQuiz Button").gameObject.AddComponent<FocusableButton>();
         closeButton = transform.Find("Close Button").gameObject.AddComponent<FocusableButton>();
 
-        deleteButton.OnPressed = () => { actions.DeleteObject(); Close(); };
+        deleteButton.OnPressed = () => { actions.DeleteObject(); Destroy(); };
         editModeButton.OnPressed = ToggleEditMode;
         boundingBoxButton.OnPressed = ToggleBoundingBox;
         quizButton.OnPressed = SelectQuiz;
@@ -133,6 +133,11 @@ public class BoundingBoxMenu : BaseMenu
             OnCloseAction();
         }
         gameObject.SetActive(false);
+    }
+
+    private void Destroy()
+    {
+        Destroy(transform.parent.gameObject);
     }
 
     public override void OnUpdateLanguage()

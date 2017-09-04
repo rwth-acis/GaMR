@@ -12,6 +12,7 @@ public class CirclePositioner : MonoBehaviour {
     public Transform boundingBox;
     public PositioningMode positioningMode = PositioningMode.FRONT;
     public float distanceFactor = 1.2f;
+    public Vector3 rotationOffset = Vector3.zero;
     private float distance;
 
     // the velocity at which the menu is currently moving to its target position
@@ -40,7 +41,7 @@ public class CirclePositioner : MonoBehaviour {
                                       //transform.position = Vector3.SmoothDamp(transform.position, pos, ref velocity, smoothTime);
 
             transform.rotation = Quaternion.LookRotation(centerToCamera);
-            transform.Rotate(new Vector3(0, 90, 0));
+            transform.Rotate(rotationOffset);
         }
         else if (positioningMode == PositioningMode.RIGHT)
         {

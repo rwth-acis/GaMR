@@ -3263,7 +3263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cf5effafd8b4724480f57e41c711161, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnMenu: {fileID: 1897613273141180, guid: 2e8a7c35fa4317942a936777f131cb28, type: 2}
+  spawnMenu: {fileID: 1091387321548576, guid: 24f1c2bd3a6aa314b8f0a982706bbf3d, type: 2}
 --- !u!114 &114388767313605806
 MonoBehaviour:
   m_ObjectHideFlags: 1
