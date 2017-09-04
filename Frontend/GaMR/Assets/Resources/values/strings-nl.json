@@ -97,6 +97,10 @@
       "value": "Voer de tekst van de annotatie in"
     },
     {
+      "key": "Connect the names with their corresponding position",
+      "value": "Verbind de namen met hun overeenkomstige positie."
+    },
+    {
       "key": "Login",
       "value": "Log in"
     },
@@ -123,6 +127,34 @@
     {
       "key": "DUTCH",
       "value": "Nederlands"
+    },
+    {
+      "key": "Correct",
+      "value": "Correct"
+    },
+    {
+      "key": "Incorrect",
+      "value": "Onjuist"
+    },
+    {
+      "key": "Enter the Server",
+      "value": "Voer de server in"
+    },
+    {
+      "key": "Address successfully saved",
+      "value": "Succesvol opgeslagen adres"
+    },
+    {
+      "key": "The server is responding",
+      "value": "De server reageert"
+    },
+    {
+      "key": "Enter Gamification Server",
+      "value": "Voer de gamification server in"
+    },
+    {
+      "key": "Enter Sharing Server",
+      "value": "Voer de sharing server in"
     }
   ]
 }

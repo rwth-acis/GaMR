@@ -97,6 +97,10 @@
       "value": "Gebe den Namen zu der Annotation ein."
     },
     {
+      "key": "Connect the names with their corresponding position",
+      "value": "Wähle einen Namen aus und dann die dazugehörige Annotation."
+    },
+    {
       "key": "Login",
       "value": "Login"
     },
@@ -123,6 +127,34 @@
     {
       "key": "DUTCH",
       "value": "Niederländisch"
+    },
+    {
+      "key": "Correct",
+      "value": "Korrekt"
+    },
+    {
+      "key": "Incorrect",
+      "value": "Falsch"
+    },
+    {
+      "key": "Enter the Server",
+      "value": "Server eingeben"
+    },
+    {
+      "key": "Address successfully saved",
+      "value": "Adresse erfolgreich gespeichert"
+    },
+    {
+      "key": "The server is responding",
+      "value": "Der Server antwortet"
+    },
+    {
+      "key": "Enter Gamification Server",
+      "value": "Gamification Server eingeben"
+    },
+    {
+      "key": "Enter Sharing Server",
+      "value": "Sharing Server eingeben"
     }
   ]
 }
