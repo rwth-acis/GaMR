@@ -80,7 +80,7 @@ public class BoundingBoxActions : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void SelectQuiz()
+    public void SelectQuiz()
     {
         RestManager.Instance.GET(InformationManager.Instance.FullBackendAddress + "/resources/quiz/overview/" + objectInfo.ModelName, AvailableQuizzesLoaded, null);
     }

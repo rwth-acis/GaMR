@@ -41,6 +41,15 @@ public class BoundingBoxMenu : BaseMenu
         base.Start();
         actions = BoundingBox.GetComponent<BoundingBoxActions>();
         InitializeButtons();
+        SetPlayerTypeMode();
+    }
+
+    private void SetPlayerTypeMode()
+    {
+        bool isStudent = (InformationManager.Instance.playerType == PlayerType.STUDENT);
+        createQuizButton.Visible = !isStudent;
+        transform.Find("Top Menu").gameObject.SetActive(isStudent);
+        transform.Find("Top Menu Short").gameObject.SetActive(!isStudent);
     }
 
     private void InitializeButtons()
@@ -57,6 +66,7 @@ public class BoundingBoxMenu : BaseMenu
         boundingBoxButton.OnPressed = ToggleBoundingBox;
         quizButton.OnPressed = SelectQuiz;
         closeButton.OnPressed = Close;
+        createQuizButton.OnPressed = actions.CreateNewQuiz;
 
         boundingBoxButton.ButtonChecked = true;
         editModeButton.ButtonChecked = true;
@@ -70,20 +80,32 @@ public class BoundingBoxMenu : BaseMenu
     {
         if (quizButton.ButtonChecked)
         {
-            MenuEnabled = false;
-            QuizStyleMenu styleMenu = transform.Find("QuizStyle Menu").GetComponent<QuizStyleMenu>();
-            styleMenu.OnCloseAction = (selectionSuccessful) =>
+            if (InformationManager.Instance.playerType == PlayerType.STUDENT)
             {
-                quizButton.ButtonChecked = selectionSuccessful;
+                MenuEnabled = false;
+                QuizStyleMenu styleMenu = transform.Find("QuizStyle Menu").GetComponent<QuizStyleMenu>();
+                styleMenu.OnCloseAction = (selectionSuccessful) =>
+                {
+                    quizButton.ButtonChecked = selectionSuccessful;
+                    actions.EnableBoundingBox(false);
+                    boundingBoxButton.ButtonChecked = false;
+
+                    actions.EnableEditMode(false);
+                    editModeButton.ButtonChecked = false;
+
+                    editModeButton.ButtonEnabled = false;
+                };
+                styleMenu.gameObject.SetActive(true);
+            }
+            else
+            {
                 actions.EnableBoundingBox(false);
                 boundingBoxButton.ButtonChecked = false;
+                actions.EnableEditMode(true);
+                editModeButton.ButtonChecked = true;
 
-                actions.EnableEditMode(false);
-                editModeButton.ButtonChecked = false;
-
-                editModeButton.ButtonEnabled = false;
-            };
-            styleMenu.gameObject.SetActive(true);
+                actions.SelectQuiz();
+            }
         }
         else
         {

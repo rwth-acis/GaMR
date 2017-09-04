@@ -51,7 +51,7 @@ public class QuizStyleMenu : BaseMenu
         }
     }
 
-    public void OnUpdateLanguage()
+    public override void OnUpdateLanguage()
     {
         cancelButton.Text = LocalizationManager.Instance.ResolveString("Cancel");
         positionToNameButton.Text = LocalizationManager.Instance.ResolveString("Position - Name");

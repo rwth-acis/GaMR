@@ -104,6 +104,7 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
             string json = result.downloadHandler.text;
             Debug.Log(json);
             UserInfo info = JsonUtility.FromJson<UserInfo>(json);
+
             InformationManager.Instance.UserInfo = info;
             GamificationFramework.Instance.ValidateLogin(LoginValidated);
         }

@@ -10,6 +10,7 @@ public class StartMenu : BaseMenu
     private GameObject settingsMenu;
     private FocusableButton settingsButton;
     private FocusableButton loginButton;
+    private FocusableCheckButton authorButton;
     private bool menuEnabled = true;
 
 
@@ -45,11 +46,27 @@ public class StartMenu : BaseMenu
     {
         settingsButton = transform.Find("Settings Button").gameObject.AddComponent<FocusableButton>();
         loginButton = transform.Find("Login Button").gameObject.AddComponent<FocusableButton>();
+        authorButton = transform.Find("Author Button").gameObject.AddComponent<FocusableCheckButton>();
 
         settingsButton.OnPressed = ShowSettings;
         loginButton.OnPressed = Login;
+        authorButton.OnPressed = TogglePlayerType;
+
+        authorButton.ButtonChecked = (InformationManager.Instance.playerType == PlayerType.AUTHOR);
 
         OnUpdateLanguage();
+    }
+
+    private void TogglePlayerType()
+    {
+        if (authorButton.ButtonChecked)
+        {
+            InformationManager.Instance.playerType = PlayerType.AUTHOR;
+        }
+        else
+        {
+            InformationManager.Instance.playerType = PlayerType.STUDENT;
+        }
     }
 
     private void Login()
@@ -77,9 +94,10 @@ public class StartMenu : BaseMenu
     {
         settingsButton.Text = LocalizationManager.Instance.ResolveString("Settings");
         loginButton.Text = LocalizationManager.Instance.ResolveString("Login");
+        authorButton.Text = LocalizationManager.Instance.ResolveString("Author");
     }
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
         LastPosition = transform.parent.position;
         LastRotation = transform.parent.rotation;

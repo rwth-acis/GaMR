@@ -3802,3 +3802,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boundingBox: {fileID: 0}
+  positioningMode: 0
+  distanceFactor: 1.2

@@ -8,7 +8,7 @@ public class QuizMenuSpawner : MonoBehaviour {
     private GameObject spawnMenu;
 
     // Use this for initialization
-    void Start()
+    void OnEnable()
     {
         GameObject menuInstance = Instantiate(spawnMenu);
         CirclePositioner positioner = menuInstance.GetComponentInChildren<CirclePositioner>();

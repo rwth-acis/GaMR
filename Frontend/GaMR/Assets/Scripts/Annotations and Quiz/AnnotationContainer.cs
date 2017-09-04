@@ -66,14 +66,6 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
         }
     }
 
-    private void UserQuizInputFinished(string input)
-    {
-        if (input != null)
-        {
-            ((QuizManager)annotationManager).EvaluateQuestion(Annotation, input);
-        }
-    }
-
     public void OnInputUp(InputEventData eventData)
     {
     }
@@ -109,7 +101,11 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
             // determine which direction was asked
             if (((QuizManager)annotationManager).PositionToName)
             {
-                Keyboard.Display(LocalizationManager.Instance.ResolveString("How is this part called?"), UserQuizInputFinished, true);
+                // Keyboard.Display(LocalizationManager.Instance.ResolveString("How is this part called?"), UserQuizInputFinished, true);
+                ((QuizManager)annotationManager).CurrentlySelectedAnnotation = Annotation;
+                ((QuizManager)annotationManager).ShowNames();
+                Select();
+                ((QuizManager)annotationManager).CurrentlySelectedAnnotationContainer = this;
             }
             else
             {

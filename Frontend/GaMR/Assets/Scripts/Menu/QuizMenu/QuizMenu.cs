@@ -68,7 +68,14 @@ public class QuizMenu : BaseMenu, IViewEvents
         }
         questionSelected = sender.Data;
         ((FocusableCheckButton)sender).ButtonChecked = true;
-        quizManager.CurrentlySelectedName = quizManager.Annotations[questionSelected].Text;
+        if (quizManager.PositionToName)
+        {
+            quizManager.EvaluateQuestion(quizManager.Annotations[questionSelected].Text);
+        }
+        else
+        {
+            quizManager.CurrentlySelectedName = quizManager.Annotations[questionSelected].Text;
+        }
     }
 
     public override void OnUpdateLanguage()
@@ -138,6 +145,23 @@ public class QuizMenu : BaseMenu, IViewEvents
     public void UpdateView()
     {
         FillQuestions();
+    }
+
+    public void Show()
+    {
+        gameObject.SetActive(true);
+        UpdateView();
+    }
+
+    public void Close()
+    {
+        questionSelected = -1;
+        gameObject.SetActive(false);
+    }
+
+    public void Destroy()
+    {
+        Destroy(gameObject);
     }
 
     protected override void OnDestroy()

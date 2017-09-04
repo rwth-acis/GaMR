@@ -13,9 +13,20 @@ public class QuizManager : AnnotationManager
     protected new string subPathSave = "/resources/quiz/save/";
 
     public string CurrentlySelectedName { get; set; }
+    public Annotation CurrentlySelectedAnnotation { get; set; }
+    public AnnotationContainer CurrentlySelectedAnnotationContainer { get { return currentlySelectedAnnotationContainer; }
+        set
+        {
+            if (currentlySelectedAnnotationContainer != null)
+            {
+                currentlySelectedAnnotationContainer.Deselect();
+            }
+            currentlySelectedAnnotationContainer = value;
+        }
+    }
+    private AnnotationContainer currentlySelectedAnnotationContainer;
     private ObjectInfo objInfo;
     private GamificationManager gamificationManager;
-    private GameObject quizObject;
     private Menu availableNames; // only used in the mode "name to position"
     private ProgressBar progressBar;
     List<int> freeIndices;
@@ -133,6 +144,12 @@ public class QuizManager : AnnotationManager
             );
     }
 
+    public void ShowNames()
+    {
+        transform.parent.parent.GetComponentInChildren<QuizMenuSpawner>().enabled = true;
+        ShowListeners();
+    }
+
     private void EnsureActionsForAnnotations(Quest quest)
     {
         for (int i=0;i<annotations.Count;i++)
@@ -247,42 +264,6 @@ public class QuizManager : AnnotationManager
             MessageBox.Show(LocalizationManager.Instance.ResolveString("Connect the names with their corresponding position"), MessageBoxType.INFORMATION);
 
             transform.parent.parent.GetComponentInChildren<QuizMenuSpawner>().enabled = true;
-
-            //quizObject = new GameObject("Quiz");
-            //quizObject.AddComponent<RotateToCameraOnYAxis>();
-            //quizObject.transform.parent = boundingBoxHook;
-            //quizObject.transform.position = gameObject.transform.position + new Vector3(objInfo.Size.x, objInfo.Size.y / 2, 0);
-
-            //availableNames = quizObject.AddComponent<Menu>();
-            //availableNames.rootMenu = new List<CustomMenuItem>();
-            //availableNames.alignment = Direction.VERTICAL;
-            //availableNames.markOnlyOne = true;
-            //availableNames.defaultMenuStyle = (GameObject)Resources.Load("QuizItem");
-
-            //InitializeFreeIndices();
-
-            //// only take 5 questions at first
-            //for (int i = 0; i < 5; i++)
-            //{
-            //    CustomMenuItem item = quizObject.AddComponent<CustomMenuItem>();
-            //    item.Init(null, null, false);
-
-            //    int randomIndex = UnityEngine.Random.Range(0, freeIndices.Count);
-            //    int annotationIndex = freeIndices[randomIndex];
-
-
-            //    string annotationText = annotations[annotationIndex].Text;
-            //    item.Text = annotationText;
-
-            //    freeIndices.RemoveAt(randomIndex);
-
-            //    string index = annotationIndex.ToString();
-            //    item.MenuItemName = index;
-            //    item.subMenu = new List<CustomMenuItem>();
-            //    item.onClickEvent.AddListener(OnItemClicked);
-            //    item.markOnClick = true;
-            //    availableNames.rootMenu.Add(item);
-            //}
         }
 
         // in both cases: create progress bar
@@ -382,6 +363,23 @@ public class QuizManager : AnnotationManager
         }
     }
 
+    public bool EvaluateQuestion(string input)
+    {
+        if (CurrentlySelectedAnnotation != null)
+        {
+            bool res = EvaluateQuestion(CurrentlySelectedAnnotation, input);
+            if (res)
+            {
+                CloseListeners();
+            }
+            return res;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     /// <summary>
     /// evaluates a question by comparing the annotation with the input text
     /// Shows a MessageBox to indicate success or failure
@@ -389,7 +387,7 @@ public class QuizManager : AnnotationManager
     /// <param name="annotation">The selected annotation</param>
     /// <param name="input">The user input to compare to the annotation's text</param>
     /// <returns>true if input is equal to the annotations text, else false</returns>
-    public bool EvaluateQuestion(Annotation annotation, string input)
+    private bool EvaluateQuestion(Annotation annotation, string input)
     {
         if (annotation.Text == input)
         {
@@ -406,6 +404,8 @@ public class QuizManager : AnnotationManager
 
             if (progressBar.Progress == 1)
             {
+                CloseListeners();
+
                 // also trigger the default action
                 GamificationFramework.Instance.TriggerAction(gamificationManager.gameId, "defaultAction");
                 badgeManager.WinBadge();
@@ -438,6 +438,30 @@ public class QuizManager : AnnotationManager
         }
     }
 
+    private void ShowListeners()
+    {
+        foreach(IViewEvents listener in listeners)
+        {
+            listener.Show();
+        }
+    }
+
+    private void CloseListeners()
+    {
+        foreach(IViewEvents listener in listeners)
+        {
+            listener.Close();
+        }
+    }
+
+    private void DestroyListeners()
+    {
+        foreach (IViewEvents listener in listeners)
+        {
+            listener.Destroy();
+        }
+    }
+
     /// <summary>
     /// called when the QuizManager is destroyed
     /// calls the base method to save the annotations
@@ -445,6 +469,8 @@ public class QuizManager : AnnotationManager
     /// </summary>
     public override void OnDestroy()
     {
+        transform.parent.parent.GetComponentInChildren<QuizMenuSpawner>().enabled = false;
+        DestroyListeners();
         base.OnDestroy();
         CleanUp();
     }
@@ -454,10 +480,7 @@ public class QuizManager : AnnotationManager
     /// </summary>
     private void CleanUp()
     {
-        if (quizObject != null)
-        {
-            Destroy(quizObject);
-        }
+        CloseListeners();
         if (progressBar != null)
         {
             Destroy(progressBar.gameObject);
