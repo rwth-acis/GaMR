@@ -23,7 +23,7 @@ public class ModelSynchronizer : Singleton<ModelSynchronizer>
         Vector3 localSpawnPosition = worldAnchor.InverseTransformPoint(spawnPosition); // get coordinates in world-anchor-local space
         CustomMessages.Instance.SendModelSpawn(modelName, localSpawnPosition); // broadcast spawn event
 
-        ModelLoadManager manager = new ModelLoadManager(localSpawnPosition, worldAnchor);
+        ModelLoadManager manager = new ModelLoadManager(localSpawnPosition, worldAnchor, false);
 
         manager.Load(modelName); // load model
     }
@@ -35,7 +35,7 @@ public class ModelSynchronizer : Singleton<ModelSynchronizer>
         {
             string modelName = msg.ReadString();
             Vector3 spawnPosition = CustomMessages.Instance.ReadVector3(msg);
-            ModelLoadManager manager = new ModelLoadManager(spawnPosition, worldAnchor);
+            ModelLoadManager manager = new ModelLoadManager(spawnPosition, worldAnchor, true);
             manager.Load(modelName);
         }
     }

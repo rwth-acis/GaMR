@@ -22,6 +22,7 @@ public class InformationManager : Singleton<InformationManager>
     private string gamificationServer = "192.168.178.75";
     [SerializeField]
     private string sharingServer = "192.168.178.48";
+    private bool sharingEnabled = true;
     [SerializeField]
     private int portBackend = 8080;
     [SerializeField]
@@ -59,9 +60,27 @@ public class InformationManager : Singleton<InformationManager>
         }
     }
 
+    public bool SharingEnabled
+    {
+        get { return sharingEnabled; }
+        set
+        {
+            sharingEnabled = value;
+            if (SharingStage.Instance != null)
+            {
+                SharingStage.Instance.gameObject.SetActive(value);
+                if (value)
+                {
+                    SharingStage.Instance.ConnectToServer();
+                }
+            }
+        }
+    }
+
     private void OnLevelWasLoaded(int level)
     {
         SharingServer = PlayerPrefs.GetString("sharingServer");
+        SharingEnabled = (1 == PlayerPrefs.GetInt("sharingEnabled", 1));
     }
 
     public bool CollisionEnabled
@@ -109,6 +128,22 @@ public class InformationManager : Singleton<InformationManager>
         PlayerPrefs.SetString("gamificationServer", gamificationServer);
         PlayerPrefs.SetString("sharingServer", SharingServer);
         PlayerPrefs.SetInt("language", (int)language);
+        if (SharingEnabled)
+        {
+            PlayerPrefs.SetInt("sharingEnabled", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("sharingEnabled", 0);
+        }
+        if (collisionEnabled)
+        {
+            PlayerPrefs.SetInt("collisionEnabled", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("collisionEnabled", 0);
+        }
         PlayerPrefs.Save();
         Debug.Log("Data saved");
     }
@@ -119,6 +154,8 @@ public class InformationManager : Singleton<InformationManager>
         GamificationServer = PlayerPrefs.GetString("gamificationServer", "localhost");
         SharingServer = PlayerPrefs.GetString("sharingServer", "localhost");
         this.Language = (Language)PlayerPrefs.GetInt("language", 0);
+        SharingEnabled = (1 == PlayerPrefs.GetInt("sharingEnabled", 1));
+        CollisionEnabled = (1 == PlayerPrefs.GetInt("collisionEnabled", 1));
         Debug.Log("Loaded " + backendServer + ":" + portBackend);
         Debug.Log("Language: " + language);
     }

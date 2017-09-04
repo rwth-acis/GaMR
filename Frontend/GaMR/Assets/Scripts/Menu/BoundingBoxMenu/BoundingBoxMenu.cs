@@ -109,6 +109,7 @@ public class BoundingBoxMenu : BaseMenu
         }
         else
         {
+            actions.AbortQuizSelection(); // in case it was still in quiz selection
             actions.LoadAnnotations();
             editModeButton.ButtonEnabled = true;
             editModeButton.ButtonChecked = true;

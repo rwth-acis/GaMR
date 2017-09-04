@@ -14,6 +14,7 @@ public class SettingsMenu : BaseMenu
     FocusableContentButton gamificationServerButton;
     FocusableContentButton sharingServerButton;
     FocusableContentButton collisionButton;
+    FocusableContentButton sharingEnabledButton;
 
     private bool menuEnabled = true;
 
@@ -32,6 +33,7 @@ public class SettingsMenu : BaseMenu
             gamificationServerButton.ButtonEnabled = value;
             sharingServerButton.ButtonEnabled = value;
             collisionButton.ButtonEnabled = value;
+            sharingEnabledButton.ButtonEnabled = value;
         }
     }
 
@@ -50,6 +52,7 @@ public class SettingsMenu : BaseMenu
         modelServerButton = transform.Find("Model Server Button").gameObject.AddComponent<FocusableContentButton>();
         gamificationServerButton = transform.Find("Gamification Server Button").gameObject.AddComponent<FocusableContentButton>();
         sharingServerButton = transform.Find("Sharing Server Button").gameObject.AddComponent<FocusableContentButton>();
+        sharingEnabledButton = transform.Find("Sharing Enabled Button").gameObject.AddComponent<FocusableContentButton>();
         collisionButton = transform.Find("Collision Detection Button").gameObject.AddComponent<FocusableContentButton>();
 
         SettingsActions actions = gameObject.AddComponent<SettingsActions>();
@@ -60,6 +63,11 @@ public class SettingsMenu : BaseMenu
         modelServerButton.OnPressed = actions.EnterServer;
         gamificationServerButton.OnPressed = actions.EnterGamificationServer;
         sharingServerButton.OnPressed = actions.EnterSharingServer;
+        sharingEnabledButton.OnPressed = () =>
+        {
+            actions.ToggleSharing();
+            SetButtonContents();
+        };
         collisionButton.OnPressed = () =>
         {
             actions.ToggleCollision();
@@ -103,6 +111,8 @@ public class SettingsMenu : BaseMenu
             gamificationServerButton.Content = InformationManager.Instance.GamificationServer;
             sharingServerButton.Content = InformationManager.Instance.SharingServer;
             collisionButton.Content = InformationManager.Instance.CollisionEnabled ?
+                LocalizationManager.Instance.ResolveString("On") : LocalizationManager.Instance.ResolveString("Off");
+            sharingEnabledButton.Content = InformationManager.Instance.SharingEnabled ?
                 LocalizationManager.Instance.ResolveString("On") : LocalizationManager.Instance.ResolveString("Off");
         }
     }

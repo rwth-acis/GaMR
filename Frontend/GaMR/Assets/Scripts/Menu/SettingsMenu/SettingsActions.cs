@@ -75,6 +75,11 @@ public class SettingsActions : MonoBehaviour {
         RestManager.Instance.GET(InformationManager.Instance.FullBackendAddress + "/resources/model/overview", RestResult, null);
     }
 
+    internal void ToggleSharing()
+    {
+        InformationManager.Instance.SharingEnabled = !InformationManager.Instance.SharingEnabled;
+    }
+
     /// <summary>
     /// Processes the result of the TestAddress web request
     /// </summary>

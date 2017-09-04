@@ -162,6 +162,14 @@ public class BoundingBoxActions : MonoBehaviour
         SelectQuiz();
     }
 
+    public void AbortQuizSelection()
+    {
+        if (carouselInstance != null)
+        {
+            Destroy(carouselInstance.gameObject);
+        }
+    }
+
     private void CreateQuiz(string text)
     {
         if (text != null)

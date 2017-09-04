@@ -1,4 +1,5 @@
 ﻿using HoloToolkit.Unity;
+using HoloToolkit.Unity.InputModule;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -18,16 +19,18 @@ public class ModelLoadManager
     public Vector3 spawnEulerAngles;
     public Transform globalSpawnParent;
     private X3DObj x3dObject;
+    private bool remotelySpawned;
 
     private Action callback;
 
-    public ModelLoadManager(Vector3 spawnPosition, Transform globalSpawnParent)
+    public ModelLoadManager(Vector3 spawnPosition, Transform globalSpawnParent, bool remotelySpawned)
     {
         shader = ModelLoadSettings.Instance.shader;
         boundingBoxPrefab = ModelLoadSettings.Instance.boundingBox;
         spawnEulerAngles = new Vector3(0, 180, 0);
         this.spawnPosition = spawnPosition;
         this.globalSpawnParent = globalSpawnParent;
+        this.remotelySpawned = remotelySpawned;
     }
 
     /// <summary>
@@ -60,7 +63,10 @@ public class ModelLoadManager
 
         CreateGamificationGame(x3dObject.ModelName.ToLower());
 
-        callback();
+        if (callback != null)
+        {
+            callback();
+        }
     }
 
     /// <summary>
@@ -84,6 +90,12 @@ public class ModelLoadManager
         if (globalSpawnParent != null)
         {
             box.transform.parent = globalSpawnParent;
+        }
+
+        if(remotelySpawned)
+        {
+            TapToPlace tapToPlace = box.GetComponent<TapToPlace>();
+            tapToPlace.IsBeingPlaced = false;
         }
     }
 

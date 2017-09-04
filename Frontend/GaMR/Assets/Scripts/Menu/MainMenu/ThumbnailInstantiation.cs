@@ -43,6 +43,8 @@ public class ThumbnailInstantiation : BaseMenu
                 upButton.ButtonEnabled = false;
                 downButton.ButtonEnabled = false;
             }
+            logoutButton.ButtonEnabled = menuEnabled;
+            settingsButton.ButtonEnabled = menuEnabled;
         }
     }
 
@@ -79,6 +81,8 @@ public class ThumbnailInstantiation : BaseMenu
         downButton.OnPressed = PageDown;
         settingsButton.OnPressed = ShowSettings;
         logoutButton.OnPressed = Logout;
+
+        badgeButton.ButtonEnabled = false;
 
         OnUpdateLanguage();
 
@@ -162,6 +166,8 @@ public class ThumbnailInstantiation : BaseMenu
 
             SetButtonStates();
         }
+
+        MenuEnabled = true;
     }
 
     private void SetButtonStates()
@@ -211,12 +217,6 @@ public class ThumbnailInstantiation : BaseMenu
 
     public void OnThumbnailClicked(string modelName)
     {
-        MenuEnabled = false;
         ModelSynchronizer.Instance.LoadModelForAll(modelName);
-    }
-
-    private void OnModelLoadReady()
-    {
-        MenuEnabled = true;
     }
 }
