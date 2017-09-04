@@ -212,18 +212,11 @@ public class ThumbnailInstantiation : BaseMenu
     public void OnThumbnailClicked(string modelName)
     {
         MenuEnabled = false;
-        ModelLoadManager mln = new ModelLoadManager();
-        mln.Load(modelName, OnModelLoadReady);
+        ModelSynchronizer.Instance.LoadModelForAll(modelName);
     }
 
     private void OnModelLoadReady()
     {
         MenuEnabled = true;
     }
-
-    private void OnDestroy()
-    {
-        LocalizationManager.Instance.RemoveUpdateReceiver(this);
-    }
-
 }

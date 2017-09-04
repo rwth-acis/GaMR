@@ -5,6 +5,7 @@ using UnityEngine;
 using System;
 using UnityEngine.Events;
 using HoloToolkit.Unity.SpatialMapping;
+using HoloToolkit.Sharing;
 
 /// <summary>
 /// Manages important settings of the application
@@ -49,8 +50,18 @@ public class InformationManager : Singleton<InformationManager>
         set
         {
             sharingServer = value;
-            // TODO synchronize the value with the sharing prefab
+            if (SharingStage.Instance != null)
+            {
+                SharingStage.Instance.ServerAddress = sharingServer;
+                Debug.Log("Sharing ip set to " + sharingServer);
+                SharingStage.Instance.ConnectToServer();
+            }
         }
+    }
+
+    private void OnLevelWasLoaded(int level)
+    {
+        SharingServer = PlayerPrefs.GetString("sharingServer");
     }
 
     public bool CollisionEnabled
@@ -96,6 +107,7 @@ public class InformationManager : Singleton<InformationManager>
     {
         PlayerPrefs.SetString("backendServer", backendServer);
         PlayerPrefs.SetString("gamificationServer", gamificationServer);
+        PlayerPrefs.SetString("sharingServer", SharingServer);
         PlayerPrefs.SetInt("language", (int)language);
         PlayerPrefs.Save();
         Debug.Log("Data saved");
@@ -104,7 +116,8 @@ public class InformationManager : Singleton<InformationManager>
     private void LoadValues()
     {
         BackendServer = PlayerPrefs.GetString("backendServer", "localhost");
-        gamificationServer = PlayerPrefs.GetString("gamificationServer", "localhost");
+        GamificationServer = PlayerPrefs.GetString("gamificationServer", "localhost");
+        SharingServer = PlayerPrefs.GetString("sharingServer", "localhost");
         this.Language = (Language)PlayerPrefs.GetInt("language", 0);
         Debug.Log("Loaded " + backendServer + ":" + portBackend);
         Debug.Log("Language: " + language);

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.Networking;
+using HoloToolkit.Sharing.Tests;
+using HoloToolkit.Sharing;
 
 public class AnnotationManager : MonoBehaviour
 {
@@ -30,7 +32,20 @@ public class AnnotationManager : MonoBehaviour
         Init();
         subPathLoad += objectInfo.ModelName;
         subPathSave += objectInfo.ModelName;
+        CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.AnnotationsUpdated] = RemoteAnnotationsUpdated;
         LoadAnnotations();
+    }
+
+    private void RemoteAnnotationsUpdated(NetworkInMessage msg)
+    {
+        if (msg.ReadInt64() != SharingStage.Instance.Manager.GetLocalUser().GetID())
+        {
+            string modelName = msg.ReadString();
+            if (modelName == objectInfo.ModelName)
+            {
+                LoadAnnotations();
+            }
+        }
     }
 
     /// <summary>
@@ -92,6 +107,8 @@ public class AnnotationManager : MonoBehaviour
     {
         annotations.Add(annotationContainer.Annotation);
         annotationContainers.Add(annotationContainer);
+        Save();
+        CustomMessages.Instance.SendAnnotationsUpdated(objectInfo.ModelName);
     }
 
     /// <summary>
@@ -102,6 +119,8 @@ public class AnnotationManager : MonoBehaviour
     {
         annotations.Remove(annotationContainer.Annotation);
         annotationContainers.Remove(annotationContainer);
+        Save();
+        CustomMessages.Instance.SendAnnotationsUpdated(objectInfo.ModelName);
     }
 
     public virtual void NotifyAnnotationEdited(Annotation updatedAnnotation)
@@ -156,10 +175,6 @@ public class AnnotationManager : MonoBehaviour
             JsonAnnotationArray array = JsonUtility.FromJson<JsonAnnotationArray>(res.downloadHandler.text);
             annotations = array.array;
             ShowAllAnnotations();
-        }
-        else
-        {
-            MessageBox.Show(LocalizationManager.Instance.ResolveString("Could not load the annotations"), MessageBoxType.ERROR);
         }
     }
 

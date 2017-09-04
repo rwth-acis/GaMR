@@ -14,15 +14,20 @@ public class ModelLoadManager
     public string baseUrl = "/resources/model/";
     private Shader shader;
     private GameObject boundingBoxPrefab;
+    public Vector3 spawnPosition;
     public Vector3 spawnEulerAngles;
+    public Transform globalSpawnParent;
     private X3DObj x3dObject;
 
     private Action callback;
 
-    public ModelLoadManager()
+    public ModelLoadManager(Vector3 spawnPosition, Transform globalSpawnParent)
     {
         shader = ModelLoadSettings.Instance.shader;
         boundingBoxPrefab = ModelLoadSettings.Instance.boundingBox;
+        spawnEulerAngles = new Vector3(0, 180, 0);
+        this.spawnPosition = spawnPosition;
+        this.globalSpawnParent = globalSpawnParent;
     }
 
     /// <summary>
@@ -73,8 +78,13 @@ public class ModelLoadManager
         content.transform.parent = contentHolder;
 
         // set the correct position and rotation
-        box.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 2.5f;
+        box.transform.position = spawnPosition;
         box.transform.localRotation = Quaternion.Euler(spawnEulerAngles);
+
+        if (globalSpawnParent != null)
+        {
+            box.transform.parent = globalSpawnParent;
+        }
     }
 
     private void CreateGamificationGame(string modelName)

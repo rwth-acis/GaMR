@@ -32,6 +32,7 @@ public class StartMenu : BaseMenu
             menuEnabled = value;
             settingsButton.ButtonEnabled = value;
             loginButton.ButtonEnabled = value;
+            authorButton.ButtonEnabled = value;
         }
     }
 
@@ -99,6 +100,7 @@ public class StartMenu : BaseMenu
 
     protected override void OnDestroy()
     {
+        base.OnDestroy();
         LastPosition = transform.parent.position;
         LastRotation = transform.parent.rotation;
     }

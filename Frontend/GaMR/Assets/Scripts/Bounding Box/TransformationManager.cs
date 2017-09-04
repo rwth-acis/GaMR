@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using HoloToolkit.Sharing.Tests;
 
 /// <summary>
 /// Transforms the attached gameobject
@@ -15,10 +16,40 @@ public class TransformationManager : MonoBehaviour
     [Tooltip("The minimum size of the gameObject's bounds")]
     public Vector3 minSize;
     private Rigidbody ridgidBody;
+    private BoundingBoxInfo boxInfo;
+    public static Dictionary<int, TransformationManager> instances;
 
     private void Start()
     {
         ridgidBody = GetComponent<Rigidbody>();
+        boxInfo = GetComponentInChildren<BoundingBoxInfo>();
+        if (boxInfo == null)
+        {
+            Debug.LogError("Bounding Box needs to have a BoundingBoxInfo");
+        }
+        if (instances == null)
+        {
+            instances = new Dictionary<int, TransformationManager>();
+        }
+        instances.Add(boxInfo.BoxId, this);
+    }
+
+    private void OnDestroy()
+    {
+        instances.Remove(boxInfo.BoxId);
+    }
+
+    public void OnRemoteTransformChanged(Vector3 newPosition, Quaternion newRotation, Vector3 newScale)
+    {
+        transform.localPosition = newPosition;
+        transform.localRotation = newRotation;
+        transform.localScale = newScale;
+    }
+
+    private void UpdateTransformToRemote()
+    {
+        CustomMessages.Instance.SendBoundingBoxTransform(boxInfo.BoxId, transform.localPosition, transform.localRotation, transform.localScale);
+        Debug.Log("Sending " + boxInfo.BoxId.ToString() + ", " + transform.localPosition.ToString() + ", " + transform.localRotation.eulerAngles.ToString() + ", " + transform.localScale.ToString());
     }
 
     public void Scale(Vector3 scaleVector)
@@ -34,11 +65,14 @@ public class TransformationManager : MonoBehaviour
         {
             transform.localScale = newScale;
         }
+
+        UpdateTransformToRemote();
     }
 
     public void Rotate(Vector3 axis, float angle)
     {
         transform.Rotate(axis, angle, Space.World);
+        UpdateTransformToRemote();
     }
 
     public void Translate(Vector3 movement)
@@ -51,6 +85,8 @@ public class TransformationManager : MonoBehaviour
         {
             transform.Translate(movement, Space.World);
         }
+
+        UpdateTransformToRemote();
     }
 
     private IEnumerator SmoothRotate(Vector3 axis, float angle, float time)
@@ -70,6 +106,7 @@ public class TransformationManager : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         transform.localRotation = targetRotation;
+        UpdateTransformToRemote();
     }
 
     private IEnumerator SmoothScale(Vector3 scaleVector, float time)
@@ -89,6 +126,7 @@ public class TransformationManager : MonoBehaviour
         }
 
         transform.localScale = targetScale;
+        UpdateTransformToRemote();
     }
 
     // ---------------------------------

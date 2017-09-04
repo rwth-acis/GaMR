@@ -256,6 +256,7 @@ GameObject:
   - component: {fileID: 114047741941808338}
   - component: {fileID: 114016171755315338}
   - component: {fileID: 114310506189927054}
+  - component: {fileID: 114254530517450238}
   m_Layer: 0
   m_Name: Bounding Box
   m_TagString: Untagged
@@ -3211,6 +3212,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fadeDuration: 1
   minimumAlpha: 0.25
+--- !u!114 &114254530517450238
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1446011052128680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61693a403637dd94e88e7f4092ec1a0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114296212772232504
 MonoBehaviour:
   m_ObjectHideFlags: 1

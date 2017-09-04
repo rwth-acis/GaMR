@@ -13,7 +13,6 @@ public class MainMenuActions : MonoBehaviour
 
     public GameObject carouselMenu;
     public GameObject carouselMenuStyle;
-    ModelLoadManager modelLoadManager;
     Menu menu;
     static GameObject carouselInstance;
 
@@ -23,7 +22,6 @@ public class MainMenuActions : MonoBehaviour
     /// </summary>
     public void Start()
     {
-        modelLoadManager = new ModelLoadManager();
         menu = GetComponent<Menu>();
         if (carouselInstance != null)
         {
@@ -170,7 +168,7 @@ public class MainMenuActions : MonoBehaviour
     /// <param name="name">The name of the menu item</param>
     public void OnCarouselItemClicked(string name)
     {
-        modelLoadManager.Load(name);
+        ModelSynchronizer.Instance.LoadModelForAll(name);
         Destroy(carouselInstance);
         carouselInstance = null;
     }
