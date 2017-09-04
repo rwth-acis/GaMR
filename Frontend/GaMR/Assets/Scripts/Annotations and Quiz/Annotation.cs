@@ -13,6 +13,7 @@ public class Annotation {
     private Vector3 position;
     [SerializeField]
     private string text;
+    public bool Answered { get; set; }
 
     /// <summary>
     /// creates an annotation

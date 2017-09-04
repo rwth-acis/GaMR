@@ -10,6 +10,8 @@ public class CirclePositioner : MonoBehaviour {
 
     [Tooltip("The center of the circle")]
     public Transform boundingBox;
+    public PositioningMode positioningMode = PositioningMode.FRONT;
+    public float distanceFactor = 1.2f;
     private float distance;
 
     // the velocity at which the menu is currently moving to its target position
@@ -22,21 +24,43 @@ public class CirclePositioner : MonoBehaviour {
     /// </summary>
 	void Update () {
         // calculate the maximum distance to encapsualte the object
-        distance = 1.2f * new Vector2(boundingBox.localScale.x/2, boundingBox.localScale.z/2).magnitude;
+        distance = distanceFactor * new Vector2(boundingBox.localScale.x/2, boundingBox.localScale.z/2).magnitude;
         // get the vector from the center to the camera 
         // and add it (scaled by distance) to the position of the center to get the point on the circle
         Vector3 centerToCamera = Camera.main.transform.position - boundingBox.position;
-        Vector3 pos = boundingBox.position + distance * new Vector3(
-            centerToCamera.normalized.x,
-            0,
-            centerToCamera.normalized.z);
-        transform.position = pos; // directly jumping to the position
-        //// dampen the movement a bit so that is smoothly transitions to the position
-        //// instead of always being there
-        //transform.position = Vector3.SmoothDamp(transform.position, pos, ref velocity, smoothTime);
+        if (positioningMode == PositioningMode.FRONT)
+        {
+            Vector3 pos = boundingBox.position + distance * new Vector3(
+                centerToCamera.normalized.x,
+                0,
+                centerToCamera.normalized.z);
+            transform.position = pos; // directly jumping to the position
+                                      //// dampen the movement a bit so that is smoothly transitions to the position
+                                      //// instead of always being there
+                                      //transform.position = Vector3.SmoothDamp(transform.position, pos, ref velocity, smoothTime);
 
-        transform.rotation = Quaternion.LookRotation(centerToCamera);
-        transform.Rotate(new Vector3(0, 90, 0));
+            transform.rotation = Quaternion.LookRotation(centerToCamera);
+            transform.Rotate(new Vector3(0, 90, 0));
+        }
+        else if (positioningMode == PositioningMode.RIGHT)
+        {
+            Vector3 rightVector = -1 * Vector3.Cross(Vector3.up, centerToCamera);
+            Vector3 pos = boundingBox.position + distance * new Vector3(
+                rightVector.normalized.x,
+                0,
+                rightVector.normalized.z);
+            transform.position = pos; // directly jumping to the position
+                                      //// dampen the movement a bit so that is smoothly transitions to the position
+                                      //// instead of always being there
+                                      //transform.position = Vector3.SmoothDamp(transform.position, pos, ref velocity, smoothTime);
+
+            // rotation needs to be handeled by the thing itself
+        }
 
 	}
+}
+
+public enum PositioningMode
+{
+    FRONT, RIGHT
 }

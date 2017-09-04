@@ -6,7 +6,6 @@ using System;
 
 public class Thumbnail : FocusableButton
 {
-    private bool visible;
     private GameObject frameObject;
 
     private string modelName;
@@ -27,16 +26,6 @@ public class Thumbnail : FocusableButton
         if (InstantiationParent != null)
         {
             InstantiationParent.OnThumbnailClicked(modelName);
-        }
-    }
-
-    public bool Visible
-    {
-        get { return visible; }
-        set
-        {
-            visible = value;
-            gameObject.SetActive(value);
         }
     }
 

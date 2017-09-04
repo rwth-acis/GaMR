@@ -12,14 +12,14 @@ public class QuizManager : AnnotationManager
     protected new string subPathLoad = "/resources/quiz/load/";
     protected new string subPathSave = "/resources/quiz/save/";
 
-    private AnnotationContainer currentContainer;
-    private CustomMenuItem currentMenuItem;
+    public string CurrentlySelectedName { get; set; }
     private ObjectInfo objInfo;
     private GamificationManager gamificationManager;
     private GameObject quizObject;
     private Menu availableNames; // only used in the mode "name to position"
     private ProgressBar progressBar;
     List<int> freeIndices;
+    List<IViewEvents> listeners = new List<IViewEvents>();
 
     BadgeManager badgeManager;
 
@@ -230,8 +230,6 @@ public class QuizManager : AnnotationManager
     /// </summary>
     private void InitializeQuiz()
     {
-        int value = UnityEngine.Random.Range(0, 2);
-
         // get the boundingBoxHook: it always faces the player
         // this will be used to correctly align the quiz options and the progress bar
         Transform boundingBoxHook = gameObject.transform.parent.parent.Find("FacePlayer");
@@ -240,50 +238,51 @@ public class QuizManager : AnnotationManager
         boundingBoxHook.localRotation = Quaternion.identity;
 
 
-        if (value == 0)
+        if (PositionToName == true)
         {
-            PositionToName = true;
             MessageBox.Show(LocalizationManager.Instance.ResolveString("Click on the annotations and enter the name of the corresponding part"), MessageBoxType.INFORMATION);
         }
         else
         {
-            PositionToName = false;
             MessageBox.Show(LocalizationManager.Instance.ResolveString("Connect the names with their corresponding position"), MessageBoxType.INFORMATION);
-            quizObject = new GameObject("Quiz");
-            quizObject.AddComponent<RotateToCameraOnYAxis>();
-            quizObject.transform.parent = boundingBoxHook;
-            quizObject.transform.position = gameObject.transform.position + new Vector3(objInfo.Size.x, objInfo.Size.y / 2, 0);
 
-            availableNames = quizObject.AddComponent<Menu>();
-            availableNames.rootMenu = new List<CustomMenuItem>();
-            availableNames.alignment = Direction.VERTICAL;
-            availableNames.markOnlyOne = true;
-            availableNames.defaultMenuStyle = (GameObject)Resources.Load("QuizItem");
+            transform.parent.parent.GetComponentInChildren<QuizMenuSpawner>().enabled = true;
 
-            InitializeFreeIndices();
+            //quizObject = new GameObject("Quiz");
+            //quizObject.AddComponent<RotateToCameraOnYAxis>();
+            //quizObject.transform.parent = boundingBoxHook;
+            //quizObject.transform.position = gameObject.transform.position + new Vector3(objInfo.Size.x, objInfo.Size.y / 2, 0);
 
-            // only take 5 questions at first
-            for (int i = 0; i < 5; i++)
-            {
-                CustomMenuItem item = quizObject.AddComponent<CustomMenuItem>();
-                item.Init(null, null, false);
+            //availableNames = quizObject.AddComponent<Menu>();
+            //availableNames.rootMenu = new List<CustomMenuItem>();
+            //availableNames.alignment = Direction.VERTICAL;
+            //availableNames.markOnlyOne = true;
+            //availableNames.defaultMenuStyle = (GameObject)Resources.Load("QuizItem");
 
-                int randomIndex = UnityEngine.Random.Range(0, freeIndices.Count);
-                int annotationIndex = freeIndices[randomIndex];
+            //InitializeFreeIndices();
+
+            //// only take 5 questions at first
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    CustomMenuItem item = quizObject.AddComponent<CustomMenuItem>();
+            //    item.Init(null, null, false);
+
+            //    int randomIndex = UnityEngine.Random.Range(0, freeIndices.Count);
+            //    int annotationIndex = freeIndices[randomIndex];
 
 
-                string annotationText = annotations[annotationIndex].Text;
-                item.Text = annotationText;
+            //    string annotationText = annotations[annotationIndex].Text;
+            //    item.Text = annotationText;
 
-                freeIndices.RemoveAt(randomIndex);
+            //    freeIndices.RemoveAt(randomIndex);
 
-                string index = annotationIndex.ToString();
-                item.MenuItemName = index;
-                item.subMenu = new List<CustomMenuItem>();
-                item.onClickEvent.AddListener(OnItemClicked);
-                item.markOnClick = true;
-                availableNames.rootMenu.Add(item);
-            }
+            //    string index = annotationIndex.ToString();
+            //    item.MenuItemName = index;
+            //    item.subMenu = new List<CustomMenuItem>();
+            //    item.onClickEvent.AddListener(OnItemClicked);
+            //    item.markOnClick = true;
+            //    availableNames.rootMenu.Add(item);
+            //}
         }
 
         // in both cases: create progress bar
@@ -366,44 +365,15 @@ public class QuizManager : AnnotationManager
     }
 
     /// <summary>
-    /// Called when an item is clicked
-    /// </summary>
-    /// <param name="name">The name of the item</param>
-    private void OnItemClicked(string name)
-    {
-        // text should be the index since the item was initialized this way
-        int index = int.Parse(name);
-        currentContainer = annotationContainers[index];
-        // availableNames is not null or else this could not be called
-        currentMenuItem = availableNames.GetItem(name);
-    }
-
-    /// <summary>
     /// Evaluates a question by comparing the selected annotation with solution annotation currentContainer
     /// </summary>
     /// <param name="annotation">The selected annotation to compare</param>
     /// <returns></returns>
     public bool EvaluateQuestion(Annotation annotation)
     {
-        if (currentContainer != null && currentMenuItem != null)
+        if (CurrentlySelectedName != null && CurrentlySelectedName != "")
         {
-            bool res = EvaluateQuestion(annotation, currentContainer.Annotation.Text);
-            if (res) // answer was correct
-            {
-                // if there are still annotations to ask => change the menu item
-                if (freeIndices.Count > 0)
-                {
-                    int randomIndex = UnityEngine.Random.Range(0, freeIndices.Count);
-                    currentMenuItem.Text = annotations[freeIndices[randomIndex]].Text;
-                    currentMenuItem.MenuItemName = freeIndices[randomIndex].ToString();
-                    currentMenuItem.Marked = false;
-                    freeIndices.RemoveAt(randomIndex);
-                }
-                else
-                {
-                    currentMenuItem.Destroy();
-                }
-            }
+            bool res = EvaluateQuestion(annotation, CurrentlySelectedName);
             return res;
         }
         else
@@ -426,6 +396,12 @@ public class QuizManager : AnnotationManager
             MessageBox.Show(LocalizationManager.Instance.ResolveString("Correct"), MessageBoxType.SUCCESS);
             correctlyAnswered++;
             progressBar.Progress = (float)correctlyAnswered / annotations.Count;
+
+            annotation.Answered = true;
+            InformListeners();
+            CurrentlySelectedName = "";
+
+
             GamificationFramework.Instance.TriggerAction(gamificationManager.gameId, GameAction.CreateActionId(annotation, QuizName));
 
             if (progressBar.Progress == 1)
@@ -441,6 +417,24 @@ public class QuizManager : AnnotationManager
         {
             MessageBox.Show(LocalizationManager.Instance.ResolveString("Incorrect"), MessageBoxType.ERROR);
             return false;
+        }
+    }
+
+    public void AddListener(IViewEvents listener)
+    {
+        listeners.Add(listener);
+    }
+
+    public void RemoveListener(IViewEvents listener)
+    {
+        listeners.Remove(listener);
+    }
+
+    private void InformListeners()
+    {
+        foreach(IViewEvents listener in listeners)
+        {
+            listener.UpdateView();
         }
     }
 

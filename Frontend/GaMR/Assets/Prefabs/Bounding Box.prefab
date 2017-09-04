@@ -579,6 +579,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4797790443620438}
   - component: {fileID: 114357758900972898}
+  - component: {fileID: 114326671129343348}
   m_Layer: 0
   m_Name: MenuCenter
   m_TagString: Untagged
@@ -3239,6 +3240,18 @@ MonoBehaviour:
   PlaceParentOnTap: 0
   ParentGameObjectToPlace: {fileID: 0}
   IsBeingPlaced: 1
+--- !u!114 &114326671129343348
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1742649434770572}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dadd1f0a994d5b3448cdd43a1d7f455a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnMenu: {fileID: 1612137446073796, guid: 104bd9604379ee542995a523cca216e4, type: 2}
 --- !u!114 &114357758900972898
 MonoBehaviour:
   m_ObjectHideFlags: 1

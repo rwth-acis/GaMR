@@ -17,6 +17,7 @@ public class Button : MonoBehaviour, IInputClickHandler
     public Action<Button> OnButtonPressed;
     protected string text;
     private TextMesh textMesh;
+    private bool visible;
 
     public int Data { get; set; } // custom data
 
@@ -68,5 +69,16 @@ public class Button : MonoBehaviour, IInputClickHandler
                 textMesh.text = text;
             }
         }
+    }
+
+    public bool Visible
+    {
+        get { return visible; }
+        set
+        {
+            visible = value;
+            gameObject.SetActive(value);
+        }
+
     }
 }

@@ -17,7 +17,7 @@ public class BaseMenu : MonoBehaviour, ILanguageUpdater
         LocalizationManager.Instance.AddUpdateReceiver(this);
     }
 
-    private void OnDestroy()
+    protected virtual void OnDestroy()
     {
         LocalizationManager.Instance.RemoveUpdateReceiver(this);
     }
