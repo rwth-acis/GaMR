@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using HoloToolkit.Sharing.Tests;
+using HoloToolkit.Sharing;
 
 /// <summary>
 /// Transforms the attached gameobject
@@ -17,11 +18,13 @@ public class TransformationManager : MonoBehaviour
     public Vector3 minSize;
     private Rigidbody ridgidBody;
     private BoundingBoxInfo boxInfo;
-    public static Dictionary<int, TransformationManager> instances;
+    private CustomTapToPlace tapToPlace;
+    public static Dictionary<string, TransformationManager> instances;
 
     private void Start()
     {
         ridgidBody = GetComponent<Rigidbody>();
+        tapToPlace = GetComponent<CustomTapToPlace>();
         boxInfo = GetComponentInChildren<BoundingBoxInfo>();
         if (boxInfo == null)
         {
@@ -29,14 +32,14 @@ public class TransformationManager : MonoBehaviour
         }
         if (instances == null)
         {
-            instances = new Dictionary<int, TransformationManager>();
+            instances = new Dictionary<string, TransformationManager>();
         }
-        instances.Add(boxInfo.BoxId, this);
+        instances.Add(boxInfo.Id.ToString(), this);
     }
 
     private void OnDestroy()
     {
-        instances.Remove(boxInfo.BoxId);
+        instances.Remove(boxInfo.Id.ToString());
     }
 
     public void OnRemoteTransformChanged(Vector3 newPosition, Quaternion newRotation, Vector3 newScale)
@@ -48,8 +51,8 @@ public class TransformationManager : MonoBehaviour
 
     private void UpdateTransformToRemote()
     {
-        CustomMessages.Instance.SendBoundingBoxTransform(boxInfo.BoxId, transform.localPosition, transform.localRotation, transform.localScale);
-        Debug.Log("Sending " + boxInfo.BoxId.ToString() + ", " + transform.localPosition.ToString() + ", " + transform.localRotation.eulerAngles.ToString() + ", " + transform.localScale.ToString());
+        CustomMessages.Instance.SendBoundingBoxTransform(boxInfo.Id, transform.localPosition, transform.localRotation, transform.localScale);
+        Debug.Log("Sending " + boxInfo.Id.ToString() + ", " + transform.localPosition.ToString() + ", " + transform.localRotation.eulerAngles.ToString() + ", " + transform.localScale.ToString());
     }
 
     public void Scale(Vector3 scaleVector)
@@ -150,5 +153,17 @@ public class TransformationManager : MonoBehaviour
     public void RotateCCW()
     {
         StartCoroutine(SmoothRotate(Vector3.up, -45, 1f));
+    }
+
+
+    // ---------------------------------
+    // synchronization with the TapToPlace script
+
+    private void Update()
+    {
+        if (tapToPlace.IsBeingPlaced)
+        {
+            UpdateTransformToRemote();
+        }
     }
 }

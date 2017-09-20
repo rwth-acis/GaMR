@@ -4,23 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using HoloToolkit.Sharing;
 using System;
+using HoloToolkit.Unity.InputModule;
 
 public class BoundingBoxInfo : MonoBehaviour
 {
-
-    private static int id = 0;
-    private int localId;
     private ObjectInfo objectInfo;
 
-    private void Awake()
+    public BoundingBoxId Id
     {
-        localId = id;
-        id++;
-    }
-
-    public int BoxId
-    {
-        get { return localId; }
+        get;set;
     }
 
     public ObjectInfo ObjectInfo
@@ -35,8 +27,10 @@ public class BoundingBoxInfo : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
+
+
+    public BoundingBoxMenu Menu
     {
-        CustomMessages.Instance.SendModelDelete(localId);
+        get;set;
     }
 }

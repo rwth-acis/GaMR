@@ -10,6 +10,8 @@ public class ThumbnailInstantiation : BaseMenu
     public GameObject startPosition;
     [SerializeField]
     private GameObject settingsMenu;
+    [SerializeField]
+    private GameObject badgeOverviewMenu;
 
     private Vector3 size;
     private List<Thumbnail> thumbnails;
@@ -45,6 +47,7 @@ public class ThumbnailInstantiation : BaseMenu
             }
             logoutButton.ButtonEnabled = menuEnabled;
             settingsButton.ButtonEnabled = menuEnabled;
+            badgeButton.ButtonEnabled = menuEnabled;
         }
     }
 
@@ -80,9 +83,8 @@ public class ThumbnailInstantiation : BaseMenu
         upButton.OnPressed = PageUp;
         downButton.OnPressed = PageDown;
         settingsButton.OnPressed = ShowSettings;
+        badgeButton.OnPressed = ShowBadgeOverview;
         logoutButton.OnPressed = Logout;
-
-        badgeButton.ButtonEnabled = false;
 
         OnUpdateLanguage();
 
@@ -127,6 +129,21 @@ public class ThumbnailInstantiation : BaseMenu
         settingsInstance.transform.rotation = transform.rotation;
         settingsInstance.transform.localPosition = Vector3.zero;
         settingsInstance.transform.Translate(new Vector3(-0.1f, 0.01f, 0.01f));
+        MenuEnabled = false;
+    }
+
+    private void ShowBadgeOverview()
+    {
+        GameObject badgeOverviewInstance = Instantiate(badgeOverviewMenu);
+        BadgeOverviewMenu badgeOverview = badgeOverviewInstance.GetComponent<BadgeOverviewMenu>();
+        badgeOverview.OnCloseAction = () =>
+        {
+            MenuEnabled = true;
+        };
+        badgeOverviewInstance.transform.parent = transform;
+        badgeOverviewInstance.transform.rotation = transform.rotation;
+        badgeOverviewInstance.transform.localPosition = Vector3.zero;
+        badgeOverviewInstance.transform.Translate(new Vector3(-0.1f, 0.01f, 0.01f));
         MenuEnabled = false;
     }
 

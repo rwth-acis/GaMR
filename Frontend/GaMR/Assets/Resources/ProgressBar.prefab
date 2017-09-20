@@ -119,6 +119,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4820122446597736}
   - component: {fileID: 114534134562770816}
+  - component: {fileID: 114906716288634828}
   m_Layer: 0
   m_Name: ProgressBar
   m_TagString: Untagged
@@ -213,7 +214,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1958757300102462}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.18, z: 3}
+  m_LocalPosition: {x: 5.185402, y: -0.7095, z: 8.255853}
   m_LocalScale: {x: 0.18, y: 0.28, z: 0.18}
   m_Children:
   - {fileID: 4365834301178542}
@@ -396,6 +397,21 @@ MonoBehaviour:
   hull: {fileID: 1803797243678802}
   upperCap: {fileID: 1807504614841288}
   progress: 0
+--- !u!114 &114906716288634828
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1958757300102462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b32f22edb6ae6084dabe10c120870645, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boundingBox: {fileID: 0}
+  positioningMode: 2
+  distanceFactor: 1.2
+  rotationOffset: {x: 0, y: 0, z: 0}
 --- !u!136 &136987477445133694
 CapsuleCollider:
   m_ObjectHideFlags: 1

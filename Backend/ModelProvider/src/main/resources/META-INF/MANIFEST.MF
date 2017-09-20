@@ -1,18 +1,18 @@
 Manifest-Version: 1.0
-Class-Path: hk2-locator-2.2.0.jar javax.annotation-api-1.2.jar hk2-uti
- ls-2.2.0.jar jackson-databind-2.6.3.jar org.eclipse.persistence.core-
- 2.5.0.jar jersey-container-jetty-http-2.7.jar javax.inject-2.2.0.jar 
- jetty-continuation-9.1.1.v20140108.jar org.eclipse.persistence.asm-2.
- 5.0.jar javax.ws.rs-api-2.0.jar jackson-core-2.6.3.jar jetty-servlet-
- 9.2.3.v20140905.jar jersey-entity-filtering-2.7.jar jetty-server-9.2.
- 3.v20140905.jar org.eclipse.persistence.antlr-2.5.0.jar jersey-media-
- moxy-2.7.jar org.eclipse.persistence.moxy-2.5.0.jar hk2-api-2.2.0.jar
-  javax.servlet-api-3.1.0.jar jetty-http-9.2.3.v20140905.jar aopallian
- ce-repackaged-2.2.0.jar jersey-server-2.7.jar jersey-client-2.7.jar j
- ersey-guava-2.7.jar jersey-common-2.7.jar jackson-annotations-2.6.0.j
- ar osgi-resource-locator-1.0.1.jar jetty-util-9.2.3.v20140905.jar jet
- ty-io-9.2.3.v20140905.jar javassist-3.18.1-GA.jar validation-api-1.1.
- 0.Final.jar jetty-security-9.2.3.v20140905.jar jersey-container-servl
- et-core-2.7.jar
-Main-Class: App
+Class-Path: jetty-io-9.2.3.v20140905.jar validation-api-1.1.0.Final.ja
+ r jersey-server-2.7.jar org.eclipse.persistence.asm-2.5.0.jar jersey-
+ container-servlet-core-2.7.jar javax.ws.rs-api-2.0.jar javax.inject-2
+ .2.0.jar hk2-locator-2.2.0.jar org.eclipse.persistence.antlr-2.5.0.ja
+ r javax.annotation-api-1.2.jar javax.servlet-api-3.1.0.jar jackson-an
+ notations-2.6.0.jar jersey-client-2.7.jar jackson-core-2.6.3.jar jett
+ y-security-9.2.3.v20140905.jar jersey-common-2.7.jar jetty-util-9.2.3
+ .v20140905.jar org.eclipse.persistence.core-2.5.0.jar javassist-3.18.
+ 1-GA.jar jetty-continuation-9.1.1.v20140108.jar jersey-guava-2.7.jar 
+ jersey-entity-filtering-2.7.jar jetty-server-9.2.3.v20140905.jar aopa
+ lliance-repackaged-2.2.0.jar org.eclipse.persistence.moxy-2.5.0.jar j
+ etty-http-9.2.3.v20140905.jar hk2-utils-2.2.0.jar jackson-databind-2.
+ 6.3.jar osgi-resource-locator-1.0.1.jar hk2-api-2.2.0.jar jetty-servl
+ et-9.2.3.v20140905.jar jersey-media-moxy-2.7.jar jersey-container-jet
+ ty-http-2.7.jar
+Main-Class: ModelProvider.App
 

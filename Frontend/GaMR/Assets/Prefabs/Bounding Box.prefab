@@ -255,8 +255,8 @@ GameObject:
   - component: {fileID: 114562445524153918}
   - component: {fileID: 114047741941808338}
   - component: {fileID: 114016171755315338}
-  - component: {fileID: 114310506189927054}
   - component: {fileID: 114254530517450238}
+  - component: {fileID: 114686613063575306}
   m_Layer: 0
   m_Name: Bounding Box
   m_TagString: Untagged
@@ -3236,22 +3236,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fadeDuration: 1
   minimumAlpha: 0.25
---- !u!114 &114310506189927054
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1446011052128680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbad991a9894486418e4988222483ef8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DefaultGazeDistance: 2
-  SavedAnchorFriendlyName: SavedAnchorFriendlyName
-  PlaceParentOnTap: 0
-  ParentGameObjectToPlace: {fileID: 0}
-  IsBeingPlaced: 1
 --- !u!114 &114326671129343348
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3313,6 +3297,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2529acebac81ae141adfbb18901d22d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114686613063575306
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1446011052128680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42709b98a827165449bc0502a7a7f3fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultGazeDistance: 2
+  SavedAnchorFriendlyName: SavedAnchorFriendlyName
+  PlaceParentOnTap: 0
+  ParentGameObjectToPlace: {fileID: 0}
+  IsBeingPlaced: 1
 --- !u!114 &114693266053701848
 MonoBehaviour:
   m_ObjectHideFlags: 1

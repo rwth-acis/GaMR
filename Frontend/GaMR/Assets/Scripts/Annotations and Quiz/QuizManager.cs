@@ -14,7 +14,9 @@ public class QuizManager : AnnotationManager
 
     public string CurrentlySelectedName { get; set; }
     public Annotation CurrentlySelectedAnnotation { get; set; }
-    public AnnotationContainer CurrentlySelectedAnnotationContainer { get { return currentlySelectedAnnotationContainer; }
+    public AnnotationContainer CurrentlySelectedAnnotationContainer
+    {
+        get { return currentlySelectedAnnotationContainer; }
         set
         {
             if (currentlySelectedAnnotationContainer != null)
@@ -152,7 +154,7 @@ public class QuizManager : AnnotationManager
 
     private void EnsureActionsForAnnotations(Quest quest)
     {
-        for (int i=0;i<annotations.Count;i++)
+        for (int i = 0; i < annotations.Count; i++)
         {
             int indexForLambda = i;
             GameAction action = GameAction.FromAnnotation(annotations[i], QuizName);
@@ -162,7 +164,7 @@ public class QuizManager : AnnotationManager
                 {
                     if (resCode != 201)
                     {
-                        Debug.Log("Could not create action for " + annotations[indexForLambda].Text + "\nCode: " +resCode);
+                        Debug.Log("Could not create action for " + annotations[indexForLambda].Text + "\nCode: " + resCode);
                     }
                 }
                 );
@@ -175,7 +177,7 @@ public class QuizManager : AnnotationManager
     /// <summary>
     /// Saves the quiz if the PlayerType is not STUDENT
     /// </summary>
-    protected override void Save()
+    protected override void Save(bool synchronize)
     {
         if (InformationManager.Instance.playerType != PlayerType.STUDENT)
         {
@@ -184,10 +186,7 @@ public class QuizManager : AnnotationManager
             array.array = annotations;
 
             string jsonPost = JsonUtility.ToJson(array);
-            if (restManager != null)
-            {
-                restManager.POST(infoManager.FullBackendAddress + subPathSave + QuizName, jsonPost);
-            }
+            RestManager.Instance.POST(infoManager.FullBackendAddress + subPathSave + QuizName, jsonPost);
 
             // also save the gamification
             SaveGamification();
@@ -204,7 +203,7 @@ public class QuizManager : AnnotationManager
     /// </summary>
     protected override void LoadAnnotations()
     {
-        restManager.GET(infoManager.FullBackendAddress + subPathLoad + QuizName, QuizLoaded, null);
+        RestManager.Instance.GET(infoManager.FullBackendAddress + subPathLoad + QuizName, QuizLoaded, null);
     }
 
     /// <summary>
@@ -247,14 +246,6 @@ public class QuizManager : AnnotationManager
     /// </summary>
     private void InitializeQuiz()
     {
-        // get the boundingBoxHook: it always faces the player
-        // this will be used to correctly align the quiz options and the progress bar
-        Transform boundingBoxHook = gameObject.transform.parent.parent.Find("FacePlayer");
-        // reset the rotation in order to position the progress bar at the right point
-        Quaternion currentRotation = boundingBoxHook.localRotation;
-        boundingBoxHook.localRotation = Quaternion.identity;
-
-
         if (PositionToName == true)
         {
             MessageBox.Show(LocalizationManager.Instance.ResolveString("Click on the annotations and enter the name of the corresponding part"), MessageBoxType.INFORMATION);
@@ -269,12 +260,10 @@ public class QuizManager : AnnotationManager
         // in both cases: create progress bar
         GameObject progressBarObject = (GameObject)Instantiate(Resources.Load("ProgressBar"));
 
-        progressBarObject.transform.parent = boundingBoxHook;
+        Transform boundingBoxHook = gameObject.transform.parent.parent.Find("MenuCenter");
 
-        progressBarObject.transform.position = gameObject.transform.position + new Vector3(-objInfo.Size.x, -objInfo.Size.y / 2f, 0);
-
-        // set the rotation to the value it had before
-        boundingBoxHook.localRotation = currentRotation;
+        CirclePositioner positioner = progressBarObject.GetComponent<CirclePositioner>();
+        positioner.boundingBox = boundingBoxHook;
 
         progressBar = progressBarObject.GetComponent<ProgressBar>();
 
@@ -432,7 +421,7 @@ public class QuizManager : AnnotationManager
 
     private void InformListeners()
     {
-        foreach(IViewEvents listener in listeners)
+        foreach (IViewEvents listener in listeners)
         {
             listener.UpdateView();
         }
@@ -440,7 +429,7 @@ public class QuizManager : AnnotationManager
 
     private void ShowListeners()
     {
-        foreach(IViewEvents listener in listeners)
+        foreach (IViewEvents listener in listeners)
         {
             listener.Show();
         }
@@ -448,7 +437,7 @@ public class QuizManager : AnnotationManager
 
     private void CloseListeners()
     {
-        foreach(IViewEvents listener in listeners)
+        foreach (IViewEvents listener in listeners)
         {
             listener.Close();
         }

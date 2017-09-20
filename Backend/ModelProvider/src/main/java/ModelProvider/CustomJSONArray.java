@@ -1,3 +1,5 @@
+package ModelProvider;
+
 /**
  * Created by bened on 26.06.2017.
  */

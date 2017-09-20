@@ -143,7 +143,7 @@ namespace HoloToolkit.Sharing.Tests
             }
         }
 
-        public void SendBoundingBoxTransform(int boundingBoxId, Vector3 position, Quaternion rotation, Vector3 scale)
+        public void SendBoundingBoxTransform(BoundingBoxId boundingBoxId, Vector3 position, Quaternion rotation, Vector3 scale)
         {
             // If we are connected to a session, broadcast the bounding box transform
             if (serverConnection != null && serverConnection.IsConnected())
@@ -151,7 +151,8 @@ namespace HoloToolkit.Sharing.Tests
                 // Create an outgoing network message to contain all the info we want to send
                 NetworkOutMessage msg = CreateMessage((byte)TestMessageID.BoundingBoxTransform);
 
-                msg.Write(boundingBoxId);
+                msg.Write(boundingBoxId.UserId);
+                msg.Write(boundingBoxId.BoxId);
                 AppendVector3(msg, position);
                 AppendQuaternion(msg, rotation);
                 AppendVector3(msg, scale);
@@ -166,7 +167,7 @@ namespace HoloToolkit.Sharing.Tests
             }
         }
 
-        public void SendModelSpawn(string modelName, Vector3 position)
+        public void SendModelSpawn(string modelName, BoundingBoxId boundingBoxId, Vector3 position)
         {
             // If we are connected to a session, broadcast the bounding box transform
             if (serverConnection != null && serverConnection.IsConnected())
@@ -175,6 +176,7 @@ namespace HoloToolkit.Sharing.Tests
                 NetworkOutMessage msg = CreateMessage((byte)TestMessageID.ModelSpawn);
 
                 msg.Write(modelName);
+                msg.Write(boundingBoxId.BoxId);
                 AppendVector3(msg, position);
 
                 // Send the message as a broadcast, which will cause the server to forward it to all other users in the session.
@@ -186,7 +188,7 @@ namespace HoloToolkit.Sharing.Tests
             }
         }
 
-        public void SendModelDelete(int boundingBoxId)
+        public void SendModelDelete(BoundingBoxId boundingBoxId)
         {
             // If we are connected to a session, broadcast the bounding box transform
             if (serverConnection != null && serverConnection.IsConnected())
@@ -194,7 +196,8 @@ namespace HoloToolkit.Sharing.Tests
                 // Create an outgoing network message to contain all the info we want to send
                 NetworkOutMessage msg = CreateMessage((byte)TestMessageID.ModelDelete);
 
-                msg.Write(boundingBoxId);
+                msg.Write(boundingBoxId.UserId);
+                msg.Write(boundingBoxId.BoxId);
 
                 // Send the message as a broadcast, which will cause the server to forward it to all other users in the session.
                 serverConnection.Broadcast(

@@ -1962,3 +1962,5 @@ MonoBehaviour:
   startPosition: {fileID: 1316810235864828}
   settingsMenu: {fileID: 1468763365783004, guid: 396cd5013e9a23a4e9f92f56ca3772a6,
     type: 2}
+  badgeOverviewMenu: {fileID: 1959878982056070, guid: 1b9a53e2ce7ca3d498d3cc28c95ea17a,
+    type: 2}

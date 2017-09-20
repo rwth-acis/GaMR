@@ -729,7 +729,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clientId: c4ced10f-ce0f-4155-b6f7-a4c40ffa410c
-  debugToken: 
+  debugToken: eyJhbGciOiJSUzI1NiJ9.eyJhdWQiOlsiYzc1ODhlZmMtZjgzMS00ZTMxLTkyOGUtMGY0NmE5MWZiMzExIl0sImlzcyI6Imh0dHBzOlwvXC9hcGkubGVhcm5pbmctbGF5ZXJzLmV1XC9vXC9vYXV0aDJcLyIsImV4cCI6MTUwNTc1NDQ3NSwiaWF0IjoxNTA1NzUwODc1LCJqdGkiOiI1ZTQyZDE1NC1mNDgwLTRmYzYtYWQ5NS0zMmViZDBhYTlmNDcifQ.e5XQr8tRyr9j48C1DGzt8EIw84yslb31bMEyI8hZybHJx8pCmsjqFduQK9M8Za90fGC3zKyCYnj2eY-dUy-tWPSBOvwTRdoAsFkgmCZ00sJiV8P2TT-pGIf5TNf35FZn2JCIFW-nycRR-X_RyfHt6J2fECfCzZTZ-kyT4Xp4IgY
 --- !u!1001 &1409815912
 Prefab:
   m_ObjectHideFlags: 0
@@ -768,6 +768,11 @@ Prefab:
     - target: {fileID: 4351868763753624, guid: fded36c06cce94647894830e0244b476, type: 2}
       propertyPath: m_RootOrder
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 114959455298291914, guid: fded36c06cce94647894830e0244b476,
+        type: 2}
+      propertyPath: PlaceParentOnTap
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fded36c06cce94647894830e0244b476, type: 2}

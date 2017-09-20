@@ -1,4 +1,5 @@
-﻿using HoloToolkit.Unity.InputModule;
+﻿using HoloToolkit.Sharing.Tests;
+using HoloToolkit.Unity.InputModule;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,8 +22,9 @@ public class BoundingBoxActions : MonoBehaviour
     private Transform x3dParent;
     private CarouselMenu carouselInstance;
     private bool nextQuizPositionToName;
-    private TapToPlace tapToPlace;
+    private CustomTapToPlace tapToPlace;
     private TransformationManager transformationManager;
+    private BoundingBoxInfo info;
 
     /// <summary>
     /// Get the necessary components: the collider of the bounding box and its annotationManager
@@ -36,8 +38,9 @@ public class BoundingBoxActions : MonoBehaviour
         {
             objectInfo = x3dParent.GetComponent<ObjectInfo>();
         }
-        tapToPlace = GetComponent<TapToPlace>();
+        tapToPlace = GetComponent<CustomTapToPlace>();
         transformationManager = GetComponent<TransformationManager>();
+        info = GetComponent<BoundingBoxInfo>();
     }
 
     /// <summary>
@@ -77,6 +80,14 @@ public class BoundingBoxActions : MonoBehaviour
     /// </summary>
     public void DeleteObject()
     {
+        CustomMessages.Instance.SendModelDelete(info.Id);
+        DeleteLocalObject();
+    }
+
+    public void DeleteLocalObject()
+    {
+        Debug.Log("Destroy object");
+        info.Menu.Destroy();
         Destroy(gameObject);
     }
 

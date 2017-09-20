@@ -1,3 +1,5 @@
+package ModelProvider;
+
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -10,6 +12,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+
+import static ModelProvider.Resources.foo;
 
 /**
  * Created by bened on 11.06.2017.

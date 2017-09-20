@@ -1,13 +1,8 @@
-/**
+package X3DConverter; /**
  * Created by bened on 12.06.2017.
  */
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * This class models a X3D object
@@ -22,7 +17,7 @@ public class X3DPiece {
 
     /**
      * overall number of pieces in the whole model
-     * (this X3DPiece is only one piece in the model)
+     * (this X3DConverter.X3DPiece is only one piece in the model)
      */
     private int pieceCount;
 
@@ -48,8 +43,8 @@ public class X3DPiece {
     private String textureName;
 
     /**
-     * Creates a X3DPiece from the required strings
-     * This constructor converts the strings into arrays of @see Class#Vector and float.
+     * Creates a X3DConverter.X3DPiece from the required strings
+     * This constructor converts the strings into arrays of @see Class#X3DConverter.Vector and float.
      * Those are then stored in the object.
      * All numbers in the strings need to be separated by a space
      *
@@ -145,9 +140,9 @@ public class X3DPiece {
 //     * @param text The string to convert (should contain integers separated by spaces)
 //     * @return Array of faces
 //     */
-//    private Face[] convertStringToIndex(String text)
+//    private X3DConverter.Face[] convertStringToIndex(String text)
 //    {
-//        List<Face> faceList = new LinkedList<Face>();
+//        List<X3DConverter.Face> faceList = new LinkedList<X3DConverter.Face>();
 //        // split the string by spaces
 //        String[] parts = text.split("\\s+");
 //
@@ -165,14 +160,14 @@ public class X3DPiece {
 //            // if -1 is reached or at the end of the list => organize as face
 //            if (converted == -1 || i == parts.length -1)
 //            {
-//                Face f = new Face(face.toArray(new Integer[face.size()]));
+//                X3DConverter.Face f = new X3DConverter.Face(face.toArray(new Integer[face.size()]));
 //                faceList.add(f);
 //                // also reset the buffer which stores the indices
 //                face = new LinkedList<Integer>();
 //            }
 //        }
 //
-//        return faceList.toArray(new Face[faceList.size()]);
+//        return faceList.toArray(new X3DConverter.Face[faceList.size()]);
 //    }
 
     public Vector[] getVertexCoords() {

@@ -19,11 +19,12 @@ public class ModelLoadManager
     public Vector3 spawnEulerAngles;
     public Transform globalSpawnParent;
     private X3DObj x3dObject;
+    private BoundingBoxId boundingBoxId;
     private bool remotelySpawned;
 
     private Action callback;
 
-    public ModelLoadManager(Vector3 spawnPosition, Transform globalSpawnParent, bool remotelySpawned)
+    public ModelLoadManager(Vector3 spawnPosition, Transform globalSpawnParent, BoundingBoxId boundingBoxId, bool remotelySpawned)
     {
         shader = ModelLoadSettings.Instance.shader;
         boundingBoxPrefab = ModelLoadSettings.Instance.boundingBox;
@@ -31,6 +32,7 @@ public class ModelLoadManager
         this.spawnPosition = spawnPosition;
         this.globalSpawnParent = globalSpawnParent;
         this.remotelySpawned = remotelySpawned;
+        this.boundingBoxId = boundingBoxId;
     }
 
     /// <summary>
@@ -87,6 +89,9 @@ public class ModelLoadManager
         box.transform.position = spawnPosition;
         box.transform.localRotation = Quaternion.Euler(spawnEulerAngles);
 
+        BoundingBoxInfo info = box.GetComponent<BoundingBoxInfo>();
+        info.Id = boundingBoxId;
+
         if (globalSpawnParent != null)
         {
             box.transform.parent = globalSpawnParent;
@@ -94,7 +99,7 @@ public class ModelLoadManager
 
         if(remotelySpawned)
         {
-            TapToPlace tapToPlace = box.GetComponent<TapToPlace>();
+            CustomTapToPlace tapToPlace = box.GetComponent<CustomTapToPlace>();
             tapToPlace.IsBeingPlaced = false;
         }
     }

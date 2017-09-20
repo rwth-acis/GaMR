@@ -1,3 +1,5 @@
+package X3DConverter;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.w3c.dom.Document;

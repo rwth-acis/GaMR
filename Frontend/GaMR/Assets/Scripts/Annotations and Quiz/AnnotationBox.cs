@@ -64,6 +64,7 @@ public class AnnotationBox : MonoBehaviour
             caption.Text = input;
         }
         gameObject.SetActive(true);
+
     }
 
     /// <summary>

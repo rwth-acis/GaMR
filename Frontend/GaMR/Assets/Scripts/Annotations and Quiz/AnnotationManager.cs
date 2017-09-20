@@ -14,14 +14,13 @@ public class AnnotationManager : MonoBehaviour
     protected List<AnnotationContainer> annotationContainers;
     protected bool editMode = true;
     protected GazeManager gazeManager;
-    protected RestManager restManager;
     protected InformationManager infoManager;
     protected ObjectInfo objectInfo;
 
     protected string subPathLoad = "/resources/annotation/load/";
     protected string subPathSave = "/resources/annotation/save/";
 
-    protected float annotationSize = 5.5f;
+    protected float annotationSize = 7.5f;
 
     /// <summary>
     /// Initializes the annotation-manager
@@ -32,12 +31,12 @@ public class AnnotationManager : MonoBehaviour
         Init();
         subPathLoad += objectInfo.ModelName;
         subPathSave += objectInfo.ModelName;
-        CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.AnnotationsUpdated] = RemoteAnnotationsUpdated;
         LoadAnnotations();
     }
 
     private void RemoteAnnotationsUpdated(NetworkInMessage msg)
     {
+        Debug.Log("Received remote annotations update");
         if (msg.ReadInt64() != SharingStage.Instance.Manager.GetLocalUser().GetID())
         {
             string modelName = msg.ReadString();
@@ -56,7 +55,6 @@ public class AnnotationManager : MonoBehaviour
         annotations = new List<Annotation>();
         annotationContainers = new List<AnnotationContainer>();
         gazeManager = ComponentGetter.GetComponentOnGameobject<GazeManager>("InputManager");
-        restManager = ComponentGetter.GetComponentOnGameobject<RestManager>("RestManager");
         infoManager = ComponentGetter.GetComponentOnGameobject<InformationManager>("InformationManager");
         objectInfo = GetComponent<ObjectInfo>();
     }
@@ -66,7 +64,8 @@ public class AnnotationManager : MonoBehaviour
     /// </summary>
     protected virtual void LoadAnnotations()
     {
-        restManager.GET(infoManager.FullBackendAddress + subPathLoad, Load, null);
+        Debug.Log("Reloading annotations");
+        RestManager.Instance.GET(infoManager.FullBackendAddress + subPathLoad, Load, null);
     }
 
     /// <summary>
@@ -81,7 +80,7 @@ public class AnnotationManager : MonoBehaviour
             annotationObject.transform.position = gazeManager.HitPosition;
             annotationObject.transform.parent = gameObject.transform;
             annotationObject.transform.localScale = new Vector3(annotationSize, annotationSize, annotationSize);
-            
+
             // close currently opened annotation box
             if (AnnotationBox.currentlyOpenAnnotationBox != null)
             {
@@ -108,7 +107,6 @@ public class AnnotationManager : MonoBehaviour
         annotations.Add(annotationContainer.Annotation);
         annotationContainers.Add(annotationContainer);
         Save();
-        CustomMessages.Instance.SendAnnotationsUpdated(objectInfo.ModelName);
     }
 
     /// <summary>
@@ -120,27 +118,31 @@ public class AnnotationManager : MonoBehaviour
         annotations.Remove(annotationContainer.Annotation);
         annotationContainers.Remove(annotationContainer);
         Save();
-        CustomMessages.Instance.SendAnnotationsUpdated(objectInfo.ModelName);
     }
 
     public virtual void NotifyAnnotationEdited(Annotation updatedAnnotation)
     {
-
+        Save();
     }
 
     /// <summary>
     /// saves all annotations by communicating the list of annotations to the backend
     /// </summary>
-    protected virtual void Save()
+    protected virtual void Save(bool synchronize = true)
     {
         JsonAnnotationArray array = new JsonAnnotationArray();
         array.array = annotations;
 
         string jsonPost = JsonUtility.ToJson(array);
-        if (restManager != null)
-        {
-            restManager.POST(infoManager.FullBackendAddress + subPathSave, jsonPost);
-        }
+        RestManager.Instance.POST(infoManager.FullBackendAddress + subPathSave, jsonPost,
+            (req) =>
+            {
+                if (synchronize)
+                {
+                    CustomMessages.Instance.SendAnnotationsUpdated(objectInfo.ModelName);
+                }
+            }
+            );
     }
 
     /// <summary>
@@ -155,10 +157,7 @@ public class AnnotationManager : MonoBehaviour
         array.array = annotations;
 
         string jsonPost = JsonUtility.ToJson(array);
-        if (restManager != null)
-        {
-            restManager.POST(infoManager.FullBackendAddress + subQuizPathName + name, jsonPost);
-        }
+        RestManager.Instance.POST(infoManager.FullBackendAddress + subQuizPathName + name, jsonPost);
 
     }
 
@@ -183,7 +182,7 @@ public class AnnotationManager : MonoBehaviour
     /// </summary>
     public void HideAllAnnotations()
     {
-        foreach(AnnotationContainer container in annotationContainers)
+        foreach (AnnotationContainer container in annotationContainers)
         {
             Destroy(container.gameObject);
         }
@@ -207,7 +206,7 @@ public class AnnotationManager : MonoBehaviour
             GameObject annotationObject = (GameObject)Instantiate(Resources.Load("AnnotationSphere"));
             annotationObject.transform.parent = gameObject.transform;
             annotationObject.transform.localPosition = annotation.Position;
-            annotationObject.transform.localScale = new Vector3(5, 5, 5);
+            annotationObject.transform.localScale = new Vector3(annotationSize, annotationSize, annotationSize);
 
 
             AnnotationContainer container = annotationObject.AddComponent<AnnotationContainer>();
@@ -233,7 +232,7 @@ public class AnnotationManager : MonoBehaviour
     /// </summary>
     public virtual void OnDestroy()
     {
-        Save();
+        Save(false);
     }
 
     /// <summary>
@@ -245,7 +244,7 @@ public class AnnotationManager : MonoBehaviour
     {
         if (focus == false)
         {
-            Save();
+            Save(false);
         }
     }
 

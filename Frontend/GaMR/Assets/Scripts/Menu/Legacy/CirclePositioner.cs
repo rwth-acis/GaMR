@@ -55,13 +55,27 @@ public class CirclePositioner : MonoBehaviour {
                                       //// instead of always being there
                                       //transform.position = Vector3.SmoothDamp(transform.position, pos, ref velocity, smoothTime);
 
-            // rotation needs to be handeled by the thing itself
+            // rotation needs to be handeled by the gameobject itself
+        }
+        else
+        {
+            Vector3 leftVector = Vector3.Cross(Vector3.up, centerToCamera);
+            Vector3 pos = boundingBox.position + distance * new Vector3(
+                leftVector.normalized.x,
+                0,
+                leftVector.normalized.z);
+            transform.position = pos; // directly jumping to the position
+                                      //// dampen the movement a bit so that is smoothly transitions to the position
+                                      //// instead of always being there
+                                      //transform.position = Vector3.SmoothDamp(transform.position, pos, ref velocity, smoothTime);
+
+            // rotation needs to be handeled by the gameobject itself
         }
 
-	}
+    }
 }
 
 public enum PositioningMode
 {
-    FRONT, RIGHT
+    FRONT, RIGHT, LEFT
 }

@@ -150,9 +150,9 @@ public class InformationManager : Singleton<InformationManager>
 
     private void LoadValues()
     {
-        BackendServer = PlayerPrefs.GetString("backendServer", "localhost");
-        GamificationServer = PlayerPrefs.GetString("gamificationServer", "localhost");
-        SharingServer = PlayerPrefs.GetString("sharingServer", "localhost");
+        BackendServer = PlayerPrefs.GetString("backendServer", "192.168.178.82");
+        GamificationServer = PlayerPrefs.GetString("gamificationServer", "192.168.178.82");
+        SharingServer = PlayerPrefs.GetString("sharingServer", "192.168.178.82");
         this.Language = (Language)PlayerPrefs.GetInt("language", 0);
         SharingEnabled = (1 == PlayerPrefs.GetInt("sharingEnabled", 1));
         CollisionEnabled = (1 == PlayerPrefs.GetInt("collisionEnabled", 1));

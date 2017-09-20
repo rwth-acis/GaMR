@@ -13,6 +13,7 @@ public class BoundingBoxMenu : BaseMenu
     private FocusableButton closeButton;
 
     private BoundingBoxActions actions;
+    private BoundingBoxInfo info;
 
 
     private bool menuEnabled = true;
@@ -38,10 +39,18 @@ public class BoundingBoxMenu : BaseMenu
 
     protected override void Start()
     {
+        Debug.Log("Start of bounding box menu");
         base.Start();
         actions = BoundingBox.GetComponent<BoundingBoxActions>();
+        info = BoundingBox.GetComponent<BoundingBoxInfo>();
+        Debug.Log("Create menu reference for " + info.Id.ToString());
+        info.Menu = this;
+
+        Debug.Log("InfoMenu: " + info.Menu);
+
         InitializeButtons();
         SetPlayerTypeMode();
+        gameObject.SetActive(false);
     }
 
     private void SetPlayerTypeMode()
@@ -136,7 +145,7 @@ public class BoundingBoxMenu : BaseMenu
         gameObject.SetActive(false);
     }
 
-    private void Destroy()
+    public void Destroy()
     {
         Destroy(transform.parent.gameObject);
     }

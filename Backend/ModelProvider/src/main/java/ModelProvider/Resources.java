@@ -1,6 +1,7 @@
+package ModelProvider;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -21,9 +22,43 @@ public class Resources {
     public Response getModel(@PathParam("name") String name, @PathParam("no") int no)
     {
         try {
-            System.out.println("Request for " + App.modelPath + File.separatorChar + name + File.separatorChar + no + ".json");
-            String json =  ReadFile(App.modelPath + File.separatorChar + name + File.separatorChar + no + ".json");
-            return Response.ok(json, MediaType.APPLICATION_JSON).build();
+            String modelDirPath = ModelProvider.App.modelPath + File.separatorChar + name + File.separatorChar;
+            String path = ModelProvider.App.modelPath + File.separatorChar + name + File.separatorChar + no + ".json";
+            File dir = new File(modelDirPath);
+            File[] x3ds = dir.listFiles(new FileFilter() {
+                public boolean accept(File pathname) {
+                    return  pathname.getName().endsWith(".x3d");
+                }
+            });
+
+            File jsonCached = new File(path);
+            System.out.println("Request for " + path);
+
+            if (x3ds.length > 0)
+            {
+                if (!jsonCached.exists() || jsonCached.lastModified() < x3ds[0].lastModified())
+                {
+                    System.out.println("Creating/Updating model cache...");
+                    // if the cached version does not exist or the x3d file is newer: first convert
+                    X3DConverter.App.main(new String[]{"-i", x3ds[0].getPath(), "-o", modelDirPath});
+                }
+                String json = ReadFile(path);
+                return Response.ok(json, MediaType.APPLICATION_JSON).build();
+            }
+            else // the x3d file does not exist
+            {
+                System.out.println("Warning: The X3D file for " + name + " was not found.");
+                if (jsonCached.exists()) // if there is still a cached version => use it
+                {
+                    System.out.println("Using the cached version instead of X3D");
+                    String json = ReadFile(path);
+                    return Response.ok(json, MediaType.APPLICATION_JSON).build();
+                }
+                else
+                {
+                    return Response.status(Response.Status.BAD_REQUEST).build();
+                }
+            }
         }
         catch (IOException ioEx)
         {
@@ -97,7 +132,7 @@ public class Resources {
     @Produces(MediaType.APPLICATION_JSON)
     public Response storeAnnotations( @PathParam("modelName") String modelName, String json )
     {
-        System.out.println(modelName + ": " + json);
+        System.out.println("Saving annotations for " + modelName);
         File file = new File(App.modelPath + File.separatorChar + modelName + File.separatorChar + "annotations.json");
         try {
             FileWriter writer = new FileWriter(file);
@@ -186,7 +221,7 @@ public class Resources {
     public Response storeQuiz( @PathParam("modelName") String modelName, @PathParam("quizName") String quizName,
                                String json )
     {
-        System.out.println("Quiz: " + modelName + ": " + json);
+        System.out.println("Saving quiz " + quizName + " for model " + modelName);
         File file = new File(App.modelPath + File.separatorChar + modelName + File.separatorChar + "Quizzes" +
                 File.separatorChar + quizName + ".json");
         try {
@@ -240,7 +275,6 @@ public class Resources {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
-
 
 
     public static String ReadFile(String path) throws IOException

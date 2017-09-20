@@ -15,7 +15,8 @@ public class MenuSpawner : MonoBehaviour
         CirclePositioner positioner = menuInstance.GetComponentInChildren<CirclePositioner>();
         BoundingBoxMenu menu = menuInstance.GetComponentInChildren<BoundingBoxMenu>();
         menu.BoundingBox = transform.parent.gameObject;
-        menu.gameObject.SetActive(false);
+        Debug.Log("Menu: " + menu.name);
+        Debug.Log("menu.BoundingBox: " + menu.BoundingBox.name);
         positioner.boundingBox = transform;
     }
 }

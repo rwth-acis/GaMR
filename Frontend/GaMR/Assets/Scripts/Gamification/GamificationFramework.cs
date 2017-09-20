@@ -120,6 +120,10 @@ public class GamificationFramework : Singleton<GamificationFramework>
                         JsonUserGameArray array = JsonUtility.FromJson<JsonUserGameArray>(jsonAnswer);
                         callback(array.array, req.responseCode);
                     }
+                    else
+                    {
+                        callback(null, req.responseCode);
+                    }
                 }
             }
             );
@@ -252,7 +256,7 @@ public class GamificationFramework : Singleton<GamificationFramework>
     public void CreateAchievement(string gameId, Achievement achievement, Action<Achievement, long> callback)
     {
         List<IMultipartFormSection> body = achievement.ToMultipartFormData();
-        RestManager.Instance.POST(InformationManager.Instance.FullGamificationAddress + "/gamification/achievements/" + gameId, body, 
+        RestManager.Instance.POST(InformationManager.Instance.FullGamificationAddress + "/gamification/achievements/" + gameId, body,
             reqRes =>
             {
                 if (callback != null)
@@ -397,7 +401,7 @@ public class GamificationFramework : Singleton<GamificationFramework>
     {
         List<IMultipartFormSection> body = badge.ToMultipartForm();
 
-        RestManager.Instance.POST(InformationManager.Instance.FullGamificationAddress + "/gamification/badges/" + gameId, body, 
+        RestManager.Instance.POST(InformationManager.Instance.FullGamificationAddress + "/gamification/badges/" + gameId, body,
             reqRes =>
             {
                 if (callback != null)
@@ -455,7 +459,7 @@ public class GamificationFramework : Singleton<GamificationFramework>
                         jsonResponse = "{\"array\":" + jsonResponse + "}"; // json array needs to be packed into an array object in order to work with JsonUtility
                         JsonBadgeArray array = JsonUtility.FromJson<JsonBadgeArray>(jsonResponse);
                         Badge[] badgeArray = new Badge[array.array.Length];
-                        for(int i=0;i<array.array.Length;i++)
+                        for (int i = 0; i < array.array.Length; i++)
                         {
                             badgeArray[i] = Badge.FromJsonBadge(array.array[i]);
                         }
@@ -465,6 +469,74 @@ public class GamificationFramework : Singleton<GamificationFramework>
                     {
                         callback(null, reqRes.responseCode);
                     }
+                }
+            }
+            );
+    }
+
+    public void GetAllBadgesOfUser(Action<List<KeyValuePair<string, Badge>>, long> callback)
+    {
+        List<KeyValuePair<string, Badge>> badgesFromAllGames = new List<KeyValuePair<string,Badge>>();
+        int countLoaded = 0;
+        int countToLoad;
+        GetSeparateGameInfos(
+            (games, resCode) =>
+            {
+                if (resCode == 200)
+                {
+                    Debug.Log("Game length: " + games.Length);
+                    countToLoad = games.Length;
+
+                    for (int i = 0; i < games.Length; i++)
+                    {
+                        int indexForLambda = i;
+                        // only look at this game if the member is actually added to the game
+                        if (games[i].memberHas)
+                        {
+                            // get the badges of the game
+                            GetBadgesOfUser(games[i].game_id,
+                                (badgeArray, badgesCode) =>
+                                {
+                                    if (badgesCode == 200)
+                                    {
+                                        foreach (Badge b in badgeArray)
+                                        {
+                                            badgesFromAllGames.Add(new KeyValuePair<string, Badge>(games[indexForLambda].game_id, b));
+                                        }
+
+                                        countLoaded++;
+                                        Debug.Log("Loaded: " + countLoaded);
+
+                                        if (countLoaded >= countToLoad)
+                                        {
+                                            if (callback != null)
+                                            {
+                                                callback(badgesFromAllGames, resCode);
+                                            }
+                                        }
+
+                                        Debug.Log(games[indexForLambda].game_id + ":" + indexForLambda);
+                                        Debug.Log(badgesFromAllGames.Count);
+                                    }
+                                    else
+                                    {
+                                        if (callback != null)
+                                        {
+                                            callback(null, badgesCode);
+                                        }
+                                    }
+                                }
+                                );
+                        }
+                        else
+                        {
+                            countToLoad--;
+                        }
+                    }
+                }
+                else
+                {
+                    callback(null, resCode);
                 }
             }
             );
@@ -522,12 +594,6 @@ public class GamificationFramework : Singleton<GamificationFramework>
     private void Start()
     {
         // for testing:
-        GetSeparateGameInfos(
-            (gameList, code) =>
-            {
-
-            }
-            );
     }
 
     private void Result(string obj)
