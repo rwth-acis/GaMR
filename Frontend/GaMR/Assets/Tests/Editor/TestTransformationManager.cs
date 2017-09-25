@@ -3,6 +3,8 @@ using UnityEditor;
 using UnityEngine.TestTools;
 using NUnit.Framework;
 using System.Collections;
+using HoloToolkit.Sharing;
+using HoloToolkit.Sharing.Tests;
 
 public class TestTransformationManager {
 
@@ -37,16 +39,18 @@ public class TestTransformationManager {
     public void TestScale_UnderMinimum()
     {
         Vector3 scalingVector = new Vector3(0.05f, 0.05f, 0.05f);
+        Vector3 origSize = go.transform.localScale;
         transManager.Scale(scalingVector);
-        Assert.IsTrue(minSize.Equals(go.transform.localScale));
+        Assert.IsTrue(origSize.Equals(go.transform.localScale));
     }
 
     [Test]
     public void TestScale_OverMaximum()
     {
         Vector3 scalingVector = new Vector3(3, 3, 3);
+        Vector3 origSize = go.transform.localScale;
         transManager.Scale(scalingVector);
-        Assert.IsTrue(maxSize.Equals(go.transform.localScale));
+        Assert.IsTrue(origSize.Equals(go.transform.localScale));
     }
 
     [Test]

@@ -51,8 +51,11 @@ public class TransformationManager : MonoBehaviour
 
     private void UpdateTransformToRemote()
     {
-        CustomMessages.Instance.SendBoundingBoxTransform(boxInfo.Id, transform.localPosition, transform.localRotation, transform.localScale);
-        Debug.Log("Sending " + boxInfo.Id.ToString() + ", " + transform.localPosition.ToString() + ", " + transform.localRotation.eulerAngles.ToString() + ", " + transform.localScale.ToString());
+        if (CustomMessages.Instance != null)
+        {
+            CustomMessages.Instance.SendBoundingBoxTransform(boxInfo.Id, transform.localPosition, transform.localRotation, transform.localScale);
+            Debug.Log("Sending " + boxInfo.Id.ToString() + ", " + transform.localPosition.ToString() + ", " + transform.localRotation.eulerAngles.ToString() + ", " + transform.localScale.ToString());
+        }
     }
 
     public void Scale(Vector3 scaleVector)

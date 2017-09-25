@@ -179,7 +179,10 @@ public class Keyboard : MonoBehaviour, IWindow
         }
         set
         {
-            maxWidth = maxWidth != 0.0f ? maxWidth : Geometry.GetBoundsIndependentFromRotation(inputBackground).size.x;
+            if (inputBackground != null)
+            {
+                maxWidth = maxWidth != 0.0f ? maxWidth : Geometry.GetBoundsIndependentFromRotation(inputBackground).size.x;
+            }
             string wrappedText = AutoLineBreak.StringWithLineBreaks(inputField, value, maxWidth);
             numberOfNewLines = wrappedText.Split('\n').Length;
             if (numberOfNewLines <= maxNumberOfLines)

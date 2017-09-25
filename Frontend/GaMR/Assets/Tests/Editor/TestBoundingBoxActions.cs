@@ -2,6 +2,7 @@
 using UnityEngine.TestTools;
 using NUnit.Framework;
 using System.Collections;
+using HoloToolkit.Unity.InputModule;
 
 public class TestBoundingBoxActions
 {
@@ -16,6 +17,8 @@ public class TestBoundingBoxActions
     {
         go = new GameObject();
         coll = go.AddComponent<BoxCollider>();
+        go.AddComponent<CustomTapToPlace>();
+        go.AddComponent<TransformationManager>();
         actions = go.AddComponent<BoundingBoxActions>();
         actions.boundingBoxPieces = new System.Collections.Generic.List<Transform>();
         boundingBoxPiece = new GameObject().transform;
