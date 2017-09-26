@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component LANGUAGE_LEVEL="JDK_1_5" inheritJdk="true">
+	<output-test url="file://$MODULE_DIR$/target/test-classes"/>
+	<contentEntry url="file://$MODULE_DIR$">
+		<testFolder url="file://$MODULE_DIR$/src/test/java"/>
+		<excludeFolder url="file://$MODULE_DIR$/target"/>
+	</contentEntry>
+	<levels>
+		<level name="Maven: com.fasterxml.jackson.core:jackson-databind:2.6.3" value="project"/>
+		<level name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.6.0" value="project"/>
+		<level name="Maven: com.fasterxml.jackson.core:jackson-core:2.6.3" value="project"/>
+	</levels>
+</component>
