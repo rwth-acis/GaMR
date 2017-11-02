@@ -59,7 +59,7 @@ public class QuizMenu : BaseMenu, IViewEvents
         FillQuestions();
     }
 
-    private void OnQuestionSelected(Button sender)
+    private void OnQuestionSelected(GaMRButton sender)
     {
         int nButton = questionSelected - startIndex;
         if (nButton >= 0 && nButton < buttons.Count)

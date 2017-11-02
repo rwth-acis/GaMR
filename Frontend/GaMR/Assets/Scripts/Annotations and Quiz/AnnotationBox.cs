@@ -11,7 +11,7 @@ public class AnnotationBox : MonoBehaviour
 
     public GameObject editButton, deleteButton, closeButton;
     public GameObject textField;
-    private Button buttonEdit, buttonDelete, buttonClose;
+    private GaMRButton buttonEdit, buttonDelete, buttonClose;
     private Caption caption;
 
     public static AnnotationBox currentlyOpenAnnotationBox;
@@ -27,9 +27,9 @@ public class AnnotationBox : MonoBehaviour
     void Start()
     {
 
-        buttonEdit = editButton.GetComponent<Button>();
-        buttonDelete = deleteButton.GetComponent<Button>();
-        buttonClose = closeButton.GetComponent<Button>();
+        buttonEdit = editButton.GetComponent<GaMRButton>();
+        buttonDelete = deleteButton.GetComponent<GaMRButton>();
+        buttonClose = closeButton.GetComponent<GaMRButton>();
         caption = textField.GetComponent<Caption>();
 
         // necessary since caption has not yet called Start() but is needed immediately

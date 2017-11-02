@@ -40,7 +40,7 @@ public class LanguageMenu : BaseMenu
         dutchButton.OnButtonPressed = ChangeLanguage;
     }
 
-    private void ChangeLanguage(Button sender)
+    private void ChangeLanguage(GaMRButton sender)
     {
         InformationManager.Instance.Language = (Language)sender.Data;
         if (OnCloseAction != null)

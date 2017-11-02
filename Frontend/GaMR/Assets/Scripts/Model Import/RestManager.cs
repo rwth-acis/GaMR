@@ -293,7 +293,7 @@ public class RestManager : Singleton<RestManager>
     IEnumerator GetWWWTexture(string url, System.Action<UnityWebRequest, Texture> callback)
     {
         WaitCursor.Show();
-        UnityWebRequest req = UnityWebRequest.GetTexture(url);
+        UnityWebRequest req = UnityWebRequestTexture.GetTexture(url);
 
         foreach (KeyValuePair<string, string> header in StandardHeader)
         {

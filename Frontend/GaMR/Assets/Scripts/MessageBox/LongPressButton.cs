@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LongPressButton : Button, IInputHandler {
+public class LongPressButton : GaMRButton, IInputHandler {
 
     /// <summary>
     /// gets called every frame on a long press

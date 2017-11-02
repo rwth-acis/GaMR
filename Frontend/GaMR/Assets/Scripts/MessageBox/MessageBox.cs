@@ -31,7 +31,7 @@ public class MessageBox : MonoBehaviour
     /// <summary>
     /// The Button component on the button-gameobject
     /// </summary>
-    private Button btn;
+    private GaMRButton btn;
     /// <summary>
     /// The number of currently opened MessageBoxes
     /// This is used in order to display multiple MessageBoxes behind each other
@@ -62,7 +62,7 @@ public class MessageBox : MonoBehaviour
     /// </summary>
     void Start()
     {
-        btn = button.GetComponent<Button>();
+        btn = button.GetComponent<GaMRButton>();
         tagalongScript = GetComponent<SimpleTagalong>();
 
         btn.OnPressed = Accept;

@@ -51,13 +51,13 @@ public class LoginForm : MonoBehaviour, IWindow
     // Use this for initialization
     void Start()
     {
-        Button userNameButton = userNameInputField.AddComponent<Button>();
+        GaMRButton userNameButton = userNameInputField.AddComponent<GaMRButton>();
         userNameButton.OnPressed = InputUserName;
 
-        Button passwordButton = passwordInputField.AddComponent<Button>();
+        GaMRButton passwordButton = passwordInputField.AddComponent<GaMRButton>();
         passwordButton.OnPressed = InputPassword;
 
-        Button confirmButton = confirmButtonObject.AddComponent<Button>();
+        GaMRButton confirmButton = confirmButtonObject.AddComponent<GaMRButton>();
         confirmButton.OnPressed = Login;
 
         userNameCaption = userNameInputText.GetComponent<TextMesh>();

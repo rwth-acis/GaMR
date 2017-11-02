@@ -7,14 +7,14 @@ using System;
 /// <summary>
 /// Registers InputEvents and redirects them to a specified method
 /// </summary>
-public class Button : MonoBehaviour, IInputClickHandler
+public class GaMRButton : MonoBehaviour, IInputClickHandler
 {
 
     /// <summary>
     /// The method which should be called if the button is pressed
     /// </summary>
     public Action OnPressed;
-    public Action<Button> OnButtonPressed;
+    public Action<GaMRButton> OnButtonPressed;
     protected string text;
     private TextMesh textMesh;
     private bool visible;

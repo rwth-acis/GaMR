@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class FocusableButton : Button, IFocusable, IInputHandler
+public class FocusableButton : GaMRButton, IFocusable, IInputHandler
 {
     [SerializeField]
     private GameObject focusHighlight;
