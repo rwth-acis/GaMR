@@ -56,6 +56,7 @@ GameObject:
   - component: {fileID: 33854470768321262}
   - component: {fileID: 65933121802254948}
   - component: {fileID: 23506906775251720}
+  - component: {fileID: 54855617002006942}
   m_Layer: 0
   m_Name: RotationWidget_X3
   m_TagString: Untagged
@@ -75,6 +76,7 @@ GameObject:
   - component: {fileID: 65430415461153214}
   - component: {fileID: 23679748984454692}
   - component: {fileID: 114409924210504562}
+  - component: {fileID: 54499281087940206}
   m_Layer: 0
   m_Name: RotationWidget_Y0
   m_TagString: Untagged
@@ -159,6 +161,7 @@ GameObject:
   - component: {fileID: 33938239727354040}
   - component: {fileID: 135709249003074470}
   - component: {fileID: 23641033633329870}
+  - component: {fileID: 54980728451555444}
   m_Layer: 0
   m_Name: ScaleWidget_2
   m_TagString: Untagged
@@ -212,6 +215,7 @@ GameObject:
   - component: {fileID: 65373440271567740}
   - component: {fileID: 23588815276685754}
   - component: {fileID: 114296212772232504}
+  - component: {fileID: 54913450123216584}
   m_Layer: 0
   m_Name: RotationWidget_Y3
   m_TagString: Untagged
@@ -230,6 +234,7 @@ GameObject:
   - component: {fileID: 33216221650805774}
   - component: {fileID: 135906723424048222}
   - component: {fileID: 23387446444399404}
+  - component: {fileID: 54740462185610864}
   m_Layer: 0
   m_Name: ScaleWidget_6
   m_TagString: Untagged
@@ -290,6 +295,7 @@ GameObject:
   - component: {fileID: 33715271003847874}
   - component: {fileID: 65023914464016868}
   - component: {fileID: 23719705295377312}
+  - component: {fileID: 54737140243584868}
   m_Layer: 0
   m_Name: RotationWidget_Z0
   m_TagString: Untagged
@@ -308,6 +314,7 @@ GameObject:
   - component: {fileID: 33704197218003798}
   - component: {fileID: 65992020682666512}
   - component: {fileID: 23650049376925526}
+  - component: {fileID: 54044068067211040}
   m_Layer: 0
   m_Name: RotationWidget_X2
   m_TagString: Untagged
@@ -376,6 +383,7 @@ GameObject:
   - component: {fileID: 65028269882909008}
   - component: {fileID: 23009137361444878}
   - component: {fileID: 114229992536498824}
+  - component: {fileID: 54445038515469250}
   m_Layer: 0
   m_Name: RotationWidget_Y2
   m_TagString: Untagged
@@ -394,6 +402,7 @@ GameObject:
   - component: {fileID: 33694632934870286}
   - component: {fileID: 65426572095346962}
   - component: {fileID: 23716854478001220}
+  - component: {fileID: 54972041160382856}
   m_Layer: 0
   m_Name: RotationWidget_X0
   m_TagString: Untagged
@@ -412,6 +421,7 @@ GameObject:
   - component: {fileID: 33166460075343718}
   - component: {fileID: 135613751962509276}
   - component: {fileID: 23161923810732756}
+  - component: {fileID: 54137870994126010}
   m_Layer: 0
   m_Name: ScaleWidget_1
   m_TagString: Untagged
@@ -430,6 +440,7 @@ GameObject:
   - component: {fileID: 33542264366019990}
   - component: {fileID: 135318327447149362}
   - component: {fileID: 23137581270178168}
+  - component: {fileID: 54047571804260244}
   m_Layer: 0
   m_Name: ScaleWidget_5
   m_TagString: Untagged
@@ -448,6 +459,7 @@ GameObject:
   - component: {fileID: 33193792277423024}
   - component: {fileID: 65191565953748848}
   - component: {fileID: 23481515092988224}
+  - component: {fileID: 54019363891421952}
   m_Layer: 0
   m_Name: RotationWidget_Z3
   m_TagString: Untagged
@@ -466,6 +478,7 @@ GameObject:
   - component: {fileID: 33687654184455108}
   - component: {fileID: 65796283956237680}
   - component: {fileID: 23068515444758864}
+  - component: {fileID: 54047200599500740}
   m_Layer: 0
   m_Name: RotationWidget_Z2
   m_TagString: Untagged
@@ -599,6 +612,7 @@ GameObject:
   - component: {fileID: 33682192320436136}
   - component: {fileID: 135508473467508936}
   - component: {fileID: 23109227525049152}
+  - component: {fileID: 54635160657940932}
   m_Layer: 0
   m_Name: ScaleWidget_3
   m_TagString: Untagged
@@ -617,6 +631,7 @@ GameObject:
   - component: {fileID: 33737573668005700}
   - component: {fileID: 65076265974855234}
   - component: {fileID: 23077093262939058}
+  - component: {fileID: 54889269348569388}
   m_Layer: 0
   m_Name: RotationWidget_X1
   m_TagString: Untagged
@@ -650,6 +665,7 @@ GameObject:
   - component: {fileID: 33539050004742022}
   - component: {fileID: 135799929497385808}
   - component: {fileID: 23676370171192202}
+  - component: {fileID: 54765192752454610}
   m_Layer: 0
   m_Name: ScaleWidget_4
   m_TagString: Untagged
@@ -668,6 +684,7 @@ GameObject:
   - component: {fileID: 33068972487922514}
   - component: {fileID: 135460513522084316}
   - component: {fileID: 23316180672979938}
+  - component: {fileID: 54098499451675572}
   m_Layer: 0
   m_Name: ScaleWidget_0
   m_TagString: Untagged
@@ -752,6 +769,7 @@ GameObject:
   - component: {fileID: 65969947435972230}
   - component: {fileID: 23384523464359110}
   - component: {fileID: 114933455104616650}
+  - component: {fileID: 54744626582678396}
   m_Layer: 0
   m_Name: RotationWidget_Y1
   m_TagString: Untagged
@@ -787,6 +805,7 @@ GameObject:
   - component: {fileID: 33167634183106854}
   - component: {fileID: 135328942314731366}
   - component: {fileID: 23436626871322768}
+  - component: {fileID: 54976850567454914}
   m_Layer: 0
   m_Name: ScaleWidget_7
   m_TagString: Untagged
@@ -805,6 +824,7 @@ GameObject:
   - component: {fileID: 33435611534214806}
   - component: {fileID: 65866481788660032}
   - component: {fileID: 23716726906530062}
+  - component: {fileID: 54246507325139932}
   m_Layer: 0
   m_Name: RotationWidget_Z1
   m_TagString: Untagged
@@ -2890,6 +2910,156 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1078044595460552}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &54019363891421952
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1604523079050734}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54044068067211040
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1498182249034838}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54047200599500740
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1628725405594478}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54047571804260244
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1587112284173830}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54098499451675572
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1865286285731236}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54137870994126010
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1586409138995120}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54246507325139932
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1995963635450896}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54445038515469250
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1570052806125044}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54499281087940206
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1078044595460552}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54635160657940932
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1765891251046606}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!54 &54691350115317696
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -2901,6 +3071,156 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54737140243584868
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1494246338059564}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54740462185610864
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1425707617444472}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54744626582678396
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1970592614686530}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54765192752454610
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1851248806322674}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54855617002006942
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1076152799026984}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54889269348569388
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1802925331640652}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54913450123216584
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1204278914089080}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54972041160382856
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1574367252134654}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54976850567454914
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1986717481986554}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &54980728451555444
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1156553520346982}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
@@ -3173,6 +3493,8 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
+  IsGlobalListener: 0
+  PersistentKeywords: 0
 --- !u!114 &114047741941808338
 MonoBehaviour:
   m_ObjectHideFlags: 1

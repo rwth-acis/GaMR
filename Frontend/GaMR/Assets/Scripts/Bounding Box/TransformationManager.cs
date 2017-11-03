@@ -84,7 +84,6 @@ public class TransformationManager : MonoBehaviour
 
     public void Translate(Vector3 movement)
     {
-        Debug.Log("Moved by Transformation Manager");
         RaycastHit hitInfo;
         // check if the object would collide with something
         // if not => perform the movement
