@@ -51,7 +51,7 @@ public class TransformationManager : MonoBehaviour
 
     private void UpdateTransformToRemote()
     {
-        if (CustomMessages.Instance != null)
+        if (CustomMessages.Instance != null && SharingStage.Instance.gameObject.activeSelf == true)
         {
             CustomMessages.Instance.SendBoundingBoxTransform(boxInfo.Id, transform.localPosition, transform.localRotation, transform.localScale);
             Debug.Log("Sending " + boxInfo.Id.ToString() + ", " + transform.localPosition.ToString() + ", " + transform.localRotation.eulerAngles.ToString() + ", " + transform.localScale.ToString());
@@ -60,6 +60,7 @@ public class TransformationManager : MonoBehaviour
 
     public void Scale(Vector3 scaleVector)
     {
+        Debug.Log("Scale");
         Vector3 newScale = new Vector3(
             transform.localScale.x * scaleVector.x,
             transform.localScale.y * scaleVector.y,

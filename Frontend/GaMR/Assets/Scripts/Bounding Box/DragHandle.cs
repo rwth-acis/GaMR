@@ -9,11 +9,6 @@ using System;
 /// </summary>
 public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHandler
 {
-
-    /// <summary>
-    /// the input manager of the application
-    /// </summary>
-    InputManager inputManager;
     [Tooltip("Defines which operation this handle initiates: Translation, Rotation or Scale")]
     public HandleType handleType;
     [Tooltip("The object to manipulate")]
@@ -56,7 +51,6 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
     void Start()
     {
         transformationManager = toManipulate.GetComponent<TransformationManager>();
-        inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
     }
 
     /// <summary>
@@ -67,7 +61,7 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
     {
         // set the focus to this object so that the manipulation continues to have effect even if
         // the user does not look at the gameObject anymore
-        inputManager.OverrideFocusedObject = gameObject;
+        InputManager.Instance.OverrideFocusedObject = gameObject;
     }
 
     /// <summary>
@@ -141,7 +135,7 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
     public void OnManipulationCompleted(ManipulationEventData eventData)
     {
         // release the focus-override so that other objects can now be affected by the manipulation gesture
-        inputManager.OverrideFocusedObject = null;
+        InputManager.Instance.OverrideFocusedObject = null;
     }
 
     /// <summary>
@@ -151,7 +145,7 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
     public void OnManipulationCanceled(ManipulationEventData eventData)
     {
         // release the focus-override so that other objects can now be affected by the manipulation gesture
-        inputManager.OverrideFocusedObject = null;
+        InputManager.Instance.OverrideFocusedObject = null;
     }
 }
 
