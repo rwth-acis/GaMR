@@ -70,61 +70,64 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
     /// <param name="eventData">The data of the manipulation event</param>
     public void OnManipulationUpdated(ManipulationEventData eventData)
     {
-        switch (handleType)
+        if (transformationManager.enabled)
         {
-            case HandleType.SCALE:
-                {
-                    // it is also possible to scale without preserving the aspect ratio
-                    // this option is implemented in here but it is currently not used
-                    bool preserveAspectRatio = true;
-                    if (preserveAspectRatio)
+            switch (handleType)
+            {
+                case HandleType.SCALE:
                     {
-                        Vector2 centerProj = Camera.main.WorldToScreenPoint(toManipulate.position);
-                        Vector2 handleProj = Camera.main.WorldToScreenPoint(transform.position);
+                        // it is also possible to scale without preserving the aspect ratio
+                        // this option is implemented in here but it is currently not used
+                        bool preserveAspectRatio = true;
+                        if (preserveAspectRatio)
+                        {
+                            Vector2 centerProj = Camera.main.WorldToScreenPoint(toManipulate.position);
+                            Vector2 handleProj = Camera.main.WorldToScreenPoint(transform.position);
 
-                        Vector2 fromCenterToHandle = handleProj - centerProj;
-                        fromCenterToHandle = fromCenterToHandle.normalized;
+                            Vector2 fromCenterToHandle = handleProj - centerProj;
+                            fromCenterToHandle = fromCenterToHandle.normalized;
 
-                        int drawDirection = Math.Sign(Vector2.Dot(eventData.CumulativeDelta, fromCenterToHandle));
-                        // fromCenterToHandle points outwards from the center
-                        // thus:
-                        // if drawDirection < 0: inwards-drag => scale down
-                        // if drawDirection > 0: outwards-drag => scale up
+                            int drawDirection = Math.Sign(Vector2.Dot(eventData.CumulativeDelta, fromCenterToHandle));
+                            // fromCenterToHandle points outwards from the center
+                            // thus:
+                            // if drawDirection < 0: inwards-drag => scale down
+                            // if drawDirection > 0: outwards-drag => scale up
 
-                        // just get the most dominant 2D-axis to determine the strength of the scale
-                        float max = Math.Max(Math.Abs(eventData.CumulativeDelta.x), Math.Abs(eventData.CumulativeDelta.y));
+                            // just get the most dominant 2D-axis to determine the strength of the scale
+                            float max = Math.Max(Math.Abs(eventData.CumulativeDelta.x), Math.Abs(eventData.CumulativeDelta.y));
 
-                        // determine scaling factor
-                        float scaleFac = 1.0f + (speed * max * drawDirection);
+                            // determine scaling factor
+                            float scaleFac = 1.0f + (speed * max * drawDirection);
 
-                        // scale
-                        transformationManager.Scale(scaleFac * Vector3.one);
+                            // scale
+                            transformationManager.Scale(scaleFac * Vector3.one);
+                        }
+                        else
+                        {
+                            Vector3 scaleVec = speed * new Vector3(
+                    eventData.CumulativeDelta.x * gestureOrientation.x,
+                    eventData.CumulativeDelta.y * gestureOrientation.y,
+                    eventData.CumulativeDelta.z * gestureOrientation.z);
+                            transformationManager.Scale(scaleVec);
+                        }
+                        break;
                     }
-                    else
+                case HandleType.ROTATE:
                     {
-                        Vector3 scaleVec = speed * new Vector3(
-                eventData.CumulativeDelta.x * gestureOrientation.x,
-                eventData.CumulativeDelta.y * gestureOrientation.y,
-                eventData.CumulativeDelta.z * gestureOrientation.z);
-                        transformationManager.Scale(scaleVec);
-                    }
-                    break;
-                }
-            case HandleType.ROTATE:
-                {
-                    float[] values = new[] {eventData.CumulativeDelta.x,
+                        float[] values = new[] {eventData.CumulativeDelta.x,
                             eventData.CumulativeDelta.y, eventData.CumulativeDelta.z};
-                    float rotationValue = GetMaxAbsolute(values);
-                    transformationManager.Rotate(gestureOrientation, speed * rotationValue);
-                    break;
-                }
-            case HandleType.TRANSLATE:
-                {
-                    //Vector3 translationVec = new Vector3(speed * eventData.CumulativeDelta.x, speed * eventData.CumulativeDelta.y, speed * eventData.CumulativeDelta.z);
-                    transformationManager.Translate(speed * eventData.CumulativeDelta);
-                    break;
-                }
+                        float rotationValue = GetMaxAbsolute(values);
+                        transformationManager.Rotate(gestureOrientation, speed * rotationValue);
+                        break;
+                    }
+                case HandleType.TRANSLATE:
+                    {
+                        //Vector3 translationVec = new Vector3(speed * eventData.CumulativeDelta.x, speed * eventData.CumulativeDelta.y, speed * eventData.CumulativeDelta.z);
+                        transformationManager.Translate(speed * eventData.CumulativeDelta);
+                        break;
+                    }
 
+            }
         }
     }
 
