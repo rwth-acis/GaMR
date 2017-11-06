@@ -19,7 +19,7 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
     [Tooltip("The speed of the operation")]
     public float speed = 0.01f;
 
-    private Vector3 lastCummulativeDelta;
+    private Vector3 lastCummulativeDelta, upVector, forwardVector, rightVector;
 
     /// <summary>
     /// Gets the value which has the maximum absolute value
@@ -66,6 +66,9 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
         InputManager.Instance.OverrideFocusedObject = gameObject;
 
         lastCummulativeDelta = Vector3.zero;
+        upVector = transform.up;
+        forwardVector = transform.forward;
+        rightVector = transform.right;
     }
 
     /// <summary>
@@ -121,18 +124,41 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
                         //float[] values = new[] {eventData.CumulativeDelta.x,
                         //    eventData.CumulativeDelta.y, eventData.CumulativeDelta.z};
                         //float rotationValue = GetMaxAbsolute(values);
+
                         Vector3 delta = eventData.CumulativeDelta - lastCummulativeDelta;
                         Vector3 objToCam = Camera.main.transform.position - transform.position;
                         Vector3 objToTarget = (Camera.main.transform.position + delta) - transform.position;
                         float rotationAngle = Vector3.Angle(objToCam, objToTarget);
+                        Debug.Log("Gesture orientation: " + gestureOrientation);
                         Vector3 crossProduct = Vector3.Cross(objToCam, objToTarget);
-                        if (crossProduct.y > 0)
+                        if (gestureOrientation == Vector3.up)
                         {
-                            rotationAngle *= -1;
+                            if (Vector3.Dot(crossProduct, upVector) <= 0)
+                            {
+                                rotationAngle *= -1;
+                            }
                         }
-                        Debug.Log("Rotation by: " + rotationAngle);
-                        Debug.Log("Delta: " + delta);
+                        else if (gestureOrientation == Vector3.right)
+                        {
+                            if (Vector3.Dot(crossProduct, rightVector) > 0)
+                            {
+                                rotationAngle *= -1;
+                            }
+                        }
+                        else if (gestureOrientation == Vector3.forward)
+                        {
+                            if (Vector3.Dot(crossProduct, forwardVector) > 0)
+                            {
+                                rotationAngle *= -1;
+                            }
+                        }
+
+                        //Debug.Log("Rotation by: " + rotationAngle);
+                        //Debug.Log("Cum. Delta: " + eventData.CumulativeDelta);
                         lastCummulativeDelta = eventData.CumulativeDelta;
+
+
+
                         transformationManager.Rotate(gestureOrientation, speed * rotationAngle);
                         break;
                     }

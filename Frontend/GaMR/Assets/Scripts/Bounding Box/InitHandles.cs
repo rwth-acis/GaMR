@@ -78,7 +78,7 @@ public class InitHandles : MonoBehaviour
         }
         else if (handlePosition.y == 0)
         {
-            return Vector3.down;
+            return Vector3.up;
         }
         else if (handlePosition.z == 0)
         {
