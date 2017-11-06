@@ -19,7 +19,7 @@ public class BoundingBoxManager : MonoBehaviour
 
     public float menuSize = 1f;
 
-    private Transform xAxis, yAxis, zAxis, menu;
+    private Transform xAxis, yAxis, zAxis;
     private List<Transform> widgets;
 
     /// <summary>

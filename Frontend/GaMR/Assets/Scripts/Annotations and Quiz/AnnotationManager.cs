@@ -137,7 +137,7 @@ public class AnnotationManager : MonoBehaviour
         RestManager.Instance.POST(infoManager.FullBackendAddress + subPathSave, jsonPost,
             (req) =>
             {
-                if (synchronize)
+                if (synchronize && CustomMessages.Instance != null)
                 {
                     CustomMessages.Instance.SendAnnotationsUpdated(objectInfo.ModelName);
                 }

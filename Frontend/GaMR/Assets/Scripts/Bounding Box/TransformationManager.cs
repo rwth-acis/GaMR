@@ -78,7 +78,7 @@ public class TransformationManager : MonoBehaviour
 
     public void Rotate(Vector3 axis, float angle)
     {
-        transform.Rotate(axis, angle, Space.World);
+        transform.Rotate(axis, angle);
         UpdateTransformToRemote();
     }
 
@@ -124,7 +124,7 @@ public class TransformationManager : MonoBehaviour
         transform.localScale = startingScale;
 
         float elapsedTime = 0;
-        while(elapsedTime < time)
+        while (elapsedTime < time)
         {
             elapsedTime += Time.deltaTime;
             transform.localScale = Vector3.Slerp(startingScale, targetScale, (elapsedTime / time));
@@ -146,7 +146,7 @@ public class TransformationManager : MonoBehaviour
 
     public void ScaleDown()
     {
-        StartCoroutine(SmoothScale(new Vector3(0.9f, 0.9f,0.9f), 1f));
+        StartCoroutine(SmoothScale(new Vector3(0.9f, 0.9f, 0.9f), 1f));
     }
 
     public void RotateCW()

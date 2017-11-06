@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Placed on the parent-object of all scale-handles
+/// Placed on the parent-object of all scale- and rotation-handles
 /// distributes the DragHandle script to them and sets it up
 /// NOTE: since this script relys on the fact that the bounding-box has not yet been reshaped this script needs to be called before any other
 /// </summary>

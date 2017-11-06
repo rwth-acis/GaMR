@@ -19,6 +19,8 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
     [Tooltip("The speed of the operation")]
     public float speed = 0.01f;
 
+    private Vector3 lastCummulativeDelta;
+
     /// <summary>
     /// Gets the value which has the maximum absolute value
     /// e.g. for -1, 10, -500 it returns -500
@@ -62,6 +64,8 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
         // set the focus to this object so that the manipulation continues to have effect even if
         // the user does not look at the gameObject anymore
         InputManager.Instance.OverrideFocusedObject = gameObject;
+
+        lastCummulativeDelta = Vector3.zero;
     }
 
     /// <summary>
@@ -114,10 +118,22 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
                     }
                 case HandleType.ROTATE:
                     {
-                        float[] values = new[] {eventData.CumulativeDelta.x,
-                            eventData.CumulativeDelta.y, eventData.CumulativeDelta.z};
-                        float rotationValue = GetMaxAbsolute(values);
-                        transformationManager.Rotate(gestureOrientation, speed * rotationValue);
+                        //float[] values = new[] {eventData.CumulativeDelta.x,
+                        //    eventData.CumulativeDelta.y, eventData.CumulativeDelta.z};
+                        //float rotationValue = GetMaxAbsolute(values);
+                        Vector3 delta = eventData.CumulativeDelta - lastCummulativeDelta;
+                        Vector3 objToCam = Camera.main.transform.position - transform.position;
+                        Vector3 objToTarget = (Camera.main.transform.position + delta) - transform.position;
+                        float rotationAngle = Vector3.Angle(objToCam, objToTarget);
+                        Vector3 crossProduct = Vector3.Cross(objToCam, objToTarget);
+                        if (crossProduct.y > 0)
+                        {
+                            rotationAngle *= -1;
+                        }
+                        Debug.Log("Rotation by: " + rotationAngle);
+                        Debug.Log("Delta: " + delta);
+                        lastCummulativeDelta = eventData.CumulativeDelta;
+                        transformationManager.Rotate(gestureOrientation, speed * rotationAngle);
                         break;
                     }
                 case HandleType.TRANSLATE:
