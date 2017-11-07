@@ -128,15 +128,23 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
                         Vector3 delta = eventData.CumulativeDelta - lastCummulativeDelta;
                         Vector3 objToCam = Camera.main.transform.position - transform.position;
                         Vector3 objToTarget = (Camera.main.transform.position + delta) - transform.position;
-                        float rotationAngle = Vector3.Angle(objToCam, objToTarget);
+                        float rotationAngle = Vector3.Angle(objToCam, objToTarget);                  
                         Debug.Log("Gesture orientation: " + gestureOrientation);
+
                         Vector3 crossProduct = Vector3.Cross(objToCam, objToTarget);
+                        Debug.Log("Cross: " + crossProduct.normalized);
+                        Debug.Log("Up: " + upVector);
                         if (gestureOrientation == Vector3.up)
                         {
-                            if (Vector3.Dot(crossProduct, upVector) <= 0)
+                            if (crossProduct.z < 0)
                             {
                                 rotationAngle *= -1;
                             }
+
+                            //if (Vector3.Dot(upVector, Vector3.up) > -0.5f  && Vector3.Dot(upVector, Vector3.up) < 0.5f)
+                            //{
+                            //    rotationAngle *= -1;
+                            //}
                         }
                         else if (gestureOrientation == Vector3.right)
                         {
@@ -144,6 +152,11 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
                             {
                                 rotationAngle *= -1;
                             }
+
+                            //if (Vector3.Dot(rightVector, Vector3.right) > -0.5f && Vector3.Dot(rightVector, Vector3.right) < 0.5f)
+                            //{
+                            //    rotationAngle *= -1;
+                            //}
                         }
                         else if (gestureOrientation == Vector3.forward)
                         {
@@ -151,13 +164,18 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
                             {
                                 rotationAngle *= -1;
                             }
+
+                            //if (Vector3.Dot(forwardVector, Vector3.forward) > -0.5f && Vector3.Dot(forwardVector, Vector3.forward) < 0.5f)
+                            //{
+                            //    rotationAngle *= -1;
+                            //}
                         }
 
-                        //Debug.Log("Rotation by: " + rotationAngle);
+                        Debug.Log("Rotation by: " + rotationAngle);
                         //Debug.Log("Cum. Delta: " + eventData.CumulativeDelta);
                         lastCummulativeDelta = eventData.CumulativeDelta;
 
-
+                        
 
                         transformationManager.Rotate(gestureOrientation, speed * rotationAngle);
                         break;
