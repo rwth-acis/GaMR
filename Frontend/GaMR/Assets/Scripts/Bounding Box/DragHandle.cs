@@ -19,9 +19,12 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
     [Tooltip("The speed of the operation")]
     public float speed = 0.01f;
 
-    private Vector3 lastCummulativeDelta, upVector, forwardVector, rightVector;
+    private Vector3 lastCummulativeDelta;
 
-    private Vector3 currentAxis, currentAxisProjection, projectionCross;
+    private Vector3 currentAxis;
+#if ALTERNATIVE_SOLUTION
+    private Vector3 currentAxisProjection, projectionCross;
+#endif
 
     /// <summary>
     /// Gets the value which has the maximum absolute value
@@ -68,30 +71,33 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
         InputManager.Instance.OverrideFocusedObject = gameObject;
 
         lastCummulativeDelta = Vector3.zero;
-        upVector = toManipulate.up;
-        forwardVector = toManipulate.forward;
-        rightVector = toManipulate.right;
 
-        if (gestureOrientation == Vector3.up)
+        if (handleType == HandleType.ROTATE)
         {
-            currentAxis = toManipulate.up;
-        }
-        else if (gestureOrientation == Vector3.right)
-        {
-            currentAxis = toManipulate.right;
-        }
-        else if (gestureOrientation == Vector3.forward)
-        {
-            currentAxis = toManipulate.forward;
-        }
 
-        currentAxisProjection = Vector3.ProjectOnPlane(currentAxis, Camera.main.transform.forward);
+            if (gestureOrientation == Vector3.up)
+            {
+                currentAxis = toManipulate.up;
+            }
+            else if (gestureOrientation == Vector3.right)
+            {
+                currentAxis = toManipulate.right;
+            }
+            else if (gestureOrientation == Vector3.forward)
+            {
+                currentAxis = toManipulate.forward;
+            }
 
-        projectionCross = Vector3.Cross(Camera.main.transform.forward, currentAxisProjection);
+#if ALTERNATIVE_SOLUTION
+            currentAxisProjection = Vector3.ProjectOnPlane(currentAxis, Camera.main.transform.forward);
 
-        Debug.Log("Current Axis: " + currentAxis);
-        Debug.Log("Projection: " + currentAxisProjection);
-        Debug.Log("Projection Cross: " + projectionCross);
+            projectionCross = Vector3.Cross(Camera.main.transform.forward, currentAxisProjection);
+
+            Debug.Log("Current Axis: " + currentAxis);
+            Debug.Log("Projection: " + currentAxisProjection);
+            Debug.Log("Projection Cross: " + projectionCross);
+#endif
+        }
     }
 
     /// <summary>
@@ -144,14 +150,15 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
                     }
                 case HandleType.ROTATE:
                     {
-                        //float[] values = new[] {eventData.CumulativeDelta.x,
-                        //    eventData.CumulativeDelta.y, eventData.CumulativeDelta.z};
-                        //float rotationValue = GetMaxAbsolute(values);
-
+                        // compute the difference of the drag gesture in comparison to the last frame
+                        // this way the rotation speed is not accumulating but only depends on the current drag speed
                         Vector3 delta = lastCummulativeDelta - eventData.CumulativeDelta;
                         // the x axis of the delta is flipped => correct this
                         delta = new Vector3(-delta.x, delta.y, delta.z);
 
+#if ALTERNATIVE_SOLUTION
+                        // this is an alternative solution
+                        // it uses the projection of the axis and computes everything in the viewport plane
                         Vector3 projectedDelta = Vector3.Project(delta, projectionCross);
 
                         float rotationAngle = projectedDelta.magnitude * Vector3.Dot(projectedDelta.normalized, projectionCross.normalized) * 360;
@@ -164,55 +171,23 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
                         //Debug.DrawLine(Camera.main.transform.position, Camera.main.transform.position + (projectedDelta * 10000), Color.blue);
                         //Debug.DrawLine(Camera.main.transform.position, Camera.main.transform.position + (delta * 10000), Color.cyan);
 
-
-#if ORIG_SOLUTION
-                        Vector3 objToCam = Camera.main.transform.position - toManipulate.position;
-                        Vector3 objToTarget = (Camera.main.transform.position + delta) - toManipulate.position;
-                        float rotationAngle = Vector3.Angle(objToCam, objToTarget);                  
-                        Debug.Log("Gesture orientation: " + gestureOrientation);
-
-                        Vector3 crossProduct = Vector3.Cross(objToCam, objToTarget);
-                        if (gestureOrientation == Vector3.up)
-                        {
-                            if (Vector3.Dot(crossProduct, upVector) < 0)
-                            {
-                                rotationAngle *= -1;
-                            }
-
-                            //if (Vector3.Dot(upVector, Vector3.up) > -0.5f  && Vector3.Dot(upVector, Vector3.up) < 0.5f)
-                            //{
-                            //    rotationAngle *= -1;
-                            //}
-                        }
-                        else if (gestureOrientation == Vector3.right)
-                        {
-                            if (Vector3.Dot(crossProduct, rightVector) > 0)
-                            {
-                                rotationAngle *= -1;
-                            }
-
-                            //if (Vector3.Dot(rightVector, Vector3.right) > -0.5f && Vector3.Dot(rightVector, Vector3.right) < 0.5f)
-                            //{
-                            //    rotationAngle *= -1;
-                            //}
-                        }
-                        else if (gestureOrientation == Vector3.forward)
-                        {
-                            if (Vector3.Dot(crossProduct, forwardVector) > 0)
-                            {
-                                rotationAngle *= -1;
-                            }
-
-                            //if (Vector3.Dot(forwardVector, Vector3.forward) > -0.5f && Vector3.Dot(forwardVector, Vector3.forward) < 0.5f)
-                            //{
-                            //    rotationAngle *= -1;
-                            //}
-                        }
-
 #endif
 
-                        Debug.Log("Rotation by: " + rotationAngle);
-                        //Debug.Log("Cum. Delta: " + eventData.CumulativeDelta);
+                        // this solution determines the angle at the object between the camera and its offset by the drag vector
+                        // with the aid of the cross product the "sign of the angle" can be determined
+                        // i.e. if the drag direction is pointing to the left or the right of the axis as seen from the camera
+                        Vector3 objToCam = Camera.main.transform.position - toManipulate.position;
+                        Vector3 objToTarget = (Camera.main.transform.position + delta) - toManipulate.position;
+                        float rotationAngle = Vector3.Angle(objToCam, objToTarget);
+                        Debug.Log("Rotation around local " + gestureOrientation);
+
+                        Vector3 crossProduct = Vector3.Cross(objToCam, objToTarget);
+                        if (Vector3.Dot(crossProduct, currentAxis) < 0)
+                        {
+                            rotationAngle *= -1;
+                        }
+
+                        // Debug.Log("Rotation by: " + rotationAngle);
                         lastCummulativeDelta = eventData.CumulativeDelta;
 
                         transformationManager.Rotate(gestureOrientation, speed * rotationAngle);
@@ -220,7 +195,6 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
                     }
                 case HandleType.TRANSLATE:
                     {
-                        //Vector3 translationVec = new Vector3(speed * eventData.CumulativeDelta.x, speed * eventData.CumulativeDelta.y, speed * eventData.CumulativeDelta.z);
                         transformationManager.Translate(speed * eventData.CumulativeDelta);
                         break;
                     }
