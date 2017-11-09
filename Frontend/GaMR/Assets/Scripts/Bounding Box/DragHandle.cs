@@ -88,6 +88,8 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
                 currentAxis = toManipulate.forward;
             }
 
+            Debug.Log("Rotation around local " + gestureOrientation);
+
 #if ALTERNATIVE_SOLUTION
             currentAxisProjection = Vector3.ProjectOnPlane(currentAxis, Camera.main.transform.forward);
 
@@ -179,7 +181,6 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
                         Vector3 objToCam = Camera.main.transform.position - toManipulate.position;
                         Vector3 objToTarget = (Camera.main.transform.position + delta) - toManipulate.position;
                         float rotationAngle = Vector3.Angle(objToCam, objToTarget);
-                        Debug.Log("Rotation around local " + gestureOrientation);
 
                         Vector3 crossProduct = Vector3.Cross(objToCam, objToTarget);
                         if (Vector3.Dot(crossProduct, currentAxis) < 0)
@@ -187,9 +188,11 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
                             rotationAngle *= -1;
                         }
 
-                        // Debug.Log("Rotation by: " + rotationAngle);
+                        Debug.Log("Rotation by: " + rotationAngle);
+                        // remember the cumulativeDelta in order to calculate the difference to this in the next frame
                         lastCummulativeDelta = eventData.CumulativeDelta;
 
+                        // rotate around the given axis by the calculated angle
                         transformationManager.Rotate(gestureOrientation, speed * rotationAngle);
                         break;
                     }
