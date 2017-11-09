@@ -1400,7 +1400,7 @@ Prefab:
     - target: {fileID: 114885505972973812, guid: 82427b962df012c4ab2bc95cb7d2a543,
         type: 2}
       propertyPath: rotationSpeed
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1995963635450896, guid: 82427b962df012c4ab2bc95cb7d2a543, type: 2}
       propertyPath: m_IsActive
@@ -1413,6 +1413,10 @@ Prefab:
     - target: {fileID: 1628725405594478, guid: 82427b962df012c4ab2bc95cb7d2a543, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4099883202616398, guid: 82427b962df012c4ab2bc95cb7d2a543, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 82427b962df012c4ab2bc95cb7d2a543, type: 2}

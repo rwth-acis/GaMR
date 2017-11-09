@@ -78,6 +78,7 @@ public class TransformationManager : MonoBehaviour
 
     public void Rotate(Vector3 axis, float angle)
     {
+        //transform.RotateAround(transform.position, axis, angle);
         transform.Rotate(axis, angle);
         UpdateTransformToRemote();
     }

@@ -21,6 +21,8 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
 
     private Vector3 lastCummulativeDelta, upVector, forwardVector, rightVector;
 
+    private Vector3 currentAxis, currentAxisProjection, projectionCross;
+
     /// <summary>
     /// Gets the value which has the maximum absolute value
     /// e.g. for -1, 10, -500 it returns -500
@@ -66,9 +68,30 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
         InputManager.Instance.OverrideFocusedObject = gameObject;
 
         lastCummulativeDelta = Vector3.zero;
-        upVector = transform.up;
-        forwardVector = transform.forward;
-        rightVector = transform.right;
+        upVector = toManipulate.up;
+        forwardVector = toManipulate.forward;
+        rightVector = toManipulate.right;
+
+        if (gestureOrientation == Vector3.up)
+        {
+            currentAxis = toManipulate.up;
+        }
+        else if (gestureOrientation == Vector3.right)
+        {
+            currentAxis = toManipulate.right;
+        }
+        else if (gestureOrientation == Vector3.forward)
+        {
+            currentAxis = toManipulate.forward;
+        }
+
+        currentAxisProjection = Vector3.ProjectOnPlane(currentAxis, Camera.main.transform.forward);
+
+        projectionCross = Vector3.Cross(Camera.main.transform.forward, currentAxisProjection);
+
+        Debug.Log("Current Axis: " + currentAxis);
+        Debug.Log("Projection: " + currentAxisProjection);
+        Debug.Log("Projection Cross: " + projectionCross);
     }
 
     /// <summary>
@@ -126,17 +149,28 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
                         //float rotationValue = GetMaxAbsolute(values);
 
                         Vector3 delta = eventData.CumulativeDelta - lastCummulativeDelta;
-                        Vector3 objToCam = Camera.main.transform.position - transform.position;
-                        Vector3 objToTarget = (Camera.main.transform.position + delta) - transform.position;
+
+                        Vector3 projectedDelta = Vector3.Project(delta, projectionCross);
+                        Debug.Log("Pr: " + projectedDelta);
+
+                        float rotationAngle = Vector3.Dot(projectedDelta.normalized, projectionCross.normalized);
+
+                        Debug.DrawLine(toManipulate.position, toManipulate.position + currentAxis, Color.red);
+                        Debug.DrawLine(Camera.main.transform.position, Camera.main.transform.position + currentAxisProjection, Color.magenta);
+                        Debug.DrawLine(Camera.main.transform.position, Camera.main.transform.position + projectionCross, Color.green);
+                        Debug.DrawLine(Camera.main.transform.position, Camera.main.transform.position + (projectedDelta * 10000), Color.blue);
+
+
+#if ORIG_SOLUTION
+                        Vector3 objToCam = Camera.main.transform.position - toManipulate.position;
+                        Vector3 objToTarget = (Camera.main.transform.position + delta) - toManipulate.position;
                         float rotationAngle = Vector3.Angle(objToCam, objToTarget);                  
                         Debug.Log("Gesture orientation: " + gestureOrientation);
 
                         Vector3 crossProduct = Vector3.Cross(objToCam, objToTarget);
-                        Debug.Log("Cross: " + crossProduct.normalized);
-                        Debug.Log("Up: " + upVector);
                         if (gestureOrientation == Vector3.up)
                         {
-                            if (crossProduct.z < 0)
+                            if (Vector3.Dot(crossProduct, upVector) < 0)
                             {
                                 rotationAngle *= -1;
                             }
@@ -171,11 +205,11 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
                             //}
                         }
 
+#endif
+
                         Debug.Log("Rotation by: " + rotationAngle);
                         //Debug.Log("Cum. Delta: " + eventData.CumulativeDelta);
                         lastCummulativeDelta = eventData.CumulativeDelta;
-
-                        
 
                         transformationManager.Rotate(gestureOrientation, speed * rotationAngle);
                         break;
