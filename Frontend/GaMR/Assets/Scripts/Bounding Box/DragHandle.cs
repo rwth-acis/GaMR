@@ -148,17 +148,21 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
                         //    eventData.CumulativeDelta.y, eventData.CumulativeDelta.z};
                         //float rotationValue = GetMaxAbsolute(values);
 
-                        Vector3 delta = eventData.CumulativeDelta - lastCummulativeDelta;
+                        Vector3 delta = lastCummulativeDelta - eventData.CumulativeDelta;
+                        // the x axis of the delta is flipped => correct this
+                        delta = new Vector3(-delta.x, delta.y, delta.z);
 
                         Vector3 projectedDelta = Vector3.Project(delta, projectionCross);
-                        Debug.Log("Pr: " + projectedDelta);
 
-                        float rotationAngle = Vector3.Dot(projectedDelta.normalized, projectionCross.normalized);
+                        float rotationAngle = projectedDelta.magnitude * Vector3.Dot(projectedDelta.normalized, projectionCross.normalized) * 360;
 
-                        Debug.DrawLine(toManipulate.position, toManipulate.position + currentAxis, Color.red);
-                        Debug.DrawLine(Camera.main.transform.position, Camera.main.transform.position + currentAxisProjection, Color.magenta);
-                        Debug.DrawLine(Camera.main.transform.position, Camera.main.transform.position + projectionCross, Color.green);
-                        Debug.DrawLine(Camera.main.transform.position, Camera.main.transform.position + (projectedDelta * 10000), Color.blue);
+                        // the following are debug lines which can be used to visualize the relevant vectors
+                        // they are only visible in the game view
+                        //Debug.DrawLine(toManipulate.position, toManipulate.position + currentAxis, Color.red);
+                        //Debug.DrawLine(Camera.main.transform.position, Camera.main.transform.position + currentAxisProjection, Color.magenta);
+                        //Debug.DrawLine(Camera.main.transform.position, Camera.main.transform.position + projectionCross, Color.green);
+                        //Debug.DrawLine(Camera.main.transform.position, Camera.main.transform.position + (projectedDelta * 10000), Color.blue);
+                        //Debug.DrawLine(Camera.main.transform.position, Camera.main.transform.position + (delta * 10000), Color.cyan);
 
 
 #if ORIG_SOLUTION
