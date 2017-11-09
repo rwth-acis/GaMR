@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+
+
 /// <summary>
 /// Registers drag movements and propagates them to the TransformationManager of the object which should be transformed
 /// </summary>
@@ -22,9 +24,9 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
     private Vector3 lastCummulativeDelta;
 
     private Vector3 currentAxis;
-#if ALTERNATIVE_SOLUTION
+//#if ALTERNATIVE_SOLUTION
     private Vector3 currentAxisProjection, projectionCross;
-#endif
+//#endif
 
     /// <summary>
     /// Gets the value which has the maximum absolute value
@@ -90,7 +92,7 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
 
             Debug.Log("Rotation around local " + gestureOrientation);
 
-#if ALTERNATIVE_SOLUTION
+//#if ALTERNATIVE_SOLUTION
             currentAxisProjection = Vector3.ProjectOnPlane(currentAxis, Camera.main.transform.forward);
 
             projectionCross = Vector3.Cross(Camera.main.transform.forward, currentAxisProjection);
@@ -98,7 +100,7 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
             Debug.Log("Current Axis: " + currentAxis);
             Debug.Log("Projection: " + currentAxisProjection);
             Debug.Log("Projection Cross: " + projectionCross);
-#endif
+//#endif
         }
     }
 
@@ -158,7 +160,7 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
                         // the x axis of the delta is flipped => correct this
                         delta = new Vector3(-delta.x, delta.y, delta.z);
 
-#if ALTERNATIVE_SOLUTION
+//#if ALTERNATIVE_SOLUTION
                         // this is an alternative solution
                         // it uses the projection of the axis and computes everything in the viewport plane
                         Vector3 projectedDelta = Vector3.Project(delta, projectionCross);
@@ -173,7 +175,9 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
                         //Debug.DrawLine(Camera.main.transform.position, Camera.main.transform.position + (projectedDelta * 10000), Color.blue);
                         //Debug.DrawLine(Camera.main.transform.position, Camera.main.transform.position + (delta * 10000), Color.cyan);
 
-#endif
+//#endif
+
+#if ORIG_SOLUTION
 
                         // this solution determines the angle at the object between the camera and its offset by the drag vector
                         // with the aid of the cross product the "sign of the angle" can be determined
@@ -187,6 +191,7 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
                         {
                             rotationAngle *= -1;
                         }
+#endif
 
                         Debug.Log("Rotation by: " + rotationAngle);
                         // remember the cumulativeDelta in order to calculate the difference to this in the next frame
