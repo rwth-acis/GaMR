@@ -781,48 +781,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fded36c06cce94647894830e0244b476, type: 2}
   m_IsPrefabParent: 0
---- !u!1001 &1479590694
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4099883202616398, guid: 82427b962df012c4ab2bc95cb7d2a543, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4099883202616398, guid: 82427b962df012c4ab2bc95cb7d2a543, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4099883202616398, guid: 82427b962df012c4ab2bc95cb7d2a543, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4099883202616398, guid: 82427b962df012c4ab2bc95cb7d2a543, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4099883202616398, guid: 82427b962df012c4ab2bc95cb7d2a543, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4099883202616398, guid: 82427b962df012c4ab2bc95cb7d2a543, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4099883202616398, guid: 82427b962df012c4ab2bc95cb7d2a543, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4099883202616398, guid: 82427b962df012c4ab2bc95cb7d2a543, type: 2}
-      propertyPath: m_RootOrder
-      value: 8
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 82427b962df012c4ab2bc95cb7d2a543, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &1490208454 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1000014098139846, guid: 022450106439a8946ae18a9e20cc92d8,
