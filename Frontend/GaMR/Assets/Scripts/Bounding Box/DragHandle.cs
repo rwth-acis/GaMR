@@ -24,9 +24,7 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
     private Vector3 lastCummulativeDelta;
 
     private Vector3 currentAxis;
-//#if ALTERNATIVE_SOLUTION
     private Vector3 currentAxisProjection, projectionCross;
-//#endif
 
     /// <summary>
     /// Gets the value which has the maximum absolute value
@@ -92,15 +90,14 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
 
             Debug.Log("Rotation around local " + gestureOrientation);
 
-//#if ALTERNATIVE_SOLUTION
             currentAxisProjection = Vector3.ProjectOnPlane(currentAxis, Camera.main.transform.forward);
 
             projectionCross = Vector3.Cross(Camera.main.transform.forward, currentAxisProjection);
 
-            Debug.Log("Current Axis: " + currentAxis);
-            Debug.Log("Projection: " + currentAxisProjection);
-            Debug.Log("Projection Cross: " + projectionCross);
-//#endif
+            // Debug values:
+            //Debug.Log("Current Axis: " + currentAxis);
+            //Debug.Log("Projection: " + currentAxisProjection);
+            //Debug.Log("Projection Cross: " + projectionCross);
         }
     }
 
@@ -112,6 +109,13 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
     {
         if (transformationManager.enabled)
         {
+            // compute the difference of the drag gesture in comparison to the last frame
+            // this way the rotation speed is not accumulating but only depends on the current drag speed
+            Vector3 delta = lastCummulativeDelta - eventData.CumulativeDelta;
+
+            // the x axis of the delta is flipped => correct this
+            delta = new Vector3(-delta.x, delta.y, delta.z);
+
             switch (handleType)
             {
                 case HandleType.SCALE:
@@ -127,17 +131,26 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
                             Vector2 fromCenterToHandle = handleProj - centerProj;
                             fromCenterToHandle = fromCenterToHandle.normalized;
 
-                            int drawDirection = Math.Sign(Vector2.Dot(eventData.CumulativeDelta, fromCenterToHandle));
+                            int drawDirection = Math.Sign(Vector2.Dot(delta, fromCenterToHandle));
                             // fromCenterToHandle points outwards from the center
                             // thus:
                             // if drawDirection < 0: inwards-drag => scale down
                             // if drawDirection > 0: outwards-drag => scale up
 
                             // just get the most dominant 2D-axis to determine the strength of the scale
-                            float max = Math.Max(Math.Abs(eventData.CumulativeDelta.x), Math.Abs(eventData.CumulativeDelta.y));
+                            // float max = Math.Max(Math.Abs(delta.x), Math.Abs(delta.y));
+
+                            // get the length of the drag vector in order to determine the strength of the operation
+                            float max = delta.magnitude;
 
                             // determine scaling factor
                             float scaleFac = 1.0f + (speed * max * drawDirection);
+
+                            // the following are debug lines which can be used to visualize the relevant vectors
+                            // they are only visible in the game view
+                            //Debug.DrawLine(toManipulate.position, toManipulate.position + new Vector3(fromCenterToHandle.x, fromCenterToHandle.y, 0), Color.red);
+                            //Debug.DrawLine(Camera.main.transform.position, Camera.main.transform.position + (delta * 10000), Color.cyan);
+
 
                             // scale
                             transformationManager.Scale(scaleFac * Vector3.one);
@@ -145,21 +158,15 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
                         else
                         {
                             Vector3 scaleVec = speed * new Vector3(
-                    eventData.CumulativeDelta.x * gestureOrientation.x,
-                    eventData.CumulativeDelta.y * gestureOrientation.y,
-                    eventData.CumulativeDelta.z * gestureOrientation.z);
+                    delta.x * gestureOrientation.x,
+                    delta.y * gestureOrientation.y,
+                    delta.z * gestureOrientation.z);
                             transformationManager.Scale(scaleVec);
                         }
                         break;
                     }
                 case HandleType.ROTATE:
                     {
-                        // compute the difference of the drag gesture in comparison to the last frame
-                        // this way the rotation speed is not accumulating but only depends on the current drag speed
-                        Vector3 delta = lastCummulativeDelta - eventData.CumulativeDelta;
-                        // the x axis of the delta is flipped => correct this
-                        delta = new Vector3(-delta.x, delta.y, delta.z);
-
 //#if ALTERNATIVE_SOLUTION
                         // this is an alternative solution
                         // it uses the projection of the axis and computes everything in the viewport plane
@@ -194,8 +201,6 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
 #endif
 
                         Debug.Log("Rotation by: " + rotationAngle);
-                        // remember the cumulativeDelta in order to calculate the difference to this in the next frame
-                        lastCummulativeDelta = eventData.CumulativeDelta;
 
                         // rotate around the given axis by the calculated angle
                         transformationManager.Rotate(gestureOrientation, speed * rotationAngle);
@@ -208,6 +213,9 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
                     }
 
             }
+
+            // remember the cumulativeDelta in order to calculate the difference to this in the next frame
+            lastCummulativeDelta = eventData.CumulativeDelta;
         }
     }
 
