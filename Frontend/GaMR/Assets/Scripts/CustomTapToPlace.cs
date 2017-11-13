@@ -105,7 +105,8 @@ namespace HoloToolkit.Unity.InputModule
             interpolator.SetTargetPosition(placementPosition);
 
             // Rotate this object to face the user.
-            interpolator.SetTargetRotation(Quaternion.Euler(0, Camera.main.transform.localEulerAngles.y, 0));
+            // this is not used because it destroys any rotation which has previously been set by the user
+            // interpolator.SetTargetRotation(Quaternion.Euler(0, Camera.main.transform.localEulerAngles.y, 0));
         }
 
         public virtual void OnInputClicked(InputClickedEventData eventData)
