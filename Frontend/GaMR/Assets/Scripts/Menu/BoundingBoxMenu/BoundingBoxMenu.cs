@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HoloToolkit.Unity.InputModule;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class BoundingBoxMenu : BaseMenu
 
     private BoundingBoxActions actions;
     private BoundingBoxInfo info;
+    private CustomTapToPlace tapToPlace;
 
 
     private bool menuEnabled = true;
@@ -43,6 +45,7 @@ public class BoundingBoxMenu : BaseMenu
         base.Start();
         actions = BoundingBox.GetComponent<BoundingBoxActions>();
         info = BoundingBox.GetComponent<BoundingBoxInfo>();
+        tapToPlace = BoundingBox.GetComponent<CustomTapToPlace>();
         Debug.Log("Create menu reference for " + info.Id.ToString());
         info.Menu = this;
 
@@ -51,6 +54,27 @@ public class BoundingBoxMenu : BaseMenu
         InitializeButtons();
         SetPlayerTypeMode();
         gameObject.SetActive(false);
+
+        tapToPlace.OnPickUp += BoundingBoxPickedUp;
+        tapToPlace.OnPlaced += BoundingBoxPlaced;
+    }
+
+    /// <summary>
+    /// if the bounding box is picked up the menu is hidden to avoid weird behavior
+    /// where the bounding box is in conflict with the menu and tries to jump in front of it
+    /// when the user focuses the menu
+    /// </summary>
+    private void BoundingBoxPickedUp()
+    {
+        transform.parent.gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// once the bounding box is placed using tap to place, the bounding box menu can be displayed again
+    /// </summary>
+    private void BoundingBoxPlaced()
+    {
+        transform.parent.gameObject.SetActive(true);
     }
 
     private void SetPlayerTypeMode()

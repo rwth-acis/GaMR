@@ -23,7 +23,7 @@ public class BoundingBoxInfo : MonoBehaviour
             {
                 objectInfo = GetComponentInChildren<ObjectInfo>();
             }
-            return ObjectInfo;
+            return objectInfo;
         }
     }
 

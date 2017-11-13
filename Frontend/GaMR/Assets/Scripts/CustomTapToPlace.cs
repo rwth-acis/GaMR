@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using HoloToolkit.Unity.SpatialMapping;
 using HoloToolkit.Sharing.Tests;
+using System;
 
 namespace HoloToolkit.Unity.InputModule
 {
@@ -50,6 +51,14 @@ namespace HoloToolkit.Unity.InputModule
 
         private static Dictionary<GameObject, int> defaultLayersCache = new Dictionary<GameObject, int>();
 
+        public delegate void PickUp();
+        public delegate void Placed();
+
+        public event PickUp OnPickUp;
+        public event Placed OnPlaced;
+
+        private bool lastPlacementState;
+
         protected virtual void Start()
         {
             if (WorldAnchorManager.Instance != null)
@@ -77,7 +86,31 @@ namespace HoloToolkit.Unity.InputModule
 
         protected virtual void Update()
         {
-            if (!IsBeingPlaced) { return; }
+            if (IsBeingPlaced != lastPlacementState)
+            {
+                if (IsBeingPlaced)
+                {
+                    if (OnPickUp != null)
+                    {
+                        OnPickUp();
+                    }
+                }
+                else
+                {
+                    if (OnPlaced != null)
+                    {
+                        OnPlaced();
+                    }
+                }
+                lastPlacementState = IsBeingPlaced;
+            }
+
+
+
+            if (!IsBeingPlaced)
+            {
+                return;
+            }
 
             Vector3 headPosition = Camera.main.transform.position;
             Vector3 gazeDirection = Camera.main.transform.forward;
