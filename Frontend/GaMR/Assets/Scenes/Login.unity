@@ -650,6 +650,11 @@ Prefab:
       propertyPath: RaycastLayerMasks.Array.data[0].m_Bits
       value: 4294966779
       objectReference: {fileID: 0}
+    - target: {fileID: 114742747811649402, guid: 3eddd1c29199313478dd3f912bfab2ab,
+        type: 2}
+      propertyPath: Cursor
+      value: 
+      objectReference: {fileID: 1999305865}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3eddd1c29199313478dd3f912bfab2ab, type: 2}
   m_IsPrefabParent: 0
@@ -1159,6 +1164,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Cursor
+--- !u!114 &1999305865 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114698458312288788, guid: dc138879450c80f438141cbe47938daf,
+    type: 2}
+  m_PrefabInternal: {fileID: 1860341189}
+  m_Script: {fileID: 11500000, guid: 169d15588dbd2704b827c111916f5be1, type: 3}
 --- !u!1 &2005764619 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1000011327985922, guid: 022450106439a8946ae18a9e20cc92d8,

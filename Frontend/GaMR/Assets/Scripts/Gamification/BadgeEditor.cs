@@ -13,7 +13,6 @@ public class BadgeEditor : MonoBehaviour
     public GameObject textMenuItem;
     public GameObject badgeMenuItem;
 
-    private static BadgeManager badgeManager;
     private static GamificationManager gamificationManager;
 
 
@@ -31,7 +30,6 @@ public class BadgeEditor : MonoBehaviour
         {
             this.enabled = false;
         }
-        badgeManager = GetComponentInChildren<BadgeManager>();
         gamificationManager = GetComponentInChildren<GamificationManager>();
     }
 

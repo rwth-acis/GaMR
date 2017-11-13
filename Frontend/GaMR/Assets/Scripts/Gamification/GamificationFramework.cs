@@ -54,7 +54,6 @@ public class GamificationFramework : Singleton<GamificationFramework>
     {
         if (callWithResult != null)
         {
-            object[] args = { callWithResult };
             RestManager.Instance.GET(InformationManager.Instance.FullGamificationAddress + "/gamification/games/data/" + gameId, reqRes =>
             {
                 Game game = null;

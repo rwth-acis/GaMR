@@ -9,13 +9,11 @@ public class BadgeOverview : Singleton<BadgeOverview>
 
     private List<GameObject> instantiatedBadges;
     private Dictionary<string, List<Badge>> badgesFromAllGames;
-    private List<BadgeManager> badgeManagers;
     private Vector3 instantiatePosition;
 
     private void Start()
     {
         instantiatedBadges = new List<GameObject>();
-        badgeManagers = new List<BadgeManager>();
         badgesFromAllGames = new Dictionary<string, List<Badge>>();
         instantiatePosition = new Vector3(0, 0, 2);
     }
