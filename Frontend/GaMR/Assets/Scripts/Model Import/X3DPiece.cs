@@ -81,6 +81,12 @@ public class X3DPiece
             // it also needs a mesh collider to react to ray casts
             gameObject.AddComponent<MeshCollider>();
 
+            // it also needs a ridgidbody so that the tap is not recognized by the parent ridgidbody on the bounding box
+            // but by the surface itself
+            Rigidbody rb = gameObject.AddComponent<Rigidbody>();
+            rb.isKinematic = true; // no physics simulations like gravity
+
+
             results.Add(gameObject);
         }
 
