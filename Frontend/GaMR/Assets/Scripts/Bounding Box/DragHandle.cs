@@ -23,6 +23,7 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
 
     private Vector3 lastCummulativeDelta;
 
+    // used for rotation:
     private Vector3 currentAxis;
     private Vector3 currentAxisProjection, projectionCross;
 
@@ -146,11 +147,12 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
                             // determine scaling factor
                             float scaleFac = 1.0f + (speed * max * drawDirection);
 
+#if BOUNDING_BOX_DEBUG
                             // the following are debug lines which can be used to visualize the relevant vectors
                             // they are only visible in the game view
                             //Debug.DrawLine(toManipulate.position, toManipulate.position + new Vector3(fromCenterToHandle.x, fromCenterToHandle.y, 0), Color.red);
                             //Debug.DrawLine(Camera.main.transform.position, Camera.main.transform.position + (delta * 10000), Color.cyan);
-
+#endif
 
                             // scale
                             transformationManager.Scale(scaleFac * Vector3.one);
@@ -167,13 +169,12 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
                     }
                 case HandleType.ROTATE:
                     {
-//#if ALTERNATIVE_SOLUTION
-                        // this is an alternative solution
                         // it uses the projection of the axis and computes everything in the viewport plane
                         Vector3 projectedDelta = Vector3.Project(delta, projectionCross);
 
                         float rotationAngle = projectedDelta.magnitude * Vector3.Dot(projectedDelta.normalized, projectionCross.normalized) * 360;
 
+#if BOUNDING_BOX_DEBUG
                         // the following are debug lines which can be used to visualize the relevant vectors
                         // they are only visible in the game view
                         //Debug.DrawLine(toManipulate.position, toManipulate.position + currentAxis, Color.red);
@@ -181,10 +182,9 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
                         //Debug.DrawLine(Camera.main.transform.position, Camera.main.transform.position + projectionCross, Color.green);
                         //Debug.DrawLine(Camera.main.transform.position, Camera.main.transform.position + (projectedDelta * 10000), Color.blue);
                         //Debug.DrawLine(Camera.main.transform.position, Camera.main.transform.position + (delta * 10000), Color.cyan);
+#endif
 
-//#endif
-
-#if ORIG_SOLUTION
+#if ALTERNATIVE_SOLUTION
 
                         // this solution determines the angle at the object between the camera and its offset by the drag vector
                         // with the aid of the cross product the "sign of the angle" can be determined
@@ -208,7 +208,7 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
                     }
                 case HandleType.TRANSLATE:
                     {
-                        transformationManager.Translate(speed * eventData.CumulativeDelta);
+                        transformationManager.Translate(speed * delta);
                         break;
                     }
 
