@@ -595,7 +595,7 @@ PlayerSettings:
       WebCam: False
   metroFTAName: 
   metroFTAFileTypes: []
-  metroProtocolName: 
+  metroProtocolName: gamr
   metroCompilationOverrides: 1
   tizenProductDescription: 
   tizenProductURL: 
