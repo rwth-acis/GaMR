@@ -176,6 +176,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &135549272 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000011947540078, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
+    type: 2}
+  m_PrefabInternal: {fileID: 1056965969}
+--- !u!114 &135549273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 135549272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e9c82fe8b1b33f4ebc84dc8317709c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SensitivityScale: 3
+  UseUnscaledTime: 1
+  axisType: 12
+  buttonType: 3
+  InputManagerHorizontalAxisName: 
+  InputManagerVerticalAxisName: 
+  Axis0Destination: 4
+  Axis1Destination: 6
+  Axis2Destination: 6
 --- !u!1 &140169216
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,6 +250,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Managers
+--- !u!1 &141952129 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000012744789930, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
+    type: 2}
+  m_PrefabInternal: {fileID: 1056965969}
+--- !u!114 &141952130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 141952129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e9c82fe8b1b33f4ebc84dc8317709c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SensitivityScale: 1
+  UseUnscaledTime: 1
+  axisType: 13
+  buttonType: 21
+  InputManagerHorizontalAxisName: 
+  InputManagerVerticalAxisName: 
+  Axis0Destination: 0
+  Axis1Destination: 2
+  Axis2Destination: 6
 --- !u!1 &161883051 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1000011021619270, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
@@ -254,18 +304,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MouseSupported: 1
-  MouseXYRotationAxisControl: {fileID: 856933568}
-  MouseXYTranslationAxisControl: {fileID: 823360455}
-  MouseXZTranslationAxisControl: {fileID: 1770778121}
+  MouseXYRotationAxisControl: {fileID: 1956943537}
+  MouseXYTranslationAxisControl: {fileID: 141952130}
+  MouseXZTranslationAxisControl: {fileID: 135549273}
   KeyboardSupported: 1
-  KeyboardXYRotationAxisControl: {fileID: 1925168537}
-  KeyboardXZRotationAxisControl: {fileID: 1331280756}
-  KeyboardXYTranslationAxisControl: {fileID: 1950716093}
-  KeyboardXZTranslationAxisControl: {fileID: 1232751271}
+  KeyboardXYRotationAxisControl: {fileID: 2086655677}
+  KeyboardXZRotationAxisControl: {fileID: 1765977475}
+  KeyboardXYTranslationAxisControl: {fileID: 714432238}
+  KeyboardXZTranslationAxisControl: {fileID: 1602578249}
   JoystickSupported: 0
-  JoystickXYRotationAxisControl: {fileID: 1903789148}
-  JoystickXYTranslationAxisControl: {fileID: 334830149}
-  JoystickXZTranslationAxisControl: {fileID: 1938407793}
+  JoystickXYRotationAxisControl: {fileID: 1216065145}
+  JoystickXYTranslationAxisControl: {fileID: 1942358608}
+  JoystickXZTranslationAxisControl: {fileID: 467523347}
 --- !u!4 &161883058 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4000010560871102, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
@@ -311,12 +361,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec19347209f7c3f4590873086fd52a9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &334830149 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114000010160007858, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
-    type: 2}
-  m_PrefabInternal: {fileID: 1056965969}
-  m_Script: {fileID: 11500000, guid: d1b627838df61e64baecc87fee2dec17, type: 3}
 --- !u!4 &370446433 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4000013641020314, guid: dc138879450c80f438141cbe47938daf,
@@ -501,6 +545,31 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 022450106439a8946ae18a9e20cc92d8, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &467523346 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000010136702736, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
+    type: 2}
+  m_PrefabInternal: {fileID: 1056965969}
+--- !u!114 &467523347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 467523346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e9c82fe8b1b33f4ebc84dc8317709c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SensitivityScale: 3
+  UseUnscaledTime: 1
+  axisType: 0
+  buttonType: 21
+  InputManagerHorizontalAxisName: CONTROLLER_RIGHT_STICK_HORIZONTAL
+  InputManagerVerticalAxisName: CONTROLLER_RIGHT_STICK_VERTICAL
+  Axis0Destination: 0
+  Axis1Destination: 4
+  Axis2Destination: 6
 --- !u!1 &501829635
 GameObject:
   m_ObjectHideFlags: 0
@@ -666,12 +735,31 @@ MonoBehaviour:
   mouse: {fileID: 1906025923057554, guid: cd6acc470ce1ff9498ebbe7ecb97f3bf, type: 2}
   leftHand: {fileID: 1747030157760962, guid: 6a0cbfea92d2726479e279e67a44931d, type: 2}
   rightHand: {fileID: 1198379067318554, guid: 537cb629399815b4ba225c2a2dfe41f9, type: 2}
---- !u!114 &823360455 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114000011359953050, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
+--- !u!1 &714432237 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000012618464992, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
     type: 2}
   m_PrefabInternal: {fileID: 1056965969}
-  m_Script: {fileID: 11500000, guid: d1b627838df61e64baecc87fee2dec17, type: 3}
+--- !u!114 &714432238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 714432237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e9c82fe8b1b33f4ebc84dc8317709c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SensitivityScale: 1
+  UseUnscaledTime: 1
+  axisType: 3
+  buttonType: 21
+  InputManagerHorizontalAxisName: 
+  InputManagerVerticalAxisName: 
+  Axis0Destination: 2
+  Axis1Destination: 6
+  Axis2Destination: 6
 --- !u!1001 &850561888
 Prefab:
   m_ObjectHideFlags: 0
@@ -735,15 +823,10 @@ Prefab:
       propertyPath: Cursor
       value: 
       objectReference: {fileID: 1999305865}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114950568511066590, guid: 3eddd1c29199313478dd3f912bfab2ab, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 3eddd1c29199313478dd3f912bfab2ab, type: 2}
   m_IsPrefabParent: 0
---- !u!114 &856933568 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114000013933693316, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
-    type: 2}
-  m_PrefabInternal: {fileID: 1056965969}
-  m_Script: {fileID: 11500000, guid: d1b627838df61e64baecc87fee2dec17, type: 3}
 --- !u!1 &972694079 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1000011070707148, guid: 3eddd1c29199313478dd3f912bfab2ab,
@@ -829,6 +912,16 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114000013543835744, guid: d379ed0a5618c9f479f58bd83a2d0ad3, type: 2}
+    - {fileID: 114000013933693316, guid: d379ed0a5618c9f479f58bd83a2d0ad3, type: 2}
+    - {fileID: 114000011359953050, guid: d379ed0a5618c9f479f58bd83a2d0ad3, type: 2}
+    - {fileID: 114000013988799740, guid: d379ed0a5618c9f479f58bd83a2d0ad3, type: 2}
+    - {fileID: 114000012889557236, guid: d379ed0a5618c9f479f58bd83a2d0ad3, type: 2}
+    - {fileID: 114000014171224568, guid: d379ed0a5618c9f479f58bd83a2d0ad3, type: 2}
+    - {fileID: 114000012298662144, guid: d379ed0a5618c9f479f58bd83a2d0ad3, type: 2}
+    - {fileID: 114000012656745502, guid: d379ed0a5618c9f479f58bd83a2d0ad3, type: 2}
+    - {fileID: 114000013649663976, guid: d379ed0a5618c9f479f58bd83a2d0ad3, type: 2}
+    - {fileID: 114000010160007858, guid: d379ed0a5618c9f479f58bd83a2d0ad3, type: 2}
+    - {fileID: 114000011221680894, guid: d379ed0a5618c9f479f58bd83a2d0ad3, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: d379ed0a5618c9f479f58bd83a2d0ad3, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1131215276
@@ -873,18 +966,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clientId: c4ced10f-ce0f-4155-b6f7-a4c40ffa410c
   debugToken: eyJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoicE5sVEc1TllsSkZFSjI3WlozZWxQUSIsInN1YiI6ImI3MmQtMTJhYWI2YzM3NGIxIiwiYXVkIjpbImM3NTg4ZWZjLWY4MzEtNGUzMS05MjhlLTBmNDZhOTFmYjMxMSJdLCJhdXRoX3RpbWUiOjE1MTAyMzY0NjgsImlzcyI6Imh0dHBzOlwvXC9hcGkubGVhcm5pbmctbGF5ZXJzLmV1XC9vXC9vYXV0aDJcLyIsImV4cCI6MTUxMDIzNzA2OCwibm9uY2UiOiIxNHM1bmN1IiwiaWF0IjoxNTEwMjM2NDY4fQ.A9qM4VmSqf_WjiEsRxCNjdzseXajZHqMEC2-iaEyZSx5P1VeRdeW2K9QIuxB7akNDeeIlLBJuwgQyJEz8G9PK0tUwW_rbbDaOKfmvhdZS6ET7Kd8kg3iLg5A_giwqjBLGhSxVZL6vXnPOX3py9FccWxUuOj4cP_AnDcT5P8Cu3M
---- !u!114 &1232751271 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114000012656745502, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
+--- !u!1 &1216065144 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000014073514604, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
     type: 2}
   m_PrefabInternal: {fileID: 1056965969}
-  m_Script: {fileID: 11500000, guid: d1b627838df61e64baecc87fee2dec17, type: 3}
---- !u!114 &1331280756 stripped
+--- !u!114 &1216065145
 MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114000014171224568, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
-    type: 2}
-  m_PrefabInternal: {fileID: 1056965969}
-  m_Script: {fileID: 11500000, guid: d1b627838df61e64baecc87fee2dec17, type: 3}
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1216065144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e9c82fe8b1b33f4ebc84dc8317709c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SensitivityScale: 3
+  UseUnscaledTime: 1
+  axisType: 0
+  buttonType: 21
+  InputManagerHorizontalAxisName: CONTROLLER_LEFT_STICK_HORIZONTAL
+  InputManagerVerticalAxisName: CONTROLLER_LEFT_STICK_VERTICAL
+  Axis0Destination: 2
+  Axis1Destination: 0
+  Axis2Destination: 6
 --- !u!1001 &1409815912
 Prefab:
   m_ObjectHideFlags: 0
@@ -1023,6 +1129,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1602578248 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000010956895450, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
+    type: 2}
+  m_PrefabInternal: {fileID: 1056965969}
+--- !u!114 &1602578249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1602578248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e9c82fe8b1b33f4ebc84dc8317709c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SensitivityScale: 3
+  UseUnscaledTime: 1
+  axisType: 0
+  buttonType: 21
+  InputManagerHorizontalAxisName: Horizontal
+  InputManagerVerticalAxisName: Vertical
+  Axis0Destination: 0
+  Axis1Destination: 4
+  Axis2Destination: 6
 --- !u!1 &1648687113
 GameObject:
   m_ObjectHideFlags: 0
@@ -1091,12 +1222,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d47caee8187d21341b2ce24fbdc660b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1770778121 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114000013988799740, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
+--- !u!1 &1765977474 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000013425959562, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
     type: 2}
   m_PrefabInternal: {fileID: 1056965969}
-  m_Script: {fileID: 11500000, guid: d1b627838df61e64baecc87fee2dec17, type: 3}
+--- !u!114 &1765977475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1765977474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e9c82fe8b1b33f4ebc84dc8317709c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SensitivityScale: 1
+  UseUnscaledTime: 1
+  axisType: 7
+  buttonType: 21
+  InputManagerHorizontalAxisName: 
+  InputManagerVerticalAxisName: 
+  Axis0Destination: 5
+  Axis1Destination: 4
+  Axis2Destination: 6
 --- !u!1001 &1860341189
 Prefab:
   m_ObjectHideFlags: 0
@@ -1156,30 +1306,56 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dc138879450c80f438141cbe47938daf, type: 2}
   m_IsPrefabParent: 0
---- !u!114 &1903789148 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114000013649663976, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
+--- !u!1 &1942358607 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000011026140476, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
     type: 2}
   m_PrefabInternal: {fileID: 1056965969}
-  m_Script: {fileID: 11500000, guid: d1b627838df61e64baecc87fee2dec17, type: 3}
---- !u!114 &1925168537 stripped
+--- !u!114 &1942358608
 MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114000012889557236, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1942358607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e9c82fe8b1b33f4ebc84dc8317709c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SensitivityScale: 3
+  UseUnscaledTime: 1
+  axisType: 0
+  buttonType: 21
+  InputManagerHorizontalAxisName: CONTROLLER_LEFT_TRIGGER
+  InputManagerVerticalAxisName: CONTROLLER_RIGHT_TRIGGER
+  Axis0Destination: 2
+  Axis1Destination: 3
+  Axis2Destination: 6
+--- !u!1 &1956943536 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000011337565444, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
     type: 2}
   m_PrefabInternal: {fileID: 1056965969}
-  m_Script: {fileID: 11500000, guid: d1b627838df61e64baecc87fee2dec17, type: 3}
---- !u!114 &1938407793 stripped
+--- !u!114 &1956943537
 MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114000011221680894, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
-    type: 2}
-  m_PrefabInternal: {fileID: 1056965969}
-  m_Script: {fileID: 11500000, guid: d1b627838df61e64baecc87fee2dec17, type: 3}
---- !u!114 &1950716093 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114000012298662144, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
-    type: 2}
-  m_PrefabInternal: {fileID: 1056965969}
-  m_Script: {fileID: 11500000, guid: d1b627838df61e64baecc87fee2dec17, type: 3}
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1956943536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e9c82fe8b1b33f4ebc84dc8317709c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SensitivityScale: 4.5
+  UseUnscaledTime: 1
+  axisType: 11
+  buttonType: 1
+  InputManagerHorizontalAxisName: 
+  InputManagerVerticalAxisName: 
+  Axis0Destination: 0
+  Axis1Destination: 2
+  Axis2Destination: 6
 --- !u!1 &1962335647
 GameObject:
   m_ObjectHideFlags: 0
@@ -1323,3 +1499,28 @@ MonoBehaviour:
   extents: {x: 10, y: 10, z: 10}
   origin: {x: 0, y: 0, z: 0}
   orientation: {x: 0, y: 0, z: 0, w: 1}
+--- !u!1 &2086655676 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000012373135252, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
+    type: 2}
+  m_PrefabInternal: {fileID: 1056965969}
+--- !u!114 &2086655677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2086655676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e9c82fe8b1b33f4ebc84dc8317709c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SensitivityScale: 1
+  UseUnscaledTime: 1
+  axisType: 6
+  buttonType: 21
+  InputManagerHorizontalAxisName: 
+  InputManagerVerticalAxisName: 
+  Axis0Destination: 2
+  Axis1Destination: 1
+  Axis2Destination: 6

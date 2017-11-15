@@ -21,9 +21,9 @@ namespace HoloToolkit.Unity.InputModule
         public CustomAxisController PrimaryAxisRotateControl;
         public CustomAxisController SecondaryAxisRotateControl;
         public CustomAxisController TertiaryAxisRotateControl;
-        public ButtonController SelectButtonControl;
-        public ButtonController MenuButtonControl;
-        public ButtonController GraspControl;
+        public CustomButtonController SelectButtonControl;
+        public CustomButtonController MenuButtonControl;
+        public CustomButtonController GraspControl;
 
         public DebugInteractionSourceState ControllerSourceState;
 
@@ -147,10 +147,10 @@ namespace HoloToolkit.Unity.InputModule
             // If there is a mouse translate with a modifier key and it is held down, do not reset the controller position.
             bool controllerTranslateActive =
                 (PrimaryAxisTranslateControl.axisType == CustomAxisController.AxisType.Mouse &&
-                 PrimaryAxisTranslateControl.buttonType != ButtonController.ButtonType.None &&
+                 PrimaryAxisTranslateControl.buttonType != CustomButtonController.ButtonType.None &&
                  PrimaryAxisTranslateControl.ShouldControl()) ||
                 (SecondaryAxisTranslateControl.axisType == CustomAxisController.AxisType.Mouse &&
-                 SecondaryAxisTranslateControl.buttonType != ButtonController.ButtonType.None &&
+                 SecondaryAxisTranslateControl.buttonType != CustomButtonController.ButtonType.None &&
                  SecondaryAxisTranslateControl.ShouldControl());
 
             if (controllerTranslateActive ||

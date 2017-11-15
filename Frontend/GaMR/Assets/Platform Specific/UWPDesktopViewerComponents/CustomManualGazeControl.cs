@@ -12,20 +12,20 @@ namespace HoloToolkit.Unity.InputModule
     public class CustomManualGazeControl : MonoBehaviour
     {
         public bool MouseSupported = true;
-        public AxisController MouseXYRotationAxisControl;
-        public AxisController MouseXYTranslationAxisControl;
-        public AxisController MouseXZTranslationAxisControl;
+        public CustomAxisController MouseXYRotationAxisControl;
+        public CustomAxisController MouseXYTranslationAxisControl;
+        public CustomAxisController MouseXZTranslationAxisControl;
 
         public bool KeyboardSupported = true;
-        public AxisController KeyboardXYRotationAxisControl;
-        public AxisController KeyboardXZRotationAxisControl;
-        public AxisController KeyboardXYTranslationAxisControl;
-        public AxisController KeyboardXZTranslationAxisControl;
+        public CustomAxisController KeyboardXYRotationAxisControl;
+        public CustomAxisController KeyboardXZRotationAxisControl;
+        public CustomAxisController KeyboardXYTranslationAxisControl;
+        public CustomAxisController KeyboardXZTranslationAxisControl;
 
         public bool JoystickSupported = false;
-        public AxisController JoystickXYRotationAxisControl;
-        public AxisController JoystickXYTranslationAxisControl;
-        public AxisController JoystickXZTranslationAxisControl;
+        public CustomAxisController JoystickXYRotationAxisControl;
+        public CustomAxisController JoystickXYTranslationAxisControl;
+        public CustomAxisController JoystickXZTranslationAxisControl;
 
         private Vector3 lastTrackerToUnityTranslation = Vector3.zero;
         private Quaternion lastTrackerToUnityRotation = Quaternion.identity;

@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4206912659239426}
-  - component: {fileID: 114832010102587794}
+  - component: {fileID: 114552302360848220}
   m_Layer: 0
   m_Name: FingerUpButton
   m_TagString: Untagged
@@ -52,7 +52,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4058272613492988}
-  - component: {fileID: 114094494764368480}
+  - component: {fileID: 114477629300679144}
   m_Layer: 0
   m_Name: FingerDownButton
   m_TagString: Untagged
@@ -231,18 +231,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1230265507304776}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114094494764368480
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1722897563627424}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1350e83623c005741ad0d1b09834ed62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buttonType: 12
 --- !u!114 &114112698699571242
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -294,7 +282,7 @@ MonoBehaviour:
   PrimaryAxisRotateControl: {fileID: 0}
   SecondaryAxisRotateControl: {fileID: 0}
   TertiaryAxisRotateControl: {fileID: 0}
-  SelectButtonControl: {fileID: 114094494764368480}
+  SelectButtonControl: {fileID: 114477629300679144}
   MenuButtonControl: {fileID: 0}
   GraspControl: {fileID: 0}
   ActiveControllerColor: {r: 0.29803923, g: 0.5019608, b: 0.85098046, a: 1}
@@ -325,7 +313,19 @@ MonoBehaviour:
   Axis0Destination: 3
   Axis1Destination: 0
   Axis2Destination: 6
---- !u!114 &114832010102587794
+--- !u!114 &114477629300679144
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1722897563627424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a079d1763a1f304c8b6e691818c4bb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonType: 12
+--- !u!114 &114552302360848220
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -333,7 +333,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1105593999589684}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1350e83623c005741ad0d1b09834ed62, type: 3}
+  m_Script: {fileID: 11500000, guid: 1a079d1763a1f304c8b6e691818c4bb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   buttonType: 12

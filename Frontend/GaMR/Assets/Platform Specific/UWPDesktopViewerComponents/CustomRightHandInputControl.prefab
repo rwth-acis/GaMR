@@ -52,7 +52,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4805689650974438}
-  - component: {fileID: 114821726498339338}
+  - component: {fileID: 114409039561630810}
   m_Layer: 0
   m_Name: FingerDownButton
   m_TagString: Untagged
@@ -101,7 +101,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4825104445489654}
-  - component: {fileID: 114940059561914556}
+  - component: {fileID: 114137542954865218}
   m_Layer: 0
   m_Name: FingerUpButton
   m_TagString: Untagged
@@ -270,7 +270,7 @@ MonoBehaviour:
   PrimaryAxisRotateControl: {fileID: 0}
   SecondaryAxisRotateControl: {fileID: 0}
   TertiaryAxisRotateControl: {fileID: 0}
-  SelectButtonControl: {fileID: 114821726498339338}
+  SelectButtonControl: {fileID: 114409039561630810}
   MenuButtonControl: {fileID: 0}
   GraspControl: {fileID: 0}
   ActiveControllerColor: {r: 0.29803923, g: 0.5019608, b: 0.8509804, a: 1}
@@ -281,6 +281,18 @@ MonoBehaviour:
   HandDownTexture: {fileID: 2800000, guid: d84aac8e3bc8fe344b50dab1e7382ad7, type: 3}
   ShowPointingRay: 0
   InitialPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &114137542954865218
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1985651008039540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a079d1763a1f304c8b6e691818c4bb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonType: 18
 --- !u!114 &114139865742654114
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -313,6 +325,18 @@ MonoBehaviour:
     HoldInProgress: 0
     CumulativeDelta: {x: 0, y: 0, z: 0}
   manipulationStartMovementThreshold: 0.03
+--- !u!114 &114409039561630810
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1632211177596444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a079d1763a1f304c8b6e691818c4bb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonType: 18
 --- !u!114 &114418219904398762
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -333,27 +357,3 @@ MonoBehaviour:
   Axis0Destination: 3
   Axis1Destination: 0
   Axis2Destination: 6
---- !u!114 &114821726498339338
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1632211177596444}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1350e83623c005741ad0d1b09834ed62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buttonType: 18
---- !u!114 &114940059561914556
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1985651008039540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1350e83623c005741ad0d1b09834ed62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buttonType: 18

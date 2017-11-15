@@ -59,7 +59,7 @@ namespace HoloToolkit.Unity.InputModule
         public bool UseUnscaledTime = true;
 
         public AxisType axisType = AxisType.Mouse;
-        public ButtonController.ButtonType buttonType = ButtonController.ButtonType.None;
+        public CustomButtonController.ButtonType buttonType = CustomButtonController.ButtonType.None;
 
         public string InputManagerHorizontalAxisName;
         public string InputManagerVerticalAxisName;
@@ -123,19 +123,19 @@ namespace HoloToolkit.Unity.InputModule
             // Workaround for Remote Desktop.  Ctrl-mouse, Shift-mouse, and Alt-mouse don't work, so they should be avoided.
             if (IsRunningUnderRemoteDesktop())
             {
-                if (this.buttonType == ButtonController.ButtonType.Control)
+                if (this.buttonType == CustomButtonController.ButtonType.Control)
                 {
-                    this.buttonType = ButtonController.ButtonType.Left;
+                    this.buttonType = CustomButtonController.ButtonType.Left;
                     Debug.LogWarning("Running under Remote Desktop, so changed AxisContol method to Left mouse button");
                 }
-                if (this.buttonType == ButtonController.ButtonType.Alt)
+                if (this.buttonType == CustomButtonController.ButtonType.Alt)
                 {
-                    this.buttonType = ButtonController.ButtonType.Right;
+                    this.buttonType = CustomButtonController.ButtonType.Right;
                     Debug.LogWarning("Running under Remote Desktop, so changed AxisContol method to Right mouse button");
                 }
-                if (this.buttonType == ButtonController.ButtonType.Shift)
+                if (this.buttonType == CustomButtonController.ButtonType.Shift)
                 {
-                    this.buttonType = ButtonController.ButtonType.Middle;
+                    this.buttonType = CustomButtonController.ButtonType.Middle;
                     Debug.LogWarning("Running under Remote Desktop, so changed AxisContol method to Middle mouse button");
                 }
             }
@@ -269,12 +269,12 @@ namespace HoloToolkit.Unity.InputModule
 
         private void OnStartMouseLook()
         {
-            if (this.buttonType <= ButtonController.ButtonType.Middle)
+            if (this.buttonType <= CustomButtonController.ButtonType.Middle)
             {
                 // if mousebutton is either left, right or middle
                 SetWantsMouseJumping(true);
             }
-            else if (this.buttonType <= ButtonController.ButtonType.Focused)
+            else if (this.buttonType <= CustomButtonController.ButtonType.Focused)
             {
                 // if mousebutton is either control, shift or focused
                 UnityEngine.Cursor.lockState = CursorLockMode.Locked;
@@ -286,12 +286,12 @@ namespace HoloToolkit.Unity.InputModule
 
         private void OnEndMouseLook()
         {
-            if (this.buttonType <= ButtonController.ButtonType.Middle)
+            if (this.buttonType <= CustomButtonController.ButtonType.Middle)
             {
                 // if mousebutton is either left, right or middle
                 SetWantsMouseJumping(false);
             }
-            else if (this.buttonType <= ButtonController.ButtonType.Focused)
+            else if (this.buttonType <= CustomButtonController.ButtonType.Focused)
             {
                 // if mousebutton is either control, shift or focused
                 UnityEngine.Cursor.lockState = CursorLockMode.None;
@@ -451,35 +451,35 @@ namespace HoloToolkit.Unity.InputModule
             {
                 return false;
             }
-            else if (this.buttonType == ButtonController.ButtonType.None)
-            {
-                return true;
-            }
-            else if (this.buttonType <= ButtonController.ButtonType.Middle)
+            else if (this.buttonType == CustomButtonController.ButtonType.None)
+            {                           
+                return true;            
+            }                           
+            else if (this.buttonType <= CustomButtonController.ButtonType.Middle)
             {
                 return Input.GetMouseButton((int)this.buttonType);
             }
-            else if (this.buttonType == ButtonController.ButtonType.Control)
+            else if (this.buttonType == CustomButtonController.ButtonType.Control)
             {
                 return Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
             }
-            else if (this.buttonType == ButtonController.ButtonType.Shift)
+            else if (this.buttonType == CustomButtonController.ButtonType.Shift)
             {
                 return Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
             }
-            else if (this.buttonType == ButtonController.ButtonType.Alt)
+            else if (this.buttonType == CustomButtonController.ButtonType.Alt)
             {
                 return Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt);
             }
-            else if (this.buttonType == ButtonController.ButtonType.Space)
+            else if (this.buttonType == CustomButtonController.ButtonType.Space)
             {
                 return Input.GetKey(KeyCode.Space);
             }
-            else if (this.buttonType == ButtonController.ButtonType.Return)
+            else if (this.buttonType == CustomButtonController.ButtonType.Return)
             {
                 return Input.GetKey(KeyCode.Return);
             }
-            else if (this.buttonType == ButtonController.ButtonType.Focused)
+            else if (this.buttonType == CustomButtonController.ButtonType.Focused)
             {
                 if (!this.usingMouse)
                 {
