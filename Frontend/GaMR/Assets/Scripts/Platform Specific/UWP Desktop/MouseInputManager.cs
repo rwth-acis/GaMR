@@ -2,11 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MouseInputManager : MonoBehaviour
 {
     GameObject cursorObject;
     Transform lastObjectHit;
+    InteractionInputSource inputSource;
 
     private void Awake()
     {
@@ -20,11 +22,20 @@ public class MouseInputManager : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 10f))
         {
-            Debug.Log("Hit: " + hit.transform);
             cursorObject.transform.position = hit.point - 0.02f * (hit.point - Camera.main.transform.position);
             Quaternion.LookRotation(hit.normal);
 
             Transform objectHit = hit.transform;
+
+            if (Input.GetMouseButton(0))
+            {
+                Debug.Log("Clicked: " + objectHit);
+            }
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                Debug.Log("Down: " + objectHit);
+            }
 
             if (objectHit != lastObjectHit)
             {

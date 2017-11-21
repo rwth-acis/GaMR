@@ -1326,6 +1326,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: c1000081192be7347a0ad0c380ed6171, type: 3}
+      propertyPath: m_Name
+      value: DesktopCursor
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c1000081192be7347a0ad0c380ed6171, type: 3}
   m_IsPrefabParent: 0
