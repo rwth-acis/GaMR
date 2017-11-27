@@ -5,6 +5,7 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class ButtonScaler : MonoBehaviour
 {
+#if UNITY_EDITOR
     Transform frameObject;
     SpriteRenderer frame;
     Transform icon;
@@ -22,19 +23,24 @@ public class ButtonScaler : MonoBehaviour
 
         icon = transform.Find("Icon");
         captionObject = transform.Find("Caption");
-
     }
 
-    private void UndoScaling(Transform parent, Transform child)
+    private void UndoScaling(Transform parent, Transform child, float size)
     {
-        child.localScale = new Vector3(
-            child.localScale.x / parent.localScale.x,
-            child.localScale.y / parent.localScale.y,
-            child.localScale.z / parent.localScale.z);
+        Vector3 newScale = new Vector3(
+            size / parent.localScale.x,
+            size / parent.localScale.y,
+            size / parent.localScale.z
+            );
+
+        newScale = child.rotation * newScale;
+        child.localScale = newScale;
+        
     }
 
     void Update()
     {
-        //UndoScaling(transform, icon);
+        UndoScaling(transform, icon, 0.03f);
     }
+#endif
 }
