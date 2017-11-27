@@ -115,7 +115,10 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
             Vector3 delta = lastCummulativeDelta - eventData.CumulativeDelta;
 
             // the x axis of the delta is flipped => correct this
-            delta = new Vector3(-delta.x, delta.y, delta.z);
+            //delta = new Vector3(-delta.x, delta.y, delta.z);
+
+            // the delta is flipped => correct this
+            delta *= -1;
 
             switch (handleType)
             {
