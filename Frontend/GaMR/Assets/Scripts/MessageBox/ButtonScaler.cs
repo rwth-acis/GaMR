@@ -9,7 +9,6 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class ButtonScaler : MonoBehaviour
 {
-#if UNITY_EDITOR
     private Transform frameTransform;
     private SpriteRenderer frame;
     private Transform icon;
@@ -30,6 +29,17 @@ public class ButtonScaler : MonoBehaviour
     public bool scaleComponentsWithButton = true;
 
     /// <summary>
+    /// makes sure that the script is only affecting the editor
+    /// the script is destroyed in play mode to save performance
+    /// </summary>
+    private void Awake()
+    {
+#if !UNITY_EDITOR
+        Destroy(this);
+#endif
+    }
+
+    /// <summary>
     /// Initialization function which is executed with the first update
     /// In Awake and Start many objects do not seem to be available yet
     /// </summary>
@@ -45,7 +55,11 @@ public class ButtonScaler : MonoBehaviour
         captionTransform = transform.Find("Caption");
 
         originalSize = transform.localScale;
-        originalFrameSize = frame.size;
+
+        if (frame != null)
+        {
+            originalFrameSize = frame.size;
+        }
     }
 
     /// <summary>
@@ -69,16 +83,19 @@ public class ButtonScaler : MonoBehaviour
     /// <param name="scaleFactors">Determines the constant size of the child object. The size can be specified axis-independent</param>
     private void UndoScaling(Transform child, Vector3 scaleFactors)
     {
-        if (transform.localScale.x != 0 && transform.localScale.y != 0 && transform.localScale.z != 0)
+        if (child != null) // only do something if the child really exists
         {
-            Vector3 newScale = new Vector3(
-                scaleFactors.x / transform.localScale.x,
-                scaleFactors.y / transform.localScale.y,
-                scaleFactors.z / transform.localScale.z
-                );
+            if (transform.localScale.x != 0 && transform.localScale.y != 0 && transform.localScale.z != 0)
+            {
+                Vector3 newScale = new Vector3(
+                    scaleFactors.x / transform.localScale.x,
+                    scaleFactors.y / transform.localScale.y,
+                    scaleFactors.z / transform.localScale.z
+                    );
 
-            newScale = child.rotation * newScale;
-            child.localScale = newScale;
+                newScale = child.rotation * newScale;
+                child.localScale = newScale;
+            }
         }
     }
 
@@ -91,8 +108,11 @@ public class ButtonScaler : MonoBehaviour
     /// <param name="child">The child to scale</param>
     private void ScaleProportionally(Transform child)
     {
-        float scaleFactor = Mathf.Min(ratio.y, ratio.z);
-        child.localScale *= scaleFactor;
+        if (child != null) // only do something if the child really exits
+        {
+            float scaleFactor = Mathf.Min(ratio.y, ratio.z);
+            child.localScale *= scaleFactor;
+        }
     }
 
     /// <summary>
@@ -102,12 +122,15 @@ public class ButtonScaler : MonoBehaviour
     /// </summary>
     private void ScaleFrame()
     {
-        frame.size = new Vector2(
-            originalFrameSize.x * ratio.z,
-            originalFrameSize.y * ratio.y
-            );
-        frame.size /= borderWidth;
-        frame.transform.localScale *= borderWidth;
+        if (frame != null)
+        {
+            frame.size = new Vector2(
+                originalFrameSize.x * ratio.z,
+                originalFrameSize.y * ratio.y
+                );
+            frame.size /= borderWidth;
+            frame.transform.localScale *= borderWidth;
+        }
     }
 
     /// <summary>
@@ -154,5 +177,4 @@ public class ButtonScaler : MonoBehaviour
         // scale the frame to fit the button
         ScaleFrame();
     }
-#endif
 }

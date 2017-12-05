@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 23685653643472606}
   - component: {fileID: 114212505072150888}
   m_Layer: 0
-  m_Name: Settings Button
+  m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -389,6 +389,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 042a39a229e54204587609c2fa4d0d24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  iconSize: 0.05
+  captionSize: 0.006
+  borderWidth: 1
+  scaleComponentsWithButton: 1
 --- !u!212 &212624983524838112
 SpriteRenderer:
   m_ObjectHideFlags: 1
