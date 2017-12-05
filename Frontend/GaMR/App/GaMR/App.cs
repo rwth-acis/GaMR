@@ -5,6 +5,7 @@ using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using UnityPlayer;
+using UnityEngine;
 
 namespace GaMR
 {
@@ -49,6 +50,18 @@ namespace GaMR
         private void ApplicationView_Activated(CoreApplicationView sender, IActivatedEventArgs args)
         {
             CoreWindow.GetForCurrentThread().Activate();
+            if (args.Kind == ActivationKind.Protocol)
+            {
+                ProtocolActivatedEventArgs eventArgs = args as ProtocolActivatedEventArgs;
+                UnityEngine.WSA.Application.InvokeOnAppThread(() =>
+                {
+                    GameObject go = GameObject.Find("AuthorizationManager");
+                    if (go)
+                    {
+                        go.SendMessage("StartedByProtocol", eventArgs.Uri);
+                    }
+                }, false);
+            }
         }
 
         public void SetWindow(CoreWindow coreWindow)
