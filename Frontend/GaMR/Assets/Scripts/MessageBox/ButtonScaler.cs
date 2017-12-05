@@ -27,7 +27,7 @@ public class ButtonScaler : MonoBehaviour
     public float ledSize = 1f;
     [Tooltip("The width of the border around the button")]
     public float borderWidth = 1f;
-    [Tooltip("If this is enabled, the icon and text will also be scaled if the button is resized")]
+    [Tooltip("If this is enabled, the icon, text and LED will also be scaled if the button is resized")]
     public bool scaleComponentsWithButton = true;
 
     private float frameSize = 0.01423f; // this is an internal value which scales the frame to the correct size

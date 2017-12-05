@@ -56,6 +56,8 @@ public class ButtonConfiguration : MonoBehaviour
                 icon = spriteRenderer.sprite;
             }
         }
+
+        UpdateButtonType();
     }
 
     private void Update()
@@ -83,25 +85,30 @@ public class ButtonConfiguration : MonoBehaviour
 
         if (lastButtonType != type)
         {
-            // disable all specific controls and just re-enable the needed control
-            // this simplifies transition between button types
-            DisableAllSpecificControls();
-
-
-            switch(type)
-            {
-                case ButtonType.BUTTON:
-                    break;
-                case ButtonType.CHECK_BUTTON:
-                    if (ledTransform != null)
-                    {
-                        ledTransform.gameObject.SetActive(true);
-                    }
-                    break;
-                case ButtonType.CONTENT_BUTTON:
-                    break;
-            }
+            UpdateButtonType();
             lastButtonType = type;
+        }
+    }
+
+    private void UpdateButtonType()
+    {
+        // disable all specific controls and just re-enable the needed control
+        // this simplifies transition between button types
+        DisableAllSpecificControls();
+
+
+        switch (type)
+        {
+            case ButtonType.BUTTON:
+                break;
+            case ButtonType.CHECK_BUTTON:
+                if (ledTransform != null)
+                {
+                    ledTransform.gameObject.SetActive(true);
+                }
+                break;
+            case ButtonType.CONTENT_BUTTON:
+                break;
         }
     }
 
