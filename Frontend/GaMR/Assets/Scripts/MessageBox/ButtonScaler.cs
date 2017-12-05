@@ -13,6 +13,7 @@ public class ButtonScaler : MonoBehaviour
     private SpriteRenderer frame;
     private Transform icon;
     private Transform captionTransform;
+    private Transform led;
     private bool firstUpdate = true;
     private Vector3 originalSize;
     private Vector3 ratio = Vector3.one;
@@ -22,11 +23,14 @@ public class ButtonScaler : MonoBehaviour
     public float iconSize = 0.05f;
     [Tooltip("The size of the button's caption")]
     public float captionSize = 0.006f;
+    [Tooltip("The size of the LED (if it exists)")]
+    public float ledSize = 1f;
     [Tooltip("The width of the border around the button")]
     public float borderWidth = 1f;
-    private float frameSize = 0.01423f; // this is an internal value which scales the frame to the correct size
     [Tooltip("If this is enabled, the icon and text will also be scaled if the button is resized")]
     public bool scaleComponentsWithButton = true;
+
+    private float frameSize = 0.01423f; // this is an internal value which scales the frame to the correct size
 
     /// <summary>
     /// makes sure that the script is only affecting the editor
@@ -53,6 +57,8 @@ public class ButtonScaler : MonoBehaviour
 
         icon = transform.Find("Icon");
         captionTransform = transform.Find("Caption");
+
+        led = transform.Find("LED");
 
         originalSize = transform.localScale;
 
@@ -94,6 +100,7 @@ public class ButtonScaler : MonoBehaviour
                     );
 
                 newScale = child.rotation * newScale;
+                newScale = new Vector3(Mathf.Abs(newScale.x), Mathf.Abs(newScale.y), Mathf.Abs(newScale.z));
                 child.localScale = newScale;
             }
         }
@@ -156,6 +163,7 @@ public class ButtonScaler : MonoBehaviour
         UndoScaling(icon, iconSize);
         UndoScaling(frameTransform, frameSize);
         UndoScaling(captionTransform, captionSize);
+        UndoScaling(led, ledSize);
 
         // make sure that no scale is 0 or else the button will not be visible anymore
         if (transform.localScale.x != 0 && transform.localScale.y != 0 && transform.localScale.z != 0)
@@ -172,6 +180,7 @@ public class ButtonScaler : MonoBehaviour
         {
             ScaleProportionally(icon);
             ScaleProportionally(captionTransform);
+            ScaleProportionally(led);
         }
 
         // scale the frame to fit the button

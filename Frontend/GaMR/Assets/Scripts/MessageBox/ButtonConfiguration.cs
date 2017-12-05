@@ -7,11 +7,17 @@ public class ButtonConfiguration : MonoBehaviour
 {
     [SerializeField]
     private ButtonType type;
-
     [SerializeField]
     private Sprite icon;
+    [SerializeField]
+    private bool showIcon = true;
+    [SerializeField]
+    private bool showCaption = true;
 
     private SpriteRenderer spriteRenderer;
+    private Transform captionTransform;
+    private Transform ledTransform;
+    private ButtonType lastButtonType;
 
     private bool firstUpdate = true;
 
@@ -22,13 +28,26 @@ public class ButtonConfiguration : MonoBehaviour
     private void Awake()
     {
 #if !UNITY_EDITOR
-        Destroy(this);
+
+        // destroy all inactive children => they should not be shown and so they can be deleted
+        foreach (Transform trans in transform)
+        {
+            if (!trans.gameObject.activeSelf)
+            {
+                GameObject.Destroy(trans);
+            }
+        }
+
+        Destroy(this); // save performance => the button is already configured in the editor
 #endif
     }
 
     private void Initialize()
     {
         Transform spriteTransform = transform.Find("Icon");
+        captionTransform = transform.Find("Caption");
+        ledTransform = transform.Find("LED");
+
         if (spriteTransform != null)
         {
             spriteRenderer = spriteTransform.GetComponent<SpriteRenderer>();
@@ -48,15 +67,58 @@ public class ButtonConfiguration : MonoBehaviour
         }
 
         // update the assigned icon
-        if (spriteRenderer != null && spriteRenderer.sprite != icon)
+        if (spriteRenderer != null)
         {
-            spriteRenderer.sprite = icon;
+            spriteRenderer.gameObject.SetActive(showIcon);
+            if (spriteRenderer.sprite != icon)
+            {
+                spriteRenderer.sprite = icon;
+            }
+        }
+
+        if (captionTransform != null && showCaption != captionTransform.gameObject.activeSelf)
+        {
+            captionTransform.gameObject.SetActive(showCaption);
+        }
+
+        if (lastButtonType != type)
+        {
+            // disable all specific controls and just re-enable the needed control
+            // this simplifies transition between button types
+            DisableAllSpecificControls();
+
+
+            switch(type)
+            {
+                case ButtonType.BUTTON:
+                    break;
+                case ButtonType.CHECK_BUTTON:
+                    if (ledTransform != null)
+                    {
+                        ledTransform.gameObject.SetActive(true);
+                    }
+                    break;
+                case ButtonType.CONTENT_BUTTON:
+                    break;
+            }
+            lastButtonType = type;
+        }
+    }
+
+    /// <summary>
+    /// Disables all controls which are only used by specialized button types
+    /// </summary>
+    private void DisableAllSpecificControls()
+    {
+        if (ledTransform != null)
+        {
+            ledTransform.gameObject.SetActive(false);
         }
     }
 
     private enum ButtonType
     {
-        BUTTON, CHECK_BUTTON, CONTENT_BUTTON, CUSTOM
+        BUTTON, CHECK_BUTTON, CONTENT_BUTTON
     }
 
 }
