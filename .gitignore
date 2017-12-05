@@ -32,7 +32,3 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
-/Frontend/GaMR/Assets/Scripts/Platform Specific
-/Frontend/GaMR/Assets/Scripts
-/Frontend/GaMR/Assets/Platform Specific.meta
-/Frontend/GaMR/Assets/Platform Specific
