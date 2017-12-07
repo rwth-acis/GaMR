@@ -13,6 +13,7 @@ public class ButtonScaler : MonoBehaviour
     private SpriteRenderer frame;
     private Transform icon;
     private Transform captionTransform;
+    private Transform contentTransform;
     private Transform led;
     private bool firstUpdate = true;
     private Vector3 originalSize;
@@ -25,6 +26,8 @@ public class ButtonScaler : MonoBehaviour
     public float captionSize = 0.006f;
     [Tooltip("The size of the LED (if it exists)")]
     public float ledSize = 1f;
+    [Tooltip("The size of the content label (if it exists)")]
+    public float contentSize = 0.02f;
     [Tooltip("The width of the border around the button")]
     public float borderWidth = 1f;
     [Tooltip("If this is enabled, the icon, text and LED will also be scaled if the button is resized")]
@@ -59,6 +62,8 @@ public class ButtonScaler : MonoBehaviour
         captionTransform = transform.Find("Caption");
 
         led = transform.Find("LED");
+
+        contentTransform = transform.Find("Content");
 
         originalSize = transform.localScale;
 
@@ -164,6 +169,7 @@ public class ButtonScaler : MonoBehaviour
         UndoScaling(frameTransform, frameSize);
         UndoScaling(captionTransform, captionSize);
         UndoScaling(led, ledSize);
+        UndoScaling(contentTransform, contentSize);
 
         // make sure that no scale is 0 or else the button will not be visible anymore
         if (transform.localScale.x != 0 && transform.localScale.y != 0 && transform.localScale.z != 0)
@@ -181,9 +187,13 @@ public class ButtonScaler : MonoBehaviour
             ScaleProportionally(icon);
             ScaleProportionally(captionTransform);
             ScaleProportionally(led);
+            ScaleProportionally(contentTransform);
         }
 
         // scale the frame to fit the button
         ScaleFrame();
+
+        // also fix the frame to always be in the middle of the button
+        frameTransform.localPosition = new Vector3(frameTransform.localPosition.x, 0, 0);
     }
 }

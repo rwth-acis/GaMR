@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,9 +18,15 @@ public class ButtonConfiguration : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Transform captionTransform;
     private Transform ledTransform;
+    private Transform contentTransform;
     private ButtonType lastButtonType;
 
+    private FocusableButton currentButtonComponent;
+
     private bool firstUpdate = true;
+
+    // stored button settings
+    private float pressDepth;
 
     /// <summary>
     /// makes sure that the script is only affecting the editor
@@ -47,6 +54,7 @@ public class ButtonConfiguration : MonoBehaviour
         Transform spriteTransform = transform.Find("Icon");
         captionTransform = transform.Find("Caption");
         ledTransform = transform.Find("LED");
+        contentTransform = transform.Find("Content");
 
         if (spriteTransform != null)
         {
@@ -56,6 +64,8 @@ public class ButtonConfiguration : MonoBehaviour
                 icon = spriteRenderer.sprite;
             }
         }
+
+        currentButtonComponent = gameObject.GetComponent<FocusableButton>();
 
         UpdateButtonType();
     }
@@ -95,21 +105,41 @@ public class ButtonConfiguration : MonoBehaviour
         // disable all specific controls and just re-enable the needed control
         // this simplifies transition between button types
         DisableAllSpecificControls();
-
+        // remove button script to exchange it for a new type
+        // but store the settings of the button
+        StoreButtonSettings();
+        DestroyImmediate(currentButtonComponent);
 
         switch (type)
         {
             case ButtonType.BUTTON:
+                currentButtonComponent = gameObject.AddComponent<FocusableButton>();
                 break;
             case ButtonType.CHECK_BUTTON:
                 if (ledTransform != null)
                 {
                     ledTransform.gameObject.SetActive(true);
+                    currentButtonComponent = gameObject.AddComponent<FocusableCheckButton>();
+                }
+                else
+                {
+                    Debug.LogError("Tried to set focusable check button without LED. This is not allowed (" + gameObject.name + ")");
                 }
                 break;
             case ButtonType.CONTENT_BUTTON:
+                if (contentTransform != null)
+                {
+                    contentTransform.gameObject.SetActive(true);
+                    currentButtonComponent = gameObject.AddComponent<FocusableContentButton>();
+                }
+                else
+                {
+                    Debug.LogError("Tried to set focusable content button without content label. This is not allowed (" + gameObject.name + ")");
+                }
                 break;
         }
+
+        RestoreButtonSettings();
     }
 
     /// <summary>
@@ -120,6 +150,33 @@ public class ButtonConfiguration : MonoBehaviour
         if (ledTransform != null)
         {
             ledTransform.gameObject.SetActive(false);
+        }
+        if (contentTransform != null)
+        {
+            contentTransform.gameObject.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// stores the settings which have been made on the FocusableButton, FocusableContentButton or FocusableCheckButton
+    /// this is useful for the developer as the specific values can be restored when the script is exchanged
+    /// </summary>
+    private void StoreButtonSettings()
+    {
+        if (currentButtonComponent != null)
+        {
+            pressDepth = currentButtonComponent.pressDepth;
+        }
+    }
+
+    /// <summary>
+    /// restores button settings from saved values of a previous button script
+    /// </summary>
+    private void RestoreButtonSettings()
+    {
+        if (currentButtonComponent != null)
+        {
+            currentButtonComponent.pressDepth = pressDepth;
         }
     }
 
