@@ -35,13 +35,13 @@ public class ButtonConfiguration : MonoBehaviour
     private void Awake()
     {
 #if !UNITY_EDITOR
-
+        
         // destroy all inactive children => they should not be shown and so they can be deleted
         foreach (Transform trans in transform)
         {
             if (!trans.gameObject.activeSelf)
             {
-                GameObject.Destroy(trans);
+                GameObject.Destroy(trans.gameObject);
             }
         }
 
