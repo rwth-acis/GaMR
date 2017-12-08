@@ -288,6 +288,11 @@ Prefab:
       propertyPath: m_LocalPosition.z
       value: 0.09699996
       objectReference: {fileID: 0}
+    - target: {fileID: 102376709821391630, guid: ab959f48521775c4992ca1cd1cb4d823,
+        type: 2}
+      propertyPath: m_Text
+      value: Button
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
     - {fileID: 0}
@@ -1005,9 +1010,49 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 114060786659670106, guid: ab959f48521775c4992ca1cd1cb4d823,
+        type: 2}
+      propertyPath: type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1252351853385160, guid: ab959f48521775c4992ca1cd1cb4d823, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1856593208504332, guid: ab959f48521775c4992ca1cd1cb4d823, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4197976671907526, guid: ab959f48521775c4992ca1cd1cb4d823, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -0.31405997
+      objectReference: {fileID: 0}
+    - target: {fileID: 102525048365666012, guid: ab959f48521775c4992ca1cd1cb4d823,
+        type: 2}
+      propertyPath: m_Text
+      value: Content
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114828021262008802, guid: ab959f48521775c4992ca1cd1cb4d823, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: ab959f48521775c4992ca1cd1cb4d823, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1054161115 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1249079764563076, guid: ab959f48521775c4992ca1cd1cb4d823,
+    type: 2}
+  m_PrefabInternal: {fileID: 1054161114}
+--- !u!114 &1054161116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1054161115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5db6ac60a770130439407d74480cb1f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pressDepth: 0.008
 --- !u!1 &1131215276
 GameObject:
   m_ObjectHideFlags: 0
@@ -1561,6 +1606,11 @@ Prefab:
     - target: {fileID: 4197976671907526, guid: ab959f48521775c4992ca1cd1cb4d823, type: 2}
       propertyPath: m_LocalPosition.z
       value: 0.09699996
+      objectReference: {fileID: 0}
+    - target: {fileID: 102376709821391630, guid: ab959f48521775c4992ca1cd1cb4d823,
+        type: 2}
+      propertyPath: m_Text
+      value: Button
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}

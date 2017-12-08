@@ -11,6 +11,8 @@ public class ButtonConfiguration : MonoBehaviour
     [SerializeField]
     private Sprite icon;
     [SerializeField]
+    private string caption;
+    [SerializeField]
     private bool showIcon = true;
     [SerializeField]
     private bool showCaption = true;
@@ -97,6 +99,11 @@ public class ButtonConfiguration : MonoBehaviour
         {
             UpdateButtonType();
             lastButtonType = type;
+        }
+
+        if (currentButtonComponent != null)
+        {
+            currentButtonComponent.Text = caption;
         }
     }
 

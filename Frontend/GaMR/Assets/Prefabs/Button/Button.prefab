@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 23685653643472606}
   - component: {fileID: 114212505072150888}
   - component: {fileID: 114060786659670106}
-  - component: {fileID: 114828021262008802}
+  - component: {fileID: 114233575791693356}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -160,7 +160,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1856593208504332}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -1.0237792, y: 0, z: 0.09700002}
+  m_LocalPosition: {x: -1.0237792, y: 0, z: -0.31405997}
   m_LocalScale: {x: 0.07999958, y: 0.08, z: 3.5667782}
   m_Children: []
   m_Father: {fileID: 4539708981875870}
@@ -503,7 +503,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1718424241700044}
-  m_Text: Settings
+  m_Text: Button
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
@@ -524,7 +524,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1856593208504332}
-  m_Text: English
+  m_Text: Content
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
@@ -551,6 +551,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   icon: {fileID: 21300000, guid: ed73f34871df0a24a9fa5b650e0dd747, type: 3}
+  caption: Button
   showIcon: 1
   showCaption: 1
 --- !u!114 &114212505072150888
@@ -570,6 +571,18 @@ MonoBehaviour:
   contentSize: 0.08
   borderWidth: 1
   scaleComponentsWithButton: 1
+--- !u!114 &114233575791693356
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1249079764563076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85a458358f5fd3547b9a44720050fe3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pressDepth: 0.008
 --- !u!114 &114301423329335588
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -634,18 +647,6 @@ MonoBehaviour:
   constantOffset: {x: -0.00053334236, y: -0.06999998, z: -0.31406003}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
---- !u!114 &114828021262008802
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1249079764563076}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85a458358f5fd3547b9a44720050fe3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pressDepth: 0.008
 --- !u!212 &212624983524838112
 SpriteRenderer:
   m_ObjectHideFlags: 1
