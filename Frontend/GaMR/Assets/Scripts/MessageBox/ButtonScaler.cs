@@ -33,7 +33,9 @@ public class ButtonScaler : MonoBehaviour
     [Tooltip("If this is enabled, the icon, text and LED will also be scaled if the button is resized")]
     public bool scaleComponentsWithButton = true;
 
-    private float frameSize = 0.01423f; // this is an internal value which scales the frame to the correct size
+    private bool previousScaleComponentWithButton;
+
+    private float frameSize = 0.1423f; // this is an internal value which scales the frame to the correct size
 
     /// <summary>
     /// makes sure that the script is only affecting the editor
@@ -65,12 +67,11 @@ public class ButtonScaler : MonoBehaviour
 
         contentTransform = transform.Find("Content");
 
-        originalSize = transform.localScale;
+        // set original values:
+        // these values are obtained when the button has the size (1,1)
+        originalSize = Vector3.one;
 
-        if (frame != null)
-        {
-            originalFrameSize = frame.size;
-        }
+        originalFrameSize = new Vector2(7.05f, 7.05f);
     }
 
     /// <summary>
@@ -164,13 +165,6 @@ public class ButtonScaler : MonoBehaviour
             borderWidth = 1;
         }
 
-        // undo the parent scaling on the button components
-        UndoScaling(icon, iconSize);
-        UndoScaling(frameTransform, frameSize);
-        UndoScaling(captionTransform, captionSize);
-        UndoScaling(led, ledSize);
-        UndoScaling(contentTransform, contentSize);
-
         // make sure that no scale is 0 or else the button will not be visible anymore
         if (transform.localScale.x != 0 && transform.localScale.y != 0 && transform.localScale.z != 0)
         {
@@ -180,6 +174,13 @@ public class ButtonScaler : MonoBehaviour
                 transform.localScale.z / originalSize.z
                 );
         }
+
+        // undo the parent scaling on the button components
+        UndoScaling(icon, iconSize);
+        UndoScaling(frameTransform, frameSize);
+        UndoScaling(captionTransform, captionSize);
+        UndoScaling(led, ledSize);
+        UndoScaling(contentTransform, contentSize);
 
         // handle the scaling of the components
         if (scaleComponentsWithButton)
