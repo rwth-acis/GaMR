@@ -16,7 +16,6 @@ public class ButtonScaler : MonoBehaviour
     private Transform contentTransform;
     private Transform led;
     private bool firstUpdate = true;
-    private Vector3 originalSize;
     private Vector3 ratio = Vector3.one;
     private Vector2 originalFrameSize;
 
@@ -69,8 +68,6 @@ public class ButtonScaler : MonoBehaviour
 
         // set original values:
         // these values are obtained when the button has the size (1,1)
-        originalSize = Vector3.one;
-
         originalFrameSize = new Vector2(7.05f, 7.05f);
     }
 
@@ -105,7 +102,7 @@ public class ButtonScaler : MonoBehaviour
                     scaleFactors.z / transform.localScale.z
                     );
 
-                newScale = child.rotation * newScale;
+                newScale = child.localRotation * newScale;
                 newScale = new Vector3(Mathf.Abs(newScale.x), Mathf.Abs(newScale.y), Mathf.Abs(newScale.z));
                 child.localScale = newScale;
             }
@@ -168,11 +165,7 @@ public class ButtonScaler : MonoBehaviour
         // make sure that no scale is 0 or else the button will not be visible anymore
         if (transform.localScale.x != 0 && transform.localScale.y != 0 && transform.localScale.z != 0)
         {
-            ratio = new Vector3(
-                transform.localScale.x / originalSize.x,
-                transform.localScale.y / originalSize.y,
-                transform.localScale.z / originalSize.z
-                );
+            ratio = transform.localScale;
         }
 
         // undo the parent scaling on the button components
