@@ -94,15 +94,16 @@ public class ButtonScaler : MonoBehaviour
     {
         if (child != null) // only do something if the child really exists
         {
-            if (transform.localScale.x != 0 && transform.localScale.y != 0 && transform.localScale.z != 0)
+            if (ratio.x != 0 && ratio.y != 0 && ratio.z != 0)
             {
                 Vector3 newScale = new Vector3(
-                    scaleFactors.x / transform.localScale.x,
-                    scaleFactors.y / transform.localScale.y,
-                    scaleFactors.z / transform.localScale.z
+                    scaleFactors.x / ratio.x,
+                    scaleFactors.y / ratio.y,
+                    scaleFactors.z / ratio.z
                     );
 
                 newScale = child.localRotation * newScale;
+
                 newScale = new Vector3(Mathf.Abs(newScale.x), Mathf.Abs(newScale.y), Mathf.Abs(newScale.z));
                 child.localScale = newScale;
             }
@@ -166,6 +167,12 @@ public class ButtonScaler : MonoBehaviour
         if (transform.localScale.x != 0 && transform.localScale.y != 0 && transform.localScale.z != 0)
         {
             ratio = transform.localScale;
+            Transform current = transform.parent;
+            while(current != null)
+            {
+                ratio.Scale(current.localScale);
+                current = current.parent;
+            }
         }
 
         // undo the parent scaling on the button components

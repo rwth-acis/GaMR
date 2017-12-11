@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 23685653643472606}
   - component: {fileID: 114212505072150888}
   - component: {fileID: 114060786659670106}
-  - component: {fileID: 114233575791693356}
+  - component: {fileID: 114667117103047378}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -571,18 +571,6 @@ MonoBehaviour:
   contentSize: 0.08
   borderWidth: 1
   scaleComponentsWithButton: 1
---- !u!114 &114233575791693356
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1249079764563076}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85a458358f5fd3547b9a44720050fe3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pressDepth: 0.008
 --- !u!114 &114301423329335588
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -631,6 +619,18 @@ MonoBehaviour:
   constantOffset: {x: -0.016486421, y: -0.14604151, z: 0.1422242}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
+--- !u!114 &114667117103047378
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1249079764563076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85a458358f5fd3547b9a44720050fe3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pressDepth: 0.008
 --- !u!114 &114770518024293968
 MonoBehaviour:
   m_ObjectHideFlags: 1

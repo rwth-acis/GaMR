@@ -69,6 +69,12 @@ public class RelativeAlignment : MonoBehaviour
         if (transform.localScale.x != 0 && transform.localScale.y != 0 && transform.localScale.z != 0)
         {
             ratio = transform.parent.localScale;
+            Transform current = transform.parent.parent;
+            while(current != null)
+            {
+                ratio.Scale(current.localScale);
+                current = current.parent;
+            }
         }
 
 
