@@ -46,6 +46,11 @@ public class ButtonConfiguration : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Called if the script finds itself in a non-editor environment
+    /// The button is fixed in its current configuration and the script is destroyed
+    /// This way, performance is saved by avoiding unnecessary Update() calls
+    /// </summary>
     private void RemoveScript()
     {
         // destroy all inactive children => they should not be shown and so they can be deleted
@@ -64,6 +69,10 @@ public class ButtonConfiguration : MonoBehaviour
         Destroy(this); // save performance => the button is already configured in the editor
     }
 
+    /// <summary>
+    /// Initializes the configuration script
+    /// Gets the necessary transforms and components
+    /// </summary>
     private void Initialize()
     {
         Transform spriteTransform = transform.Find("Icon");
@@ -85,8 +94,12 @@ public class ButtonConfiguration : MonoBehaviour
         UpdateButtonType();
     }
 
+    /// <summary>
+    /// Is called every time something changes in the editor
+    /// </summary>
     private void Update()
     {
+        // initialize everything in the first Update() call
         if (firstUpdate)
         {
             Initialize();
@@ -103,23 +116,30 @@ public class ButtonConfiguration : MonoBehaviour
             }
         }
 
+        // if the "showCaption" is different from its current state => show/hide caption
         if (captionTransform != null && showCaption != captionTransform.gameObject.activeSelf)
         {
             captionTransform.gameObject.SetActive(showCaption);
         }
 
+        // if the button type has been changed => update it
         if (lastButtonType != type)
         {
             UpdateButtonType();
             lastButtonType = type;
         }
 
+        // update the caption of the button
         if (currentButtonComponent != null)
         {
             currentButtonComponent.Text = caption;
         }
     }
 
+    /// <summary>
+    /// Applies the currently selected button type
+    /// Adapts the visibility of sub-controls and handles the transition between two button types
+    /// </summary>
     private void UpdateButtonType()
     {
         // disable all specific controls and just re-enable the needed control
@@ -200,6 +220,12 @@ public class ButtonConfiguration : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Specifies the type of button
+    /// BUTTON: a normal button
+    /// CHECK_BUTTON: a button with an on/off-state
+    /// CONTENT_BUTTON: a button with an additional text label for text content
+    /// </summary>
     private enum ButtonType
     {
         BUTTON, CHECK_BUTTON, CONTENT_BUTTON
