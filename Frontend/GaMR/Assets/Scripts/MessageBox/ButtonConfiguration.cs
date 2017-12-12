@@ -38,17 +38,30 @@ public class ButtonConfiguration : MonoBehaviour
     {
 #if !UNITY_EDITOR
         
+        RemoveScript();
+#endif
+        if (Application.isEditor && Application.isPlaying)
+        {
+            RemoveScript();
+        }
+    }
+
+    private void RemoveScript()
+    {
         // destroy all inactive children => they should not be shown and so they can be deleted
+        // exception: frame
+
+        Transform frame = transform.Find("Frame");
+
         foreach (Transform trans in transform)
         {
-            if (!trans.gameObject.activeSelf)
+            if (trans != frame && !trans.gameObject.activeSelf)
             {
                 GameObject.Destroy(trans.gameObject);
             }
         }
 
         Destroy(this); // save performance => the button is already configured in the editor
-#endif
     }
 
     private void Initialize()

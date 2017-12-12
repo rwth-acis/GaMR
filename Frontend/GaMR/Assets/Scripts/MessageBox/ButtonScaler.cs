@@ -12,6 +12,7 @@ public class ButtonScaler : MonoBehaviour
     private Transform frameTransform;
     private SpriteRenderer frame;
     private Transform icon;
+    private SpriteRenderer iconRenderer;
     private Transform captionTransform;
     private Transform contentTransform;
     private Transform led;
@@ -21,6 +22,8 @@ public class ButtonScaler : MonoBehaviour
 
     [Tooltip("The size of the button's icon")]
     public float iconSize = 0.05f;
+    public bool flipIconX = false;
+    public bool flipIconY = false;
     [Tooltip("The size of the button's caption")]
     public float captionSize = 0.006f;
     [Tooltip("The size of the LED (if it exists)")]
@@ -43,8 +46,18 @@ public class ButtonScaler : MonoBehaviour
     private void Awake()
     {
 #if !UNITY_EDITOR
-        Destroy(this);
+        RemoveScript();
 #endif
+
+        if (Application.isEditor && Application.isPlaying)
+        {
+            RemoveScript();
+        }
+    }
+
+    private void RemoveScript()
+    {
+        Destroy(this);
     }
 
     /// <summary>
@@ -60,6 +73,10 @@ public class ButtonScaler : MonoBehaviour
         }
 
         icon = transform.Find("Icon");
+        if (icon != null)
+        {
+            iconRenderer = icon.GetComponent<SpriteRenderer>();
+        }
         captionTransform = transform.Find("Caption");
 
         led = transform.Find("LED");
@@ -168,7 +185,7 @@ public class ButtonScaler : MonoBehaviour
         {
             ratio = transform.localScale;
             Transform current = transform.parent;
-            while(current != null)
+            while (current != null)
             {
                 ratio.Scale(current.localScale);
                 current = current.parent;
@@ -189,6 +206,12 @@ public class ButtonScaler : MonoBehaviour
             ScaleProportionally(captionTransform);
             ScaleProportionally(led);
             ScaleProportionally(contentTransform);
+        }
+
+        if (iconRenderer != null)
+        {
+            iconRenderer.flipX = flipIconX;
+            iconRenderer.flipY = flipIconY;
         }
 
         // scale the frame to fit the button

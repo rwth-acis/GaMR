@@ -45,9 +45,9 @@ public class StartMenu : BaseMenu
 
     private void InitializeButtons()
     {
-        settingsButton = transform.Find("Settings Button").gameObject.AddComponent<FocusableButton>();
-        loginButton = transform.Find("Login Button").gameObject.AddComponent<FocusableButton>();
-        authorButton = transform.Find("Author Button").gameObject.AddComponent<FocusableCheckButton>();
+        settingsButton = transform.Find("Settings Button").GetComponent<FocusableButton>();
+        loginButton = transform.Find("Login Button").GetComponent<FocusableButton>();
+        authorButton = transform.Find("Author Button").GetComponent<FocusableCheckButton>();
 
         settingsButton.OnPressed = ShowSettings;
         loginButton.OnPressed = Login;
