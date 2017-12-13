@@ -1,11 +1,14 @@
 package ModelProvider;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jdk.nashorn.internal.runtime.Debug;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.*;
+import java.nio.file.Files;
 import java.util.Scanner;
 
 /**
@@ -159,6 +162,30 @@ public class Resources {
         {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
+    }
+
+    @GET
+    @Path("/annotation/audio/load/{modelName}/{annotationId}")
+    @Produces("audio/mp3")
+    public Response getAnnotationAudio(@PathParam("modelName") String modelName, @PathParam("annotationId") String annotationId)
+    {
+            File mp3 = new File(App.modelPath + File.separatorChar + modelName +
+                    File.separatorChar + "Audio" + File.separatorChar + annotationId + ".mp3");
+            if (mp3.exists()) {
+                return Response.ok(mp3, "audio/mp3").build();
+            }
+            else
+            {
+                return  Response.status(Response.Status.BAD_REQUEST).build();
+            }
+    }
+
+    @POST
+    @Path("/annotation/audio/save/{modelName}/{annotationId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response storeAnnotationAudio(@PathParam("modelName") String modelName, @PathParam("annotationId") String annotationId, File audio)
+    {
+        return  Response.ok().build();
     }
 
     @GET

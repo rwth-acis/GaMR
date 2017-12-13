@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
-import static ModelProvider.Resources.foo;
+//import static ModelProvider.Resources.foo;
 
 /**
  * Created by bened on 11.06.2017.
