@@ -177,15 +177,12 @@ public class Resources {
     {
             File ogg = new File(App.modelPath + File.separatorChar + modelName +
                     File.separatorChar + "Audio" + File.separatorChar + annotationId + ".ogg");
-            try {
-                byte[] data = Files.readAllBytes(Paths.get(App.modelPath + File.separatorChar + modelName +
-                        File.separatorChar + "Audio" + File.separatorChar + annotationId + ".ogg"));
-                System.out.println(data.length);
-                    return Response.ok(data, MediaType.APPLICATION_OCTET_STREAM).build();
-            }
-            catch (Exception e)
+            if (ogg.exists())
             {
-                System.out.println("Error");
+                return Response.ok(ogg, MediaType.APPLICATION_OCTET_STREAM).build();
+            }
+            else
+            {
                 return  Response.status(Response.Status.BAD_REQUEST).build();
             }
     }
