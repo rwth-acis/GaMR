@@ -1,14 +1,20 @@
 package ModelProvider;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import jdk.nashorn.internal.runtime.Debug;
 
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.sql.Savepoint;
 import java.util.Scanner;
 
 /**
@@ -166,26 +172,41 @@ public class Resources {
 
     @GET
     @Path("/annotation/audio/load/{modelName}/{annotationId}")
-    @Produces("audio/mp3")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response getAnnotationAudio(@PathParam("modelName") String modelName, @PathParam("annotationId") String annotationId)
     {
-            File mp3 = new File(App.modelPath + File.separatorChar + modelName +
-                    File.separatorChar + "Audio" + File.separatorChar + annotationId + ".mp3");
-            if (mp3.exists()) {
-                return Response.ok(mp3, "audio/mp3").build();
+            File ogg = new File(App.modelPath + File.separatorChar + modelName +
+                    File.separatorChar + "Audio" + File.separatorChar + annotationId + ".ogg");
+            try {
+                byte[] data = Files.readAllBytes(Paths.get(App.modelPath + File.separatorChar + modelName +
+                        File.separatorChar + "Audio" + File.separatorChar + annotationId + ".ogg"));
+                System.out.println(data.length);
+                    return Response.ok(data, MediaType.APPLICATION_OCTET_STREAM).build();
             }
-            else
+            catch (Exception e)
             {
+                System.out.println("Error");
                 return  Response.status(Response.Status.BAD_REQUEST).build();
             }
     }
 
     @POST
     @Path("/annotation/audio/save/{modelName}/{annotationId}")
+    @Consumes(MediaType.APPLICATION_OCTET_STREAM)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response storeAnnotationAudio(@PathParam("modelName") String modelName, @PathParam("annotationId") String annotationId, File audio)
+    public Response storeAnnotationAudio(@PathParam("modelName") String modelName, @PathParam("annotationId") String annotationId, byte[] audio)
     {
-        return  Response.ok().build();
+        System.out.println("Received audio");
+        try {
+            Files.write(new File(App.modelPath + File.separatorChar + modelName +
+                    File.separatorChar + "Audio" + File.separatorChar + annotationId + ".ogg").toPath(), audio);
+
+            return  Response.ok().build();
+        }
+        catch (IOException e)
+        {
+            return  Response.status(Response.Status.BAD_REQUEST).build();
+        }
     }
 
     @GET
