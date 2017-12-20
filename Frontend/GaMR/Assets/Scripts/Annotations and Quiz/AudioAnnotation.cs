@@ -15,60 +15,52 @@ public class AudioAnnotation : MonoBehaviour
 
     private IEnumerator SendRequest()
     {
-        UnityWebRequest req = UnityWebRequestMultimedia.GetAudioClip("http://localhost:8080/resources/annotation/audio/load/brain/horse", AudioType.OGGVORBIS);
+        // Example to get audio file ========================================
+        //UnityWebRequest req = UnityWebRequestMultimedia.GetAudioClip("http://localhost:8080/resources/annotation/audio/load/brain/horse", AudioType.OGGVORBIS);
+        //yield return req.Send();
+
+        //Debug.Log(req.responseCode);
+        //AudioClip clip = DownloadHandlerAudioClip.GetContent(req);
+        //Debug.Log(clip.length);
+
+        // Example to get bytes =============================================
+        UnityWebRequest req = UnityWebRequest.Get("http://localhost:8080/resources/annotation/audio/load/brain/test");
         yield return req.Send();
+        byte[] reqBytes = req.downloadHandler.data;
+        float[] reqFloats = new float[reqBytes.Length / 4];
+        for (int i = 0; i < reqBytes.Length; i += 4)
+        {
+            reqFloats[i / 4] = BitConverter.ToSingle(reqBytes, i);
+        }
 
-        Debug.Log(req.responseCode);
-        AudioClip clip = DownloadHandlerAudioClip.GetContent(req);
+        AudioClip clip = AudioClip.Create("", reqFloats.Length, 2, 44100, false);
+        clip.SetData(reqFloats, 0);
+
         Debug.Log(clip.length);
-
 
         AudioSource source = gameObject.AddComponent<AudioSource>();
         source.spatialBlend = 1;
         source.clip = clip;
         source.Play();
 
+        // Post data =========================================================
         //UnityWebRequest post = new UnityWebRequest("http://localhost:8080/resources/annotation/audio/save/brain/test", "POST");
 
         //float[] clipSamples = new float[clip.samples];
-
         //clip.GetData(clipSamples, 0);
 
-        //Int16[] intData = new Int16[clipSamples.Length];
-        //byte[] byteData = new byte[clipSamples.Length * 2];
-
-        //int rescaleFactor = 32767;
-
+        //List<byte> byteSamples = new List<byte>();
         //for (int i=0;i<clipSamples.Length;i++)
         //{
-        //    intData[i] = (short)(clipSamples[i] * rescaleFactor);
-        //    byte[] byteConversion = new byte[2];
-        //    byteConversion = BitConverter.GetBytes(intData[i]);
-        //    byteConversion.CopyTo(byteData, i * 2);
+        //    byteSamples.AddRange(BitConverter.GetBytes(clipSamples[i]));
         //}
 
-        //List<byte> completeWAV = new List<byte>();
-        //completeWAV.AddRange(System.Text.Encoding.UTF8.GetBytes("RIFF"));
-        //completeWAV.AddRange(BitConverter.GetBytes(byteData.Length - 8));
-        //completeWAV.AddRange(System.Text.Encoding.UTF8.GetBytes("WAVE"));
-        //completeWAV.AddRange(System.Text.Encoding.UTF8.GetBytes("fmt "));
-        //completeWAV.AddRange(BitConverter.GetBytes(16));
-        //completeWAV.AddRange(BitConverter.GetBytes((UInt16)1));
-        //completeWAV.AddRange(BitConverter.GetBytes(clip.channels));
-        //completeWAV.AddRange(BitConverter.GetBytes(clip.frequency));
-        //completeWAV.AddRange(BitConverter.GetBytes(clip.frequency * clip.channels * 2));
-        //completeWAV.AddRange(BitConverter.GetBytes((ushort)clip.channels * 2));
-        //completeWAV.AddRange(BitConverter.GetBytes((UInt16)16));
-        //completeWAV.AddRange(System.Text.Encoding.UTF8.GetBytes("data"));
-        //completeWAV.AddRange(BitConverter.GetBytes(clip.samples * clip.channels * 2));
-        //completeWAV.AddRange(byteData);
-
         //UnityWebRequest post = new UnityWebRequest("http://localhost:8080/resources/annotation/audio/save/brain/test", "POST");
-        //post.uploadHandler = new UploadHandlerRaw(completeWAV.ToArray());
+        //post.uploadHandler = new UploadHandlerRaw(byteSamples.ToArray());
         //yield return post.Send();
 
+        // Example for audio recording =========================================
 
-        // Example for audio recording
         //AudioClip recording = Microphone.Start(null, false, 60, 44100);
         //yield return new WaitForSeconds(10);
         //int endTime = Microphone.GetPosition(null);
@@ -83,5 +75,5 @@ public class AudioAnnotation : MonoBehaviour
 
         //Debug.Log(cutClip.length);
     }
-    
+
 }

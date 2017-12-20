@@ -175,16 +175,33 @@ public class Resources {
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response getAnnotationAudio(@PathParam("modelName") String modelName, @PathParam("annotationId") String annotationId)
     {
-            File ogg = new File(App.modelPath + File.separatorChar + modelName +
-                    File.separatorChar + "Audio" + File.separatorChar + annotationId + ".ogg");
-            if (ogg.exists())
-            {
-                return Response.ok(ogg, MediaType.APPLICATION_OCTET_STREAM).build();
+//            File ogg = new File(App.modelPath + File.separatorChar + modelName +
+//                    File.separatorChar + "Audio" + File.separatorChar + annotationId + ".ogg");
+//            if (ogg.exists())
+//            {
+//                return Response.ok(ogg, MediaType.APPLICATION_OCTET_STREAM).build();
+//            }
+//            else
+//            {
+//                return  Response.status(Response.Status.BAD_REQUEST).build();
+//            }
+
+        File audio = new File(App.modelPath + File.separatorChar + modelName +
+                    File.separatorChar + "Audio" + File.separatorChar + annotationId);
+        System.out.println("Request for " + audio.getPath());
+        try {
+            if (audio.exists()) {
+                byte[] byteData = Files.readAllBytes(audio.toPath());
+                System.out.println(byteData.length);
+                return Response.ok(byteData, MediaType.APPLICATION_OCTET_STREAM).build();
+            } else {
+                return Response.status(Response.Status.BAD_REQUEST).build();
             }
-            else
-            {
-                return  Response.status(Response.Status.BAD_REQUEST).build();
-            }
+        }
+        catch (Exception e)
+        {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
     }
 
     @POST
@@ -196,7 +213,7 @@ public class Resources {
         System.out.println("Received audio");
         try {
             Files.write(new File(App.modelPath + File.separatorChar + modelName +
-                    File.separatorChar + "Audio" + File.separatorChar + annotationId + ".ogg").toPath(), audio);
+                    File.separatorChar + "Audio" + File.separatorChar + annotationId).toPath(), audio);
 
             return  Response.ok().build();
         }
