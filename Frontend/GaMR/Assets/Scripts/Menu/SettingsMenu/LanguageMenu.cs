@@ -21,9 +21,9 @@ public class LanguageMenu : BaseMenu
     private void InitializeButtons()
     {
         // get/create buttons
-        englishButton = transform.Find("English Button").gameObject.AddComponent<FocusableContentButton>();
-        germanButton = transform.Find("German Button").gameObject.AddComponent<FocusableContentButton>();
-        dutchButton = transform.Find("Dutch Button").gameObject.AddComponent<FocusableContentButton>();
+        englishButton = transform.Find("English Button").gameObject.GetComponent<FocusableContentButton>();
+        germanButton = transform.Find("German Button").gameObject.GetComponent<FocusableContentButton>();
+        dutchButton = transform.Find("Dutch Button").gameObject.GetComponent<FocusableContentButton>();
 
         SettingsActions actions = gameObject.AddComponent<SettingsActions>();
 

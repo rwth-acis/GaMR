@@ -87,12 +87,12 @@ public class BoundingBoxMenu : BaseMenu
 
     private void InitializeButtons()
     {
-        deleteButton = transform.Find("Delete Button").gameObject.AddComponent<FocusableButton>();
-        editModeButton = transform.Find("EditMode Button").gameObject.AddComponent<FocusableCheckButton>();
-        boundingBoxButton = transform.Find("Box Button").gameObject.AddComponent<FocusableCheckButton>();
-        quizButton = transform.Find("Quiz Button").gameObject.AddComponent<FocusableCheckButton>();
-        createQuizButton = transform.Find("CreateQuiz Button").gameObject.AddComponent<FocusableButton>();
-        closeButton = transform.Find("Close Button").gameObject.AddComponent<FocusableButton>();
+        deleteButton = transform.Find("Delete Button").gameObject.GetComponent<FocusableButton>();
+        editModeButton = transform.Find("EditMode Button").gameObject.GetComponent<FocusableCheckButton>();
+        boundingBoxButton = transform.Find("Box Button").gameObject.GetComponent<FocusableCheckButton>();
+        quizButton = transform.Find("Quiz Button").gameObject.GetComponent<FocusableCheckButton>();
+        createQuizButton = transform.Find("CreateQuiz Button").gameObject.GetComponent<FocusableButton>();
+        closeButton = transform.Find("Close Button").gameObject.GetComponent<FocusableButton>();
 
         deleteButton.OnPressed = () => { actions.DeleteObject(); Destroy(); };
         editModeButton.OnPressed = ToggleEditMode;
