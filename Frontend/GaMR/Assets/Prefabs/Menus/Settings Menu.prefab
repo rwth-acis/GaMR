@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 23597526246678084}
   - component: {fileID: 114671554041001486}
   - component: {fileID: 114198872019206846}
-  - component: {fileID: 114710981280837230}
+  - component: {fileID: 114471180493984748}
   m_Layer: 0
   m_Name: Collision Detection Button
   m_TagString: Untagged
@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 23841156298778524}
   - component: {fileID: 114248866870988344}
   - component: {fileID: 114632930272253654}
-  - component: {fileID: 114525889405494980}
+  - component: {fileID: 114433750343857516}
   m_Layer: 0
   m_Name: Sharing Server Button
   m_TagString: Untagged
@@ -311,7 +311,7 @@ GameObject:
   - component: {fileID: 23334817522765742}
   - component: {fileID: 114727932645854842}
   - component: {fileID: 114414287753127576}
-  - component: {fileID: 114770247542127294}
+  - component: {fileID: 114918986798694294}
   m_Layer: 0
   m_Name: Model Server Button
   m_TagString: Untagged
@@ -332,7 +332,7 @@ GameObject:
   - component: {fileID: 23820639797013446}
   - component: {fileID: 114117165056210440}
   - component: {fileID: 114276399800197390}
-  - component: {fileID: 114591131336199908}
+  - component: {fileID: 114177344853902746}
   m_Layer: 0
   m_Name: Close Button
   m_TagString: Untagged
@@ -508,7 +508,7 @@ GameObject:
   - component: {fileID: 23811018173095800}
   - component: {fileID: 114873649989319688}
   - component: {fileID: 114134776398159846}
-  - component: {fileID: 114443658194538970}
+  - component: {fileID: 114488746289767700}
   m_Layer: 0
   m_Name: Gamification Server Button
   m_TagString: Untagged
@@ -547,7 +547,7 @@ GameObject:
   - component: {fileID: 23449870077872764}
   - component: {fileID: 114469585963433326}
   - component: {fileID: 114252974882934838}
-  - component: {fileID: 114534760170830498}
+  - component: {fileID: 114994025291439610}
   m_Layer: 0
   m_Name: Language Button
   m_TagString: Untagged
@@ -586,7 +586,7 @@ GameObject:
   - component: {fileID: 23673524159598420}
   - component: {fileID: 114062726165526912}
   - component: {fileID: 114130580531612138}
-  - component: {fileID: 114087267979015900}
+  - component: {fileID: 114672167751008112}
   m_Layer: 0
   m_Name: Sharing Enabled Button
   m_TagString: Untagged
@@ -891,7 +891,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1611194401362032}
   m_LocalRotation: {x: -0.00000001545431, y: 0.7071068, z: -0.00000001545431, w: 0.7071068}
-  m_LocalPosition: {x: -0.510178, y: 0.06299453, z: 0.43800017}
+  m_LocalPosition: {x: -0.510178, y: 0.06299453, z: 0.43800056}
   m_LocalScale: {x: 0.03908428, y: 0.29999992, z: 1.8499997}
   m_Children: []
   m_Father: {fileID: 4485259403712486}
@@ -995,7 +995,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1051943829816388}
   m_LocalRotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 4.2691875, y: -8.775174, z: 34.519394}
+  m_LocalPosition: {x: 7.1797743, y: -9.455301, z: 42.731457}
   m_LocalScale: {x: 0.45000046, y: 0.45, z: 0.45000046}
   m_Children:
   - {fileID: 4220195142978846}
@@ -2990,18 +2990,6 @@ MonoBehaviour:
   constantOffset: {x: 0, y: -0.44299743, z: 0.000000019364034}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
---- !u!114 &114087267979015900
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1724154925460806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5db6ac60a770130439407d74480cb1f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pressDepth: 0.008
 --- !u!114 &114106657750038296
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3069,6 +3057,18 @@ MonoBehaviour:
   caption: Gamification Server
   showIcon: 1
   showCaption: 1
+--- !u!114 &114177344853902746
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1443943023647348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85a458358f5fd3547b9a44720050fe3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pressDepth: 0.008
 --- !u!114 &114179206680390158
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3130,7 +3130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alignmentMode: 3
   alignTo: {fileID: 0}
-  constantOffset: {x: -0.006885534, y: 0.10299679, z: -0.4758892}
+  constantOffset: {x: -0.006885534, y: 0.10299679, z: -0.47588634}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
 --- !u!114 &114248866870988344
@@ -3213,7 +3213,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alignmentMode: 1
   alignTo: {fileID: 4115392264782554}
-  constantOffset: {x: 0.000003812641, y: -0.40299466, z: -0.20724514}
+  constantOffset: {x: 0.000003812641, y: -0.40299466, z: -0.20724802}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
 --- !u!114 &114397216520226980
@@ -3243,7 +3243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 756854e0540b10f4c8c13bd84e83eaff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  languageMenu: {fileID: 1520823917001890, guid: d3dd11a637d034c42b8e5f64f04b3275,
+  languageMenu: {fileID: 1923063251106870, guid: 93dfaa18750d7fc4abf5fb2cd845d61f,
     type: 2}
 --- !u!114 &114414287753127576
 MonoBehaviour:
@@ -3261,6 +3261,18 @@ MonoBehaviour:
   caption: Model Server
   showIcon: 1
   showCaption: 1
+--- !u!114 &114433750343857516
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1203904721079794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5db6ac60a770130439407d74480cb1f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pressDepth: 0.008
 --- !u!114 &114434540020613712
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3274,21 +3286,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alignmentMode: 3
   alignTo: {fileID: 0}
-  constantOffset: {x: -0.006885534, y: 0.10299679, z: -0.4758892}
+  constantOffset: {x: -0.006885534, y: 0.10299679, z: -0.47588634}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
---- !u!114 &114443658194538970
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1625669816209276}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5db6ac60a770130439407d74480cb1f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pressDepth: 0.008
 --- !u!114 &114451656963273968
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3318,7 +3318,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alignmentMode: 3
   alignTo: {fileID: 0}
-  constantOffset: {x: -0.006885534, y: 0.10299679, z: -0.4758892}
+  constantOffset: {x: -0.006885534, y: 0.10299679, z: -0.47588634}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
 --- !u!114 &114469585963433326
@@ -3340,24 +3340,24 @@ MonoBehaviour:
   contentSize: 0.1
   borderWidth: 0.05
   scaleComponentsWithButton: 1
---- !u!114 &114525889405494980
+--- !u!114 &114471180493984748
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1203904721079794}
+  m_GameObject: {fileID: 1002431520514320}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5db6ac60a770130439407d74480cb1f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pressDepth: 0.008
---- !u!114 &114534760170830498
+--- !u!114 &114488746289767700
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1654520949192774}
+  m_GameObject: {fileID: 1625669816209276}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5db6ac60a770130439407d74480cb1f2, type: 3}
@@ -3377,7 +3377,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alignmentMode: 3
   alignTo: {fileID: 0}
-  constantOffset: {x: -0.006885534, y: 0.10299679, z: -0.4758892}
+  constantOffset: {x: -0.006885534, y: 0.10299679, z: -0.47588634}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
 --- !u!114 &114559438726138746
@@ -3412,18 +3412,6 @@ MonoBehaviour:
   constantOffset: {x: 0, y: -0.44299743, z: 0.000000019364034}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
---- !u!114 &114591131336199908
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1443943023647348}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85a458358f5fd3547b9a44720050fe3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pressDepth: 0.008
 --- !u!114 &114604236947593258
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3485,7 +3473,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alignmentMode: 1
   alignTo: {fileID: 4115392264782554}
-  constantOffset: {x: -0.006614691, y: -0.0030013768, z: -0.5449719}
+  constantOffset: {x: -0.006614691, y: -0.0030013768, z: -0.54497474}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
 --- !u!114 &114657868217274012
@@ -3501,7 +3489,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alignmentMode: 3
   alignTo: {fileID: 0}
-  constantOffset: {x: -0.006885534, y: 0.062994026, z: -0.47589207}
+  constantOffset: {x: -0.006885534, y: 0.062994026, z: -0.47588634}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
 --- !u!114 &114671554041001486
@@ -3523,6 +3511,18 @@ MonoBehaviour:
   contentSize: 0.1
   borderWidth: 0.05
   scaleComponentsWithButton: 1
+--- !u!114 &114672167751008112
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1724154925460806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5db6ac60a770130439407d74480cb1f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pressDepth: 0.008
 --- !u!114 &114677020953785570
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3536,21 +3536,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alignmentMode: 3
   alignTo: {fileID: 0}
-  constantOffset: {x: -0.006889349, y: 0.10500151, z: -0.50000596}
+  constantOffset: {x: -0.006889349, y: 0.10500152, z: -0.500006}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
---- !u!114 &114710981280837230
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1002431520514320}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5db6ac60a770130439407d74480cb1f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pressDepth: 0.008
 --- !u!114 &114727932645854842
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3586,18 +3574,6 @@ MonoBehaviour:
   constantOffset: {x: 0.0000038143548, y: -0.44299743, z: -0.034544185}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
---- !u!114 &114770247542127294
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1429012604558310}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5db6ac60a770130439407d74480cb1f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pressDepth: 0.008
 --- !u!114 &114803262466455720
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3665,6 +3641,18 @@ MonoBehaviour:
   constantOffset: {x: -0.006614691, y: -0.043004144, z: -0.54497474}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
+--- !u!114 &114918986798694294
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1429012604558310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5db6ac60a770130439407d74480cb1f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pressDepth: 0.008
 --- !u!114 &114939757626428638
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3678,7 +3666,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alignmentMode: 1
   alignTo: {fileID: 4177638308354462}
-  constantOffset: {x: 0, y: -0.41500005, z: 0.00000001814023}
+  constantOffset: {x: 0, y: -0.4150001, z: 0.00000001814023}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
 --- !u!114 &114955575675163462
@@ -3713,6 +3701,18 @@ MonoBehaviour:
   constantOffset: {x: 0, y: -0.44299743, z: 0.000000019364034}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
+--- !u!114 &114994025291439610
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1654520949192774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5db6ac60a770130439407d74480cb1f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pressDepth: 0.008
 --- !u!212 &212103503680609090
 SpriteRenderer:
   m_ObjectHideFlags: 1
