@@ -1881,3 +1881,4 @@ MonoBehaviour:
   thumbnail: {fileID: 1697870960306182, guid: 3ab9a8a24c60ebb45b632c99b4bae6e3, type: 2}
   startPosition: {fileID: 1403887921041920}
   settingsMenu: {fileID: 0}
+  badgeOverviewMenu: {fileID: 0}
