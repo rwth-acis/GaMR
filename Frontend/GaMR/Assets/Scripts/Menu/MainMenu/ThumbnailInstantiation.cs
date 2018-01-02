@@ -74,8 +74,8 @@ public class ThumbnailInstantiation : BaseMenu
 
     private void InitializeButtons()
     {
-        upButton = transform.Find("Up Button").gameObject.AddComponent<FocusableButton>();
-        downButton = transform.Find("Down Button").gameObject.AddComponent<FocusableButton>();
+        upButton = transform.Find("Up Button").gameObject.GetComponent<FocusableButton>();
+        downButton = transform.Find("Down Button").gameObject.GetComponent<FocusableButton>();
         settingsButton = transform.Find("Settings Button").gameObject.GetComponent<FocusableButton>();
         logoutButton = transform.Find("Logout Button").gameObject.GetComponent<FocusableButton>();
         badgeButton = transform.Find("Badges Button").gameObject.GetComponent<FocusableButton>();
