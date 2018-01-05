@@ -215,8 +215,8 @@ GameObject:
   - component: {fileID: 23536300251562464}
   - component: {fileID: 114052050904251030}
   - component: {fileID: 114352047466497844}
-  - component: {fileID: 114331556194272564}
-  - component: {fileID: 114249572397237576}
+  - component: {fileID: 114326974455878130}
+  - component: {fileID: 114559262216036016}
   m_Layer: 0
   m_Name: Settings Button
   m_TagString: Untagged
@@ -271,8 +271,7 @@ GameObject:
   - component: {fileID: 23231982032237064}
   - component: {fileID: 114109700074455218}
   - component: {fileID: 114949983604513290}
-  - component: {fileID: 114927735620514492}
-  - component: {fileID: 114152070209900004}
+  - component: {fileID: 114263132101976394}
   m_Layer: 0
   m_Name: Author Button
   m_TagString: Untagged
@@ -414,8 +413,8 @@ GameObject:
   - component: {fileID: 23308057809265782}
   - component: {fileID: 114386061188304356}
   - component: {fileID: 114077569340503088}
-  - component: {fileID: 114632251911722280}
-  - component: {fileID: 114573013245435890}
+  - component: {fileID: 114290269013760714}
+  - component: {fileID: 114162854529040278}
   m_Layer: 0
   m_Name: Login Button
   m_TagString: Untagged
@@ -474,7 +473,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1596272041959470}
   m_LocalRotation: {x: -0.00000001545431, y: 0.7071068, z: -0.00000001545431, w: 0.7071068}
-  m_LocalPosition: {x: -0.649914, y: 0.058996357, z: -0.00002932162}
+  m_LocalPosition: {x: -0.649914, y: 0.058997, z: -0.000033832242}
   m_LocalScale: {x: 0.27999952, y: 0.2799999, z: 1.7266645}
   m_Children: []
   m_Father: {fileID: 4606119535022804}
@@ -544,7 +543,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1746920085979702}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.649914, y: -0.3150041, z: -0.000047025573}
+  m_LocalPosition: {x: -0.649914, y: -0.31500378, z: -0.000053469317}
   m_LocalScale: {x: 0.03499994, y: 0.035, z: 0.21583307}
   m_Children: []
   m_Father: {fileID: 4606119535022804}
@@ -584,7 +583,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1279238213503088}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.62023944, y: 0.35399905, z: -0.35800892}
+  m_LocalPosition: {x: -0.62023944, y: 0.35399905, z: -0.3580112}
   m_LocalScale: {x: 5.9999943, y: 6, z: 36.99999}
   m_Children: []
   m_Father: {fileID: 4685036427172978}
@@ -636,7 +635,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1551808554587360}
   m_LocalRotation: {x: -0.00000001545431, y: 0.7071068, z: -0.00000001545431, w: 0.7071068}
-  m_LocalPosition: {x: -0.6501918, y: 0.05000346, z: -0.000011762028}
+  m_LocalPosition: {x: -0.6501918, y: 0.05000346, z: -0.000014339528}
   m_LocalScale: {x: 0.27999973, y: 0.2799999, z: 1.7266663}
   m_Children: []
   m_Father: {fileID: 4685036427172978}
@@ -1594,7 +1593,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alignmentMode: 8
   alignTo: {fileID: 0}
-  constantOffset: {x: -0.0083732605, y: -0.14600092, z: 0.14199153}
+  constantOffset: {x: -0.0083732605, y: -0.14600092, z: 0.14198938}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
 --- !u!114 &114109700074455218
@@ -1616,15 +1615,15 @@ MonoBehaviour:
   contentSize: 0.08
   borderWidth: 0.05
   scaleComponentsWithButton: 1
---- !u!114 &114152070209900004
+--- !u!114 &114162854529040278
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1520104616464978}
+  m_GameObject: {fileID: 1912335216271008}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9308d99cfe6f83347aa9792c81475234, type: 3}
+  m_Script: {fileID: 11500000, guid: 85a458358f5fd3547b9a44720050fe3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pressDepth: 0.008
@@ -1645,15 +1644,15 @@ MonoBehaviour:
   IsBeingPlaced: 1
   AllowMeshVisualizationControl: 1
   UseColliderCenter: 0
---- !u!114 &114249572397237576
+--- !u!114 &114263132101976394
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1460238767628348}
+  m_GameObject: {fileID: 1520104616464978}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85a458358f5fd3547b9a44720050fe3c, type: 3}
+  m_Script: {fileID: 11500000, guid: 9308d99cfe6f83347aa9792c81475234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pressDepth: 0.008
@@ -1673,6 +1672,18 @@ MonoBehaviour:
   constantOffset: {x: -7.1054274e-15, y: -0.37399995, z: -0.0000006996236}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
+--- !u!114 &114290269013760714
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1912335216271008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85a458358f5fd3547b9a44720050fe3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pressDepth: 0.008
 --- !u!114 &114324056366836076
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1689,7 +1700,7 @@ MonoBehaviour:
   constantOffset: {x: -0.008775116, y: 0.059, z: -0.00000070598526}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
---- !u!114 &114331556194272564
+--- !u!114 &114326974455878130
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1765,24 +1776,12 @@ MonoBehaviour:
   constantOffset: {x: -0.00053334236, y: -0.06999998, z: -0.31406003}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
---- !u!114 &114573013245435890
+--- !u!114 &114559262216036016
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1912335216271008}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85a458358f5fd3547b9a44720050fe3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pressDepth: 0.008
---- !u!114 &114632251911722280
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1912335216271008}
+  m_GameObject: {fileID: 1460238767628348}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 85a458358f5fd3547b9a44720050fe3c, type: 3}
@@ -1850,7 +1849,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alignmentMode: 2
   alignTo: {fileID: 0}
-  constantOffset: {x: -0.008773805, y: 0.058996066, z: -0.000028628885}
+  constantOffset: {x: -0.008773805, y: 0.05899678, z: -0.000033282704}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
 --- !u!114 &114848185654316604
@@ -1866,7 +1865,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alignmentMode: 1
   alignTo: {fileID: 4086694633030028}
-  constantOffset: {x: -1.7053026e-13, y: -0.3740007, z: -0.000017166974}
+  constantOffset: {x: -1.8829382e-13, y: -0.3740007, z: -0.000018956904}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
 --- !u!114 &114869901816322928
@@ -1905,18 +1904,6 @@ MonoBehaviour:
   constantOffset: {x: -0.00053334236, y: -0.06999998, z: -0.31406003}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
---- !u!114 &114927735620514492
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1520104616464978}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9308d99cfe6f83347aa9792c81475234, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pressDepth: 0.008
 --- !u!114 &114949983604513290
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1946,7 +1933,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alignmentMode: 2
   alignTo: {fileID: 0}
-  constantOffset: {x: -0.008777619, y: 0.050003458, z: -0.000011445164}
+  constantOffset: {x: -0.008777619, y: 0.050003458, z: -0.000013951066}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
 --- !u!212 &212192026218730522
