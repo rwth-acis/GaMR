@@ -8,10 +8,29 @@ public class AnnotationMenu : BaseMenu
     private FocusableButton editButton, deleteButton, closeButton;
     private TextMesh label;
     private Caption caption;
+    private AnnotationContainer container;
 
     private static AnnotationMenu currentlyOpenAnnotationMenu;
 
-    public AnnotationContainer Container { get; set; }
+    public AnnotationContainer Container
+    {
+        get
+        {
+            return container;
+        }
+        set
+        {
+            container = value;
+            if (editButton != null)
+            {
+                editButton.ButtonEnabled = (container != null);
+            }
+            if (deleteButton != null)
+            {
+                deleteButton.ButtonEnabled = (container != null);
+            }
+        }
+    }
 
     protected override void Start()
     {

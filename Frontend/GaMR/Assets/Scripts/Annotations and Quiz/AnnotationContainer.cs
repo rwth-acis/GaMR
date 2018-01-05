@@ -81,19 +81,10 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
         // show the annotation-edit box if it is in edit mode
         if (!isQuiz || (isQuiz && annotationManager.EditMode))
         {
-            // make sure that only one annotation box is opened and that it is opened for this annotation
-            if (AnnotationBox.currentlyOpenAnnotationBox != null)
-            {
-                if (AnnotationBox.currentlyOpenAnnotationBox.container != this)
-                {
-                    AnnotationBox.currentlyOpenAnnotationBox.Close();
-                    AnnotationBox.Show(this);
-                }
-            }
-            else
-            {
-                AnnotationBox.Show(this);
-            }
+            GameObject annotationMenuInstance = Instantiate(WindowResources.Instance.AnnotationMenu);
+            annotationMenuInstance.GetComponent<CirclePositioner>().boundingBox = transform.parent.parent;
+            annotationMenuInstance.GetComponent<AnnotationMenu>().Container = this;
+
         }
         // else: it is a quiz
         else

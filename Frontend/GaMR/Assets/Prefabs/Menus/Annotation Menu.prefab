@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 23567843778731498}
   - component: {fileID: 114468970594220894}
   - component: {fileID: 114886609902985204}
-  - component: {fileID: 114277205740174444}
+  - component: {fileID: 114342824907463698}
   m_Layer: 0
   m_Name: Delete Button
   m_TagString: Untagged
@@ -202,7 +202,7 @@ GameObject:
   - component: {fileID: 23729066763263744}
   - component: {fileID: 114752182946340986}
   - component: {fileID: 114137160986157286}
-  - component: {fileID: 114665383493692012}
+  - component: {fileID: 114216836127989660}
   m_Layer: 0
   m_Name: Close Button
   m_TagString: Untagged
@@ -309,7 +309,7 @@ GameObject:
   - component: {fileID: 23016533683891458}
   - component: {fileID: 114416829562333832}
   - component: {fileID: 114033473146431964}
-  - component: {fileID: 114602822859915234}
+  - component: {fileID: 114266904252279114}
   m_Layer: 0
   m_Name: Edit Button
   m_TagString: Untagged
@@ -326,6 +326,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4733183921420080}
   - component: {fileID: 114812226395911258}
+  - component: {fileID: 114823456469209028}
+  - component: {fileID: 114146993839263946}
   m_Layer: 0
   m_Name: Annotation Menu
   m_TagString: Untagged
@@ -462,7 +464,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1559202648599714}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.6499451, y: -0.3150041, z: -0.000048958696}
+  m_LocalPosition: {x: -0.6499451, y: -0.31500477, z: -0.000048958696}
   m_LocalScale: {x: 0.03499994, y: 0.035, z: 0.21583307}
   m_Children: []
   m_Father: {fileID: 4555427978055182}
@@ -501,7 +503,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1021518211728732}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.51043946, y: -0.30999798, z: -0.0000048192587}
+  m_LocalPosition: {x: -0.51043946, y: -0.30999893, z: -0.0000048192587}
   m_LocalScale: {x: 0.03499994, y: 0.035, z: 0.21583307}
   m_Children: []
   m_Father: {fileID: 4333650875934558}
@@ -514,7 +516,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1280725749520308}
   m_LocalRotation: {x: -0.00000001545431, y: 0.7071068, z: -0.00000001545431, w: 0.7071068}
-  m_LocalPosition: {x: -0.64994466, y: 0.117000364, z: 0.00000015597949}
+  m_LocalPosition: {x: -0.64994466, y: 0.11700101, z: 0.00000015597946}
   m_LocalScale: {x: 0.29999974, y: 0.29999992, z: 1.8499997}
   m_Children: []
   m_Father: {fileID: 4271743189799120}
@@ -628,7 +630,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1010520087206748}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.64994466, y: -0.31500408, z: -0.000051375133}
+  m_LocalPosition: {x: -0.64994466, y: -0.31500474, z: -0.000051375133}
   m_LocalScale: {x: 0.034999967, y: 0.035, z: 0.21583329}
   m_Children: []
   m_Father: {fileID: 4271743189799120}
@@ -726,7 +728,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1737021395842500}
   m_LocalRotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 2.0587277, y: -0.8395906, z: 8.707949}
+  m_LocalPosition: {x: 3.4861486, y: -1.546288, z: 8.6905575}
   m_LocalScale: {x: 0.45000046, y: 0.45, z: 0.45000046}
   m_Children:
   - {fileID: 4647990387570630}
@@ -772,7 +774,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1844114984526482}
   m_LocalRotation: {x: -0.00000001545431, y: 0.7071068, z: -0.00000001545431, w: 0.7071068}
-  m_LocalPosition: {x: -0.51043946, y: 0.10500212, z: -0.000004837399}
+  m_LocalPosition: {x: -0.51043946, y: 0.10500148, z: -0.000004837399}
   m_LocalScale: {x: 0.26999956, y: 0.26999992, z: 1.6649982}
   m_Children: []
   m_Father: {fileID: 4333650875934558}
@@ -785,7 +787,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1054291163997200}
   m_LocalRotation: {x: -0.00000001545431, y: 0.7071068, z: -0.00000001545431, w: 0.7071068}
-  m_LocalPosition: {x: -0.6499451, y: 0.11700038, z: -0.00000032730154}
+  m_LocalPosition: {x: -0.6499451, y: 0.11700102, z: -0.00000032730156}
   m_LocalScale: {x: 0.24999958, y: 0.24999994, z: 1.5416646}
   m_Children: []
   m_Father: {fileID: 4555427978055182}
@@ -1684,6 +1686,18 @@ MonoBehaviour:
   caption: Close
   showIcon: 1
   showCaption: 1
+--- !u!114 &114146993839263946
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1737021395842500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0efe80f0746a4f643ac262e91d343c87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationOffset: -90
 --- !u!114 &114175530922710758
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1697,7 +1711,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alignmentMode: 3
   alignTo: {fileID: 0}
-  constantOffset: {x: -0.006891256, y: 0.10500152, z: -0.500006}
+  constantOffset: {x: -0.006891256, y: 0.10500152, z: -0.50000316}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
 --- !u!114 &114187306085581010
@@ -1716,6 +1730,18 @@ MonoBehaviour:
   constantOffset: {x: 0, y: -0.4150001, z: 0.00000001814023}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
+--- !u!114 &114216836127989660
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1510041868353416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85a458358f5fd3547b9a44720050fe3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pressDepth: 0.008
 --- !u!114 &114250407622734776
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1727,12 +1753,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30f744d7e8e8b1c459fa415d1f71b705, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114277205740174444
+--- !u!114 &114266904252279114
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1500307941521630}
+  m_GameObject: {fileID: 1724410084489612}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 85a458358f5fd3547b9a44720050fe3c, type: 3}
@@ -1755,6 +1781,18 @@ MonoBehaviour:
   constantOffset: {x: -0.00053334236, y: -0.06999998, z: -0.31406003}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
+--- !u!114 &114342824907463698
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1500307941521630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85a458358f5fd3547b9a44720050fe3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pressDepth: 0.008
 --- !u!114 &114350430305175078
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1768,7 +1806,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alignmentMode: 2
   alignTo: {fileID: 0}
-  constantOffset: {x: -0.008773805, y: 0.11699979, z: 0.0000000074493656}
+  constantOffset: {x: -0.008773805, y: 0.11700122, z: 0.000000007449303}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
 --- !u!114 &114416829562333832
@@ -1825,18 +1863,6 @@ MonoBehaviour:
   constantOffset: {x: -0.016486421, y: -0.14604151, z: 0.1422242}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
---- !u!114 &114602822859915234
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1724410084489612}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85a458358f5fd3547b9a44720050fe3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pressDepth: 0.008
 --- !u!114 &114639291121326112
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1850,21 +1876,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alignmentMode: 2
   alignTo: {fileID: 0}
-  constantOffset: {x: -0.008773805, y: 0.1169998, z: 0.000000007449366}
+  constantOffset: {x: -0.008773805, y: 0.11700123, z: 0.0000000074493034}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
---- !u!114 &114665383493692012
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1510041868353416}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85a458358f5fd3547b9a44720050fe3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pressDepth: 0.008
 --- !u!114 &114752182946340986
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1913,7 +1927,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alignmentMode: 1
   alignTo: {fileID: 4927682863131908}
-  constantOffset: {x: -4.8316906e-13, y: -0.43200442, z: -0.000048667196}
+  constantOffset: {x: -4.8316906e-13, y: -0.43200585, z: -0.000048667196}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
 --- !u!114 &114812226395911258
@@ -1927,6 +1941,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5480ffa939355e242a8d2310a275185f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114823456469209028
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1737021395842500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b32f22edb6ae6084dabe10c120870645, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boundingBox: {fileID: 0}
+  positioningMode: 1
+  distanceFactor: 1.5
+  rotationOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &114828631270666220
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1956,7 +1985,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alignmentMode: 1
   alignTo: {fileID: 4163358696107316}
-  constantOffset: {x: -5.1159077e-13, y: -0.4320044, z: -0.00005153108}
+  constantOffset: {x: -5.1159077e-13, y: -0.43200582, z: -0.00005153108}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
 --- !u!114 &114865081851983934
