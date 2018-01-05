@@ -19,6 +19,7 @@ public class AnnotationMenu : BaseMenu
         InitializeButtons();
         label = transform.Find("Label").GetComponent<TextMesh>();
         caption = transform.Find("TextField").GetComponent<Caption>();
+        caption.Init();
 
         if (Container != null)
         {
@@ -41,6 +42,18 @@ public class AnnotationMenu : BaseMenu
         closeButton = transform.Find("Close Button").GetComponent<FocusableButton>();
         deleteButton = transform.Find("Delete Button").GetComponent<FocusableButton>();
         editButton = transform.Find("Edit Button").GetComponent<FocusableButton>();
+
+        closeButton.OnPressed = Close;
+        deleteButton.OnPressed = DeleteAnnotation;
+        editButton.OnPressed = EditText;
+
+        // if the window somehow got instantiated without an attached container: disable the edit and delete button
+        if (Container == null)
+        {
+            editButton.ButtonEnabled = false;
+            deleteButton.ButtonEnabled = false;
+        }
+
     }
 
     private void Close()
@@ -51,6 +64,41 @@ public class AnnotationMenu : BaseMenu
             Container.Deselect();
         }
         Destroy(gameObject);
+    }
+
+    private void DeleteAnnotation()
+    {
+        if (Container != null)
+        {
+            Container.DeleteAnnotation();
+        }
+        Close();
+    }
+
+    /// <summary>
+    /// Called if the edit-button is pressed => opens a keyboard to edit the annotation
+    /// </summary>
+    private void EditText()
+    {
+        Keyboard.Display("Edit the annotation", Container.Annotation.Text, OnEditFinished, true);
+        gameObject.SetActive(false);
+
+    }
+
+    /// <summary>
+    /// called if the edit-keyboard is closed
+    /// applies changes to the annotation-text
+    /// </summary>
+    /// <param name="input">The text which was typed by the user (null if input was cancelled)</param>
+    private void OnEditFinished(string input)
+    {
+        if (input != null)
+        {
+            Container.EditAnnotation(input);
+            caption.Text = input;
+        }
+        gameObject.SetActive(true);
+
     }
 
     public override void OnUpdateLanguage()
