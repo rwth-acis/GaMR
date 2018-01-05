@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class StartMenu : BaseMenu
 {
-
-    [SerializeField]
-    private GameObject settingsMenu;
     private FocusableButton settingsButton;
     private FocusableButton loginButton;
     private FocusableCheckButton authorButton;
@@ -77,7 +74,7 @@ public class StartMenu : BaseMenu
 
     private void ShowSettings()
     {
-        GameObject settingsInstance = Instantiate(settingsMenu);
+        GameObject settingsInstance = Instantiate(WindowResources.Instance.SettingsMenu);
         SettingsMenu settings = settingsInstance.GetComponent<SettingsMenu>();
         settings.OnCloseAction = () =>
         {

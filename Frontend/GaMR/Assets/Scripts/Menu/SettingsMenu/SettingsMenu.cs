@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class SettingsMenu : BaseMenu
 {
-    [SerializeField]
-    private GameObject languageMenu;
 
     FocusableButton closeButton;
     FocusableContentButton languageButton;
@@ -82,7 +80,7 @@ public class SettingsMenu : BaseMenu
 
     private void ChangeLanguage()
     {
-        GameObject languageInstance = Instantiate(languageMenu);
+        GameObject languageInstance = Instantiate(WindowResources.Instance.LanguageMenu);
         LanguageMenu languageScript = languageInstance.GetComponent<LanguageMenu>();
         languageScript.OnCloseAction = () =>
         {

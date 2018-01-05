@@ -6,7 +6,6 @@ using UnityEngine.Networking;
 
 public class ThumbnailInstantiation : BaseMenu
 {
-    public GameObject thumbnail;
     public GameObject startPosition;
     [SerializeField]
     private GameObject settingsMenu;
@@ -218,7 +217,7 @@ public class ThumbnailInstantiation : BaseMenu
                     0,
                     size.y / 2f * -i - size.y/4f,
                     size.z / 4f * -j - size.z / 8f);
-                GameObject thumbnailObj = Instantiate(thumbnail, startPosition.transform);
+                GameObject thumbnailObj = Instantiate(WindowResources.Instance.Thumbnail, startPosition.transform);
 
                 thumbnailObj.transform.localPosition = instantiationPosition;
 

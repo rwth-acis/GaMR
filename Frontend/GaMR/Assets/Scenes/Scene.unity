@@ -829,7 +829,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4889603396104314, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.0000024028557
+      value: -0.0000035305118
       objectReference: {fileID: 0}
     - target: {fileID: 4734900918133012, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
       propertyPath: m_LocalPosition.y
@@ -865,7 +865,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4734900918133012, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.0000019195732
+      value: -0.000002886135
       objectReference: {fileID: 0}
     - target: {fileID: 4856461471948040, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
       propertyPath: m_LocalPosition.x
@@ -897,7 +897,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4723932946146056, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.0000016155261
+      value: -0.0000022599006
       objectReference: {fileID: 0}
     - target: {fileID: 4072071686527104, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
       propertyPath: m_LocalPosition.x
@@ -905,7 +905,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4072071686527104, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.113000914
+      value: -0.1130011
       objectReference: {fileID: 0}
     - target: {fileID: 4333652431246228, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
       propertyPath: m_LocalPosition.x
@@ -913,7 +913,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4333652431246228, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.0000012933397
+      value: -0.0000019377146
       objectReference: {fileID: 0}
     - target: {fileID: 4609140984152418, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
       propertyPath: m_LocalPosition.x
@@ -921,7 +921,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4609140984152418, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.0000075759954
+      value: -0.0000087036515
       objectReference: {fileID: 0}
     - target: {fileID: 4716293537009974, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
       propertyPath: m_LocalPosition.x
@@ -933,7 +933,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4716293537009974, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.11300042
+      value: -0.11300061
       objectReference: {fileID: 0}
     - target: {fileID: 4734900918133012, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
       propertyPath: m_LocalPosition.x
@@ -941,7 +941,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4765169307578292, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.000009813168
+      value: -0.000011907387
       objectReference: {fileID: 0}
     - target: {fileID: 1179905082796526, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
       propertyPath: m_Name
@@ -1641,6 +1641,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1622583215}
   - component: {fileID: 1622583216}
+  - component: {fileID: 1622583217}
   m_Layer: 0
   m_Name: WindowManager
   m_TagString: Untagged
@@ -1673,6 +1674,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   focusedDepth: 2
+--- !u!114 &1622583217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1622583214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e86a2aae4e59bcf4ea5912ccdd64619b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loginMenu: {fileID: 1456345112698534, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
+  mainMenu: {fileID: 1179905082796526, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
+  settingsMenu: {fileID: 1051943829816388, guid: bed7a6829050ddd44bd88c473b0f59d4,
+    type: 2}
+  languageMenu: {fileID: 1923063251106870, guid: 93dfaa18750d7fc4abf5fb2cd845d61f,
+    type: 2}
+  contextMenu: {fileID: 1636685242739130, guid: d90c9faf32c843f4cb6adb197ab7b497,
+    type: 2}
+  quizMenu: {fileID: 1624918704633228, guid: d97158504f3f2d645b28acd59fdadc0f, type: 2}
+  badgeOverviewMenu: {fileID: 1206390502265822, guid: 9b90401cba1a2bc47b972fa171cd6921,
+    type: 2}
+  annotationMenu: {fileID: 1737021395842500, guid: b189047185b118c488623b8dfcbb5e7c,
+    type: 2}
+  thumbnail: {fileID: 1697870960306182, guid: 3ab9a8a24c60ebb45b632c99b4bae6e3, type: 2}
 --- !u!1 &1648687113
 GameObject:
   m_ObjectHideFlags: 0
