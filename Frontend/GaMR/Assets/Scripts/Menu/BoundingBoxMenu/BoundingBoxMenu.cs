@@ -87,12 +87,12 @@ public class BoundingBoxMenu : BaseMenu
 
     private void InitializeButtons()
     {
-        deleteButton = transform.Find("Delete Button").gameObject.AddComponent<FocusableButton>();
-        editModeButton = transform.Find("EditMode Button").gameObject.AddComponent<FocusableCheckButton>();
-        boundingBoxButton = transform.Find("Box Button").gameObject.AddComponent<FocusableCheckButton>();
-        quizButton = transform.Find("Quiz Button").gameObject.AddComponent<FocusableCheckButton>();
-        createQuizButton = transform.Find("CreateQuiz Button").gameObject.AddComponent<FocusableButton>();
-        closeButton = transform.Find("Close Button").gameObject.AddComponent<FocusableButton>();
+        deleteButton = transform.Find("Delete Button").gameObject.GetComponent<FocusableButton>();
+        editModeButton = transform.Find("EditMode Button").gameObject.GetComponent<FocusableCheckButton>();
+        boundingBoxButton = transform.Find("Box Button").gameObject.GetComponent<FocusableCheckButton>();
+        quizButton = transform.Find("Quiz Button").gameObject.GetComponent<FocusableCheckButton>();
+        createQuizButton = transform.Find("CreateQuiz Button").gameObject.GetComponent<FocusableButton>();
+        closeButton = transform.Find("Close Button").gameObject.GetComponent<FocusableButton>();
 
         deleteButton.OnPressed = () => { actions.DeleteObject(); Destroy(); };
         editModeButton.OnPressed = ToggleEditMode;
@@ -111,26 +111,35 @@ public class BoundingBoxMenu : BaseMenu
 
     private void SelectQuiz()
     {
-        if (quizButton.ButtonChecked)
+        if (quizButton.ButtonChecked) // case: no quiz active => select a new quiz
         {
-            if (InformationManager.Instance.playerType == PlayerType.STUDENT)
+            if (InformationManager.Instance.playerType == PlayerType.STUDENT) // if student: prepare quiz mode and lock any editing
             {
-                MenuEnabled = false;
+                MenuEnabled = false; // disable this menu; the user can only get back if the quiz-direction menu is closed
                 QuizStyleMenu styleMenu = transform.Find("QuizStyle Menu").GetComponent<QuizStyleMenu>();
+                // specify what should happen if the quiz direction menu is closed again => this depends on the reason for closing
+                // if the menu was closed because a quiz was selected => go into quiz mode and lock editing
+                // if the menu was closed without a quiz selection => restore normal annotation settings
                 styleMenu.OnCloseAction = (selectionSuccessful) =>
                 {
-                    quizButton.ButtonChecked = selectionSuccessful;
-                    actions.EnableBoundingBox(false);
-                    boundingBoxButton.ButtonChecked = false;
+                    quizButton.ButtonChecked = selectionSuccessful; // display if a quiz is now active
+                    if (selectionSuccessful)
+                    {
+                        // if a quiz is selected: disable the bounding box so that the user can immediately access the questions
+                        // ... also display that the bounding box is now disabled
+                        actions.EnableBoundingBox(false);
+                        boundingBoxButton.ButtonChecked = false;
 
-                    actions.EnableEditMode(false);
-                    editModeButton.ButtonChecked = false;
-
-                    editModeButton.ButtonEnabled = false;
+                        // disable the edit mode and display that it is off
+                        actions.EnableEditMode(false);
+                        editModeButton.ButtonChecked = false;
+                    }
+                    // lock the edit mode if a quiz was selected so that the user cannot turn it back on again
+                    editModeButton.ButtonEnabled = !selectionSuccessful;
                 };
-                styleMenu.gameObject.SetActive(true);
+                styleMenu.gameObject.SetActive(true); // "open" quiz direction menu
             }
-            else
+            else // author mode: just change to the quiz questions and set everything to be editable and accessible
             {
                 actions.EnableBoundingBox(false);
                 boundingBoxButton.ButtonChecked = false;

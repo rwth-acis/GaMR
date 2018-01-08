@@ -59,6 +59,9 @@ public class GamificationManager : MonoBehaviour
 
     public void CommitQuest()
     {
-        GamificationFramework.Instance.UpdateQuest(gameId, Quest);
+        if (Quest != null)
+        {
+            GamificationFramework.Instance.UpdateQuest(gameId, Quest);
+        }
     }
 }
