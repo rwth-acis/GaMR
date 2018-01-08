@@ -6,7 +6,6 @@ using UnityEngine.Networking;
 
 public class ThumbnailInstantiation : BaseMenu
 {
-    public GameObject thumbnail;
     public GameObject startPosition;
     [SerializeField]
     private GameObject settingsMenu;
@@ -74,11 +73,11 @@ public class ThumbnailInstantiation : BaseMenu
 
     private void InitializeButtons()
     {
-        upButton = transform.Find("Up Button").gameObject.AddComponent<FocusableButton>();
-        downButton = transform.Find("Down Button").gameObject.AddComponent<FocusableButton>();
-        settingsButton = transform.Find("Settings Button").gameObject.AddComponent<FocusableButton>();
-        logoutButton = transform.Find("Logout Button").gameObject.AddComponent<FocusableButton>();
-        badgeButton = transform.Find("Badges Button").gameObject.AddComponent<FocusableButton>();
+        upButton = transform.Find("Up Button").gameObject.GetComponent<FocusableButton>();
+        downButton = transform.Find("Down Button").gameObject.GetComponent<FocusableButton>();
+        settingsButton = transform.Find("Settings Button").gameObject.GetComponent<FocusableButton>();
+        logoutButton = transform.Find("Logout Button").gameObject.GetComponent<FocusableButton>();
+        badgeButton = transform.Find("Badges Button").gameObject.GetComponent<FocusableButton>();
 
         upButton.OnPressed = PageUp;
         downButton.OnPressed = PageDown;
@@ -218,7 +217,7 @@ public class ThumbnailInstantiation : BaseMenu
                     0,
                     size.y / 2f * -i - size.y/4f,
                     size.z / 4f * -j - size.z / 8f);
-                GameObject thumbnailObj = Instantiate(thumbnail, startPosition.transform);
+                GameObject thumbnailObj = Instantiate(WindowResources.Instance.Thumbnail, startPosition.transform);
 
                 thumbnailObj.transform.localPosition = instantiationPosition;
 

@@ -5,6 +5,8 @@ using UnityEngine;
 public class RotateToCameraOnYAxis : MonoBehaviour
 {
 
+    public float rotationOffset = 0f;
+
     // Use this for initialization
     void Start()
     {
@@ -17,7 +19,7 @@ public class RotateToCameraOnYAxis : MonoBehaviour
         Quaternion targetRot = Quaternion.LookRotation(transform.position - Camera.main.transform.position);
         transform.rotation = Quaternion.Euler(new Vector3(
             transform.rotation.eulerAngles.x,
-            targetRot.eulerAngles.y,
+            targetRot.eulerAngles.y + rotationOffset,
             transform.rotation.eulerAngles.z));
     }
 }

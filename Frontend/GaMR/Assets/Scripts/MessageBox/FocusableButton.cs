@@ -6,9 +6,8 @@ using System;
 
 public class FocusableButton : GaMRButton, IFocusable, IInputHandler
 {
-    [SerializeField]
-    private GameObject focusHighlight;
-    private const float pressDepth = 0.008f;
+    private GameObject focusHighlight;    
+    public float pressDepth = 0.008f;
     private bool pressed;
     protected Renderer rend;
     private bool buttonEnabled = true;

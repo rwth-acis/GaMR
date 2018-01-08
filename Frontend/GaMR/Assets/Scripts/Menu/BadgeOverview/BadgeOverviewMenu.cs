@@ -56,9 +56,9 @@ public class BadgeOverviewMenu : BaseMenu
 
     private void InitializeButtons()
     {
-        upButton = transform.Find("Up Button").gameObject.AddComponent<FocusableButton>();
-        downButton = transform.Find("Down Button").gameObject.AddComponent<FocusableButton>();
-        closeButton = transform.Find("Close Button").gameObject.AddComponent<FocusableButton>();
+        upButton = transform.Find("Up Button").gameObject.GetComponent<FocusableButton>();
+        downButton = transform.Find("Down Button").gameObject.GetComponent<FocusableButton>();
+        closeButton = transform.Find("Close Button").gameObject.GetComponent<FocusableButton>();
 
         upButton.OnPressed = PageUp;
         downButton.OnPressed = PageDown;

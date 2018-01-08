@@ -30,11 +30,11 @@ public class QuizMenu : BaseMenu, IViewEvents
 
     private void InitializeButtons()
     {
-        itemButton1 = transform.Find("Item1 Button").gameObject.AddComponent<FocusableCheckButton>();
-        itemButton2 = transform.Find("Item2 Button").gameObject.AddComponent<FocusableCheckButton>();
-        itemButton3 = transform.Find("Item3 Button").gameObject.AddComponent<FocusableCheckButton>();
-        itemButton4 = transform.Find("Item4 Button").gameObject.AddComponent<FocusableCheckButton>();
-        itemButton5 = transform.Find("Item5 Button").gameObject.AddComponent<FocusableCheckButton>();
+        itemButton1 = transform.Find("Item1 Button").gameObject.GetComponent<FocusableCheckButton>();
+        itemButton2 = transform.Find("Item2 Button").gameObject.GetComponent<FocusableCheckButton>();
+        itemButton3 = transform.Find("Item3 Button").gameObject.GetComponent<FocusableCheckButton>();
+        itemButton4 = transform.Find("Item4 Button").gameObject.GetComponent<FocusableCheckButton>();
+        itemButton5 = transform.Find("Item5 Button").gameObject.GetComponent<FocusableCheckButton>();
 
         buttons.Add(itemButton1);
         buttons.Add(itemButton2);
@@ -47,8 +47,8 @@ public class QuizMenu : BaseMenu, IViewEvents
             buttons[i].OnButtonPressed = OnQuestionSelected;
         }
 
-        pageDownButton = transform.Find("Down Button").gameObject.AddComponent<FocusableButton>();
-        pageUpButton = transform.Find("Up Button").gameObject.AddComponent<FocusableButton>();
+        pageDownButton = transform.Find("Down Button").gameObject.GetComponent<FocusableButton>();
+        pageUpButton = transform.Find("Up Button").gameObject.GetComponent<FocusableButton>();
 
         pageDownButton.OnPressed = PageDown;
         pageUpButton.OnPressed = PageUp;
