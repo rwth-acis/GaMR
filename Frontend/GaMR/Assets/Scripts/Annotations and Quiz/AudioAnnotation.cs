@@ -9,14 +9,17 @@ public class AudioAnnotation : MonoBehaviour
     // Update is called once per frame
     void Start()
     {
-        StartCoroutine(GetAudioData(null));
+        // StartCoroutine(GetAudioData(null));
+        //StartCoroutine(RecordAudio());
     }
 
-    private AudioClip RecordAudio()
+    private IEnumerator RecordAudio()
     {
         // audio recording =========================================
 
-        AudioClip recording = Microphone.Start(null, false, 60, 44100);
+        Debug.Log("Start Recording");
+        AudioClip recording = Microphone.Start(null, false, 10, 44100);
+        yield return new WaitForSeconds(11);
         int endTime = Microphone.GetPosition(null);
         Microphone.End(null);
         float[] audioSamples = new float[recording.samples];
@@ -26,7 +29,7 @@ public class AudioAnnotation : MonoBehaviour
         AudioClip cutClip = AudioClip.Create("cutClip", cutSamples.Length, 1, 44100, false);
         cutClip.SetData(cutSamples, 0);
 
-        return cutClip;
+        //return cutClip;
     }
 
     private IEnumerator GetAudioData(Action<AudioClip> callback)
