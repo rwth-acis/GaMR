@@ -17,6 +17,8 @@ public class GaMRButton : MonoBehaviour, IInputClickHandler
     public Action<GaMRButton> OnButtonPressed;
     protected string text;
     private TextMesh textMesh;
+    protected Sprite icon;
+    private SpriteRenderer spriteRenderer;
     private bool visible;
 
     public int Data { get; set; } // custom data
@@ -27,6 +29,12 @@ public class GaMRButton : MonoBehaviour, IInputClickHandler
         if (caption != null)
         {
             textMesh = caption.GetComponent<TextMesh>();
+        }
+
+        Transform iconTransform = transform.Find("Icon");
+        if (iconTransform != null)
+        {
+            iconTransform.GetComponent<SpriteRenderer>();
         }
     }
 
@@ -67,6 +75,28 @@ public class GaMRButton : MonoBehaviour, IInputClickHandler
             if (textMesh != null)
             {
                 textMesh.text = text;
+            }
+        }
+    }
+
+    public Sprite Icon
+    {
+        get { return icon; }
+        set
+        {
+            icon = value;
+            if (spriteRenderer == null)
+            {
+                Transform iconTransform = transform.Find("Icon");
+                if (iconTransform != null)
+                {
+                    iconTransform.GetComponent<SpriteRenderer>();
+                }
+            }
+
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.sprite = icon;
             }
         }
     }

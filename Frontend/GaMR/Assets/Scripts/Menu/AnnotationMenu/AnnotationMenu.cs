@@ -5,12 +5,18 @@ using UnityEngine;
 
 public class AnnotationMenu : BaseMenu
 {
-    private FocusableButton editButton, deleteButton, closeButton;
+    private FocusableButton editButton, deleteButton, closeButton, playPauseButton, editAudioButton;
     private TextMesh label;
     private Caption caption;
     private AnnotationContainer container;
+    private bool audioPlaying;
 
     private static AnnotationMenu currentlyOpenAnnotationMenu;
+
+    [SerializeField]
+    private Sprite playIcon;
+    [SerializeField]
+    private Sprite pauseIcon;
 
     public AnnotationContainer Container
     {
@@ -61,10 +67,13 @@ public class AnnotationMenu : BaseMenu
         closeButton = transform.Find("Close Button").GetComponent<FocusableButton>();
         deleteButton = transform.Find("Delete Button").GetComponent<FocusableButton>();
         editButton = transform.Find("Edit Button").GetComponent<FocusableButton>();
+        playPauseButton = transform.Find("Play Button").GetComponent<FocusableButton>();
+
 
         closeButton.OnPressed = Close;
         deleteButton.OnPressed = DeleteAnnotation;
         editButton.OnPressed = EditText;
+        playPauseButton.OnPressed = PlayPauseAudio;
 
         // if the window somehow got instantiated without an attached container: disable the edit and delete button
         if (Container == null)
@@ -118,6 +127,38 @@ public class AnnotationMenu : BaseMenu
         }
         gameObject.SetActive(true);
 
+    }
+
+    private void PlayPauseAudio()
+    {
+        audioPlaying = !audioPlaying;
+        if (audioPlaying)
+        {
+            playPauseButton.Text = LocalizationManager.Instance.ResolveString("Pause");
+            playPauseButton.Icon = pauseIcon;
+        }
+        else
+        {
+            playPauseButton.Text = LocalizationManager.Instance.ResolveString("Play");
+            playPauseButton.Icon = playIcon;
+        }
+    }
+
+    private void Update()
+    {
+        //// if the playing state changes => change the icon on the play button
+        //if (audioPlaying != container.AudioAnnotationSource.isPlaying)
+        //{
+        //    if (container.AudioAnnotationSource.isPlaying)
+        //    {
+
+        //    }
+        //    else
+        //    {
+
+        //    }
+        //}
+        //audioPlaying = container.AudioAnnotationSource.isPlaying;
     }
 
     public override void OnUpdateLanguage()

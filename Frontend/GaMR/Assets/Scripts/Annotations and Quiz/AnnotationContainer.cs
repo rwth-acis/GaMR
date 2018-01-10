@@ -20,6 +20,11 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
 
     private bool isQuiz;
 
+    public AudioSource AudioAnnotationSource
+    {
+        get; private set;
+    }
+
     /// <summary>
     /// initializes the container
     /// if it was not created from the load-routine a keyboard automatically appears
@@ -30,6 +35,9 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
     {
         deselectedColor = GetComponent<Renderer>().material.color;
         mat = gameObject.GetComponent<Renderer>().material;
+
+        AudioAnnotationSource = GetComponent<AudioSource>();
+
         if (!loaded)
         {
             mat.color = selectedColor;
