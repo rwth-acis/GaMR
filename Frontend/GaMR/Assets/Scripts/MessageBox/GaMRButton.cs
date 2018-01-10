@@ -34,7 +34,7 @@ public class GaMRButton : MonoBehaviour, IInputClickHandler
         Transform iconTransform = transform.Find("Icon");
         if (iconTransform != null)
         {
-            iconTransform.GetComponent<SpriteRenderer>();
+            spriteRenderer = iconTransform.GetComponent<SpriteRenderer>();
         }
     }
 
@@ -90,7 +90,7 @@ public class GaMRButton : MonoBehaviour, IInputClickHandler
                 Transform iconTransform = transform.Find("Icon");
                 if (iconTransform != null)
                 {
-                    iconTransform.GetComponent<SpriteRenderer>();
+                    spriteRenderer = iconTransform.GetComponent<SpriteRenderer>();
                 }
             }
 
