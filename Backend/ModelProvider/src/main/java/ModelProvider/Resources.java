@@ -172,7 +172,7 @@ public class Resources {
 
     @GET
     @Path("/annotation/audio/load/{modelName}/{annotationId}")
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @Produces("audio/wav")
     public Response getAnnotationAudio(@PathParam("modelName") String modelName, @PathParam("annotationId") String annotationId)
     {
 //            File ogg = new File(App.modelPath + File.separatorChar + modelName +
@@ -187,13 +187,11 @@ public class Resources {
 //            }
 
         File audio = new File(App.modelPath + File.separatorChar + modelName +
-                    File.separatorChar + "Audio" + File.separatorChar + annotationId);
+                    File.separatorChar + "Audio" + File.separatorChar + annotationId + ".wav");
         System.out.println("Request for " + audio.getPath());
         try {
             if (audio.exists()) {
-                byte[] byteData = Files.readAllBytes(audio.toPath());
-                System.out.println(byteData.length);
-                return Response.ok(byteData, MediaType.APPLICATION_OCTET_STREAM).build();
+                return Response.ok(audio, "audio/wav").build();
             } else {
                 return Response.status(Response.Status.BAD_REQUEST).build();
             }
@@ -213,7 +211,7 @@ public class Resources {
         System.out.println("Received audio");
         try {
             Files.write(new File(App.modelPath + File.separatorChar + modelName +
-                    File.separatorChar + "Audio" + File.separatorChar + annotationId).toPath(), audio);
+                    File.separatorChar + "Audio" + File.separatorChar + annotationId + ".wav").toPath(), audio);
 
             return  Response.ok().build();
         }

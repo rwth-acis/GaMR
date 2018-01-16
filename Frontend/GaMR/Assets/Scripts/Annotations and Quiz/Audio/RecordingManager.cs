@@ -2,7 +2,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class RecordingManager : Singleton<RecordingManager>
 {
@@ -25,10 +27,16 @@ public class RecordingManager : Singleton<RecordingManager>
     private IEnumerator TestRecording()
     {
         StartRecording();
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(5);
         AudioClip clip = StopRecording();
         AudioSource source = gameObject.AddComponent<AudioSource>();
         source.PlayClip(clip, false);
+        byte[] oggBytes;
+        SavWav.ConvertToWav(clip, out oggBytes);
+        Debug.Log(oggBytes);
+        UnityWebRequest post = new UnityWebRequest("http://localhost:8080/resources/annotation/audio/save/brain/test", "POST");
+        post.uploadHandler = new UploadHandlerRaw(oggBytes);
+        yield return post.Send();
     }
 
     public void StartRecording()
@@ -65,7 +73,7 @@ public class RecordingManager : Singleton<RecordingManager>
 
     private AudioClip CreateAudioClip()
     {
-        AudioClip clip = AudioClip.Create("Recording", recording.Count, 2, 44100, false);
+        AudioClip clip = AudioClip.Create("Recording", recording.Count, 1, 44100, false);
         clip.SetData(recording.ToArray(), 0);
         Debug.Log("Clip length: " + clip.length);
         return clip;

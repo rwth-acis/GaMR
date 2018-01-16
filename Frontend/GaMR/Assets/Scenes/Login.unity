@@ -652,7 +652,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 545473049}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 274a5f3348c83184f8f1af3e54e286d8, type: 3}
   m_Name: 
@@ -676,7 +676,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 545473049}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a123af290df0f1c47baf0d2c118b2eaa, type: 3}
   m_Name: 
@@ -1110,7 +1110,7 @@ Prefab:
         type: 3}
     - target: {fileID: 4158659015211890, guid: b189047185b118c488623b8dfcbb5e7c, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.000012229566
+      value: -0.000026727992
       objectReference: {fileID: 0}
     - target: {fileID: 4918948636366812, guid: b189047185b118c488623b8dfcbb5e7c, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1118,23 +1118,23 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4917954421869002, guid: b189047185b118c488623b8dfcbb5e7c, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.000011281144
+      value: -0.00002610176
       objectReference: {fileID: 0}
     - target: {fileID: 4170155562919578, guid: b189047185b118c488623b8dfcbb5e7c, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.00006039638
+      value: -0.00007328388
       objectReference: {fileID: 0}
     - target: {fileID: 4038305675525284, guid: b189047185b118c488623b8dfcbb5e7c, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.000057496658
+      value: -0.000081821796
       objectReference: {fileID: 0}
     - target: {fileID: 4927682863131908, guid: b189047185b118c488623b8dfcbb5e7c, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.000008059796
+      value: -0.000020947287
       objectReference: {fileID: 0}
     - target: {fileID: 4405349015003106, guid: b189047185b118c488623b8dfcbb5e7c, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.000006771051
+      value: -0.00001965855
       objectReference: {fileID: 0}
     - target: {fileID: 212711668813650424, guid: b189047185b118c488623b8dfcbb5e7c,
         type: 2}
@@ -1551,19 +1551,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4086694633030028, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.00009762532
+      value: -0.00011212375
       objectReference: {fileID: 0}
     - target: {fileID: 4308037745263162, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.35803938
+      value: -0.35804582
       objectReference: {fileID: 0}
     - target: {fileID: 4196587989135580, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.00015495831
+      value: -0.0001807333
       objectReference: {fileID: 0}
     - target: {fileID: 4414823140297466, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.000046074998
+      value: -0.000053324216
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114282035375621532, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
@@ -1758,11 +1758,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 25f57a423322f5a45bf9490fe9d13300, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
