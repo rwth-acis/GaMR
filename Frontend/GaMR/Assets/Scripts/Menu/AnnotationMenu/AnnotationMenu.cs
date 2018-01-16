@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class AnnotationMenu : BaseMenu
 {
-    private FocusableButton editButton, deleteButton, closeButton, playPauseButton, editAudioButton;
+    private FocusableButton editButton, deleteButton, closeButton, playPauseButton, recordAudioButton, stopButton;
     private TextMesh label;
     private Caption caption;
     private AnnotationContainer container;
     private bool audioPlaying;
+
+    private Coroutine flashRoutine;
 
     private static AnnotationMenu currentlyOpenAnnotationMenu;
 
@@ -68,12 +70,15 @@ public class AnnotationMenu : BaseMenu
         deleteButton = transform.Find("Delete Button").GetComponent<FocusableButton>();
         editButton = transform.Find("Edit Button").GetComponent<FocusableButton>();
         playPauseButton = transform.Find("Play Button").GetComponent<FocusableButton>();
+        recordAudioButton = transform.Find("Record Button").GetComponent<FocusableButton>();
+        stopButton = transform.Find("Stop Button").GetComponent<FocusableButton>();
 
 
         closeButton.OnPressed = Close;
         deleteButton.OnPressed = DeleteAnnotation;
         editButton.OnPressed = EditText;
         playPauseButton.OnPressed = PlayPauseAudio;
+        recordAudioButton.OnPressed = RecordAudio;
 
         // if the window somehow got instantiated without an attached container: disable the edit and delete button
         if (Container == null)
@@ -141,6 +146,45 @@ public class AnnotationMenu : BaseMenu
         {
             playPauseButton.Text = LocalizationManager.Instance.ResolveString("Play");
             playPauseButton.Icon = playIcon;
+        }
+    }
+
+    private void RecordAudio()
+    {
+        // if a recording is active => stop it
+        if (RecordingManager.Instance.IsRecording)
+        {
+            Debug.Log("Stop Recording");
+
+            RecordingManager.Instance.StopRecording();
+
+            StopCoroutine(flashRoutine);
+            recordAudioButton.IconVisible = true; // make sure that the icon is displayed
+            // re-enable the play and stop buttons
+            playPauseButton.ButtonEnabled = true;
+            stopButton.ButtonEnabled = true;
+        }
+        else // no recording active => start a new one
+        {
+            Debug.Log("Start Recording");
+            flashRoutine = StartCoroutine(FlashRecordIcon());
+            // also disable the play and stop button
+            playPauseButton.ButtonEnabled = false;
+            stopButton.ButtonEnabled = false;
+            RecordingManager.Instance.StartRecording();
+        }
+    }
+
+    private IEnumerator FlashRecordIcon()
+    {
+        float flashPause = 0.5f;
+        //  the loop needs to be terminated by stopping the coroutine
+        while (true)
+        {
+            recordAudioButton.IconVisible = false;
+            yield return new WaitForSeconds(flashPause);
+            recordAudioButton.IconVisible = true;
+            yield return new WaitForSeconds(flashPause);
         }
     }
 

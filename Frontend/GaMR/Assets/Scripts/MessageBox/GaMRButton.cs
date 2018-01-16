@@ -101,6 +101,47 @@ public class GaMRButton : MonoBehaviour, IInputClickHandler
         }
     }
 
+    public bool IconVisible
+    {
+        get
+        {
+            if (spriteRenderer == null)
+            {
+                Transform iconTransform = transform.Find("Icon");
+                if (iconTransform != null)
+                {
+                    spriteRenderer = iconTransform.GetComponent<SpriteRenderer>();
+                }
+            }
+
+            if (spriteRenderer != null)
+            {
+                return spriteRenderer.gameObject.activeSelf;
+            }
+            else
+            {
+                // if there is no icon => nothing visible
+                return false;
+            }
+        }
+        set
+        {
+            if (spriteRenderer == null)
+            {
+                Transform iconTransform = transform.Find("Icon");
+                if (iconTransform != null)
+                {
+                    spriteRenderer = iconTransform.GetComponent<SpriteRenderer>();
+                }
+            }
+
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.gameObject.SetActive(value);
+            }
+        }
+    }
+
     public bool Visible
     {
         get { return visible; }

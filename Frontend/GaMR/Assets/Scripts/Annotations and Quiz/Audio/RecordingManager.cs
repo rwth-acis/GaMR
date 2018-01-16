@@ -21,7 +21,7 @@ public class RecordingManager : Singleton<RecordingManager>
 
     private void Start()
     {
-        StartCoroutine(TestRecording());
+        //StartCoroutine(TestRecording());
     }
 
     private IEnumerator TestRecording()
