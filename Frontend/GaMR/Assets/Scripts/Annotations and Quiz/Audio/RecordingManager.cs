@@ -39,12 +39,20 @@ public class RecordingManager : Singleton<RecordingManager>
         yield return post.Send();
     }
 
-    public void StartRecording()
+    public bool StartRecording()
     {
-        IsRecording = true;
-        recording = new List<float>();
-        currentClip = Microphone.Start(null, true, recordingLength, 44100);
-        InvokeRepeating("CopyClipData", recordingLength, recordingLength);
+        if (Microphone.devices.Length > 0)
+        {
+            IsRecording = true;
+            recording = new List<float>();
+            currentClip = Microphone.Start(null, true, recordingLength, 44100);
+            InvokeRepeating("CopyClipData", recordingLength, recordingLength);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public AudioClip StopRecording()
