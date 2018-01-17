@@ -146,6 +146,20 @@ public class AnnotationManager : MonoBehaviour
     }
 
     /// <summary>
+    /// saves an audio annotation
+    /// should be called immediately after an audio annotation was changed
+    /// </summary>
+    /// <param name="container">The container which stores the audio annotation</param>
+    public void SaveAudioAnnotation(AnnotationContainer container)
+    {
+        if (container.AnnotationClip != null)
+        {
+            Debug.Log("Saving clip for " + container.Annotation.PositionToStringWithoutDots + " (" + container.Annotation.Text + ")");
+            RestManager.Instance.SendAudioClip(InformationManager.Instance.FullBackendAddress + "/resources/annotation/audio/save/" + objectInfo.ModelName + "/" + container.Annotation.PositionToStringWithoutDots, container.AnnotationClip, null);
+        }
+    }
+
+    /// <summary>
     /// saves the current set of annotations as a quiz
     /// </summary>
     /// <param name="name">The name of the quiz</param>
@@ -215,6 +229,29 @@ public class AnnotationManager : MonoBehaviour
             container.Annotation = annotation;
             annotationContainers.Add(container);
         }
+
+        if (annotationContainers.Count > 0)
+        {
+            LoadAudioAnnotations(0);
+        }
+    }
+
+    private void LoadAudioAnnotations(int index)
+    {
+        Debug.Log("Loading audio for " + index);
+        RestManager.Instance.GetAudioClip(InformationManager.Instance.FullBackendAddress + "/resources/annotation/audio/load/" + objectInfo.ModelName + "/" + annotationContainers[index].Annotation.PositionToStringWithoutDots,
+            (clip, resCode) =>
+            {
+                if (resCode == 200)
+                {
+                    annotationContainers[index].AnnotationClip = clip;
+                }
+
+                if (index < annotationContainers.Count - 1)
+                {
+                    LoadAudioAnnotations(index + 1);
+                }
+            });
     }
 
     /// <summary>

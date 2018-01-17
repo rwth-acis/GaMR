@@ -5,6 +5,7 @@ using UnityEngine;
 
 /// <summary>
 /// The display-window which is shown if an annotation is selected
+/// DEPRECATED: replaced by AnnotationMenu
 /// </summary>
 public class AnnotationBox : MonoBehaviour
 {

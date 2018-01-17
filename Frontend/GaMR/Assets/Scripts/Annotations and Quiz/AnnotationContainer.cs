@@ -20,10 +20,13 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
 
     private bool isQuiz;
 
-    public AudioSource AudioAnnotationSource
+    public AudioSource AnnotationAudioSource
     {
-        get; private set;
+        get;
+        private set;
     }
+
+    private AudioClip annotationAudioClip;
 
     /// <summary>
     /// initializes the container
@@ -36,7 +39,7 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
         deselectedColor = GetComponent<Renderer>().material.color;
         mat = gameObject.GetComponent<Renderer>().material;
 
-        AudioAnnotationSource = GetComponent<AudioSource>();
+        AnnotationAudioSource = GetComponent<AudioSource>();
 
         if (!loaded)
         {
@@ -119,6 +122,21 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
     public Annotation Annotation
     {
         get; set;
+    }
+
+    public AudioClip AnnotationClip
+    {
+        get
+        {
+            return annotationAudioClip;
+        }
+        set
+        {
+            annotationAudioClip = value;
+            AnnotationAudioSource.clip = annotationAudioClip;
+
+            annotationManager.SaveAudioAnnotation(this);
+        }
     }
 
     /// <summary>

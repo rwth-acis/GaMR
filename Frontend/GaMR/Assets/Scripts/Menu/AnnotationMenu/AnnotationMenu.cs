@@ -9,7 +9,7 @@ public class AnnotationMenu : BaseMenu
     private TextMesh label;
     private Caption caption;
     private AnnotationContainer container;
-    private AudioState audioState = AudioState.NONE_RECORDED;
+    private AudioState audioState;
 
     private AudioState AudioState
     {
@@ -20,6 +20,7 @@ public class AnnotationMenu : BaseMenu
         set
         {
             // adapt the UI according to the new audio state
+            UpdateAudioState(audioState, value);
             UpdateButtonsToAudioState(audioState, value);
             audioState = value;
         }
@@ -65,6 +66,14 @@ public class AnnotationMenu : BaseMenu
         if (Container != null)
         {
             caption.Text = Container.Annotation.Text;
+            if (container.AnnotationClip == null)
+            {
+                AudioState = AudioState.NONE_RECORDED;
+            }
+            else
+            {
+                AudioState = AudioState.STOPPED;
+            }
         }
         else
         {
@@ -196,44 +205,97 @@ public class AnnotationMenu : BaseMenu
             case AudioState.PLAYING:
                 playPauseButton.Text = LocalizationManager.Instance.ResolveString("Pause");
                 playPauseButton.Icon = pauseIcon;
+
+                stopButton.ButtonEnabled = true;
                 break;
             case AudioState.PAUSED:
+                // if previously playing => now not playing and so reset the play-button icon
+                playPauseButton.Text = LocalizationManager.Instance.ResolveString("Play");
+                playPauseButton.Icon = playIcon;
+
+                stopButton.ButtonEnabled = true;
+
+                break;
             case AudioState.STOPPED:
                 // if previously playing => now not playing and so reset the play-button icon
                 playPauseButton.Text = LocalizationManager.Instance.ResolveString("Play");
                 playPauseButton.Icon = playIcon;
+
+                stopButton.ButtonEnabled = false;
+
                 break;
             case AudioState.RECORDING:
                 flashRoutine = StartCoroutine(FlashRecordIcon());
                 // also disable the play and stop button
                 playPauseButton.ButtonEnabled = false;
                 stopButton.ButtonEnabled = false;
+
                 break;
         }
     }
 
-private void RecordAudio()
+    private void UpdateAudioState(AudioState previousState, AudioState newState)
+    {
+        // if a recording was active => stop it and store the annotation
+        if (previousState == AudioState.RECORDING && RecordingManager.Instance.IsRecording)
+        {
+            AudioClip recordedClip = RecordingManager.Instance.StopRecording();
+            if (recordedClip != null)
+            {
+                container.AnnotationClip = recordedClip;
+            }
+        }
+
+        switch (newState)
+        {
+            case AudioState.NONE_RECORDED:
+                break;
+            case AudioState.PLAYING:
+                if (previousState == AudioState.PAUSED)
+                {
+                    container.AnnotationAudioSource.UnPause();
+                }
+                else
+                {
+                    container.AnnotationAudioSource.Play();
+                }
+                break;
+            case AudioState.PAUSED:
+                container.AnnotationAudioSource.Pause();
+                break;
+            case AudioState.STOPPED:
+                container.AnnotationAudioSource.Stop();
+                break;
+            case AudioState.RECORDING:
+                // start the recording; if there is an error => stop again
+                if (!RecordingManager.Instance.StartRecording())
+                {
+                    if (previousState == AudioState.NONE_RECORDED)
+                    {
+                        AudioState = AudioState.NONE_RECORDED;
+                    }
+                    else
+                    {
+                        AudioState = AudioState.STOPPED;
+                    }
+                    MessageBox.Show("No microphone found", MessageBoxType.ERROR);
+                }
+                break;
+        }
+    }
+
+    private void RecordAudio()
     {
         // if a recording is active => stop it
-        if (RecordingManager.Instance.IsRecording)
+        if (AudioState == AudioState.RECORDING)
         {
             Debug.Log("Stop Recording");
-
-            RecordingManager.Instance.StopRecording();
-
             AudioState = AudioState.STOPPED;
         }
         else // no recording active => start a new one
         {
             Debug.Log("Start Recording");
-            if (RecordingManager.Instance.StartRecording())
-            {
-                AudioState = AudioState.RECORDING;
-            }
-            else
-            {
-                MessageBox.Show("No microphone found", MessageBoxType.ERROR);
-            }
+            AudioState = AudioState.RECORDING;
         }
     }
 
@@ -252,19 +314,17 @@ private void RecordAudio()
 
     private void Update()
     {
-        //// if the playing state changes => change the icon on the play button
-        //if (audioPlaying != container.AudioAnnotationSource.isPlaying)
-        //{
-        //    if (container.AudioAnnotationSource.isPlaying)
-        //    {
-
-        //    }
-        //    else
-        //    {
-
-        //    }
-        //}
-        //audioPlaying = container.AudioAnnotationSource.isPlaying;
+        if (container != null)
+        {
+            // if the audio should be playing => check if it is stoped by something else (e.g. the clip ends)
+            if (AudioState == AudioState.PLAYING)
+            {
+                if (!container.AnnotationAudioSource.isPlaying)
+                {
+                    AudioState = AudioState.STOPPED;
+                }
+            }
+        }
     }
 
     public override void OnUpdateLanguage()
