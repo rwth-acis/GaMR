@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,17 +8,17 @@ public class AudioProgressBar : MonoBehaviour
     private Transform innerProgressBar;
     private TextMesh timeLabel;
 
-    [SerializeField]
-    private AudioSource source;
-
+    /// <summary>
+    /// The audio source which is monitored by the progress bar. Its progress is visualized.
+    /// </summary>
     public AudioSource Source
     {
-        get
-        { return source; }
-        set
-        {
-            source = value;
-        }
+        get;set;
+    }
+
+    public bool DisplayRecording
+    {
+        get;set;
     }
 
     // Use this for initialization
@@ -29,15 +30,41 @@ public class AudioProgressBar : MonoBehaviour
 
     private void Update()
     {
-        if (Source != null && Source.isPlaying)
+        if (DisplayRecording)
         {
+            if (timeLabel == null || innerProgressBar == null)
+            {
+                Start();
+            }
+            timeLabel.text = "Recording: " + SecondsToTimeString(RecordingManager.Instance.CurrentRecordingLength);
+        }
+        else
+        {
+            if (Source != null && Source.isPlaying)
+            {
+                UpdateProgressBar();
+            }
+        }
+    }
 
+    public void UpdateProgressBar()
+    {
+        if (timeLabel == null || innerProgressBar == null)
+        {
+            Start();
+        }
+        if (Source != null && Source.clip != null)
+        {
             timeLabel.text = SecondsToTimeString(Source.time) + "/" + SecondsToTimeString(Source.clip.length);
             innerProgressBar.localScale = new Vector3(
-                Source.time / source.clip.length,
+                Source.time / Source.clip.length,
                 1,
                 1
                 );
+        }
+        else
+        {
+            timeLabel.text = "0:00 / 0:00";
         }
     }
 

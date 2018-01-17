@@ -20,6 +20,8 @@ public class AnnotationManager : MonoBehaviour
     protected string subPathLoad = "/resources/annotation/load/";
     protected string subPathSave = "/resources/annotation/save/";
 
+    private bool initializingAudio = true;
+
     protected float annotationSize = 7.5f;
 
     /// <summary>
@@ -152,10 +154,13 @@ public class AnnotationManager : MonoBehaviour
     /// <param name="container">The container which stores the audio annotation</param>
     public void SaveAudioAnnotation(AnnotationContainer container)
     {
-        if (container.AnnotationClip != null)
+        if (!initializingAudio)
         {
-            Debug.Log("Saving clip for " + container.Annotation.PositionToStringWithoutDots + " (" + container.Annotation.Text + ")");
-            RestManager.Instance.SendAudioClip(InformationManager.Instance.FullBackendAddress + "/resources/annotation/audio/save/" + objectInfo.ModelName + "/" + container.Annotation.PositionToStringWithoutDots, container.AnnotationClip, null);
+            if (container.AnnotationClip != null)
+            {
+                Debug.Log("Saving clip for " + container.Annotation.PositionToStringWithoutDots + " (" + container.Annotation.Text + ")");
+                RestManager.Instance.SendAudioClip(InformationManager.Instance.FullBackendAddress + "/resources/annotation/audio/save/" + objectInfo.ModelName + "/" + container.Annotation.PositionToStringWithoutDots, container.AnnotationClip, null);
+            }
         }
     }
 
@@ -250,6 +255,10 @@ public class AnnotationManager : MonoBehaviour
                 if (index < annotationContainers.Count - 1)
                 {
                     LoadAudioAnnotations(index + 1);
+                }
+                else
+                {
+                    initializingAudio = false;
                 }
             });
     }

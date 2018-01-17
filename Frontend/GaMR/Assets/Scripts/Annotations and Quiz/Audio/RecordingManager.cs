@@ -10,8 +10,6 @@ public class RecordingManager : Singleton<RecordingManager>
 {
     private List<float> recording;
     private AudioClip currentClip;
-    private float currentClipTime;
-
     private const int recordingLength = 10;
 
     public bool IsRecording
@@ -19,9 +17,13 @@ public class RecordingManager : Singleton<RecordingManager>
         get; private set;
     }
 
-    private void Start()
+    /// <summary>
+    /// the length of the current recording in seconds. 0 if on recording is active
+    /// </summary>
+    public float CurrentRecordingLength
     {
-        //StartCoroutine(TestRecording());
+        get;
+        private set;
     }
 
     private IEnumerator TestRecording()
@@ -43,6 +45,7 @@ public class RecordingManager : Singleton<RecordingManager>
     {
         if (Microphone.devices.Length > 0)
         {
+            CurrentRecordingLength = 0;
             IsRecording = true;
             recording = new List<float>();
             currentClip = Microphone.Start(null, true, recordingLength, 44100);
@@ -66,6 +69,7 @@ public class RecordingManager : Singleton<RecordingManager>
         Array.Copy(audioSamples, cutSamples, cutSamples.Length);
         recording.AddRange(cutSamples);
         IsRecording = false;
+        CurrentRecordingLength = 0;
 
         return CreateAudioClip();
     }
@@ -85,5 +89,13 @@ public class RecordingManager : Singleton<RecordingManager>
         clip.SetData(recording.ToArray(), 0);
         Debug.Log("Clip length: " + clip.length);
         return clip;
+    }
+
+    private void Update()
+    {
+        if (IsRecording)
+        {
+            CurrentRecordingLength += Time.deltaTime;
+        }
     }
 }

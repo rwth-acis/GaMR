@@ -10,6 +10,7 @@ public class AnnotationMenu : BaseMenu
     private Caption caption;
     private AnnotationContainer container;
     private AudioState audioState;
+    private AudioProgressBar audioProgressBar;
 
     private AudioState AudioState
     {
@@ -58,10 +59,7 @@ public class AnnotationMenu : BaseMenu
     protected override void Start()
     {
         base.Start();
-        InitializeButtons();
-        label = transform.Find("Label").GetComponent<TextMesh>();
-        caption = transform.Find("TextField").GetComponent<Caption>();
-        caption.Init();
+        InitializeUI();
 
         if (Container != null)
         {
@@ -85,6 +83,25 @@ public class AnnotationMenu : BaseMenu
             currentlyOpenAnnotationMenu.Close();
         }
         currentlyOpenAnnotationMenu = this;
+    }
+
+    private void InitializeUI()
+    {
+        InitializeButtons();
+        label = transform.Find("Label").GetComponent<TextMesh>();
+        caption = transform.Find("TextField").GetComponent<Caption>();
+        caption.Init();
+
+        // initialize audio progress bar
+        Transform audioProgressBarTransform = transform.Find("Audio Progress Bar");
+        if (audioProgressBarTransform != null)
+        {
+            audioProgressBar = audioProgressBarTransform.GetComponent<AudioProgressBar>();
+            if (audioProgressBar != null)
+            {
+                audioProgressBar.Source = container.AnnotationAudioSource;
+            }
+        }
     }
 
     private void InitializeButtons()
@@ -239,6 +256,7 @@ public class AnnotationMenu : BaseMenu
         // if a recording was active => stop it and store the annotation
         if (previousState == AudioState.RECORDING && RecordingManager.Instance.IsRecording)
         {
+            audioProgressBar.DisplayRecording = false;
             AudioClip recordedClip = RecordingManager.Instance.StopRecording();
             if (recordedClip != null)
             {
@@ -267,9 +285,13 @@ public class AnnotationMenu : BaseMenu
                 container.AnnotationAudioSource.Stop();
                 break;
             case AudioState.RECORDING:
-                // start the recording; if there is an error => stop again
-                if (!RecordingManager.Instance.StartRecording())
+                // start the recording
+                if (RecordingManager.Instance.StartRecording())
                 {
+                    audioProgressBar.DisplayRecording = true;
+                }
+                else // error case => recording did not start
+                { 
                     if (previousState == AudioState.NONE_RECORDED)
                     {
                         AudioState = AudioState.NONE_RECORDED;
@@ -282,6 +304,8 @@ public class AnnotationMenu : BaseMenu
                 }
                 break;
         }
+
+        audioProgressBar.UpdateProgressBar();
     }
 
     private void RecordAudio()
