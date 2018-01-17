@@ -98,4 +98,40 @@ public class RecordingManager : Singleton<RecordingManager>
             CurrentRecordingLength += Time.deltaTime;
         }
     }
+
+    /// <summary>
+    /// returns the peak amplitude of the microphone in the last 100 samples
+    /// </summary>
+    public float PeakAmplitude
+    {
+        get
+        {
+            int samplesBack = 100;
+            if (currentClip != null)
+            {
+                float[] data = new float[samplesBack];
+                int microphoneStartPosition = Microphone.GetPosition(null) - (samplesBack + 1);
+                if (microphoneStartPosition < 0)
+                {
+                    return 0;
+                }
+                currentClip.GetData(data, microphoneStartPosition);
+
+                float maxAmplitude = 0;
+                for (int i = 0; i < samplesBack; i++)
+                {
+                    if (maxAmplitude < data[i])
+                    {
+                        maxAmplitude = data[i];
+                    }
+                }
+
+                return maxAmplitude;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+    }
 }

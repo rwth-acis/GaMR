@@ -37,6 +37,10 @@ public class AudioProgressBar : MonoBehaviour
                 Start();
             }
             timeLabel.text = "Recording: " + SecondsToTimeString(RecordingManager.Instance.CurrentRecordingLength);
+            // display the current amplitude on the progress bar
+            float peakAmplitude = RecordingManager.Instance.PeakAmplitude;
+            peakAmplitude = Math.Min(1, peakAmplitude * 10);
+            innerProgressBar.localScale = Vector3.Lerp(innerProgressBar.localScale, new Vector3(peakAmplitude, 1, 1), Time.deltaTime * 3f);
         }
         else
         {
