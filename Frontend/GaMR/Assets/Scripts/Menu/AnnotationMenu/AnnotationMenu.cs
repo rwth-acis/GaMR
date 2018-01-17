@@ -97,7 +97,7 @@ public class AnnotationMenu : BaseMenu
         if (audioProgressBarTransform != null)
         {
             audioProgressBar = audioProgressBarTransform.GetComponent<AudioProgressBar>();
-            if (audioProgressBar != null)
+            if (audioProgressBar != null && container != null)
             {
                 audioProgressBar.Source = container.AnnotationAudioSource;
             }
@@ -224,6 +224,8 @@ public class AnnotationMenu : BaseMenu
                 playPauseButton.Icon = pauseIcon;
 
                 stopButton.ButtonEnabled = true;
+
+                recordAudioButton.ButtonEnabled = false;
                 break;
             case AudioState.PAUSED:
                 // if previously playing => now not playing and so reset the play-button icon
@@ -232,6 +234,8 @@ public class AnnotationMenu : BaseMenu
 
                 stopButton.ButtonEnabled = true;
 
+                recordAudioButton.ButtonEnabled = true;
+
                 break;
             case AudioState.STOPPED:
                 // if previously playing => now not playing and so reset the play-button icon
@@ -239,6 +243,8 @@ public class AnnotationMenu : BaseMenu
                 playPauseButton.Icon = playIcon;
 
                 stopButton.ButtonEnabled = false;
+
+                recordAudioButton.ButtonEnabled = true;
 
                 break;
             case AudioState.RECORDING:

@@ -210,8 +210,10 @@ public class Resources {
     {
         System.out.println("Received audio");
         try {
-            Files.write(new File(App.modelPath + File.separatorChar + modelName +
-                    File.separatorChar + "Audio" + File.separatorChar + annotationId + ".wav").toPath(), audio);
+            File audioFile = new File(App.modelPath + File.separatorChar + modelName +
+                    File.separatorChar + "Audio" + File.separatorChar + annotationId + ".wav");
+            audioFile.getParentFile().mkdirs();
+            Files.write(audioFile.toPath(), audio);
 
             return  Response.ok().build();
         }
