@@ -10,7 +10,7 @@ public class RecordingManager : Singleton<RecordingManager>
 {
     private List<float> recording;
     private AudioClip currentClip;
-    private const int recordingLength = 10;
+    private const int recordingLength = 60;
 
     public bool IsRecording
     {
