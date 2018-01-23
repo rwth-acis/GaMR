@@ -177,7 +177,7 @@ public class AnnotationManager : MonoBehaviour
             if (container.AnnotationClip != null)
             {
                 Debug.Log("Saving clip for " + container.Annotation.PositionToStringWithoutDots + " (" + container.Annotation.Text + ")");
-                RestManager.Instance.SendAudioClip(InformationManager.Instance.FullBackendAddress + "/resources/annotation/audio/save/" + objectInfo.ModelName + "/" + container.Annotation.PositionToStringWithoutDots, container.AnnotationClip, null);
+                RestManager.Instance.SendAudioClip(InformationManager.Instance.FullBackendAddress + "/resources/annotation/audio/" + objectInfo.ModelName + "/" + container.Annotation.PositionToStringWithoutDots, container.AnnotationClip, null);
             }
         }
     }
@@ -262,7 +262,7 @@ public class AnnotationManager : MonoBehaviour
     private void LoadAudioAnnotations(int index)
     {
         Debug.Log("Loading audio for " + index);
-        RestManager.Instance.GetAudioClip(InformationManager.Instance.FullBackendAddress + "/resources/annotation/audio/load/" + objectInfo.ModelName + "/" + annotationContainers[index].Annotation.PositionToStringWithoutDots,
+        RestManager.Instance.GetAudioClip(InformationManager.Instance.FullBackendAddress + "/resources/annotation/audio/" + objectInfo.ModelName + "/" + annotationContainers[index].Annotation.PositionToStringWithoutDots,
             (clip, resCode) =>
             {
                 if (resCode == 200)

@@ -183,7 +183,7 @@ public class Resources {
         String methodName = "StoreAnnotations(" + modelName + ")";
         UserInformation info = ValidateAccessToken(accessToken);
         if (info != null) {
-            Logger.Log("Saving annotations for " + modelName);
+            Logger.Log(methodName, "Saving annotations for " + modelName);
             File file = new File(App.modelPath + File.separatorChar + modelName + File.separatorChar + "annotations.json");
             try {
                 FileWriter writer = new FileWriter(file);
@@ -228,7 +228,7 @@ public class Resources {
     }
 
     @GET
-    @Path("/annotation/audio/load/{modelName}/{annotationId}")
+    @Path("/annotation/audio/{modelName}/{annotationId}")
     @Produces("audio/wav")
     public Response getAnnotationAudio(@PathParam("modelName") String modelName, @PathParam("annotationId") String annotationId, @HeaderParam("access_token") String accessToken)
     {
@@ -259,7 +259,7 @@ public class Resources {
     }
 
     @POST
-    @Path("/annotation/audio/save/{modelName}/{annotationId}")
+    @Path("/annotation/audio/{modelName}/{annotationId}")
     @Consumes(MediaType.APPLICATION_OCTET_STREAM)
     @Produces(MediaType.APPLICATION_JSON)
     public Response storeAnnotationAudio(@PathParam("modelName") String modelName, @PathParam("annotationId") String annotationId, byte[] audio, @HeaderParam("access_token") String accessToken)
@@ -269,18 +269,33 @@ public class Resources {
         if (info != null) {
             Logger.Log(methodName, "Received audio file");
             try {
+                // only save audio annotations of existing models
+                File modelDir = new File(App.modelPath + File.separatorChar + modelName);
+                if (!modelDir.exists()) {
+                    Logger.Log(methodName, "Tried to save an audio annotation for a model that does not exist; abort");
+                    return Response.status(Response.Status.BAD_REQUEST).build();
+                }
+
+                //check annotationId to avoid string injection
+                if (annotationId.contains("/") || annotationId.contains("\\") || annotationId.contains("."))
+                {
+                    Logger.Log(methodName, "Aborting audio saving because annotation id contains unexpected symbol(s)");
+                    return  Response.status(Response.Status.BAD_REQUEST).build();
+                }
+
+                // save file
+
                 File audioFile = new File(App.modelPath + File.separatorChar + modelName +
                         File.separatorChar + "Audio" + File.separatorChar + annotationId + ".wav");
                 if (audioFile.getParentFile().mkdirs()) {
                     Logger.Log(methodName, "Creating folder(s) to save audio");
                 }
                 Files.write(audioFile.toPath(), audio);
+                // check if saving was successful
                 if (audioFile.exists()) {
                     Logger.Log(methodName, "Successfully processed request");
                     return Response.ok().build();
-                }
-                else
-                {
+                } else {
                     Logger.Log(methodName, "Saving the audio file failed; audio file does not exist");
                     return Response.serverError().build();
                 }
@@ -376,7 +391,7 @@ public class Resources {
         String methodName = "StoreQuiz(" + modelName + "[" + quizName + "])";
         UserInformation info = ValidateAccessToken(accessToken);
         if (info != null) {
-            Logger.Log("Saving quiz " + quizName + " for model " + modelName);
+            Logger.Log(methodName, "Saving quiz " + quizName + " for model " + modelName);
             File file = new File(App.modelPath + File.separatorChar + modelName + File.separatorChar + "Quizzes" +
                     File.separatorChar + quizName + ".json");
             try {
@@ -465,6 +480,11 @@ public class Resources {
     private UserInformation ValidateAccessToken(String accessToken)
     {
         try {
+            // avoid string injection
+            if (accessToken.contains("&") || accessToken.contains("?"))
+            {
+                return null;
+            }
             URL validationURL = new URL("https://api.learning-layers.eu/o/oauth2/userinfo?access_token=" + accessToken);
             HttpURLConnection connection = (HttpURLConnection) validationURL.openConnection();
 

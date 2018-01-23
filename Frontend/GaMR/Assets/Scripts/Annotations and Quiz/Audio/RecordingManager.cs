@@ -36,7 +36,7 @@ public class RecordingManager : Singleton<RecordingManager>
         byte[] oggBytes;
         SavWav.ConvertToWav(clip, out oggBytes);
         Debug.Log(oggBytes);
-        UnityWebRequest post = new UnityWebRequest("http://localhost:8080/resources/annotation/audio/save/brain/test", "POST");
+        UnityWebRequest post = new UnityWebRequest("http://localhost:8080/resources/annotation/audio/brain/test", "POST");
         post.uploadHandler = new UploadHandlerRaw(oggBytes);
         yield return post.Send();
     }
