@@ -237,7 +237,7 @@ public class Resources {
         if (info != null) {
             File audio = new File(App.modelPath + File.separatorChar + modelName +
                     File.separatorChar + "Audio" + File.separatorChar + annotationId + ".wav");
-            Logger.Log("Received request for " + audio.getPath());
+            Logger.Log(methodName, "Received request for " + audio.getPath());
             try {
                 if (audio.exists()) {
                     Logger.Log(methodName, "Successfully processed request");
@@ -271,10 +271,19 @@ public class Resources {
             try {
                 File audioFile = new File(App.modelPath + File.separatorChar + modelName +
                         File.separatorChar + "Audio" + File.separatorChar + annotationId + ".wav");
-                audioFile.getParentFile().mkdirs();
+                if (audioFile.getParentFile().mkdirs()) {
+                    Logger.Log(methodName, "Creating folder(s) to save audio");
+                }
                 Files.write(audioFile.toPath(), audio);
-                Logger.Log(methodName, "Successfully processed request");
-                return Response.ok().build();
+                if (audioFile.exists()) {
+                    Logger.Log(methodName, "Successfully processed request");
+                    return Response.ok().build();
+                }
+                else
+                {
+                    Logger.Log(methodName, "Saving the audio file failed; audio file does not exist");
+                    return Response.serverError().build();
+                }
             } catch (IOException e) {
                 Logger.Log(methodName, "Could not store audio file\n" + e.getMessage());
                 return Response.status(Response.Status.BAD_REQUEST).build();

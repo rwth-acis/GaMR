@@ -339,6 +339,12 @@ public class RestManager : Singleton<RestManager>
     {
         // Alternative: get formatted audio file ========================================
         UnityWebRequest req = UnityWebRequestMultimedia.GetAudioClip(url, AudioType.WAV);
+
+        foreach (KeyValuePair<string, string> header in StandardHeader)
+        {
+            req.SetRequestHeader(header.Key, header.Value);
+        }
+
         yield return req.Send();
 
         AudioClip clip = null;
@@ -363,8 +369,16 @@ public class RestManager : Singleton<RestManager>
         byte[] oggBytes;
         SavWav.ConvertToWav(clip, out oggBytes);
         UnityWebRequest post = new UnityWebRequest(url, "POST");
+
+        foreach (KeyValuePair<string, string> header in StandardHeader)
+        {
+            post.SetRequestHeader(header.Key, header.Value);
+        }
+
         post.uploadHandler = new UploadHandlerRaw(oggBytes);
         yield return post.Send();
+
+        Debug.Log("Audio send code " + post.responseCode);
 
         if (callback != null)
         {
