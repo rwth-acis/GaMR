@@ -87,7 +87,7 @@ public class SettingsActions : MonoBehaviour {
     private void RestResult(UnityWebRequest result, object[] args)
     {
         WaitCursor.Hide();
-        if (result.responseCode == 200)
+        if (result.responseCode != 404)
         {
             MessageBox.Show(LocalizationManager.Instance.ResolveString("Address successfully saved") + Environment.NewLine +
                 LocalizationManager.Instance.ResolveString("The server is responding"), MessageBoxType.SUCCESS);

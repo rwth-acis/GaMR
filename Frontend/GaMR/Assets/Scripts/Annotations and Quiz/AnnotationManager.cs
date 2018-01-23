@@ -24,6 +24,24 @@ public class AnnotationManager : MonoBehaviour
 
     protected float annotationSize = 7.5f;
 
+    private AnnotationMenu currentlyOpenAnnotationMenu;
+
+    public AnnotationMenu CurrentlyOpenAnnotationMenu
+    {
+        get
+        {
+            return currentlyOpenAnnotationMenu;
+        }
+        set
+        {
+            if (currentlyOpenAnnotationMenu != null)
+            {
+                currentlyOpenAnnotationMenu.Close();
+            }
+            currentlyOpenAnnotationMenu = value;
+        }
+    }
+
     /// <summary>
     /// Initializes the annotation-manager
     /// Collects the necessary components and loads previously stored annotations if they exist
@@ -278,6 +296,10 @@ public class AnnotationManager : MonoBehaviour
     /// </summary>
     public virtual void OnDestroy()
     {
+        if (currentlyOpenAnnotationMenu != null)
+        {
+            currentlyOpenAnnotationMenu.Close();
+        }
         Save(false);
     }
 

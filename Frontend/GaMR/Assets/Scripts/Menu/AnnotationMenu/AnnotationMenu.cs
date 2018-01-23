@@ -72,17 +72,13 @@ public class AnnotationMenu : BaseMenu
             {
                 AudioState = AudioState.STOPPED;
             }
+            container.annotationManager.CurrentlyOpenAnnotationMenu = this;
+            container.Select();
         }
         else
         {
             caption.Text = "No annotation associated!";
         }
-
-        if (currentlyOpenAnnotationMenu != null)
-        {
-            currentlyOpenAnnotationMenu.Close();
-        }
-        currentlyOpenAnnotationMenu = this;
     }
 
     private void InitializeUI()
@@ -136,7 +132,7 @@ public class AnnotationMenu : BaseMenu
 
     }
 
-    private void Close()
+    public void Close()
     {
         currentlyOpenAnnotationMenu = null;
         if (Container != null)
