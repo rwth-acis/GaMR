@@ -13,8 +13,6 @@ public class AnnotationManager : MonoBehaviour
     protected List<Annotation> annotations;
     protected List<AnnotationContainer> annotationContainers;
     protected bool editMode = true;
-    protected GazeManager gazeManager;
-    protected InformationManager infoManager;
     protected ObjectInfo objectInfo;
 
     protected string subPathLoad = "/resources/annotation/load/";
@@ -74,8 +72,6 @@ public class AnnotationManager : MonoBehaviour
     {
         annotations = new List<Annotation>();
         annotationContainers = new List<AnnotationContainer>();
-        gazeManager = ComponentGetter.GetComponentOnGameobject<GazeManager>("InputManager");
-        infoManager = ComponentGetter.GetComponentOnGameobject<InformationManager>("InformationManager");
         objectInfo = GetComponent<ObjectInfo>();
     }
 
@@ -85,7 +81,7 @@ public class AnnotationManager : MonoBehaviour
     protected virtual void LoadAnnotations()
     {
         Debug.Log("Reloading annotations");
-        RestManager.Instance.GET(infoManager.FullBackendAddress + subPathLoad, Load, null);
+        RestManager.Instance.GET(InformationManager.Instance.FullBackendAddress + subPathLoad, Load, null);
     }
 
     /// <summary>
@@ -97,7 +93,7 @@ public class AnnotationManager : MonoBehaviour
         if (editMode)
         {
             GameObject annotationObject = (GameObject)Instantiate(Resources.Load("AnnotationSphere"));
-            annotationObject.transform.position = gazeManager.HitPosition;
+            annotationObject.transform.position = GazeManager.Instance.HitPosition;
             annotationObject.transform.parent = gameObject.transform;
             annotationObject.transform.localScale = new Vector3(annotationSize, annotationSize, annotationSize);
 
@@ -154,7 +150,7 @@ public class AnnotationManager : MonoBehaviour
         array.array = annotations;
 
         string jsonPost = JsonUtility.ToJson(array);
-        RestManager.Instance.POST(infoManager.FullBackendAddress + subPathSave, jsonPost,
+        RestManager.Instance.POST(InformationManager.Instance.FullBackendAddress + subPathSave, jsonPost,
             (req) =>
             {
                 if (synchronize && CustomMessages.Instance != null)
@@ -194,7 +190,7 @@ public class AnnotationManager : MonoBehaviour
         array.array = annotations;
 
         string jsonPost = JsonUtility.ToJson(array);
-        RestManager.Instance.POST(infoManager.FullBackendAddress + subQuizPathName + name, jsonPost);
+        RestManager.Instance.POST(InformationManager.Instance.FullBackendAddress + subQuizPathName + name, jsonPost);
 
     }
 
