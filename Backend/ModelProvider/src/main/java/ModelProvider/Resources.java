@@ -248,7 +248,7 @@ public class Resources {
                 }
             } catch (Exception e) {
                 Logger.Log(methodName, "Could not load audio\n" + e.getMessage());
-                return Response.status(Response.Status.BAD_REQUEST).build();
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
             }
         }
         else
@@ -301,7 +301,7 @@ public class Resources {
                 }
             } catch (IOException e) {
                 Logger.Log(methodName, "Could not store audio file\n" + e.getMessage());
-                return Response.status(Response.Status.BAD_REQUEST).build();
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
             }
         }
         else
@@ -310,6 +310,46 @@ public class Resources {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
     }
+
+    @DELETE
+    @Path("/annotation/audio/{modelName}/{annotationId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteAnnotationAudio(@PathParam("modelName") String modelName, @PathParam("annotationId") String annotationId, @HeaderParam("access_token") String accessToken)
+    {
+        String methodName = "DeleteAnnotationAudio(" + modelName + "["  + annotationId + "])";
+        UserInformation info = ValidateAccessToken(accessToken);
+        if (info != null) {
+            File audio = new File(App.modelPath + File.separatorChar + modelName +
+                    File.separatorChar + "Audio" + File.separatorChar + annotationId + ".wav");
+            try {
+                if (audio.exists()) {
+                    Logger.Log(methodName, "Deleting " + audio.getPath());
+                    audio.delete();
+                    if (!audio.exists()) {
+                        Logger.Log(methodName, "Successfully processed request");
+                        return Response.ok().build();
+                    }
+                    else
+                    {
+                        Logger.Log(methodName, "Tried deleting file but it still exists");
+                        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+                    }
+                } else {
+                    Logger.Log(methodName, "Cannot delete audio file " + audio.getPath() + ". It does not exist.");
+                    return Response.status(Response.Status.BAD_REQUEST).build();
+                }
+            } catch (Exception e) {
+                Logger.Log(methodName, "Could not delete audio\n" + e.getMessage());
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+        }
+        else
+        {
+            Logger.Log(methodName, "Denied unauthorized access");
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+    }
+
 
     @GET
     @Path("/quiz/overview/{modelName}")
