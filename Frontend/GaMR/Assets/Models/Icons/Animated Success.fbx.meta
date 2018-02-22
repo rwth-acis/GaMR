@@ -1,23 +1,23 @@
 fileFormatVersion: 2
-guid: 06a495d9e5933ad4cb94b6d96c97cd19
-timeCreated: 1498466676
+guid: 0a0073d3c52b91445887700e4e245674
+timeCreated: 1519302613
 licenseType: Free
 ModelImporter:
-  serializedVersion: 19
+  serializedVersion: 21
   fileIDToRecycleName:
     100000: //RootNode
     100002: Cube
-    100004: Cube_001
+    100004: Cube.001
     400000: //RootNode
     400002: Cube
-    400004: Cube_001
+    400004: Cube.001
     2300000: Cube
-    2300002: Cube_001
+    2300002: Cube.001
     3300000: Cube
-    3300002: Cube_001
-    4300000: Cube_001
+    3300002: Cube.001
+    4300000: Cube.001
     4300002: Cube
-    7400000: PlaySuccesss
+    7400000: Play Success
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -41,12 +41,13 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
+    extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: PlaySuccesss
-      takeName: Default Take
-      firstFrame: 0
-      lastFrame: 25
+      name: Play Success
+      takeName: Scene
+      firstFrame: 1
+      lastFrame: 26
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -66,13 +67,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
-      transformMask:
-      - path: 
-        weight: 1
-      - path: Cube
-        weight: 1
-      - path: Cube_001
-        weight: 1
+      transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
@@ -82,7 +77,10 @@ ModelImporter:
     globalScale: 0.1
     meshCompression: 0
     addColliders: 0
+    importVisibility: 1
     importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -98,6 +96,7 @@ ModelImporter:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
+    normalCalculationMode: 4
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
