@@ -1,23 +1,26 @@
 fileFormatVersion: 2
-guid: f856c3eabe154c14685beea7f478301d
-timeCreated: 1503504750
+guid: 4270483cc8009c444b6ed8c99357ae21
+timeCreated: 1519298755
 licenseType: Free
 ModelImporter:
-  serializedVersion: 19
+  serializedVersion: 21
   fileIDToRecycleName:
-    100000: Cylinder
-    100002: Plane
-    100004: //RootNode
-    400000: Cylinder
-    400002: Plane
-    400004: //RootNode
-    2300000: Cylinder
-    2300002: Plane
-    3300000: Cylinder
-    3300002: Plane
-    4300000: Cylinder
-    4300002: Plane
-    7400000: Default Take
+    100000: //RootNode
+    100002: Cube
+    100004: Cube.001
+    400000: //RootNode
+    400002: Cube
+    400004: Cube.001
+    2300000: Cube
+    2300002: Cube.001
+    3300000: Cube
+    3300002: Cube.001
+    4300000: Cube.001
+    4300002: Cube
+    7400000: Cube.001|Cube.001Action
+    7400002: Cube.001|CubeAction
+    7400004: Cube|Cube.001Action
+    7400006: Cube|CubeAction
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -41,6 +44,7 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
+    extraUserProperties: []
     clipAnimations: []
     isReadable: 1
   meshes:
@@ -48,7 +52,10 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
+    importVisibility: 1
     importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -64,6 +71,7 @@ ModelImporter:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
+    normalCalculationMode: 4
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
