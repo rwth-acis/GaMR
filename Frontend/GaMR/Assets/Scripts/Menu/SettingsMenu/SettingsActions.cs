@@ -72,7 +72,7 @@ public class SettingsActions : MonoBehaviour {
     private void TestServer()
     {
         WaitCursor.Show();
-        RestManager.Instance.GET(InformationManager.Instance.FullBackendAddress + "/resources/model/overview", RestResult, null);
+        RestManager.Instance.GET(InformationManager.Instance.FullBackendAddress + "/resources/model/overview", RestResult);
     }
 
     internal void ToggleSharing()
@@ -84,10 +84,10 @@ public class SettingsActions : MonoBehaviour {
     /// Processes the result of the TestAddress web request
     /// </summary>
     /// <param name="result">The result of the request</param>
-    private void RestResult(UnityWebRequest result, object[] args)
+    private void RestResult(UnityWebRequest result)
     {
         WaitCursor.Hide();
-        if (result.responseCode != 404)
+        if (result.responseCode != 404 && result.responseCode != 0)
         {
             MessageBox.Show(LocalizationManager.Instance.ResolveString("Address successfully saved") + Environment.NewLine +
                 LocalizationManager.Instance.ResolveString("The server is responding"), MessageBoxType.SUCCESS);
