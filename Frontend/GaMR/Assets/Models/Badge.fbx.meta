@@ -1,44 +1,16 @@
 fileFormatVersion: 2
-guid: 9dcf63e60af25d94d897377a8ea56381
-timeCreated: 1497604857
+guid: 7446695a049e2f646b83cf7c2c55eb74
+timeCreated: 1519297934
 licenseType: Free
 ModelImporter:
-  serializedVersion: 19
+  serializedVersion: 21
   fileIDToRecycleName:
     100000: //RootNode
-    100002: Cube
-    100004: Cube_001
-    100006: Cube_002
-    100008: Text
-    100010: Text_001
-    100012: Text_002
     400000: //RootNode
-    400002: Cube
-    400004: Cube_001
-    400006: Cube_002
-    400008: Text
-    400010: Text_001
-    400012: Text_002
-    2300000: Cube
-    2300002: Cube_001
-    2300004: Cube_002
-    2300006: Text
-    2300008: Text_001
-    2300010: Text_002
-    3300000: Cube
-    3300002: Cube_001
-    3300004: Cube_002
-    3300006: Text
-    3300008: Text_001
-    3300010: Text_002
-    4300000: Text_002
-    4300002: Text_001
-    4300004: Text
-    4300006: Cube_002
-    4300008: Cube_001
-    4300010: Cube
-    7400000: Default Take
-    9500000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Cylinder
+    4300002: BadgeMesh
   materials:
     importMaterials: 1
     materialName: 0
@@ -61,14 +33,18 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
+    extraUserProperties: []
     clipAnimations: []
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 10
     meshCompression: 0
     addColliders: 0
+    importVisibility: 1
     importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -84,6 +60,7 @@ ModelImporter:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
+    normalCalculationMode: 4
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
@@ -103,7 +80,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

@@ -112,7 +112,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1676897362001384}
-  m_Mesh: {fileID: 4300000, guid: 909cd1417ebe99d468b45f28b0e85055, type: 3}
+  m_Mesh: {fileID: 4300002, guid: 7446695a049e2f646b83cf7c2c55eb74, type: 3}
 --- !u!65 &65386978408254930
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -137,6 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offset: {x: 0.06, y: 0.04}
+  adaptToContent: 1
   disabledColor: {r: 0.9490197, g: 0.9490197, b: 0.9490197, a: 1}
   markedColor: {r: 0.050980397, g: 0.38431376, b: 0.7137255, a: 1}
   focusedColor: {r: 0, g: 0, b: 1, a: 1}
