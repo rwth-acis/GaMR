@@ -185,9 +185,11 @@ public class ButtonScaler : MonoBehaviour
         {
             ratio = transform.localScale;
             Transform current = transform.parent;
+            Transform last = transform;
             while (current != null)
             {
-                ratio.Scale(current.localScale);
+                ratio.Scale(last.localRotation * current.localScale);
+                last = current;
                 current = current.parent;
             }
         }
