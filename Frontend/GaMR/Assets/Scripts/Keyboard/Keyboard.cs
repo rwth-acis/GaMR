@@ -250,6 +250,8 @@ public class Keyboard : MonoBehaviour, IWindow
     /// </summary>
     private void UpdateHeights()
     {
+        Quaternion rot = transform.rotation;
+        transform.rotation = Quaternion.identity;
         int dirFac;
         dirFac = Math.Sign(numberOfNewLines - numberOfOldLines);
         float newTextHeight = Geometry.GetBoundsIndependentFromRotation(inputField.transform).size.y;
@@ -272,6 +274,8 @@ public class Keyboard : MonoBehaviour, IWindow
                 coll.size.z);
             coll.center = background.position - transform.position;
         }
+
+        transform.rotation = rot;
     }
 
     /// <summary>
