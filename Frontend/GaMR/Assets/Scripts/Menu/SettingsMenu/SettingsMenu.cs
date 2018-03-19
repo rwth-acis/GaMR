@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class SettingsMenu : BaseMenu
 {
-    [SerializeField]
-    private GameObject languageMenu;
 
     FocusableButton closeButton;
     FocusableContentButton languageButton;
@@ -47,13 +45,13 @@ public class SettingsMenu : BaseMenu
     private void InitializeButtons()
     {
         // get/create buttons
-        closeButton = transform.Find("Close Button").gameObject.AddComponent<FocusableButton>();
-        languageButton = transform.Find("Language Button").gameObject.AddComponent<FocusableContentButton>();
-        modelServerButton = transform.Find("Model Server Button").gameObject.AddComponent<FocusableContentButton>();
-        gamificationServerButton = transform.Find("Gamification Server Button").gameObject.AddComponent<FocusableContentButton>();
-        sharingServerButton = transform.Find("Sharing Server Button").gameObject.AddComponent<FocusableContentButton>();
-        sharingEnabledButton = transform.Find("Sharing Enabled Button").gameObject.AddComponent<FocusableContentButton>();
-        collisionButton = transform.Find("Collision Detection Button").gameObject.AddComponent<FocusableContentButton>();
+        closeButton = transform.Find("Close Button").gameObject.GetComponent<FocusableButton>();
+        languageButton = transform.Find("Language Button").gameObject.GetComponent<FocusableContentButton>();
+        modelServerButton = transform.Find("Model Server Button").gameObject.GetComponent<FocusableContentButton>();
+        gamificationServerButton = transform.Find("Gamification Server Button").gameObject.GetComponent<FocusableContentButton>();
+        sharingServerButton = transform.Find("Sharing Server Button").gameObject.GetComponent<FocusableContentButton>();
+        sharingEnabledButton = transform.Find("Sharing Enabled Button").gameObject.GetComponent<FocusableContentButton>();
+        collisionButton = transform.Find("Collision Detection Button").gameObject.GetComponent<FocusableContentButton>();
 
         SettingsActions actions = gameObject.AddComponent<SettingsActions>();
 
@@ -82,7 +80,7 @@ public class SettingsMenu : BaseMenu
 
     private void ChangeLanguage()
     {
-        GameObject languageInstance = Instantiate(languageMenu);
+        GameObject languageInstance = Instantiate(WindowResources.Instance.LanguageMenu);
         LanguageMenu languageScript = languageInstance.GetComponent<LanguageMenu>();
         languageScript.OnCloseAction = () =>
         {

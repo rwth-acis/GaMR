@@ -20,8 +20,8 @@ public class Keyboard : MonoBehaviour, IWindow
     // variables related to the logical keyboard-functionality
     private string text = "";
     public Action<string> callWithResult;
-    private List<Key> letterKeys;
-    private Key[] allKeys;
+    private List<KeyButtonAdapter> letterKeys;
+    private KeyButtonAdapter[] allKeys;
     private bool shift = true;
     private bool textInitialization = true;
 
@@ -58,13 +58,13 @@ public class Keyboard : MonoBehaviour, IWindow
         background = transform.Find("Background");
         coll = GetComponent<BoxCollider>();
 
-        letterKeys = new List<Key>();
+        letterKeys = new List<KeyButtonAdapter>();
 
         Capslock = false;
 
-        allKeys = GetComponentsInChildren<Key>();
+        allKeys = GetComponentsInChildren<KeyButtonAdapter>();
 
-        foreach (Key k in allKeys)
+        foreach (KeyButtonAdapter k in allKeys)
         {
             if (k.keyType == KeyType.LETTER)
             {
@@ -250,6 +250,8 @@ public class Keyboard : MonoBehaviour, IWindow
     /// </summary>
     private void UpdateHeights()
     {
+        Quaternion rot = transform.rotation;
+        transform.rotation = Quaternion.identity;
         int dirFac;
         dirFac = Math.Sign(numberOfNewLines - numberOfOldLines);
         float newTextHeight = Geometry.GetBoundsIndependentFromRotation(inputField.transform).size.y;
@@ -257,7 +259,7 @@ public class Keyboard : MonoBehaviour, IWindow
         {
             ScaleToHeight(inputBackgroundPivot, inputBackground, newTextHeight + padding);
         }
-        foreach (Key k in allKeys)
+        foreach (KeyButtonAdapter k in allKeys)
         {
             k.transform.position -= dirFac * new Vector3(0, lineHeight, 0);
         }
@@ -272,6 +274,8 @@ public class Keyboard : MonoBehaviour, IWindow
                 coll.size.z);
             coll.center = background.position - transform.position;
         }
+
+        transform.rotation = rot;
     }
 
     /// <summary>
@@ -333,7 +337,7 @@ public class Keyboard : MonoBehaviour, IWindow
     /// <param name="shiftOn"></param>
     private void UpdateKeys(bool shiftOn)
     {
-        foreach (Key key in letterKeys)
+        foreach (KeyButtonAdapter key in letterKeys)
         {
             key.Shift(shiftOn);
         }

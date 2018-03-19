@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class QuizMenuSpawner : MonoBehaviour {
 
-    [SerializeField]
-    private GameObject spawnMenu;
-
     // Use this for initialization
     void OnEnable()
     {
-        GameObject menuInstance = Instantiate(spawnMenu);
+        GameObject menuInstance = Instantiate(WindowResources.Instance.QuizMenu);
         CirclePositioner positioner = menuInstance.GetComponentInChildren<CirclePositioner>();
         QuizMenu menu = menuInstance.GetComponent<QuizMenu>();
         menu.BoundingBox = transform.parent.gameObject;

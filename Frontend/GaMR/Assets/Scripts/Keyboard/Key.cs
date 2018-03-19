@@ -172,11 +172,3 @@ public class Key : MonoBehaviour, IInputHandler, IInputClickHandler
         }
     }
 }
-
-/// <summary>
-/// The types which a key can have
-/// </summary>
-public enum KeyType
-{
-    LETTER, ACCEPT, CANCEL, BACK, ENTER, SHIFT, CAPSLOCK
-}

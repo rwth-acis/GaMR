@@ -16,7 +16,7 @@ public class BoundingContextMenu : BaseMenu
 
     private void InitializeButtons()
     {
-        button = transform.Find("Button").gameObject.AddComponent<FocusableButton>();
+        button = transform.Find("Button").gameObject.GetComponent<FocusableButton>();
 
         boundingBoxMenu.OnCloseAction = () =>
         {

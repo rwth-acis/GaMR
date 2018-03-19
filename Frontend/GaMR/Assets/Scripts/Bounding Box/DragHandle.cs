@@ -114,8 +114,7 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
             // this way the rotation speed is not accumulating but only depends on the current drag speed
             Vector3 delta = lastCummulativeDelta - eventData.CumulativeDelta;
 
-            // the x axis of the delta is flipped => correct this
-            delta = new Vector3(-delta.x, delta.y, delta.z);
+            delta *= -1;
 
             switch (handleType)
             {

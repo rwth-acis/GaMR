@@ -27,10 +27,10 @@ public class QuizStyleMenu : BaseMenu
 
     private void InitializeButtons()
     {
-        cancelButton = transform.Find("Cancel Button").gameObject.AddComponent<FocusableButton>();
-        positionToNameButton = transform.Find("PositionName Button").gameObject.AddComponent<FocusableButton>();
-        nameToPositionButton = transform.Find("NamePosition Button").gameObject.AddComponent<FocusableButton>();
-        randomButton = transform.Find("Random Button").gameObject.AddComponent<FocusableButton>();
+        cancelButton = transform.Find("Cancel Button").gameObject.GetComponent<FocusableButton>();
+        positionToNameButton = transform.Find("PositionName Button").gameObject.GetComponent<FocusableButton>();
+        nameToPositionButton = transform.Find("NamePosition Button").gameObject.GetComponent<FocusableButton>();
+        randomButton = transform.Find("Random Button").gameObject.GetComponent<FocusableButton>();
 
         cancelButton.OnPressed = () => { Close(false); };
         positionToNameButton.OnPressed = () => { actions.SelectQuizPositionToName(); Close(true); };

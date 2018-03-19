@@ -183,14 +183,14 @@ public class RestManager : Singleton<RestManager>
 
         List<byte> generatedList = new List<byte>();
 
-        for (int i=0;i<generated.Length; i++)
+        for (int i = 0; i < generated.Length; i++)
         {
             generatedList.Add(generated[i]);
         }
 
         // add end-boundary
         byte[] endBoundary = Encoding.ASCII.GetBytes("\r\n--" + Encoding.ASCII.GetString(byteBoundary) + "--");
-        for (int i=0;i<endBoundary.Length; i++)
+        for (int i = 0; i < endBoundary.Length; i++)
         {
             generatedList.Add(endBoundary[i]);
         }
@@ -328,5 +328,61 @@ public class RestManager : Singleton<RestManager>
                 }
             }
             );
+    }
+
+    public void GetAudioClip(string url, Action<AudioClip, long> callback)
+    {
+        StartCoroutine(GetAudioData(url, callback));
+    }
+
+    private IEnumerator GetAudioData(string url, Action<AudioClip, long> callback)
+    {
+        // Alternative: get formatted audio file ========================================
+        UnityWebRequest req = UnityWebRequestMultimedia.GetAudioClip(url, AudioType.WAV);
+
+        foreach (KeyValuePair<string, string> header in StandardHeader)
+        {
+            req.SetRequestHeader(header.Key, header.Value);
+        }
+
+        yield return req.Send();
+
+        AudioClip clip = null;
+        if (req.responseCode == 200)
+        {
+            clip = DownloadHandlerAudioClip.GetContent(req);
+        }
+
+        if (callback != null)
+        {
+            callback(clip, req.responseCode);
+        }
+    }
+
+    public void SendAudioClip(string url, AudioClip clip, Action<long> callback)
+    {
+        StartCoroutine(SendAudioData(url, clip, callback));
+    }
+
+    private IEnumerator SendAudioData(string url, AudioClip clip, Action<long> callback)
+    {
+        byte[] oggBytes;
+        SavWav.ConvertToWav(clip, out oggBytes);
+        UnityWebRequest post = new UnityWebRequest(url, "POST");
+
+        foreach (KeyValuePair<string, string> header in StandardHeader)
+        {
+            post.SetRequestHeader(header.Key, header.Value);
+        }
+
+        post.uploadHandler = new UploadHandlerRaw(oggBytes);
+        yield return post.Send();
+
+        Debug.Log("Audio send code " + post.responseCode);
+
+        if (callback != null)
+        {
+            callback(post.responseCode);
+        }
     }
 }

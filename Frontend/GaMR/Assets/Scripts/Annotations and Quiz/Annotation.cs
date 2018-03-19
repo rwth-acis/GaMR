@@ -52,4 +52,16 @@ public class Annotation {
         get { return text; }
         set { text = value; }
     }
+
+    public string PositionToStringWithoutDots
+    {
+        get
+        {
+            string posString = Position.ToString();
+            posString = posString.Replace("(", "");
+            posString = posString.Replace(")", "");
+            posString = posString.Replace(".", "-");
+            return posString;
+        }
+    }
 }

@@ -4090,6 +4090,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0efe80f0746a4f643ac262e91d343c87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationOffset: 0
 --- !u!114 &114081124877442056
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4175,7 +4176,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dadd1f0a994d5b3448cdd43a1d7f455a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnMenu: {fileID: 1612137446073796, guid: 104bd9604379ee542995a523cca216e4, type: 2}
 --- !u!114 &114357758900972898
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4187,7 +4187,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cf5effafd8b4724480f57e41c711161, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnMenu: {fileID: 1091387321548576, guid: 24f1c2bd3a6aa314b8f0a982706bbf3d, type: 2}
 --- !u!114 &114388767313605806
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4391,7 +4390,7 @@ MonoBehaviour:
   handleType: 2
   toManipulate: {fileID: 4099883202616398}
   gestureOrientation: {x: 0, y: 0, z: 0}
-  speed: 0.1
+  speed: 2
 --- !u!135 &135318327447149362
 SphereCollider:
   m_ObjectHideFlags: 1

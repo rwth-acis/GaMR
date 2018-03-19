@@ -13,14 +13,32 @@ public class AnnotationManager : MonoBehaviour
     protected List<Annotation> annotations;
     protected List<AnnotationContainer> annotationContainers;
     protected bool editMode = true;
-    protected GazeManager gazeManager;
-    protected InformationManager infoManager;
     protected ObjectInfo objectInfo;
 
     protected string subPathLoad = "/resources/annotation/load/";
     protected string subPathSave = "/resources/annotation/save/";
 
+    private bool initializingAudio = true;
+
     protected float annotationSize = 7.5f;
+
+    private AnnotationMenu currentlyOpenAnnotationMenu;
+
+    public AnnotationMenu CurrentlyOpenAnnotationMenu
+    {
+        get
+        {
+            return currentlyOpenAnnotationMenu;
+        }
+        set
+        {
+            if (currentlyOpenAnnotationMenu != null)
+            {
+                currentlyOpenAnnotationMenu.Close();
+            }
+            currentlyOpenAnnotationMenu = value;
+        }
+    }
 
     /// <summary>
     /// Initializes the annotation-manager
@@ -54,8 +72,6 @@ public class AnnotationManager : MonoBehaviour
     {
         annotations = new List<Annotation>();
         annotationContainers = new List<AnnotationContainer>();
-        gazeManager = ComponentGetter.GetComponentOnGameobject<GazeManager>("InputManager");
-        infoManager = ComponentGetter.GetComponentOnGameobject<InformationManager>("InformationManager");
         objectInfo = GetComponent<ObjectInfo>();
     }
 
@@ -65,7 +81,7 @@ public class AnnotationManager : MonoBehaviour
     protected virtual void LoadAnnotations()
     {
         Debug.Log("Reloading annotations");
-        RestManager.Instance.GET(infoManager.FullBackendAddress + subPathLoad, Load, null);
+        RestManager.Instance.GET(InformationManager.Instance.FullBackendAddress + subPathLoad, Load, null);
     }
 
     /// <summary>
@@ -77,7 +93,7 @@ public class AnnotationManager : MonoBehaviour
         if (editMode)
         {
             GameObject annotationObject = (GameObject)Instantiate(Resources.Load("AnnotationSphere"));
-            annotationObject.transform.position = gazeManager.HitPosition;
+            annotationObject.transform.position = GazeManager.Instance.HitPosition;
             annotationObject.transform.parent = gameObject.transform;
             annotationObject.transform.localScale = new Vector3(annotationSize, annotationSize, annotationSize);
 
@@ -115,6 +131,7 @@ public class AnnotationManager : MonoBehaviour
     /// <param name="annotation">The annotation to delete</param>
     public virtual void Delete(AnnotationContainer annotationContainer)
     {
+        DeleteAudioAnnotation(annotationContainer);
         annotations.Remove(annotationContainer.Annotation);
         annotationContainers.Remove(annotationContainer);
         Save();
@@ -134,7 +151,7 @@ public class AnnotationManager : MonoBehaviour
         array.array = annotations;
 
         string jsonPost = JsonUtility.ToJson(array);
-        RestManager.Instance.POST(infoManager.FullBackendAddress + subPathSave, jsonPost,
+        RestManager.Instance.POST(InformationManager.Instance.FullBackendAddress + subPathSave, jsonPost,
             (req) =>
             {
                 if (synchronize && CustomMessages.Instance != null)
@@ -143,6 +160,29 @@ public class AnnotationManager : MonoBehaviour
                 }
             }
             );
+    }
+
+    /// <summary>
+    /// saves an audio annotation
+    /// should be called immediately after an audio annotation was changed
+    /// </summary>
+    /// <param name="container">The container which stores the audio annotation</param>
+    public void SaveAudioAnnotation(AnnotationContainer container)
+    {
+        if (!initializingAudio)
+        {
+            if (container.AnnotationClip != null)
+            {
+                Debug.Log("Saving clip for " + container.Annotation.PositionToStringWithoutDots + " (" + container.Annotation.Text + ")");
+                RestManager.Instance.SendAudioClip(InformationManager.Instance.FullBackendAddress + "/resources/annotation/audio/" + objectInfo.ModelName + "/" + container.Annotation.PositionToStringWithoutDots, container.AnnotationClip, null);
+            }
+        }
+    }
+
+    public void DeleteAudioAnnotation(AnnotationContainer container)
+    {
+        container.AnnotationClip = null;
+        RestManager.Instance.DELETE(InformationManager.Instance.FullBackendAddress + "/resources/annotation/audio/" + objectInfo.ModelName + "/" + container.Annotation.PositionToStringWithoutDots, null);
     }
 
     /// <summary>
@@ -157,7 +197,7 @@ public class AnnotationManager : MonoBehaviour
         array.array = annotations;
 
         string jsonPost = JsonUtility.ToJson(array);
-        RestManager.Instance.POST(infoManager.FullBackendAddress + subQuizPathName + name, jsonPost);
+        RestManager.Instance.POST(InformationManager.Instance.FullBackendAddress + subQuizPathName + name, jsonPost);
 
     }
 
@@ -215,6 +255,33 @@ public class AnnotationManager : MonoBehaviour
             container.Annotation = annotation;
             annotationContainers.Add(container);
         }
+
+        if (annotationContainers.Count > 0)
+        {
+            LoadAudioAnnotations(0);
+        }
+    }
+
+    private void LoadAudioAnnotations(int index)
+    {
+        Debug.Log("Loading audio for " + index);
+        RestManager.Instance.GetAudioClip(InformationManager.Instance.FullBackendAddress + "/resources/annotation/audio/" + objectInfo.ModelName + "/" + annotationContainers[index].Annotation.PositionToStringWithoutDots,
+            (clip, resCode) =>
+            {
+                if (resCode == 200)
+                {
+                    annotationContainers[index].AnnotationClip = clip;
+                }
+
+                if (index < annotationContainers.Count - 1)
+                {
+                    LoadAudioAnnotations(index + 1);
+                }
+                else
+                {
+                    initializingAudio = false;
+                }
+            });
     }
 
     /// <summary>
@@ -232,6 +299,10 @@ public class AnnotationManager : MonoBehaviour
     /// </summary>
     public virtual void OnDestroy()
     {
+        if (currentlyOpenAnnotationMenu != null)
+        {
+            currentlyOpenAnnotationMenu.Close();
+        }
         Save(false);
     }
 

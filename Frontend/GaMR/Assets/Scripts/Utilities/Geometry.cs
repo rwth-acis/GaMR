@@ -16,9 +16,14 @@ public class Geometry {
     /// <returns>The bounds of the unrotated object</returns>
 	public static Bounds GetBoundsIndependentFromRotation(Transform transform)
     {
+        return GetBoundsIndependentFromRotation(transform, Quaternion.identity);
+    }
+
+    public static Bounds GetBoundsIndependentFromRotation(Transform transform, Quaternion neutralRotation)
+    {
         // store current rotation and undo it
         Quaternion rotation = transform.rotation;
-        transform.rotation = Quaternion.identity;
+        transform.rotation = neutralRotation;
 
         // get the bounds of the unrotated object
         Renderer rend = transform.GetComponent<Renderer>();
