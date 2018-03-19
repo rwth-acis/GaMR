@@ -520,6 +520,10 @@ public class Resources {
     private UserInformation ValidateAccessToken(String accessToken)
     {
         try {
+            if (accessToken == null) // if no access token was provided => authorization failed
+            {
+                return  null;
+            }
             // avoid string injection
             if (accessToken.contains("&") || accessToken.contains("?"))
             {
