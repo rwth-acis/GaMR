@@ -109,47 +109,18 @@ public class MouseInputManager : MonoBehaviour, IPointingSource, IInputSource
 
     private void FixedUpdate()
     {
-        RaycastHit hit;
 
-        Debug.DrawRay(Ray.origin, Ray.direction);
-
-        if (Physics.Raycast(Ray, out hit, 100f))
+        if (Input.GetMouseButtonDown(0))
         {
-            cursorObject.transform.position = hit.point - 0.02f * (hit.point - Camera.main.transform.position);
-            Quaternion.LookRotation(hit.normal);
-
-            Transform objectHit = hit.transform;
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                Debug.Log("Down: " + objectHit);
-                InputManager.Instance.RaiseSourceDown(this, 0, InteractionSourcePressInfo.Select, null);
-            }
-
-            if (Input.GetMouseButtonUp(0))
-            {
-                Debug.Log("Clicked: " + objectHit);
-                InputManager.Instance.RaiseSourceUp(this, 0, InteractionSourcePressInfo.Select, null);
-                InputManager.Instance.RaiseInputClicked(this, 0, InteractionSourcePressInfo.Select, 1, null);
-            }
-
-            if (objectHit != lastObjectHit)
-            {
-                if (objectHit != null)
-                {
-                    InputManager.Instance.RaiseFocusEnter(objectHit.gameObject);
-                }
-                if (lastObjectHit != null)
-                {
-                    InputManager.Instance.RaiseFocusExit(lastObjectHit.gameObject);
-                }
-
-                lastObjectHit = objectHit;
-            }
+            Debug.Log("Down");
+            InputManager.Instance.RaiseSourceDown(this, 0, InteractionSourcePressInfo.Select, null);
         }
-        else
+
+        if (Input.GetMouseButtonUp(0))
         {
-            cursorObject.transform.position = Ray.origin + 2 * Ray.direction;
+            Debug.Log("Clicked");
+            InputManager.Instance.RaiseSourceUp(this, 0, InteractionSourcePressInfo.Select, null);
+            InputManager.Instance.RaiseInputClicked(this, 0, InteractionSourcePressInfo.Select, 1, null);
         }
     }
 }
