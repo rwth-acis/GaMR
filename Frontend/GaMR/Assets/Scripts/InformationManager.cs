@@ -6,6 +6,7 @@ using System;
 using UnityEngine.Events;
 using HoloToolkit.Unity.SpatialMapping;
 using HoloToolkit.Sharing;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Manages important settings of the application
@@ -77,10 +78,26 @@ public class InformationManager : Singleton<InformationManager>
         }
     }
 
-    private void OnLevelWasLoaded(int level)
+    private void OnEnable()
     {
-        SharingServer = PlayerPrefs.GetString("sharingServer");
-        SharingEnabled = (1 == PlayerPrefs.GetInt("sharingEnabled", 1));
+        // subscribe to the scene load-event
+        SceneManager.sceneLoaded += OnLevelFinishedLoading;
+    }
+
+    private void OnDisable()
+    {
+        // unsubscribe from the scene load-event
+        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+    }
+
+    private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
+    {
+        // only load the sharing settings if the main scene is loaded
+        if (scene.name == "Scene")
+        {
+            SharingServer = PlayerPrefs.GetString("sharingServer");
+            SharingEnabled = (1 == PlayerPrefs.GetInt("sharingEnabled", 1));
+        }
     }
 
     public bool CollisionEnabled
