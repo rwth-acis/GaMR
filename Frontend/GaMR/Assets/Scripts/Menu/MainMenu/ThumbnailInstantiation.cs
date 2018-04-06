@@ -188,7 +188,7 @@ public class ThumbnailInstantiation : BaseMenu
 
     private void SetButtonStates()
     {
-        if (models.Count > startIndex + thumbnails.Count)
+        if (models != null && models.Count > startIndex + thumbnails.Count)
         {
             downButton.ButtonEnabled = true;
         }

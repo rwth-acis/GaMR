@@ -135,7 +135,10 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
             annotationAudioClip = value;
             AnnotationAudioSource.clip = annotationAudioClip;
 
-            annotationManager.SaveAudioAnnotation(this);
+            if (annotationAudioClip != null)
+            {
+                annotationManager.SaveAudioAnnotation(this);
+            }
         }
     }
 
