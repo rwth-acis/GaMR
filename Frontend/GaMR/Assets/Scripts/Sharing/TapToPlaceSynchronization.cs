@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using HoloToolkit.Sharing.Tests;
+using HoloToolkit.Unity.SpatialMapping;
 
 public class TapToPlaceSynchronization : TapToPlace
 {
