@@ -97,9 +97,15 @@ public class ModelLoadManager
             box.transform.parent = globalSpawnParent;
         }
 
-        if(remotelySpawned)
+        CustomTapToPlace tapToPlace = box.GetComponent<CustomTapToPlace>();
+
+        // remove the custom tap to place on desktop
+        if (!UnityEngine.XR.XRSettings.enabled)
         {
-            CustomTapToPlace tapToPlace = box.GetComponent<CustomTapToPlace>();
+            GameObject.Destroy(tapToPlace);
+        }
+        else if(remotelySpawned) // if in XR and remotely spawned => deactivate its positioning
+        {
             tapToPlace.IsBeingPlaced = false;
         }
     }

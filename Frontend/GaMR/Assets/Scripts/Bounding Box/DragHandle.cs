@@ -67,9 +67,12 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
     /// <param name="eventData">The data of the manipulation event</param>
     public void OnManipulationStarted(ManipulationEventData eventData)
     {
-        // set the focus to this object so that the manipulation continues to have effect even if
-        // the user does not look at the gameObject anymore
-        InputManager.Instance.OverrideFocusedObject = gameObject;
+        if (UnityEngine.XR.XRSettings.enabled)
+        {
+            // set the focus to this object so that the manipulation continues to have effect even if
+            // the user does not look at the gameObject anymore
+            InputManager.Instance.OverrideFocusedObject = gameObject;
+        }
 
         lastCummulativeDelta = Vector3.zero;
 
@@ -224,8 +227,11 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
     /// <param name="eventData">The data of the manipulation event</param>
     public void OnManipulationCompleted(ManipulationEventData eventData)
     {
-        // release the focus-override so that other objects can now be affected by the manipulation gesture
-        InputManager.Instance.OverrideFocusedObject = null;
+        if (UnityEngine.XR.XRSettings.enabled)
+        {
+            // release the focus-override so that other objects can now be affected by the manipulation gesture
+            InputManager.Instance.OverrideFocusedObject = null;
+        }
     }
 
     /// <summary>
@@ -234,8 +240,11 @@ public class DragHandle : MonoBehaviour, /*INavigationHandler,*/ IManipulationHa
     /// <param name="eventData">The data of the manipulation gesture</param>
     public void OnManipulationCanceled(ManipulationEventData eventData)
     {
-        // release the focus-override so that other objects can now be affected by the manipulation gesture
-        InputManager.Instance.OverrideFocusedObject = null;
+        if (UnityEngine.XR.XRSettings.enabled)
+        {
+            // release the focus-override so that other objects can now be affected by the manipulation gesture
+            InputManager.Instance.OverrideFocusedObject = null;
+        }
     }
 }
 

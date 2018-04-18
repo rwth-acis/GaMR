@@ -26,6 +26,11 @@ public class TrackAlongXAxis : MonoBehaviour {
     /// </summary>
     public void Start()
     {
+        // if not in XR: this script is not needed
+        if (!UnityEngine.XR.XRSettings.enabled)
+        {
+            Destroy(this);
+        }
         gazeManager = ComponentGetter.GetComponentOnGameobject<GazeManager>("InputManager");
         parent = transform.parent;
     }

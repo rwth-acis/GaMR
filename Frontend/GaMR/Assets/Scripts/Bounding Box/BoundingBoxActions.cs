@@ -50,7 +50,10 @@ public class BoundingBoxActions : MonoBehaviour
     {
             EnableControls(enable);
             boundingBoxVisible = enable;
+        if (UnityEngine.XR.XRSettings.enabled) // in XR there is a tap to place script
+        {
             tapToPlace.enabled = enable;
+        }
             transformationManager.enabled = enable;
     }
 

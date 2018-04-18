@@ -709,7 +709,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clientId: c4ced10f-ce0f-4155-b6f7-a4c40ffa410c
-  debugToken: eyJhbGciOiJSUzI1NiJ9.eyJhdWQiOlsiYzc1ODhlZmMtZjgzMS00ZTMxLTkyOGUtMGY0NmE5MWZiMzExIl0sImlzcyI6Imh0dHBzOlwvXC9hcGkubGVhcm5pbmctbGF5ZXJzLmV1XC9vXC9vYXV0aDJcLyIsImV4cCI6MTUyMzk3NTAxNywiaWF0IjoxNTIzOTcxNDE3LCJqdGkiOiIzOWY3NzFmZC0yMjA0LTQ4Y2QtYjc0YS1mYjg4MzlhY2FmNzQifQ.PjJPuBX_GrB4dW5RjKOYLVvl6dcZB6GZYtpo7yiskug7oX9NREI2mhGhQWDpiKsIHi7GjziNrDU3j2HSoQEz3vBxEhCB87yYiVK3ukTtKXhGxeyuqSeMO5yK63Oc6-6CYTplJZux-YxVGivGIw8MmuWx1U4ClPVy90TTFlbee2Q
+  debugToken: eyJhbGciOiJSUzI1NiJ9.eyJhdWQiOlsiYzc1ODhlZmMtZjgzMS00ZTMxLTkyOGUtMGY0NmE5MWZiMzExIl0sImlzcyI6Imh0dHBzOlwvXC9hcGkubGVhcm5pbmctbGF5ZXJzLmV1XC9vXC9vYXV0aDJcLyIsImV4cCI6MTUyNDA0ODYzNywiaWF0IjoxNTI0MDQ1MDM3LCJqdGkiOiIwYmIxMTEwNy1iZWFiLTRkYzUtYTNlOC03ZDFkZWFiNDliODYifQ.LdMcqnMmAXPoAjHWyh3NaaMOum_ZL4mSXrlV8jFZeSpDtE4rSLZmh_sEa2_eyOcXHbmiQYgQ22t-bl2XbwM6vGh3XLXpzZH_VQ5uTjeaoysb9gxW7wJ_ChDQLkxRfJML5nj-7wMJgfo8x3TpJkf4Lo3kPd_iwkThNqNgWo8iXHc
+--- !u!1 &1319379675 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000013046499688, guid: dc138879450c80f438141cbe47938daf,
+    type: 2}
+  m_PrefabInternal: {fileID: 1860341189}
+--- !u!114 &1319379676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1319379675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 198ff745adf344c44a81a9cdbeabe798, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: Cursor
 --- !u!1 &1381672141 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1912335216271008, guid: e5c4719499dd85e4d8df3ba0f0282bfe,
@@ -888,19 +905,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4086694633030028, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.00022166742
+      value: -0.0002297221
       objectReference: {fileID: 0}
     - target: {fileID: 4308037745263162, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.35809463
+      value: -0.35809818
       objectReference: {fileID: 0}
     - target: {fileID: 4196587989135580, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.00037179035
+      value: -0.0003859666
       objectReference: {fileID: 0}
     - target: {fileID: 4414823140297466, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.00010809608
+      value: -0.00011212342
       objectReference: {fileID: 0}
     - target: {fileID: 4645486226854028, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
       propertyPath: m_LocalScale.x
@@ -1094,6 +1111,7 @@ GameObject:
   - component: {fileID: 1798953119}
   - component: {fileID: 1798953118}
   - component: {fileID: 1798953123}
+  - component: {fileID: 1798953124}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1183,6 +1201,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: Camera
+--- !u!114 &1798953124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1798953117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05c9a84b431856a4689b7f5fa9551c94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementSpeed: 0.1
 --- !u!1 &1817388437
 GameObject:
   m_ObjectHideFlags: 0
@@ -1224,7 +1254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeUntilHold: 0.5
-  distanceUntilDrag: 0.03
+  distanceUntilDrag: 0.01
   cursor: {fileID: 1860341190}
 --- !u!1001 &1860341189
 Prefab:

@@ -1,10 +1,11 @@
-﻿using HoloToolkit.Unity.InputModule;
+﻿using HoloToolkit.Unity;
+using HoloToolkit.Unity.InputModule;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class MouseInputManager : MonoBehaviour
+public class MouseInputManager : Singleton<MouseInputManager>
 {
     [Tooltip("Amount of time that the mouse is held down until a drag gesture is recognized")]
     public float timeUntilHold = 0.5f;
@@ -18,6 +19,8 @@ public class MouseInputManager : MonoBehaviour
     private Vector3 mouseStartPosition;
     private bool isDrag = false;
 
+    public Vector3 HitPosition { get; private set; }
+
     // Update is called once per frame
     void Update()
     {
@@ -26,6 +29,7 @@ public class MouseInputManager : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
+            HitPosition = hit.point;
             TransformCursor(hit.point, hit.normal);
             Transform objectHit = hit.transform;
 
@@ -96,6 +100,7 @@ public class MouseInputManager : MonoBehaviour
         }
         else
         {
+            HitPosition = Vector3.zero;
             Vector3 cursorPos = Input.mousePosition;
             cursorPos.z = 5;
             cursorPos = Camera.main.ScreenToWorldPoint(cursorPos);
