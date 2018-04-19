@@ -883,19 +883,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4086694633030028, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.00021425712
+      value: -0.00021522367
       objectReference: {fileID: 0}
     - target: {fileID: 4308037745263162, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.3580914
+      value: -0.3580917
       objectReference: {fileID: 0}
     - target: {fileID: 4196587989135580, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.00035858067
+      value: -0.0003605138
       objectReference: {fileID: 0}
     - target: {fileID: 4414823140297466, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.00010455202
+      value: -0.000104874205
       objectReference: {fileID: 0}
     - target: {fileID: 4645486226854028, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
       propertyPath: m_LocalScale.x
@@ -1074,8 +1074,30 @@ Prefab:
     - {fileID: 114282035375621532, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
     - {fileID: 114383575225796346, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
     - {fileID: 114313711997510924, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
+    - {fileID: 114207900417961964, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1773734880 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1456345112698534, guid: e5c4719499dd85e4d8df3ba0f0282bfe,
+    type: 2}
+  m_PrefabInternal: {fileID: 1773734879}
+--- !u!114 &1773734881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1773734880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42709b98a827165449bc0502a7a7f3fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultGazeDistance: 2
+  SavedAnchorFriendlyName: SavedAnchorFriendlyName
+  PlaceParentOnTap: 0
+  ParentGameObjectToPlace: {fileID: 0}
+  IsBeingPlaced: 0
 --- !u!1 &1798953117
 GameObject:
   m_ObjectHideFlags: 0
