@@ -1175,6 +1175,7 @@ Prefab:
     - {fileID: 114691760445381748, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
     - {fileID: 114102488522910380, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
     - {fileID: 114037770790615372, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
+    - {fileID: 114887591412917156, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &670922970 stripped
@@ -1202,7 +1203,28 @@ GameObject:
   m_PrefabParentObject: {fileID: 1625352690545550, guid: 315a6f3e911de8242b927d029b104d4a,
     type: 2}
   m_PrefabInternal: {fileID: 670922969}
---- !u!114 &670922975
+--- !u!1 &670922975 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1179905082796526, guid: 315a6f3e911de8242b927d029b104d4a,
+    type: 2}
+  m_PrefabInternal: {fileID: 670922969}
+--- !u!114 &670922976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 670922975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42709b98a827165449bc0502a7a7f3fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultGazeDistance: 2
+  SavedAnchorFriendlyName: SavedAnchorFriendlyName
+  PlaceParentOnTap: 0
+  ParentGameObjectToPlace: {fileID: 0}
+  IsBeingPlaced: 0
+--- !u!114 &670922977
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -1214,7 +1236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pressDepth: 0.008
---- !u!114 &670922976
+--- !u!114 &670922978
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -1226,7 +1248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pressDepth: 0.008
---- !u!114 &670922977
+--- !u!114 &670922979
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -1238,7 +1260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pressDepth: 0.008
---- !u!114 &670922978
+--- !u!114 &670922980
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -1250,7 +1272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pressDepth: 0.008
---- !u!114 &670922979
+--- !u!114 &670922981
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
