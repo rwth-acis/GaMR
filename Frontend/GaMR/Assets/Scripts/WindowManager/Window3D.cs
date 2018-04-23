@@ -8,7 +8,7 @@ using System;
 /// Component marks the gameobject as a window
 /// and handles window behavior
 /// </summary>
-public class Window : MonoBehaviour
+public class Window3D : MonoBehaviour
 {
     [Tooltip("Can the window be stacked on top of existing windows?")]
     public bool stackable;

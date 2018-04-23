@@ -9,7 +9,7 @@ using System;
 /// </summary>
 public class WindowManager : Singleton<WindowManager>
 {
-    private List<Window> openWindows;
+    private List<Window3D> openWindows;
 
     public float focusedDepth = 2f;
     private float originalFocusedDepth;
@@ -24,7 +24,7 @@ public class WindowManager : Singleton<WindowManager>
     /// </summary>
     void Start()
     {
-        openWindows = new List<Window>();
+        openWindows = new List<Window3D>();
         // ignore IgnoreRaycast
         int ignoreRaycast = 1 << 2;
         // ignore Window
@@ -43,13 +43,13 @@ public class WindowManager : Singleton<WindowManager>
     /// Adds the specified window to the list of open windows
     /// </summary>
     /// <param name="window">The new window</param>
-    public void Add(Window window)
+    public void Add(Window3D window)
     {
         // if it is stackable => close all open windows
         if (!window.stackable)
         {
-            List<Window> tempCopy = CopyWindows();
-            foreach (Window w in tempCopy)
+            List<Window3D> tempCopy = CopyWindows();
+            foreach (Window3D w in tempCopy)
             {
                 w.Close();
             }
@@ -57,8 +57,8 @@ public class WindowManager : Singleton<WindowManager>
         // if it is a type singleton => close all windows of the same type
         else if (window.typeSingleton)
         {
-            List<Window> tempCopy = CopyWindows();
-            foreach (Window w in tempCopy)
+            List<Window3D> tempCopy = CopyWindows();
+            foreach (Window3D w in tempCopy)
             {
                 if (w.typeId == window.typeId)
                 {
@@ -90,7 +90,7 @@ public class WindowManager : Singleton<WindowManager>
     /// Removes a window from the openWindows-stack
     /// </summary>
     /// <param name="window">The window to remove</param>
-    public void Remove(Window window)
+    public void Remove(Window3D window)
     {
         openWindows.Remove(window);
         UpdateAlignment();
@@ -100,10 +100,10 @@ public class WindowManager : Singleton<WindowManager>
     /// Helper method to create a deep copy of the openWindows-stack
     /// </summary>
     /// <returns></returns>
-    private List<Window> CopyWindows()
+    private List<Window3D> CopyWindows()
     {
-        List<Window> res = new List<Window>();
-        foreach (Window w in openWindows)
+        List<Window3D> res = new List<Window3D>();
+        foreach (Window3D w in openWindows)
         {
             res.Add(w);
         }
