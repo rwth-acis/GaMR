@@ -11,6 +11,7 @@ public class MouseInputManager : Singleton<MouseInputManager>
     public float timeUntilHold = 0.5f;
     public float distanceUntilDrag = 0.03f;
     public Transform cursor;
+    public LayerMask layerMask;
 
     private GameObject lastFocused = null;
     private float timeSinceDown = 0f;
@@ -27,7 +28,7 @@ public class MouseInputManager : Singleton<MouseInputManager>
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, 10, layerMask))
         {
             HitPosition = hit.point;
             TransformCursor(hit.point, hit.normal);
@@ -48,6 +49,7 @@ public class MouseInputManager : Singleton<MouseInputManager>
             {
                 ExecuteEvents.Execute<IInputHandler>(objectHit.gameObject, null, (x, y) => x.OnInputDown(inputEventData));
                 selectedObject = objectHit.gameObject; // down started on this selected object
+                Debug.Log("Mouse down on " + objectHit.gameObject);
                 distanceToSelectedObject = hit.distance;
                 timeSinceDown = 0f;
                 mouseStartPosition = Input.mousePosition;
@@ -77,6 +79,7 @@ public class MouseInputManager : Singleton<MouseInputManager>
             }
             if (Input.GetMouseButton(0))
             {
+                Debug.Log("Mouse hold on " + objectHit.gameObject);
                 // count how long the mouse has been pushed to detect mouse holding
                 timeSinceDown += Time.deltaTime;
                 // if no drag manipulation yet => find out if the user is dragging the mouse now
@@ -98,7 +101,7 @@ public class MouseInputManager : Singleton<MouseInputManager>
                 }
             }
         }
-        else
+        else // no object hit
         {
             HitPosition = Vector3.zero;
             Vector3 cursorPos = Input.mousePosition;
@@ -114,9 +117,16 @@ public class MouseInputManager : Singleton<MouseInputManager>
                 ExecuteEvents.Execute<IFocusable>(lastFocused, null, (x, y) => x.OnFocusExit());
                 lastFocused = null;
             }
-            if (isDrag) // resume a drag operation, even if the mosue left the object's collider
+            if (isDrag) // consider drag movements even if the mouse is not on the object anymore
             {
-                RaiseManipulationUpdate();
+                if (Input.GetMouseButtonUp(0)) //  still listen to stop the manipulation
+                {
+                    RaiseManipulationComplete();
+                }
+                else // resume a drag operation, even if the mosue left the object's collider
+                {
+                    RaiseManipulationUpdate();
+                }                
             }
         }
     }

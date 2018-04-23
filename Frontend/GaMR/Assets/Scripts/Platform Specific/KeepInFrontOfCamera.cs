@@ -18,6 +18,8 @@ public class KeepInFrontOfCamera : MonoBehaviour, IInputClickHandler
     {
         if (isBeingPlaced)
         {
+
+
             transform.position =
                 Camera.main.transform.position + distanceInFrontOfCamera * Camera.main.transform.forward;
         }
