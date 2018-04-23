@@ -49,7 +49,6 @@ public class MouseInputManager : Singleton<MouseInputManager>
             {
                 ExecuteEvents.Execute<IInputHandler>(objectHit.gameObject, null, (x, y) => x.OnInputDown(inputEventData));
                 selectedObject = objectHit.gameObject; // down started on this selected object
-                Debug.Log("Mouse down on " + objectHit.gameObject);
                 distanceToSelectedObject = hit.distance;
                 timeSinceDown = 0f;
                 mouseStartPosition = Input.mousePosition;
@@ -79,7 +78,6 @@ public class MouseInputManager : Singleton<MouseInputManager>
             }
             if (Input.GetMouseButton(0))
             {
-                Debug.Log("Mouse hold on " + objectHit.gameObject);
                 // count how long the mouse has been pushed to detect mouse holding
                 timeSinceDown += Time.deltaTime;
                 // if no drag manipulation yet => find out if the user is dragging the mouse now
@@ -122,6 +120,7 @@ public class MouseInputManager : Singleton<MouseInputManager>
                 if (Input.GetMouseButtonUp(0)) //  still listen to stop the manipulation
                 {
                     RaiseManipulationComplete();
+                    isDrag = false;
                 }
                 else // resume a drag operation, even if the mosue left the object's collider
                 {
