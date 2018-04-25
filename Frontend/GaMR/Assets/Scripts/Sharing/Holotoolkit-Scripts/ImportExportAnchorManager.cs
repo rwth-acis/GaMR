@@ -8,9 +8,15 @@ using HoloToolkit.Unity;
 
 #if UNITY_WSA && !UNITY_EDITOR
 using System.Collections.Generic;
+#if UNITY_2017_2_OR_NEWER
+using UnityEngine.XR.WSA;
+using UnityEngine.XR.WSA.Persistence;
+using UnityEngine.XR.WSA.Sharing;
+#else
 using UnityEngine.VR.WSA;
 using UnityEngine.VR.WSA.Persistence;
 using UnityEngine.VR.WSA.Sharing;
+#endif
 #endif
 
 namespace HoloToolkit.Sharing.Tests
@@ -29,6 +35,7 @@ namespace HoloToolkit.Sharing.Tests
             Start,
             Failed,
             Ready,
+            RoomApiInitializing,
             RoomApiInitialized,
             AnchorEstablished,
             // AnchorStore states
@@ -144,7 +151,7 @@ namespace HoloToolkit.Sharing.Tests
 
         /// <summary>
         /// Sometimes we'll see a really small anchor blob get generated.
-        /// These tend to not work, so we have a minimum trustable size.
+        /// These tend to not work, so we have a minimum trustworthy size.
         /// </summary>
         private const uint MinTrustworthySerializedAnchorDataSize = 100000;
 
@@ -198,7 +205,7 @@ namespace HoloToolkit.Sharing.Tests
         /// </summary>
         private RoomManagerAdapter roomManagerListener;
 
-        #region Untiy APIs
+        #region Unity APIs
 
         protected override void Awake()
         {
@@ -302,7 +309,7 @@ namespace HoloToolkit.Sharing.Tests
         /// Called when the sharing stage connects to a server.
         /// </summary>
         /// <param name="sender">Sender.</param>
-        /// <param name="e">Events Arguements.</param>
+        /// <param name="e">Events Arguments.</param>
         private void Connected(object sender = null, EventArgs e = null)
         {
             SharingStage.Instance.SharingManagerConnected -= Connected;
@@ -343,12 +350,12 @@ namespace HoloToolkit.Sharing.Tests
 
                 if (SharingStage.Instance.ShowDetailedLogs)
                 {
-                    Debug.Log("Anchor Manager: Sucessfully uploaded anchor");
+                    Debug.Log("Anchor Manager: Successfully uploaded anchor");
                 }
 
                 if (AnchorDebugText != null)
                 {
-                    AnchorDebugText.text += "\nSucessfully uploaded anchor";
+                    AnchorDebugText.text += "\nSuccessfully uploaded anchor";
                 }
 
                 currentState = ImportExportState.AnchorEstablished;
@@ -378,21 +385,21 @@ namespace HoloToolkit.Sharing.Tests
             // If we downloaded anchor data successfully we should import the data.
             if (successful)
             {
-                int datasize = request.GetDataSize();
+                int dataSize = request.GetDataSize();
 
                 if (SharingStage.Instance.ShowDetailedLogs)
                 {
-                    Debug.LogFormat("Anchor Manager: Anchor size: {0} bytes.", datasize.ToString());
+                    Debug.LogFormat("Anchor Manager: Anchor size: {0} bytes.", dataSize.ToString());
                 }
 
                 if (AnchorDebugText != null)
                 {
-                    AnchorDebugText.text += string.Format("\nAnchor size: {0} bytes.", datasize.ToString());
+                    AnchorDebugText.text += string.Format("\nAnchor size: {0} bytes.", dataSize.ToString());
                 }
 
-                rawAnchorData = new byte[datasize];
+                rawAnchorData = new byte[dataSize];
 
-                request.GetData(rawAnchorData, datasize);
+                request.GetData(rawAnchorData, dataSize);
                 currentState = ImportExportState.DataReady;
             }
             else
@@ -489,6 +496,7 @@ namespace HoloToolkit.Sharing.Tests
         /// </summary>
         private IEnumerator InitRoomApi()
         {
+            currentState = ImportExportState.RoomApiInitializing;
             // First check if there is a current room
             currentRoom = roomManager.GetCurrentRoom();
 
@@ -497,6 +505,7 @@ namespace HoloToolkit.Sharing.Tests
                 // If we have a room, we'll join the first room we see.
                 // If we are the user with the lowest user ID, we will create the room.
                 // Otherwise we will wait for the room to be created.
+                yield return new WaitForEndOfFrame();
                 if (roomManager.GetRoomCount() == 0)
                 {
                     if (ShouldLocalUserCreateRoom)
@@ -834,12 +843,12 @@ namespace HoloToolkit.Sharing.Tests
 
                     if (SharingStage.Instance.ShowDetailedLogs)
                     {
-                        Debug.Log("Anchor Manager: Sucessfully imported anchor " + first);
+                        Debug.Log("Anchor Manager: Successfully imported anchor " + first);
                     }
 
                     if (AnchorDebugText != null)
                     {
-                        AnchorDebugText.text += string.Format("\nSucessfully imported anchor " + first);
+                        AnchorDebugText.text += string.Format("\nSuccessfully imported anchor " + first);
                     }
 
                     WorldAnchor anchor = anchorBatch.LockObject(first, gameObject);

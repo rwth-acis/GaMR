@@ -131,6 +131,7 @@ public class AnnotationManager : MonoBehaviour
     /// <param name="annotation">The annotation to delete</param>
     public virtual void Delete(AnnotationContainer annotationContainer)
     {
+        DeleteAudioAnnotation(annotationContainer);
         annotations.Remove(annotationContainer.Annotation);
         annotationContainers.Remove(annotationContainer);
         Save();
@@ -176,6 +177,12 @@ public class AnnotationManager : MonoBehaviour
                 RestManager.Instance.SendAudioClip(InformationManager.Instance.FullBackendAddress + "/resources/annotation/audio/" + objectInfo.ModelName + "/" + container.Annotation.PositionToStringWithoutDots, container.AnnotationClip, null);
             }
         }
+    }
+
+    public void DeleteAudioAnnotation(AnnotationContainer container)
+    {
+        container.AnnotationClip = null;
+        RestManager.Instance.DELETE(InformationManager.Instance.FullBackendAddress + "/resources/annotation/audio/" + objectInfo.ModelName + "/" + container.Annotation.PositionToStringWithoutDots, null);
     }
 
     /// <summary>
