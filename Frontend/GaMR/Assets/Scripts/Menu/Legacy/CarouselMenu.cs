@@ -102,8 +102,8 @@ public class CarouselMenu : Menu
         }
 
         // add the button component to the buttons
-        LongPressButton btnLeft = buttonLeft.AddComponent<LongPressButton>();
-        LongPressButton btnRight = buttonRight.AddComponent<LongPressButton>();
+        FocusableLongPressButton btnLeft = buttonLeft.GetComponent<FocusableLongPressButton>();
+        FocusableLongPressButton btnRight = buttonRight.GetComponent<FocusableLongPressButton>();
         btnLeft.OnPressed = ScrollLeftNormal;
         btnLeft.OnLongPressed = ScrollLeftFast;
         btnRight.OnPressed = ScrollRightNormal;
