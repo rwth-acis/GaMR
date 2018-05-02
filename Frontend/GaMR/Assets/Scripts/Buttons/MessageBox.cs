@@ -51,7 +51,7 @@ public class MessageBox : MonoBehaviour
     {
         background = transform.Find("Background");
 
-        float backgroundWidth = Geometry.GetBoundsIndependentFromRotation(background).size.x;
+        float backgroundWidth = Geometry.GetBoundsIndependentFromRotation(background).size.z;
 
         maxWidth = backgroundWidth - (backgroundWidth/2f - (background.localPosition.x - label.transform.localPosition.x));
     }
