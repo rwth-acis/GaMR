@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// Ressource collection where the gameobjects of the windows can be collected
 /// This is mainly used for consistent spawning of the different menu types.
-/// If a menu gameobject is exchanged it only needs to be changed here
+/// If a window resource is exchanged it only needs to be changed here
 /// </summary>
 public class WindowResources : Singleton<WindowResources>
 {
