@@ -152,11 +152,11 @@ public class Keyboard : MonoBehaviour, IWindow
         GameObject keyboardInstance;
         if (fullKeyboard)
         {
-            keyboardInstance = (GameObject)GameObject.Instantiate(Resources.Load("Keyboard"));
+            keyboardInstance = GameObject.Instantiate(WindowResources.Instance.Keyboard);
         }
         else
         {
-            keyboardInstance = (GameObject)GameObject.Instantiate(Resources.Load("NumPad"));
+            keyboardInstance = GameObject.Instantiate(WindowResources.Instance.Numpad);
         }
         Keyboard keyboard = keyboardInstance.GetComponent<Keyboard>();
         keyboard.label.text = label;

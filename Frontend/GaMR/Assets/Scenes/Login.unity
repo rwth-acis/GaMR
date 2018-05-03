@@ -336,6 +336,8 @@ MonoBehaviour:
   annotationMenu: {fileID: 1737021395842500, guid: b189047185b118c488623b8dfcbb5e7c,
     type: 2}
   thumbnail: {fileID: 1697870960306182, guid: 3ab9a8a24c60ebb45b632c99b4bae6e3, type: 2}
+  keyboard: {fileID: 1795284882829524, guid: a04638963c780c547876f178012569c0, type: 2}
+  numpad: {fileID: 1053249532688312, guid: 7122f247014886349b6444f2e382b612, type: 2}
 --- !u!1001 &433496614
 Prefab:
   m_ObjectHideFlags: 0
@@ -905,19 +907,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4086694633030028, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.00025549709
+      value: -0.00023681023
       objectReference: {fileID: 0}
     - target: {fileID: 4308037745263162, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.3581096
+      value: -0.3581014
       objectReference: {fileID: 0}
     - target: {fileID: 4196587989135580, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.0004342947
+      value: -0.00039724316
       objectReference: {fileID: 0}
     - target: {fileID: 4414823140297466, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.00012501092
+      value: -0.00011582858
       objectReference: {fileID: 0}
     - target: {fileID: 4645486226854028, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
       propertyPath: m_LocalScale.x

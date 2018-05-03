@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// Ressource collection where the gameobjects of the windows can be collected
 /// This is mainly used for consistent spawning of the different menu types.
-/// If a menu gameobject is exchanged it only needs to be changed here
+/// If a window resource is exchanged it only needs to be changed here
 /// </summary>
 public class WindowResources : Singleton<WindowResources>
 {
@@ -20,6 +20,8 @@ public class WindowResources : Singleton<WindowResources>
     [SerializeField] private GameObject badgeOverviewMenu;
     [SerializeField] private GameObject annotationMenu;
     [SerializeField] private GameObject thumbnail;
+    [SerializeField] private GameObject keyboard;
+    [SerializeField] private GameObject numpad;
 
     public GameObject LoginMenu
     {
@@ -64,5 +66,15 @@ public class WindowResources : Singleton<WindowResources>
     public GameObject Thumbnail
     {
         get { return thumbnail; }
+    }
+
+    public GameObject Keyboard
+    {
+        get { return keyboard; }
+    }
+
+    public GameObject Numpad
+    {
+        get { return numpad; }
     }
 }
