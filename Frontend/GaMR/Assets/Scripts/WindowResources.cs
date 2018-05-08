@@ -22,6 +22,8 @@ public class WindowResources : Singleton<WindowResources>
     [SerializeField] private GameObject thumbnail;
     [SerializeField] private GameObject keyboard;
     [SerializeField] private GameObject numpad;
+    [SerializeField] private GameObject focusableButton;
+    [SerializeField] private GameObject carouselMenuItem;
 
     public GameObject LoginMenu
     {
@@ -76,5 +78,15 @@ public class WindowResources : Singleton<WindowResources>
     public GameObject Numpad
     {
         get { return numpad; }
+    }
+
+    public GameObject FocusableButton
+    {
+        get { return focusableButton; }
+    }
+
+    public GameObject CarouselMenuItem
+    {
+        get { return carouselMenuItem; }
     }
 }
