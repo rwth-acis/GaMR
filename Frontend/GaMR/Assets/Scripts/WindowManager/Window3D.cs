@@ -42,7 +42,10 @@ public class Window3D : MonoBehaviour
             {
                 tagalong = GetComponent<SimpleTagalong>();
             }
-            tagalong.TagalongDistance = windowDepth;
+            if (tagalong != null)
+            {
+                tagalong.TagalongDistance = windowDepth;
+            }
         }
     }
 

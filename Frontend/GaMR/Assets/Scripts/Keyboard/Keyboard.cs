@@ -62,6 +62,21 @@ public class Keyboard : MonoBehaviour, IWindow
 
         Capslock = false;
 
+        // if not on XR: disable input so that wasd-keys for navigation do not interfere with keyboard input
+        if (!UnityEngine.XR.XRSettings.enabled)
+        {
+            DesktopCameraControl.Instance.InputEnabled = false;
+            // also replace the trackalong with a KeepInFrontOfCamera script
+            SimpleTagalong tagalong = gameObject.GetComponent<SimpleTagalong>();
+            if (tagalong != null)
+            {
+                Destroy(tagalong);
+            }
+            KeepInFrontOfCamera keepInFrontOfCamera = gameObject.AddComponent<KeepInFrontOfCamera>();
+            keepInFrontOfCamera.isBeingPlaced = true;
+            keepInFrontOfCamera.distanceInFrontOfCamera = 1.5f;
+        }
+
         allKeys = GetComponentsInChildren<KeyButtonAdapter>();
 
         foreach (KeyButtonAdapter k in allKeys)
@@ -241,6 +256,11 @@ public class Keyboard : MonoBehaviour, IWindow
     private void Close()
     {
         currentlyOpenedKeyboard = null;
+        // if not on XR: re-enable input
+        if (!UnityEngine.XR.XRSettings.enabled)
+        {
+            DesktopCameraControl.Instance.InputEnabled = true;
+        }
         Destroy(gameObject);
     }
 
