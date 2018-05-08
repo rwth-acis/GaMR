@@ -19,6 +19,7 @@ public class MouseInputManager : Singleton<MouseInputManager>
     private float distanceToSelectedObject;
     private Vector3 mouseStartPosition;
     private bool isDrag = false;
+    private bool isHold = false;
 
     public Vector3 HitPosition { get; private set; }
 
@@ -53,6 +54,7 @@ public class MouseInputManager : Singleton<MouseInputManager>
                 timeSinceDown = 0f;
                 mouseStartPosition = Input.mousePosition;
                 isDrag = false;
+                isHold = false;
             }
             if (Input.GetMouseButtonUp(0))
             {
@@ -70,6 +72,13 @@ public class MouseInputManager : Singleton<MouseInputManager>
                         InputClickedEventData inputClickedEventData = new InputClickedEventData(EventSystem.current);
                         inputClickedEventData.Initialize(null, 0, 0, InteractionSourcePressInfo.Select);
                         ExecuteEvents.Execute<IInputClickHandler>(objectHit.gameObject, null, (x, y) => x.OnInputClicked(inputClickedEventData));
+                    }
+                    else
+                    {
+                        // raise OnHoldCompleted
+                        HoldEventData holdClickedEventData = new HoldEventData(EventSystem.current);
+                        holdClickedEventData.Initialize(null, 0, null);
+                        ExecuteEvents.Execute<IHoldHandler>(objectHit.gameObject, null, (x, y) => x.OnHoldCompleted(holdClickedEventData));
                     }
                 }
 
@@ -96,6 +105,15 @@ public class MouseInputManager : Singleton<MouseInputManager>
                 if (isDrag)
                 {
                     RaiseManipulationUpdate();
+                }
+
+                // if hold-threshold is passed for the first time: raise OnHoldStarted
+                if (!isHold && !isDrag && timeSinceDown > timeUntilHold)
+                {
+                    isHold = true;
+                    HoldEventData holdClickedEventData = new HoldEventData(EventSystem.current);
+                    holdClickedEventData.Initialize(null, 0, null);
+                    ExecuteEvents.Execute<IHoldHandler>(objectHit.gameObject, null, (x, y) => x.OnHoldStarted(holdClickedEventData));
                 }
             }
         }
