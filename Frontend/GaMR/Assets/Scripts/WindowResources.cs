@@ -17,13 +17,13 @@ public class WindowResources : Singleton<WindowResources>
     [SerializeField] private GameObject languageMenu;
     [SerializeField] private GameObject contextMenu;
     [SerializeField] private GameObject quizMenu;
+    [SerializeField] private GameObject quizSelectionMenu;
     [SerializeField] private GameObject badgeOverviewMenu;
     [SerializeField] private GameObject annotationMenu;
     [SerializeField] private GameObject thumbnail;
     [SerializeField] private GameObject keyboard;
     [SerializeField] private GameObject numpad;
     [SerializeField] private GameObject focusableButton;
-    [SerializeField] private GameObject carouselMenuItem;
 
     public GameObject LoginMenu
     {
@@ -55,6 +55,11 @@ public class WindowResources : Singleton<WindowResources>
         get { return quizMenu; }
     }
 
+    public GameObject QuizSelectionMenu
+    {
+        get { return quizSelectionMenu; }
+    }
+
     public GameObject BadgeOverviewMenu
     {
         get { return badgeOverviewMenu; }
@@ -83,10 +88,5 @@ public class WindowResources : Singleton<WindowResources>
     public GameObject FocusableButton
     {
         get { return focusableButton; }
-    }
-
-    public GameObject CarouselMenuItem
-    {
-        get { return carouselMenuItem; }
     }
 }

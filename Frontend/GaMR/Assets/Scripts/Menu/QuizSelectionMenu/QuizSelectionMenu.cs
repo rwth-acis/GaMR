@@ -9,14 +9,13 @@ public class QuizSelectionMenu : BaseMenu, IViewEvents
     FocusableButton itemButton1, itemButton2, itemButton3, itemButton4, itemButton5;
     FocusableButton pageDownButton, pageUpButton;
     List<FocusableButton> buttons = new List<FocusableButton>();
-    QuizManager quizManager;
     int startIndex = 0;
     int quizSelected = -1;
 
 
     public GameObject BoundingBox { get; set; }
 
-    public string[] Items { get; set; }
+    public List<string> Items { get; set; }
 
     public Action OnCloseAction
     { get; set; }
@@ -24,9 +23,11 @@ public class QuizSelectionMenu : BaseMenu, IViewEvents
     protected override void Start()
     {
         base.Start();
+        if (Items == null)
+        {
+            Items = new List<string>();
+        }
         quizSelected = -1;
-        quizManager = BoundingBox.GetComponentInChildren<QuizManager>();
-        quizManager.AddListener(this);
         InitializeButtons();
     }
 
@@ -79,11 +80,10 @@ public class QuizSelectionMenu : BaseMenu, IViewEvents
         for (int i = 0; i < buttons.Count; i++)
         {
             int iModel = i + startIndex;
-            if (iModel < quizManager.Annotations.Count)
+            if (iModel < Items.Count)
             {
                 buttons[i].Visible = true;
-                buttons[i].Text = quizManager.Annotations[iModel].Text;
-                buttons[i].ButtonEnabled = !quizManager.Annotations[iModel].Answered;
+                buttons[i].Text = Items[i];
                 buttons[i].Data = iModel;
             }
             else
@@ -111,7 +111,7 @@ public class QuizSelectionMenu : BaseMenu, IViewEvents
 
     private void SetButtonStates()
     {
-        if (quizManager.Annotations.Count > startIndex + buttons.Count)
+        if (Items.Count > startIndex + buttons.Count)
         {
             pageDownButton.ButtonEnabled = true;
         }
@@ -154,7 +154,6 @@ public class QuizSelectionMenu : BaseMenu, IViewEvents
 
     protected override void OnDestroy()
     {
-        quizManager.RemoveListener(this);
         base.OnDestroy();
     }
 }

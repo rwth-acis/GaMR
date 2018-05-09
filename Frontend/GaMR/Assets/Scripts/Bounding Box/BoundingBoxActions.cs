@@ -118,20 +118,25 @@ public class BoundingBoxActions : MonoBehaviour
                 return;
             }
             array.array.Sort();
-            List<CustomMenuItem> items = new List<CustomMenuItem>();
 
-            carouselInstance = CarouselMenu.Show();
+            GameObject quizSelectionMenuInstance = Instantiate(WindowResources.Instance.QuizSelectionMenu);
+            quizSelectionMenuInstance.GetComponent<CirclePositioner>().boundingBox = transform;
+            QuizSelectionMenu quizSelectMenu = quizSelectionMenuInstance.GetComponent<QuizSelectionMenu>();
+            quizSelectMenu.Items = array.array;
 
-            foreach(string quiz in array.array)
-            {
-                CustomMenuItem item = carouselInstance.gameObject.AddComponent<CustomMenuItem>();
-                item.Init(carouselMenuStyle, new List<CustomMenuItem>(), false);
-                item.onClickEvent.AddListener(delegate { OnCarouselItemClicked(quiz); });
-                item.Text = quiz;
-                items.Add(item);
-            }
 
-            carouselInstance.rootMenu = items;
+            //carouselInstance = CarouselMenu.Show();
+
+            //foreach(string quiz in array.array)
+            //{
+            //    CustomMenuItem item = carouselInstance.gameObject.AddComponent<CustomMenuItem>();
+            //    item.Init(carouselMenuStyle, new List<CustomMenuItem>(), false);
+            //    item.onClickEvent.AddListener(delegate { OnCarouselItemClicked(quiz); });
+            //    item.Text = quiz;
+            //    items.Add(item);
+            //}
+
+            //carouselInstance.rootMenu = items;
         }
     }
 
