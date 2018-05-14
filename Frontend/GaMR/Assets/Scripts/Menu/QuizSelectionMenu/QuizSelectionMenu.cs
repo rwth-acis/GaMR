@@ -17,7 +17,7 @@ public class QuizSelectionMenu : BaseMenu, IViewEvents
 
     public List<string> Items { get; set; }
 
-    public Action OnCloseAction
+    public Action<bool, string> OnCloseAction // bool: was a quiz selected?, string: name of the quiz
     { get; set; }
 
     protected override void Start()
@@ -64,8 +64,8 @@ public class QuizSelectionMenu : BaseMenu, IViewEvents
 
     private void OnQuizSelected(GaMRButton sender)
     {
-        int nButton = quizSelected - startIndex;
-        
+        quizSelected = sender.Data;
+        Close();
     }
 
     public override void OnUpdateLanguage()
@@ -143,8 +143,19 @@ public class QuizSelectionMenu : BaseMenu, IViewEvents
 
     public void Close()
     {
-        quizSelected = -1;
-        gameObject.SetActive(false);
+        if (OnCloseAction != null)
+        {
+            if (quizSelected != -1) // a quiz was selected => index is not -1 anymore
+            {
+                OnCloseAction(true, Items[quizSelected]);
+            }
+            else
+            {
+                OnCloseAction(false, null);
+            }
+        }
+        quizSelected = -1; // reset selected quiz index for next selection
+        gameObject.SetActive(false); // deactivate view
     }
 
     public void Destroy()

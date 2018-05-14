@@ -33,4 +33,9 @@ public class BoundingBoxInfo : MonoBehaviour
     {
         get;set;
     }
+
+    public QuizSelectionMenu QuizSelectionMenu
+    {
+        get;set;
+    }
 }

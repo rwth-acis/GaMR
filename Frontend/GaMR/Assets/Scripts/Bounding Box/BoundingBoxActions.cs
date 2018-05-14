@@ -119,10 +119,23 @@ public class BoundingBoxActions : MonoBehaviour
             }
             array.array.Sort();
 
-            GameObject quizSelectionMenuInstance = Instantiate(WindowResources.Instance.QuizSelectionMenu);
-            quizSelectionMenuInstance.GetComponent<CirclePositioner>().boundingBox = transform;
-            QuizSelectionMenu quizSelectMenu = quizSelectionMenuInstance.GetComponent<QuizSelectionMenu>();
-            quizSelectMenu.Items = array.array;
+            if (info.QuizSelectionMenu == null)
+            {
+                GameObject quizSelectionMenuInstance = Instantiate(WindowResources.Instance.QuizSelectionMenu);
+                info.QuizSelectionMenu = quizSelectionMenuInstance.GetComponent<QuizSelectionMenu>();
+            }
+
+            if (info.QuizSelectionMenu != null)
+            {
+                info.QuizSelectionMenu.gameObject.SetActive(true); // show quiz selection menu
+                info.QuizSelectionMenu.gameObject.GetComponent<CirclePositioner>().boundingBox = transform;
+                info.QuizSelectionMenu.Items = array.array;
+                info.QuizSelectionMenu.OnCloseAction = OnQuizSelected;
+            }
+            else
+            {
+                Debug.LogError("Expected QuizSelectionMenu but did not find one");
+            }
 
 
             //carouselInstance = CarouselMenu.Show();
@@ -140,11 +153,13 @@ public class BoundingBoxActions : MonoBehaviour
         }
     }
 
-    private void OnCarouselItemClicked(string quizName)
+    private void OnQuizSelected(bool wasQuizSelected, string quizName)
     {
-        attachementManager.SetQuizManager(quizName);
-        ((QuizManager)attachementManager.Manager).PositionToName = nextQuizPositionToName;
-        Destroy(carouselInstance.gameObject);
+        if (wasQuizSelected)
+        {
+            attachementManager.SetQuizManager(quizName);
+            ((QuizManager)attachementManager.Manager).PositionToName = nextQuizPositionToName;
+        }
     }
 
     public void CreateNewQuiz()
@@ -180,9 +195,9 @@ public class BoundingBoxActions : MonoBehaviour
 
     public void AbortQuizSelection()
     {
-        if (carouselInstance != null)
+        if (info.QuizSelectionMenu != null && info.QuizSelectionMenu.gameObject.activeSelf)
         {
-            Destroy(carouselInstance.gameObject);
+            info.QuizSelectionMenu.Close();
         }
     }
 
