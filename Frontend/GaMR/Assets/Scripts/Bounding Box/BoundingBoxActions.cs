@@ -121,28 +121,48 @@ public class BoundingBoxActions : MonoBehaviour
                 return;
             }
             array.array.Sort();
-            List<CustomMenuItem> items = new List<CustomMenuItem>();
 
-            carouselInstance = CarouselMenu.Show();
-
-            foreach(string quiz in array.array)
+            if (info.QuizSelectionMenu == null)
             {
-                CustomMenuItem item = carouselInstance.gameObject.AddComponent<CustomMenuItem>();
-                item.Init(carouselMenuStyle, new List<CustomMenuItem>(), false);
-                item.onClickEvent.AddListener(delegate { OnCarouselItemClicked(quiz); });
-                item.Text = quiz;
-                items.Add(item);
+                GameObject quizSelectionMenuInstance = Instantiate(WindowResources.Instance.QuizSelectionMenu);
+                info.QuizSelectionMenu = quizSelectionMenuInstance.GetComponent<QuizSelectionMenu>();
             }
 
-            carouselInstance.rootMenu = items;
+            if (info.QuizSelectionMenu != null)
+            {
+                info.QuizSelectionMenu.gameObject.SetActive(true); // show quiz selection menu
+                info.QuizSelectionMenu.gameObject.GetComponent<CirclePositioner>().boundingBox = transform;
+                info.QuizSelectionMenu.Items = array.array;
+                info.QuizSelectionMenu.OnCloseAction = OnQuizSelected;
+            }
+            else
+            {
+                Debug.LogError("Expected QuizSelectionMenu but did not find one");
+            }
+
+
+            //carouselInstance = CarouselMenu.Show();
+
+            //foreach(string quiz in array.array)
+            //{
+            //    CustomMenuItem item = carouselInstance.gameObject.AddComponent<CustomMenuItem>();
+            //    item.Init(carouselMenuStyle, new List<CustomMenuItem>(), false);
+            //    item.onClickEvent.AddListener(delegate { OnCarouselItemClicked(quiz); });
+            //    item.Text = quiz;
+            //    items.Add(item);
+            //}
+
+            //carouselInstance.rootMenu = items;
         }
     }
 
-    private void OnCarouselItemClicked(string quizName)
+    private void OnQuizSelected(bool wasQuizSelected, string quizName)
     {
-        attachementManager.SetQuizManager(quizName);
-        ((QuizManager)attachementManager.Manager).PositionToName = nextQuizPositionToName;
-        Destroy(carouselInstance.gameObject);
+        if (wasQuizSelected)
+        {
+            attachementManager.SetQuizManager(quizName);
+            ((QuizManager)attachementManager.Manager).PositionToName = nextQuizPositionToName;
+        }
     }
 
     public void CreateNewQuiz()
@@ -178,9 +198,9 @@ public class BoundingBoxActions : MonoBehaviour
 
     public void AbortQuizSelection()
     {
-        if (carouselInstance != null)
+        if (info.QuizSelectionMenu != null && info.QuizSelectionMenu.gameObject.activeSelf)
         {
-            Destroy(carouselInstance.gameObject);
+            info.QuizSelectionMenu.Close();
         }
     }
 
