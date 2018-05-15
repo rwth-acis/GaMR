@@ -13,7 +13,6 @@ public class TextureLoader : MonoBehaviour
 
     Renderer rend;
     public string textureUrl;
-    private InformationManager infoManager;
     public string modelName;
 
     /// <summary>
@@ -22,11 +21,9 @@ public class TextureLoader : MonoBehaviour
     /// </summary>
     void Start()
     {
-        infoManager = ComponentGetter.GetComponentOnGameobject<InformationManager>("InformationManager");
-        RestManager restManager = ComponentGetter.GetComponentOnGameobject<RestManager>("RestManager");
         rend = GetComponent<Renderer>();
         WaitCursor.Show();
-        restManager.GetTexture(infoManager.FullBackendAddress + "/resources/texture/" + modelName + "/" + textureUrl, OnFinished);
+        RestManager.Instance.GetTexture(InformationManager.Instance.FullBackendAddress + "/resources/texture/" + modelName + "/" + textureUrl, OnFinished);
     }
 
     /// <summary>

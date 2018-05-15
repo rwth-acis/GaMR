@@ -9,7 +9,6 @@ using UnityEngine;
 public class TrackAlongXAxis : MonoBehaviour {
 
     public float distance = 3f;
-    private GazeManager gazeManager;
     private Transform parent;
 
     /// <summary>
@@ -26,14 +25,13 @@ public class TrackAlongXAxis : MonoBehaviour {
     /// </summary>
     public void Start()
     {
-        gazeManager = ComponentGetter.GetComponentOnGameobject<GazeManager>("InputManager");
         parent = transform.parent;
     }
 
     public void Update()
     {
         // convert the positon of the cursor to the parent's local space
-        Vector3 cursorRelativeToKeyboard = parent.InverseTransformPoint(gazeManager.HitPosition);
+        Vector3 cursorRelativeToKeyboard = parent.InverseTransformPoint(GazeManager.Instance.HitPosition);
 
         // determine where the object should be
         Vector3 targetPos = new Vector3(
