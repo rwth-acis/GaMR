@@ -1,6 +1,6 @@
-# GaMR - A Gamification Framework for Mixed Reality Training
+﻿# GaMR - A Gamification Framework for Mixed Reality Training
 
-![GaMR](https://github.com/rwth-acis/GaMR/blob/master/Frontend/GaMR/Assets/Textures/Logo/Logo_465x225px.png)
+![GaMR](https://github.com/rwth-acis/GaMR/tree/master/Frontend/Icon%20Source%20Files/Logos/GaMR_white_background_465x225.png)
 
 This framework enables a gamified approach to training and learning in a mixed reality environment. The framework targets the Microsoft HoloLens and uses the Unity 3D Engine. 3D models in the X3D format can be displayed and annotated. Moreover, users can create and solve quizzes on the 3D models. 
 The framework provides a learning environment which can visualize and gamify the study of three-dimensional structures.
