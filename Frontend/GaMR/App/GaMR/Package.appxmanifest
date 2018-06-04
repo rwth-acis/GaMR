@@ -32,6 +32,11 @@
             <uap:DisplayName>TestScheme</uap:DisplayName>
           </uap:Protocol>
         </uap:Extension>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="com.gamr">
+            <uap:DisplayName>Protocol for Google Login</uap:DisplayName>
+          </uap:Protocol>
+        </uap:Extension>
       </Extensions>
     </Application>
   </Applications>
