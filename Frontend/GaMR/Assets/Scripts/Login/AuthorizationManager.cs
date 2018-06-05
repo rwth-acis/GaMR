@@ -18,7 +18,11 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
     private string accessToken;
     private string refreshToken;
 
-    private string authorizationCode;
+
+    const string googleAuthorizationEndpoint = "https://accounts.google.com/o/oauth2/v2/auth";
+    const string googleTokenEndpoint = "https://www.googleapis.com/oauth2/v4/token";
+    const string googleUserInfoEndpoint = "https://www.googleapis.com/oauth2/v3/userinfo";
+
 
     private AuthorizationProvider selectedAuthorizationProvider;
 
@@ -61,16 +65,15 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
         {
             Application.OpenURL("https://api.learning-layers.eu/o/oauth2/authorize?response_type=token&scope=openid%20profile%20email&client_id=" + learningLayersClientId + "&redirect_uri=gamr://");
         }
-        else if  (provider == AuthorizationProvider.GOOGLE)
+        else if (provider == AuthorizationProvider.GOOGLE)
         {
-            Application.OpenURL("https://accounts.google.com/o/oauth2/v2/auth?response_type=code&scope=openid%20email&redirect_uri=com.gamr%3A%2Foauth2redirect&client_id=" + googleClientId + "&hd=");
+            Application.OpenURL(googleAuthorizationEndpoint + "?response_type=code&scope=openid%20email&redirect_uri=com.gamr%3A%2Foauth2redirect&client_id=" + googleClientId + "&hd=");
         }
     }
 
     public void Logout()
     {
         accessToken = "";
-        authorizationCode = "";
         refreshToken = "";
         SceneManager.LoadScene("Login", LoadSceneMode.Single);
     }
@@ -91,6 +94,7 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
                         break;
                     }
                 }
+                EvaluateAccessToken();
             }
         }
         else if (selectedAuthorizationProvider == AuthorizationProvider.GOOGLE)
@@ -103,21 +107,28 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
                 {
                     if (argument.StartsWith("code="))
                     {
-                        authorizationCode = argument.Replace("code=", "");
+                        string authorizationCode = argument.Replace("code=", "");
                         Debug.Log("authorization code: " + authorizationCode);
-                        RestManager.Instance.POST("https://www.googleapis.com/oauth2/v4/token?code=" + authorizationCode + "&client_id=" + googleClientId
+                        RestManager.Instance.POST(googleTokenEndpoint + "?code=" + authorizationCode + "&client_id=" + googleClientId
                             + "&redirect_uri=com.gamr%3A%2Foauth2redirect&grant_type=authorization_code", (req) =>
                             {
-                                Debug.Log(req.downloadHandler.text);
-                                if (req.responseCode != 200)
+                                string json = req.downloadHandler.text;
+                                GoogleAccessTokenResponse response = JsonUtility.FromJson<GoogleAccessTokenResponse>(json);
+                                if (response == null)
                                 {
-                                    MessageBox.Show(LocalizationManager.Instance.ResolveString("Could not exchange authorization token for access token"), MessageBoxType.ERROR);
+                                    MessageBox.Show(LocalizationManager.Instance.ResolveString("Login failed"), MessageBoxType.ERROR);
                                     return;
                                 }
-                                // else:
-                                string json = req.downloadHandler.text;
-                                Debug.Log(json);
+                                if (response.error != "")
+                                {
+                                    MessageBox.Show(response.error_description, MessageBoxType.ERROR);
+                                    return;
+                                }
+                                accessToken = response.access_token;
+                                refreshToken = response.refresh_token;
+                                EvaluateAccessToken();
                             });
+                        break; // no need to search for more
                     }
                     else if (argument.StartsWith("error="))
                     {
@@ -127,9 +138,10 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
                 }
             }
         }
+    }
 
-
-
+    private void EvaluateAccessToken()
+    {
         Debug.Log("The access token is " + accessToken);
 
         if (accessToken != "")
@@ -139,7 +151,7 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
         }
         else
         {
-            MessageBox.Show("User could not be logged in", MessageBoxType.ERROR);
+            MessageBox.Show("User could not be logged in (no access token given)", MessageBoxType.ERROR);
         }
     }
 
@@ -157,10 +169,17 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
 
     private void CheckAccessToken()
     {
-        RestManager.Instance.GET("https://api.learning-layers.eu/o/oauth2/userinfo?access_token=" + accessToken, OnLogin);
+        if (selectedAuthorizationProvider == AuthorizationProvider.LEARNING_LAYERS)
+        {
+            RestManager.Instance.GET("https://api.learning-layers.eu/o/oauth2/userinfo?access_token=" + accessToken, OnLearningLayersLogin);
+        }
+        else
+        {
+            RestManager.Instance.GET(googleUserInfoEndpoint + "?alt=json&access_token=" + accessToken, OnGoogleLogin);
+        }
     }
 
-    private void OnLogin(UnityWebRequest result)
+    private void OnLearningLayersLogin(UnityWebRequest result)
     {
         if (result.responseCode == 200)
         {
@@ -170,6 +189,22 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
 
             InformationManager.Instance.UserInfo = info;
             GamificationFramework.Instance.ValidateLogin(LoginValidated);
+        }
+        else
+        {
+            MessageBox.Show(LocalizationManager.Instance.ResolveString("Error while retrieving the user data. Login failed"), MessageBoxType.ERROR);
+        }
+    }
+
+    private void OnGoogleLogin(UnityWebRequest result)
+    {
+        if (result.responseCode == 200)
+        {
+            string json = result.downloadHandler.text;
+            Debug.Log(json);
+            UserInfo info = JsonUtility.FromJson<UserInfo>(json);
+            Debug.Log(info.email);
+            // TODO: change scene
         }
         else
         {

@@ -8,6 +8,6 @@ public class AuthorizationTest : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        AuthorizationManager.Instance.Login(AuthorizationProvider.GOOGLE);
+        AuthorizationManager.Instance.Login(AuthorizationProvider.LEARNING_LAYERS);
     }
 }

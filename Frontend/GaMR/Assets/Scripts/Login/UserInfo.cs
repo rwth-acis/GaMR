@@ -12,6 +12,7 @@ public class UserInfo
     public string given_name;
     public string family_name;
     public string updated_time;
+    public string picture;
     public string email;
     public bool email_verfied;
 }
