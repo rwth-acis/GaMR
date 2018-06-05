@@ -13,6 +13,7 @@ public class WindowResources : Singleton<WindowResources>
 
     [SerializeField] private GameObject loginMenu;
     [SerializeField] private GameObject mainMenu;
+    [SerializeField] private GameObject loginSelectionMenu;
     [SerializeField] private GameObject settingsMenu;
     [SerializeField] private GameObject languageMenu;
     [SerializeField] private GameObject contextMenu;
@@ -33,6 +34,11 @@ public class WindowResources : Singleton<WindowResources>
     public GameObject MainMenu
     {
         get {return mainMenu;}
+    }
+
+    public GameObject LoginSelectionMenu
+    {
+        get { return loginSelectionMenu; }
     }
 
     public GameObject SettingsMenu

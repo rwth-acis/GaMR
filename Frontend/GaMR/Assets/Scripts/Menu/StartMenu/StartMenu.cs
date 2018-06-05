@@ -47,7 +47,7 @@ public class StartMenu : BaseMenu
         authorButton = transform.Find("Author Button").GetComponent<FocusableCheckButton>();
 
         settingsButton.OnPressed = ShowSettings;
-        loginButton.OnPressed = Login;
+        loginButton.OnPressed = ShowLogin;
         authorButton.OnPressed = TogglePlayerType;
 
         authorButton.ButtonChecked = (InformationManager.Instance.playerType == PlayerType.AUTHOR);
@@ -67,9 +67,19 @@ public class StartMenu : BaseMenu
         }
     }
 
-    private void Login()
+    private void ShowLogin()
     {
-        AuthorizationManager.Instance.Login();
+        GameObject loginInstance = Instantiate(WindowResources.Instance.LoginSelectionMenu);
+        LoginMenu loginSelectionMenu = loginInstance.GetComponent<LoginMenu>();
+        loginSelectionMenu.OnCloseAction = () =>
+        {
+            MenuEnabled = true;
+        };
+        loginInstance.transform.parent = transform;
+        loginInstance.transform.rotation = transform.rotation;
+        loginInstance.transform.localPosition = Vector3.zero;
+        loginInstance.transform.Translate(new Vector3(-0.1f, 0.01f, 0.01f));
+        MenuEnabled = false;
     }
 
     private void ShowSettings()

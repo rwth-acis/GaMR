@@ -10,10 +10,14 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
 {
 
     [SerializeField]
-    private string clientId = "c4ced10f-ce0f-4155-b6f7-a4c40ffa410c";
+    private string learningLayersClientId = "c4ced10f-ce0f-4155-b6f7-a4c40ffa410c";
+    [SerializeField]
+    private string googleClientId = "173179682466-gm9uiqbo2717nfiuqhq13mi1s23u1pob.apps.googleusercontent.com";
     [SerializeField]
     private string debugToken;
     private string accessToken;
+
+    private AuthorizationProvider selectedAuthorizationProvider;
 
     private void Start()
     {
@@ -41,14 +45,22 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
         }
     }
 
-    public void Login()
+    public void Login(AuthorizationProvider provider)
     {
+        selectedAuthorizationProvider = provider;
         if (Application.isEditor)
         {
             SceneManager.LoadScene("Scene", LoadSceneMode.Single);
             return;
         }
-        Application.OpenURL("https://api.learning-layers.eu/o/oauth2/authorize?response_type=token&scope=openid%20profile%20email&client_id=" + clientId + "&redirect_uri=gamr://");
+        if (provider == AuthorizationProvider.LEARNING_LAYERS)
+        {
+            Application.OpenURL("https://api.learning-layers.eu/o/oauth2/authorize?response_type=token&scope=openid%20profile%20email&client_id=" + learningLayersClientId + "&redirect_uri=gamr://");
+        }
+        else if  (provider == AuthorizationProvider.GOOGLE)
+        {
+            Application.OpenURL("https://accounts.google.com/o/oauth2/v2/auth?response_type=code&scope=openid%20email&redirect_uri=com.gamr%3A%2Foauth2redirect&client_id=" + googleClientId + "&hd=");
+        }
     }
 
     public void Logout()
@@ -129,4 +141,9 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
             MessageBox.Show(LocalizationManager.Instance.ResolveString("An error concerning the user data occured. The login failed.\nCode: ") + req.responseCode + "\n" + req.downloadHandler.text, MessageBoxType.ERROR);
         }
     }
+}
+
+public enum AuthorizationProvider
+{
+    LEARNING_LAYERS, GOOGLE
 }
