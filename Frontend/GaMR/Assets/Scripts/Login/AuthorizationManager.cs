@@ -18,6 +18,8 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
     private string accessToken;
     private string refreshToken;
 
+    const string learningLayersAuthorizationEndpoint = "https://api.learning-layers.eu/o/oauth2/authorize";
+    const string learningLayersUserInfoEndpoint = "https://api.learning-layers.eu/o/oauth2/userinfo";
 
     const string googleAuthorizationEndpoint = "https://accounts.google.com/o/oauth2/v2/auth";
     const string googleTokenEndpoint = "https://www.googleapis.com/oauth2/v4/token";
@@ -34,7 +36,7 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
             accessToken = debugToken;
             selectedAuthorizationProvider = AuthorizationProvider.LEARNING_LAYERS;
             AddAccessTokenToHeader();
-            RestManager.Instance.GET("https://api.learning-layers.eu/o/oauth2/userinfo?access_token=" + accessToken, GetUserInfoForDebugToken);
+            RestManager.Instance.GET(learningLayersUserInfoEndpoint + "?access_token=" + accessToken, GetUserInfoForDebugToken);
         }
     }
 
@@ -63,7 +65,7 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
         }
         if (provider == AuthorizationProvider.LEARNING_LAYERS)
         {
-            Application.OpenURL("https://api.learning-layers.eu/o/oauth2/authorize?response_type=token&scope=openid%20profile%20email&client_id=" + learningLayersClientId + "&redirect_uri=gamr://");
+            Application.OpenURL(learningLayersAuthorizationEndpoint + "?response_type=token&scope=openid%20profile%20email&client_id=" + learningLayersClientId + "&redirect_uri=gamr://");
         }
         else if (provider == AuthorizationProvider.GOOGLE)
         {
@@ -171,7 +173,7 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
     {
         if (selectedAuthorizationProvider == AuthorizationProvider.LEARNING_LAYERS)
         {
-            RestManager.Instance.GET("https://api.learning-layers.eu/o/oauth2/userinfo?access_token=" + accessToken, OnLearningLayersLogin);
+            RestManager.Instance.GET(learningLayersUserInfoEndpoint + "?access_token=" + accessToken, OnLearningLayersLogin);
         }
         else
         {
@@ -204,7 +206,7 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
             Debug.Log(json);
             UserInfo info = JsonUtility.FromJson<UserInfo>(json);
             Debug.Log(info.email);
-            // TODO: change scene
+            LoginValidated(result);
         }
         else
         {
