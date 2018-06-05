@@ -16,6 +16,9 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
     [SerializeField]
     private string debugToken;
     private string accessToken;
+    private string refreshToken;
+
+    private string authorizationCode;
 
     private AuthorizationProvider selectedAuthorizationProvider;
 
@@ -25,6 +28,7 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
         if (Application.isEditor && (accessToken == null || accessToken == ""))
         {
             accessToken = debugToken;
+            selectedAuthorizationProvider = AuthorizationProvider.LEARNING_LAYERS;
             AddAccessTokenToHeader();
             RestManager.Instance.GET("https://api.learning-layers.eu/o/oauth2/userinfo?access_token=" + accessToken, GetUserInfoForDebugToken);
         }
@@ -66,30 +70,77 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
     public void Logout()
     {
         accessToken = "";
+        authorizationCode = "";
+        refreshToken = "";
         SceneManager.LoadScene("Login", LoadSceneMode.Single);
     }
 
     private void StartedByProtocol(Uri uri)
     {
-        if (uri.Fragment != null)
+        if (selectedAuthorizationProvider == AuthorizationProvider.LEARNING_LAYERS)
         {
-            char[] splitters = { '#', '&' };
-            string[] arguments = uri.Fragment.Split(splitters);
-            foreach (string argument in arguments)
+            if (uri.Fragment != null)
             {
-                if (argument.StartsWith("access_token="))
+                char[] splitters = { '#', '&' };
+                string[] arguments = uri.Fragment.Split(splitters);
+                foreach (string argument in arguments)
                 {
-                    accessToken = argument.Replace("access_token=", "");
-                    break;
+                    if (argument.StartsWith("access_token="))
+                    {
+                        accessToken = argument.Replace("access_token=", "");
+                        break;
+                    }
                 }
             }
-
         }
+        else if (selectedAuthorizationProvider == AuthorizationProvider.GOOGLE)
+        {
+            if (uri.Fragment != null)
+            {
+                char[] splitters = { '?', '&' };
+                string[] arguments = uri.AbsoluteUri.Split(splitters);
+                foreach (string argument in arguments)
+                {
+                    if (argument.StartsWith("code="))
+                    {
+                        authorizationCode = argument.Replace("code=", "");
+                        Debug.Log("authorization code: " + authorizationCode);
+                        RestManager.Instance.POST("https://www.googleapis.com/oauth2/v4/token?code=" + authorizationCode + "&client_id=" + googleClientId
+                            + "&redirect_uri=com.gamr%3A%2Foauth2redirect&grant_type=authorization_code", (req) =>
+                            {
+                                Debug.Log(req.downloadHandler.text);
+                                if (req.responseCode != 200)
+                                {
+                                    MessageBox.Show(LocalizationManager.Instance.ResolveString("Could not exchange authorization token for access token"), MessageBoxType.ERROR);
+                                    return;
+                                }
+                                // else:
+                                string json = req.downloadHandler.text;
+                                Debug.Log(json);
+                            });
+                    }
+                    else if (argument.StartsWith("error="))
+                    {
+                        MessageBox.Show(LocalizationManager.Instance.ResolveString("Login failed") + ": " + argument.Replace("error=", ""), MessageBoxType.ERROR);
+                        return;
+                    }
+                }
+            }
+        }
+
+
 
         Debug.Log("The access token is " + accessToken);
 
-        AddAccessTokenToHeader();
-        CheckAccessToken();
+        if (accessToken != "")
+        {
+            AddAccessTokenToHeader();
+            CheckAccessToken();
+        }
+        else
+        {
+            MessageBox.Show("User could not be logged in", MessageBoxType.ERROR);
+        }
     }
 
     private void AddAccessTokenToHeader()
