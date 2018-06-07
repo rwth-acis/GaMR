@@ -203,9 +203,7 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
         if (result.responseCode == 200)
         {
             string json = result.downloadHandler.text;
-            Debug.Log(json);
             UserInfo info = JsonUtility.FromJson<UserInfo>(json);
-            Debug.Log(info.email);
             LoginValidated(result);
         }
         else

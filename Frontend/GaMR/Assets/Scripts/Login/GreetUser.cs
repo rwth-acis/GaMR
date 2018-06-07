@@ -12,7 +12,14 @@ public class GreetUser : MonoBehaviour
     {
         if (InformationManager.Instance.UserInfo != null)
         {
-            MessageBox.Show(LocalizationManager.Instance.ResolveString("Hello") + ", " + InformationManager.Instance.UserInfo.name, MessageBoxType.INFORMATION);
+            if (InformationManager.Instance.UserInfo.name != "")
+            {
+                MessageBox.Show(LocalizationManager.Instance.ResolveString("Hello") + ", " + InformationManager.Instance.UserInfo.name, MessageBoxType.INFORMATION);
+            }
+            else
+            {
+                MessageBox.Show(LocalizationManager.Instance.ResolveString("Hello"), MessageBoxType.INFORMATION);
+            }
         }
     }
 }
