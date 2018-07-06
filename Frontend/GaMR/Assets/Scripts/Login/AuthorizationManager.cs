@@ -69,7 +69,7 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
         }
         else if (provider == AuthorizationProvider.GOOGLE)
         {
-            Application.OpenURL(googleAuthorizationEndpoint + "?response_type=code&scope=openid%20email&redirect_uri=com.gamr%3A%2Foauth2redirect&client_id=" + googleClientId + "&hd=");
+            Application.OpenURL(googleAuthorizationEndpoint + "?response_type=code&scope=openid%20profile%20email&redirect_uri=com.gamr%3A%2Foauth2redirect&client_id=" + googleClientId + "&hd=");
         }
     }
 
@@ -127,6 +127,7 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
                                     return;
                                 }
                                 accessToken = response.access_token;
+                                Debug.Log(accessToken);
                                 refreshToken = response.refresh_token;
                                 EvaluateAccessToken();
                             });
