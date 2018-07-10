@@ -15,6 +15,8 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
     private string debugToken;
     private string accessToken;
 
+    public string AccessToken { get { return accessToken; } }
+
     private void Start()
     {
         // skip the login by using the debug token

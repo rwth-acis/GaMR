@@ -20,6 +20,7 @@ public class ThumbnailInstantiation : BaseMenu
     private FocusableButton settingsButton;
     private FocusableButton logoutButton;
     private FocusableButton badgeButton;
+    private FocusableButton feedbackButton;
 
     private List<string> models;
     private bool menuEnabled = true;
@@ -47,6 +48,7 @@ public class ThumbnailInstantiation : BaseMenu
             logoutButton.ButtonEnabled = menuEnabled;
             settingsButton.ButtonEnabled = menuEnabled;
             badgeButton.ButtonEnabled = menuEnabled;
+            feedbackButton.ButtonEnabled = menuEnabled;
         }
     }
 
@@ -78,6 +80,7 @@ public class ThumbnailInstantiation : BaseMenu
         settingsButton = transform.Find("Settings Button").gameObject.GetComponent<FocusableButton>();
         logoutButton = transform.Find("Logout Button").gameObject.GetComponent<FocusableButton>();
         badgeButton = transform.Find("Badges Button").gameObject.GetComponent<FocusableButton>();
+        feedbackButton = transform.Find("Feedback Button").gameObject.GetComponent<FocusableButton>();
 
         upButton.OnPressed = PageUp;
         downButton.OnPressed = PageDown;
@@ -92,10 +95,14 @@ public class ThumbnailInstantiation : BaseMenu
         bool showBadgeButton = InformationManager.Instance.playerType != PlayerType.AUTHOR;
 
         badgeButton.gameObject.SetActive(showBadgeButton);
-        GameObject topMenu = transform.Find("Top Menu").gameObject;
-        topMenu.SetActive(!showBadgeButton);
-        GameObject topMenuShort = transform.Find("Top Menu Short").gameObject;
-        topMenuShort.SetActive(showBadgeButton);
+        GameObject topMenu2Shorter = transform.Find("Top Menu Medium").gameObject;
+        topMenu2Shorter.SetActive(!showBadgeButton);
+        GameObject topMenu1Shorter = transform.Find("Top Menu Short").gameObject;
+        topMenu1Shorter.SetActive(showBadgeButton);
+        if (!showBadgeButton) // shift the next button to fill the gap
+        {
+            feedbackButton.transform.localPosition = badgeButton.transform.localPosition;
+        }
 
 
         MenuEnabled = false;
@@ -109,6 +116,7 @@ public class ThumbnailInstantiation : BaseMenu
         settingsButton.Text = LocalizationManager.Instance.ResolveString("Settings");
         logoutButton.Text = LocalizationManager.Instance.ResolveString("Logout");
         badgeButton.Text = LocalizationManager.Instance.ResolveString("Badges");
+        feedbackButton.Text = LocalizationManager.Instance.ResolveString("Feedback");
     }
 
     private void Logout()
