@@ -19,6 +19,7 @@ public class WindowResources : Singleton<WindowResources>
     [SerializeField] private GameObject quizMenu;
     [SerializeField] private GameObject quizSelectionMenu;
     [SerializeField] private GameObject badgeOverviewMenu;
+    [SerializeField] private GameObject feedbackForm;
     [SerializeField] private GameObject annotationMenu;
     [SerializeField] private GameObject thumbnail;
     [SerializeField] private GameObject keyboard;
@@ -63,6 +64,11 @@ public class WindowResources : Singleton<WindowResources>
     public GameObject BadgeOverviewMenu
     {
         get { return badgeOverviewMenu; }
+    }
+
+    public GameObject FeedbackForm
+    {
+        get { return feedbackForm; }
     }
 
     public GameObject AnnotationMenu

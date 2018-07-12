@@ -7,10 +7,6 @@ using UnityEngine.Networking;
 public class ThumbnailInstantiation : BaseMenu
 {
     public GameObject startPosition;
-    [SerializeField]
-    private GameObject settingsMenu;
-    [SerializeField]
-    private GameObject badgeOverviewMenu;
 
     private Vector3 size;
     private List<Thumbnail> thumbnails;
@@ -86,6 +82,7 @@ public class ThumbnailInstantiation : BaseMenu
         downButton.OnPressed = PageDown;
         settingsButton.OnPressed = ShowSettings;
         badgeButton.OnPressed = ShowBadgeOverview;
+        feedbackButton.OnPressed = ShowFeedbackForm;
         logoutButton.OnPressed = Logout;
 
         OnUpdateLanguage();
@@ -126,7 +123,7 @@ public class ThumbnailInstantiation : BaseMenu
 
     private void ShowSettings()
     {
-        GameObject settingsInstance = Instantiate(settingsMenu);
+        GameObject settingsInstance = Instantiate(WindowResources.Instance.SettingsMenu);
         SettingsMenu settings = settingsInstance.GetComponent<SettingsMenu>();
         settings.OnCloseAction = () =>
         {
@@ -141,7 +138,7 @@ public class ThumbnailInstantiation : BaseMenu
 
     private void ShowBadgeOverview()
     {
-        GameObject badgeOverviewInstance = Instantiate(badgeOverviewMenu);
+        GameObject badgeOverviewInstance = Instantiate(WindowResources.Instance.BadgeOverviewMenu);
         BadgeOverviewMenu badgeOverview = badgeOverviewInstance.GetComponent<BadgeOverviewMenu>();
         badgeOverview.OnCloseAction = () =>
         {
@@ -151,6 +148,21 @@ public class ThumbnailInstantiation : BaseMenu
         badgeOverviewInstance.transform.rotation = transform.rotation;
         badgeOverviewInstance.transform.localPosition = Vector3.zero;
         badgeOverviewInstance.transform.Translate(new Vector3(-0.1f, 0.01f, 0.01f));
+        MenuEnabled = false;
+    }
+
+    private void ShowFeedbackForm()
+    {
+        GameObject feedbackFormInstance = Instantiate(WindowResources.Instance.FeedbackForm);
+        FeedbackForm feedbackForm = feedbackFormInstance.GetComponent<FeedbackForm>();
+        feedbackForm.OnCloseAction = () =>
+        {
+            MenuEnabled = true;
+        };
+        feedbackForm.transform.parent = transform;
+        feedbackForm.transform.rotation = transform.rotation;
+        feedbackForm.transform.localPosition = Vector3.zero;
+        feedbackForm.transform.Translate(new Vector3(-0.1f, 0.01f, 0.01f));
         MenuEnabled = false;
     }
 
