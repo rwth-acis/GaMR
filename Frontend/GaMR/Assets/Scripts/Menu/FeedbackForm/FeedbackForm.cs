@@ -11,6 +11,9 @@ public class FeedbackForm : BaseMenu
 
     private bool menuEnabled = true;
 
+    private string title;
+    private string comment;
+
     public Action OnCloseAction
     { get; set; }
 
@@ -42,6 +45,8 @@ public class FeedbackForm : BaseMenu
 
         // set button actions
         postOnReqBaz.OnPressed = Close;
+        titleField.OnPressed = () => { Keyboard.Display("Enter title", title, TitleSet, true); };
+        commentField.OnPressed = () => { Keyboard.Display("Enter your comment", comment, CommentSet, true); };
         
 
         OnUpdateLanguage();
@@ -62,5 +67,21 @@ public class FeedbackForm : BaseMenu
         titleField.Text = LocalizationManager.Instance.ResolveString("Title");
         commentField.Text = LocalizationManager.Instance.ResolveString("Comment");
         postOnReqBaz.Text = LocalizationManager.Instance.ResolveString("Post on Requirements Bazaar");
+    }
+
+    private void TitleSet(string title)
+    {
+        if (title != null)
+        {
+            this.title = title;
+        }
+    }
+
+    private void CommentSet(string comment)
+    {
+        if (comment != null)
+        {
+            this.comment = comment;
+        }
     }
 }
