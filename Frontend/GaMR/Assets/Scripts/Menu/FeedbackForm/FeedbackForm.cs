@@ -131,12 +131,30 @@ public class FeedbackForm : BaseMenu
         postOnReqBaz = transform.Find("Post ReqBaz Button").gameObject.GetComponent<FocusableButton>();
 
         // set button actions
-        postOnReqBaz.OnPressed = Close;
+        postOnReqBaz.OnPressed = SubmitToReqBaz;
         titleField.OnPressed = () => { Keyboard.Display("Enter title", title, TitleSet, true); };
         commentField.OnPressed = () => { Keyboard.Display("Enter your comment", comment, CommentSet, true); };
         
 
         OnUpdateLanguage();
+    }
+
+    private void SubmitToReqBaz()
+    {
+        // Requirements Bazaar uses a different access token header format => include it
+        RestManager.Instance.StandardHeader.Add("Authorization", "Bearer " + AuthorizationManager.Instance.AccessToken);
+
+        RequirementPost post = new RequirementPost(Title, Comment, 376, new CategoryId[] { new CategoryId(692) });
+
+        post.categories = new CategoryId[] { new CategoryId(692) };
+
+        string json = JsonUtility.ToJson(post);
+
+        RestManager.Instance.POST("https://requirements-bazaar.org/bazaar/requirements", json);
+
+        RestManager.Instance.StandardHeader.Remove("Authorization"); // remove different header again
+        MessageBox.Show("Thank you for your feedback!", MessageBoxType.SUCCESS);
+        Close();
     }
 
     private void Close()
