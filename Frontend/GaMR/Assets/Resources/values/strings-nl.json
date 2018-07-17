@@ -155,6 +155,42 @@
     {
       "key": "Enter Sharing Server",
       "value": "Voer de sharing server in"
+    },
+    {
+      "key": "Author",
+      "value": "Auteur"
+    },
+    {
+      "key": "Title",
+      "value": "Titel"
+    },
+    {
+      "key": "Comment",
+      "value": "Commentaar"
+    },
+    {
+      "key": "Post on\nRequirements Bazaar",
+      "value": "Post op\nRequirements Bazaar"
+    },
+    {
+      "key": "Feedback",
+      "value": "Feedback"
+    },
+    {
+      "key": "Hello",
+      "value": "Hallo"
+    },
+    {
+      "key": "The feedback could not be sent. Please try again later.",
+      "value": "De feedback kon niet worden verzonden. Probeer het later nog eens."
+    },
+    {
+      "key": "Thank you for your feedback!",
+      "value": "Bedankt voor uw feedback!"
+    },
+    {
+      "key": "Type your comment",
+      "value": "Typ uw commentaar."
     }
   ]
 }

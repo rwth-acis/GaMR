@@ -8,6 +8,7 @@ public class FeedbackForm : BaseMenu
     FocusableContentButton titleField;
     FocusableContentButton commentField;
     FocusableButton postOnReqBaz;
+    FocusableButton closeButton;
 
     private bool menuEnabled = true;
 
@@ -41,6 +42,8 @@ public class FeedbackForm : BaseMenu
                 shownContent = lines[0] + '\n' + lines[1];
             }
             titleField.Content = shownContent;
+
+            CheckFormComplete();
         }
     }
 
@@ -63,6 +66,8 @@ public class FeedbackForm : BaseMenu
                 shownContent = lines[0] + '\n' + lines[1] + '\n' + lines[2] + '\n' + lines[3] + '\n' + lines[4];
             }
             commentField.Content = shownContent;
+
+            CheckFormComplete();
         }
     }
 
@@ -85,6 +90,7 @@ public class FeedbackForm : BaseMenu
         InitializeButtons();
 
         GetFieldData();
+        CheckFormComplete();
     }
 
     /// <summary>
@@ -129,14 +135,27 @@ public class FeedbackForm : BaseMenu
         titleField = transform.Find("Title Button").gameObject.GetComponent<FocusableContentButton>();
         commentField = transform.Find("Comment Button").gameObject.GetComponent<FocusableContentButton>();
         postOnReqBaz = transform.Find("Post ReqBaz Button").gameObject.GetComponent<FocusableButton>();
+        closeButton = transform.Find("Close Button").gameObject.GetComponent<FocusableButton>();
 
         // set button actions
         postOnReqBaz.OnPressed = SubmitToReqBaz;
         titleField.OnPressed = () => { Keyboard.Display("Enter title", title, TitleSet, true); };
         commentField.OnPressed = () => { Keyboard.Display("Enter your comment", comment, CommentSet, true); };
-
+        closeButton.OnPressed = Close;
 
         OnUpdateLanguage();
+    }
+
+    private void CheckFormComplete()
+    {
+        if (Comment != "" && Title != "")
+        {
+            postOnReqBaz.ButtonEnabled = true;
+        }
+        else
+        {
+            postOnReqBaz.ButtonEnabled = false;
+        }
     }
 
     private void SubmitToReqBaz()
@@ -182,7 +201,10 @@ public class FeedbackForm : BaseMenu
         // set captions
         titleField.Text = LocalizationManager.Instance.ResolveString("Title");
         commentField.Text = LocalizationManager.Instance.ResolveString("Comment");
+        titleField.Text = LocalizationManager.Instance.ResolveString("Title");
+        commentField.Text = LocalizationManager.Instance.ResolveString("Type your comment");
         postOnReqBaz.Text = LocalizationManager.Instance.ResolveString("Post on\nRequirements Bazaar");
+        closeButton.Text = LocalizationManager.Instance.ResolveString("Close");
     }
 
     private void TitleSet(string title)
