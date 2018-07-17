@@ -187,9 +187,9 @@ public class Keyboard : MonoBehaviour, IWindow
             numberOfNewLines = wrappedText.Split('\n').Length;
             if (numberOfNewLines <= maxNumberOfLines)
             {
-                text = wrappedText;
+                text = value; // give the original value to the text
                 // update the input field
-                NotifyInputField();
+                UpdateInputField(wrappedText); // but display the wrapped text version
                 // also handle one-time shift: use lower-case again after one letter
                 // do not change shift if text is initialized by the program
                 if (!textInitialization)
@@ -217,9 +217,9 @@ public class Keyboard : MonoBehaviour, IWindow
     /// <summary>
     /// Applies the text of the keyboard to the input-field
     /// </summary>
-    private void NotifyInputField()
+    private void UpdateInputField(string newText)
     {
-        inputField.text = Text;
+        inputField.text = newText;
         cursorOn = false;
     }
 
