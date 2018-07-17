@@ -134,7 +134,7 @@ public class FeedbackForm : BaseMenu
         postOnReqBaz.OnPressed = SubmitToReqBaz;
         titleField.OnPressed = () => { Keyboard.Display("Enter title", title, TitleSet, true); };
         commentField.OnPressed = () => { Keyboard.Display("Enter your comment", comment, CommentSet, true); };
-        
+
 
         OnUpdateLanguage();
     }
@@ -150,11 +150,22 @@ public class FeedbackForm : BaseMenu
 
         string json = JsonUtility.ToJson(post);
 
-        RestManager.Instance.POST("https://requirements-bazaar.org/bazaar/requirements", json);
+        WaitCursor.Show();
+        RestManager.Instance.POST("https://requirements-bazaar.org/bazaar/requirements", json, (req) =>
+        {
+            WaitCursor.Hide();
+            if (req.isHttpError || req.isNetworkError)
+            {
+                MessageBox.Show(LocalizationManager.Instance.ResolveString("The feedback could not be sent. Please try again later."), MessageBoxType.ERROR);
+            }
+            else
+            {
+                MessageBox.Show(LocalizationManager.Instance.ResolveString("Thank you for your feedback!"), MessageBoxType.SUCCESS);
+                Close();
+            }
 
-        RestManager.Instance.StandardHeader.Remove("Authorization"); // remove different header again
-        MessageBox.Show("Thank you for your feedback!", MessageBoxType.SUCCESS);
-        Close();
+            RestManager.Instance.StandardHeader.Remove("Authorization"); // remove different header again
+        });
     }
 
     private void Close()
