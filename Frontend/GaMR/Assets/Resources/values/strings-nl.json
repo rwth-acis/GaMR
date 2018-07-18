@@ -189,8 +189,13 @@
       "value": "Bedankt voor uw feedback!"
     },
     {
-      "key": "Type your comment",
-      "value": "Typ uw commentaar."
+      "key": "Enter your feedback",
+      "value": "Vul uw feedback in"
+    }
+    ,
+    {
+      "key": "Enter the feedback title",
+      "value": "Voer de feedbacktitel in"
     }
   ]
 }

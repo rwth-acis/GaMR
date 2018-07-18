@@ -14,6 +14,8 @@ public class Keyboard : MonoBehaviour, IWindow
     public TextMesh inputField;
     [Tooltip("The label which can display a message to the user describing what is currently edited")]
     public TextMesh label;
+    [Tooltip("The label which displays how long the input is compared to the maximum number of allowed characters")]
+    public TextMesh inputLengthLabel;
     [Tooltip("The maximum number of lines that the input may have at maximum")]
     public int maxNumberOfLines = 4;
 
@@ -40,11 +42,34 @@ public class Keyboard : MonoBehaviour, IWindow
     // variables concerning the width limit
     private float maxWidth;
 
+    private int maxLength;
+
 
     public static Keyboard currentlyOpenedKeyboard;
 
 
     public bool IsFullKeyboard { get; set; }
+
+    public int MaxLength
+    {
+        get
+        {
+            return maxLength;
+        }
+        set
+        {
+            maxLength = value;
+            if (maxLength == 0)
+            {
+                inputLengthLabel.gameObject.SetActive(false);
+            }
+            else
+            {
+                inputLengthLabel.gameObject.SetActive(true);
+                inputLengthLabel.text = Text.Length + "/" + maxLength;
+            }
+        }
+    }
 
     /// <summary>
     /// Finds the necessary components: the background of the keyboard, it collider, all keys 
@@ -149,6 +174,11 @@ public class Keyboard : MonoBehaviour, IWindow
     /// version is shown</param>
     public static void Display(string label, string text, Action<string> callWithResult, bool fullKeyboard)
     {
+        Display(label, text, 0, callWithResult, fullKeyboard);
+    }
+
+    public static void Display(string label, string text, int maxNumberOfCharacters, Action<string> callWithResult, bool fullKeyboard)
+    {
         GameObject keyboardInstance;
         if (fullKeyboard)
         {
@@ -163,6 +193,7 @@ public class Keyboard : MonoBehaviour, IWindow
         keyboard.Text = text;
         keyboard.callWithResult = callWithResult;
         keyboard.IsFullKeyboard = fullKeyboard;
+        keyboard.MaxLength = maxNumberOfCharacters;
         currentlyOpenedKeyboard = keyboard;
     }
 
@@ -179,6 +210,15 @@ public class Keyboard : MonoBehaviour, IWindow
         }
         set
         {
+            if (MaxLength > 0)
+            {
+                if (value.Length > MaxLength)
+                {
+                    return;
+                }
+
+                inputLengthLabel.text = value.Length + "/" + MaxLength;
+            }
             if (inputBackground != null)
             {
                 maxWidth = maxWidth != 0.0f ? maxWidth : Geometry.GetBoundsIndependentFromRotation(inputBackground).size.x;

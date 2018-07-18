@@ -189,8 +189,12 @@
       "value": "Thank you for your feedback!"
     },
     {
-      "key": "Type your comment",
-      "value":  "Type your comment"
+      "key": "Enter your feedback",
+      "value": "Enter your feedback"
+    },
+    {
+      "key": "Enter the feedback title",
+      "value": "Enter the feedback title"
     }
   ]
 }

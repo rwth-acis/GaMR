@@ -189,8 +189,12 @@
       "value": "Vielen Dank für das Feedback!"
     },
     {
-      "key": "Type your comment",
-      "value":  "Kommentar eingeben"
+      "key": "Enter your feedback",
+      "value": "Feedback eingeben"
+    },
+    {
+      "key": "Enter the feedback title",
+      "value": "Feedback-Titel eingeben"
     }
   ]
 }

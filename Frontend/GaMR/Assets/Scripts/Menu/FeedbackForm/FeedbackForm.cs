@@ -139,8 +139,8 @@ public class FeedbackForm : BaseMenu
 
         // set button actions
         postOnReqBaz.OnPressed = SubmitToReqBaz;
-        titleField.OnPressed = () => { Keyboard.Display("Enter title", title, TitleSet, true); };
-        commentField.OnPressed = () => { Keyboard.Display("Enter your comment", comment, CommentSet, true); };
+        titleField.OnPressed = () => { Keyboard.Display( LocalizationManager.Instance.ResolveString("Enter the feedback title"), title, 50, TitleSet, true); };
+        commentField.OnPressed = () => { Keyboard.Display( LocalizationManager.Instance.ResolveString("Enter your feedback"), comment, CommentSet, true); };
         closeButton.OnPressed = Close;
 
         OnUpdateLanguage();
@@ -201,8 +201,8 @@ public class FeedbackForm : BaseMenu
         // set captions
         titleField.Text = LocalizationManager.Instance.ResolveString("Title");
         commentField.Text = LocalizationManager.Instance.ResolveString("Comment");
-        titleField.Text = LocalizationManager.Instance.ResolveString("Title");
-        commentField.Text = LocalizationManager.Instance.ResolveString("Type your comment");
+        titleField.Content = LocalizationManager.Instance.ResolveString("Title");
+        commentField.Content = LocalizationManager.Instance.ResolveString("Enter your feedback");
         postOnReqBaz.Text = LocalizationManager.Instance.ResolveString("Post on\nRequirements Bazaar");
         closeButton.Text = LocalizationManager.Instance.ResolveString("Close");
     }
