@@ -155,6 +155,46 @@
     {
       "key": "Enter Sharing Server",
       "value": "Sharing Server eingeben"
+    },
+    {
+      "key": "Author",
+      "value": "Autor"
+    },
+    {
+      "key": "Title",
+      "value": "Titel"
+    },
+    {
+      "key": "Comment",
+      "value": "Kommentar"
+    },
+    {
+      "key": "Post on\nRequirements Bazaar",
+      "value": "Posten im\nRequirements Bazaar"
+    },
+    {
+      "key": "Feedback",
+      "value": "Feedback"
+    },
+    {
+      "key": "Hello",
+      "value": "Hallo"
+    },
+    {
+      "key": "The feedback could not be sent. Please try again later.",
+      "value": "Das Feedback konnte nicht versendet werden. Bitte versuchen Sie es später erneut."
+    },
+    {
+      "key": "Thank you for your feedback!",
+      "value": "Vielen Dank für das Feedback!"
+    },
+    {
+      "key": "Enter your feedback",
+      "value": "Feedback eingeben"
+    },
+    {
+      "key": "Enter the feedback title",
+      "value": "Feedback-Titel eingeben"
     }
   ]
 }

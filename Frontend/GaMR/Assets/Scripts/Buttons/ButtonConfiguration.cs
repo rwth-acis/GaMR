@@ -10,6 +10,7 @@ public class ButtonConfiguration : MonoBehaviour
     private ButtonType type;
     [SerializeField]
     private Sprite icon;
+    [TextArea(1,5)]
     public string caption;
     [SerializeField]
     private bool showIcon = true;
