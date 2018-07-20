@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Struct which acts as a container for the json POST data which are sent to the requirements bazaar
+/// </summary>
 [Serializable]
 public struct RequirementPost
 {
@@ -20,6 +23,9 @@ public struct RequirementPost
     }
 }
 
+/// <summary>
+/// Container for a category id of the requirements bazaar
+/// </summary>
 [Serializable]
 public struct CategoryId
 {
