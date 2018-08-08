@@ -13,6 +13,6 @@ Class-Path: jetty-io-9.2.3.v20140905.jar validation-api-1.1.0.Final.ja
  etty-http-9.2.3.v20140905.jar hk2-utils-2.2.0.jar jackson-databind-2.
  6.3.jar osgi-resource-locator-1.0.1.jar hk2-api-2.2.0.jar jetty-servl
  et-9.2.3.v20140905.jar jersey-media-moxy-2.7.jar jersey-container-jet
- ty-http-2.7.jar
+ ty-http-2.7.jar X3DToJsonConverter.jar
 Main-Class: ModelProvider.App
 

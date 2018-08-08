@@ -2,6 +2,7 @@ package X3DConverter;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -155,7 +156,7 @@ public class App {
 
             for (int i=0;i<models.size();i++)
             {
-                File outputFile = new File(outputPath + "\\" + i + ".json");
+                File outputFile = new File(outputPath + File.separatorChar + i + ".json");
                 // create all directories which don't exist
                 outputFile.getParentFile().mkdirs();
                 mapper.writeValue(outputFile, models.get(i));

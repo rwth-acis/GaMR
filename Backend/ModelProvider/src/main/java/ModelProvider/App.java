@@ -35,6 +35,7 @@ public class App {
         catch (IOException e)
         {
             System.out.println("Could not read the config file");
+            return;
         }
 
 

@@ -16,18 +16,28 @@ public class AudioProgressBar : MonoBehaviour
         get;set;
     }
 
+    /// <summary>
+    /// true if a recording is currently in progress
+    /// </summary>
     public bool DisplayRecording
     {
         get;set;
     }
 
-    // Use this for initialization
+    /// <summary>
+    /// Gets the necessary components and references
+    /// </summary>
     void Start()
     {
         innerProgressBar = transform.Find("Audio Progress Bar/Audio Progress Bar Inner Part");
         timeLabel = transform.Find("Time Label").GetComponent<TextMesh>();
     }
 
+    /// <summary>
+    /// Decides what the progress bar should display:
+    /// If a recording is in progress, it shows the length of the recording
+    /// If a clip was saved, it shows how long this clip is and how much of it was already played
+    /// </summary>
     private void Update()
     {
         if (DisplayRecording)
@@ -51,6 +61,11 @@ public class AudioProgressBar : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Updates the progress bar to a clip
+    /// Determines how long a clip is and how much of it has already been played
+    /// Adapts the label and the progress bar length accordingly
+    /// </summary>
     public void UpdateProgressBar()
     {
         if (timeLabel == null || innerProgressBar == null)
@@ -72,6 +87,11 @@ public class AudioProgressBar : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Converts a float which represents an amount of seconds to a time string of the form mm:ss
+    /// </summary>
+    /// <param name="seconds">The duration in seconds</param>
+    /// <returns>A string of the form "mm:ss" which represents a time of minutes and seconds</returns>
     private static string SecondsToTimeString(float seconds)
     {
         int minutes = (int) (seconds / 60);
