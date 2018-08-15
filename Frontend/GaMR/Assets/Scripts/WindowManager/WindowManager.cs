@@ -129,16 +129,6 @@ public class WindowManager : Singleton<WindowManager>
                 focusedDepth = hit.distance - 0.1f;
                 overwriteRotation = true;
                 windowNormal = hit.normal;
-
-
-                if (focusedDepth < Camera.main.nearClipPlane && !UIMessage.Instance.Active)
-                {
-                    UIMessage.Instance.Show(LocalizationManager.Instance.ResolveString("Your are too close to an obstacle. Step away so that windows can be displayed."));
-                }
-                else if (UIMessage.Instance.Active && focusedDepth >= Camera.main.nearClipPlane)
-                {
-                    UIMessage.Instance.Hide();
-                }
             }
             else
             {
@@ -147,10 +137,6 @@ public class WindowManager : Singleton<WindowManager>
             }
 
             UpdateAlignment();
-        }
-        else
-        {
-            UIMessage.Instance.Hide();
         }
     }
 }

@@ -13,9 +13,6 @@ TagManager:
   - UI
   - 
   - 
-  - Window
-  - Bounding Box
-  - Badge
   - 
   - 
   - 
@@ -36,7 +33,10 @@ TagManager:
   - 
   - 
   - 
-  - SpatialMapping
+  - 
+  - 
+  - 
+  - 
   m_SortingLayers:
   - name: Default
     uniqueID: 0
