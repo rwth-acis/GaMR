@@ -50,6 +50,7 @@ public class VRInputManager : Tool
                 ExecuteEvents.Execute<IFocusable>(lastHitTransform.gameObject, null, (x, y) => x.OnFocusExit());
                 lastHitTransform = null;
             }
+            lastDown = null;
         }
     }
 }
