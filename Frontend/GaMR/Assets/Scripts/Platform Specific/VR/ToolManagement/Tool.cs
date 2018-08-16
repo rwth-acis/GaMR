@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Tool : MonoBehaviour
 {
-    public Color colorRepresentation = Color.green;
-
     protected SteamVR_TrackedObject trackedObj;
 
     protected SteamVR_Controller.Device Controller
