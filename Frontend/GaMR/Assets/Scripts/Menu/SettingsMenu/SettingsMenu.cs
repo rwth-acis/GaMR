@@ -135,13 +135,13 @@ public class SettingsMenu : BaseMenu
         gamificationServerButton.Text = LocalizationManager.Instance.ResolveString("Gamification Server");
         sharingServerButton.Text = LocalizationManager.Instance.ResolveString("Sharing Server");
         collisionButton.Text = LocalizationManager.Instance.ResolveString("Collision Detection");
-        if (VersionManager.Instance != null)
+        if (VersionManager.Instance == null)
         {
-            versionLabel.text = LocalizationManager.Instance.ResolveString("Version") + " " + VersionManager.Instance.VersionString;
+            versionLabel.text = LocalizationManager.Instance.ResolveString("Version") + ": " + Application.version;
         }
         else
         {
-            versionLabel.text = "";
+            versionLabel.text = LocalizationManager.Instance.ResolveString("Version") + ": " + VersionManager.Instance.VersionNumber;
         }
     }
 }

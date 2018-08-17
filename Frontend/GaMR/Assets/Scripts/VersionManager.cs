@@ -6,17 +6,52 @@ using UnityEngine;
 public class VersionManager : Singleton<VersionManager>
 {
     [SerializeField]
-    private uint majorRelease = 1;
+    private TargetPlatform targetPlatform;
+
     [SerializeField]
-    private uint minorRelease = 0;
+    private uint platformRevision;
+
     [SerializeField]
-    private uint patchLevel = 0;
+    [Tooltip("Major version number of the compatible target backend")]
+    private uint backendMajor = 1;
+    [SerializeField]
+    [Tooltip("Minor version number of the compatible target backend")]
+    private uint backendMinor;
 
-    public uint MajorRelease { get { return majorRelease; } }
+    public string VersionNumber
+    {
+        get
+        {
+            string platformAbbreviation;
+            switch (targetPlatform)
+            {
+                case TargetPlatform.HOLOLENS:
+                    platformAbbreviation = "h";
+                    break;
+                case TargetPlatform.DESKTOP:
+                    platformAbbreviation = "d";
+                    break;
+                case TargetPlatform.HTC_VIVE:
+                    platformAbbreviation = "v";
+                    break;
+                default:
+                    platformAbbreviation = "err";
+                    break;
+            }
 
-    public uint MinorRelease { get { return minorRelease; } }
+            if (platformRevision > 0)
+            {
+                return Application.version + platformAbbreviation + "-" + platformRevision;
+            }
+            else
+            {
+                return Application.version + platformAbbreviation;
+            }
+        }
+    }
+}
 
-    public uint PatchLevel { get { return patchLevel; } }
-
-    public string VersionString { get { return MajorRelease + "." + MinorRelease + "." + PatchLevel; } }
+public enum TargetPlatform
+{
+    HOLOLENS, DESKTOP, HTC_VIVE
 }
