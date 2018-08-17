@@ -24,7 +24,13 @@ public class App {
     public static String path;
     public static String modelPath;
 
+    private static final int major = 1;
+    private static final int minor = 4;
+    private static final int patch = 0;
+
     public static void main(String[] args) throws Exception {
+
+        System.out.println("------- GaMR Model Provider Version " + major + "." + minor + "." + patch + " -------");
 
         try {
             path = Resources.ReadFile("config.conf");
@@ -35,6 +41,7 @@ public class App {
         catch (IOException e)
         {
             System.out.println("Could not read the config file");
+            return;
         }
 
 

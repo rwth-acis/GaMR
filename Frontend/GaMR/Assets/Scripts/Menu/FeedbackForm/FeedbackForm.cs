@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Feedback form where users can enter text in two text fields
+/// </summary>
 public class FeedbackForm : BaseMenu
 {
     FocusableContentButton titleField;
@@ -23,6 +26,10 @@ public class FeedbackForm : BaseMenu
     public Action OnCloseAction
     { get; set; }
 
+    /// <summary>
+    /// The title of the feedback
+    /// If set, it automatically updates the text field
+    /// </summary>
     private string Title
     {
         get
@@ -32,9 +39,11 @@ public class FeedbackForm : BaseMenu
         set
         {
             title = value;
+            // add line breaks to fit text to text field
             string contentWithLineBreaks = AutoLineBreak.StringWithLineBreaks(titleTextMesh, title, titleMaxWidth);
             string shownContent = contentWithLineBreaks;
             string[] lines = contentWithLineBreaks.Split('\n');
+            // if text is too long for the text field: just cut its visualization off and show three dots
             if (lines.Length > 2)
             {
                 lines[1].Remove(lines[1].Length - 4);
@@ -47,6 +56,10 @@ public class FeedbackForm : BaseMenu
         }
     }
 
+    /// <summary>
+    /// The comment of the feedback
+    /// If set, it automatically updates the comment text field
+    /// </summary>
     private string Comment
     {
         get
@@ -56,9 +69,11 @@ public class FeedbackForm : BaseMenu
         set
         {
             comment = value;
+            // add line breaks to fit text to text field
             string contentWithLineBreaks = AutoLineBreak.StringWithLineBreaks(commentTextMesh, comment, commentMaxWidth);
             string shownContent = contentWithLineBreaks;
             string[] lines = contentWithLineBreaks.Split('\n');
+            // if text is too long for the text field: just cut its visualization off and show three dots
             if (lines.Length > 5)
             {
                 lines[4].Remove(lines[1].Length - 4);
@@ -71,6 +86,9 @@ public class FeedbackForm : BaseMenu
         }
     }
 
+    /// <summary>
+    /// Enabled and disables the menu and its buttons
+    /// </summary>
     public bool MenuEnabled
     {
         get { return menuEnabled; }
@@ -83,7 +101,9 @@ public class FeedbackForm : BaseMenu
         }
     }
 
-    // Use this for initialization
+    /// <summary>
+    /// Initializes the menu and its components
+    /// </summary>
     protected override void Start()
     {
         base.Start();
@@ -129,6 +149,9 @@ public class FeedbackForm : BaseMenu
         commentMaxWidth = fieldWidth - (fieldWidth / 2f - distanceBetweenButtonCenterAndContent);
     }
 
+    /// <summary>
+    /// Initializes the buttons; gets all requires references
+    /// </summary>
     private void InitializeButtons()
     {
         // get/create buttons
@@ -146,6 +169,10 @@ public class FeedbackForm : BaseMenu
         OnUpdateLanguage();
     }
 
+    /// <summary>
+    /// Checks if the feedback form is complete
+    /// If it is, the send-button is enabled
+    /// </summary>
     private void CheckFormComplete()
     {
         if (Comment != "" && Title != "")
@@ -158,6 +185,9 @@ public class FeedbackForm : BaseMenu
         }
     }
 
+    /// <summary>
+    /// Posts the feedback as a new requirement to the requirements bazaar
+    /// </summary>
     private void SubmitToReqBaz()
     {
         // Requirements Bazaar uses a different access token header format => include it
@@ -187,6 +217,9 @@ public class FeedbackForm : BaseMenu
         });
     }
 
+    /// <summary>
+    /// Closes the menu
+    /// </summary>
     private void Close()
     {
         if (OnCloseAction != null)
@@ -196,6 +229,10 @@ public class FeedbackForm : BaseMenu
         Destroy(gameObject);
     }
 
+    /// <summary>
+    /// Called if the language is updated
+    /// Assigns the translated descriptions to the menu components
+    /// </summary>
     public override void OnUpdateLanguage()
     {
         // set captions
@@ -207,6 +244,10 @@ public class FeedbackForm : BaseMenu
         closeButton.Text = LocalizationManager.Instance.ResolveString("Close");
     }
 
+    /// <summary>
+    /// Called if the title has been entered using the keyboard
+    /// </summary>
+    /// <param name="title">The new title (null if keyboard input was aborted)</param>
     private void TitleSet(string title)
     {
         if (title != null)
@@ -215,6 +256,10 @@ public class FeedbackForm : BaseMenu
         }
     }
 
+    /// <summary>
+    /// Called if the comment has been entered using the keyboard
+    /// </summary>
+    /// <param name="comment">The new comment (null if keyboard input was aborted)</param>
     private void CommentSet(string comment)
     {
         if (comment != null)
