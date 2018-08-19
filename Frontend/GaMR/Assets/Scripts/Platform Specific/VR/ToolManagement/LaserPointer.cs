@@ -15,6 +15,9 @@ public class LaserPointer : Tool
     public GameObject laserPrefab;
     public GameObject hitPrefab;
 
+    public Vector3 cursorSize = new Vector3(0.015f, 0.015f, 0.015f);
+    public Vector3 cursorPressedSize = new Vector3(0.008f, 0.008f, 0.008f);
+
     private Material laserMaterial;
 
     private Renderer laserRenderer;
@@ -63,6 +66,14 @@ public class LaserPointer : Tool
             hitPoint = hit.point;
             hitInstance.transform.position = hitPoint + 0.015f * hit.normal;
             hitInstance.transform.rotation = Quaternion.LookRotation(hit.normal);
+            if (Controller.GetPress(SteamVR_Controller.ButtonMask.Trigger))
+            {
+                hitInstance.transform.localScale = cursorPressedSize;
+            }
+            else
+            {
+                hitInstance.transform.localScale = cursorSize;
+            }
 
             if (showAlways || Controller.GetPress(SteamVR_Controller.ButtonMask.Trigger))
             {
