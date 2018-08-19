@@ -13,6 +13,7 @@ public class SettingsMenu : BaseMenu
     FocusableContentButton sharingServerButton;
     FocusableContentButton collisionButton;
     FocusableContentButton sharingEnabledButton;
+    TextMesh versionLabel;
 
     private bool menuEnabled = true;
 
@@ -52,6 +53,7 @@ public class SettingsMenu : BaseMenu
         sharingServerButton = transform.Find("Sharing Server Button").gameObject.GetComponent<FocusableContentButton>();
         sharingEnabledButton = transform.Find("Sharing Enabled Button").gameObject.GetComponent<FocusableContentButton>();
         collisionButton = transform.Find("Collision Detection Button").gameObject.GetComponent<FocusableContentButton>();
+        versionLabel = transform.Find("Version Label").gameObject.GetComponent<TextMesh>();
 
         SettingsActions actions = gameObject.AddComponent<SettingsActions>();
 
@@ -133,5 +135,13 @@ public class SettingsMenu : BaseMenu
         gamificationServerButton.Text = LocalizationManager.Instance.ResolveString("Gamification Server");
         sharingServerButton.Text = LocalizationManager.Instance.ResolveString("Sharing Server");
         collisionButton.Text = LocalizationManager.Instance.ResolveString("Collision Detection");
+        if (VersionManager.Instance == null)
+        {
+            versionLabel.text = LocalizationManager.Instance.ResolveString("Version") + ": " + Application.version;
+        }
+        else
+        {
+            versionLabel.text = LocalizationManager.Instance.ResolveString("Version") + ": " + VersionManager.Instance.VersionNumber;
+        }
     }
 }
