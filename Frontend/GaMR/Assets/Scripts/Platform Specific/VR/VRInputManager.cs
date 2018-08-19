@@ -15,17 +15,32 @@ public class VRInputManager : Tool
 
         if (Physics.Raycast(trackedObj.transform.position, transform.forward, out hit, 100))
         {
+            InputEventData inputEventData = new InputEventData(EventSystem.current);
+
             if (lastHitTransform != hit.transform)
             {
-                if (lastHitTransform != null)
+                if (!Controller.GetPress(SteamVR_Controller.ButtonMask.Trigger))
                 {
-                    ExecuteEvents.Execute<IFocusable>(lastHitTransform.gameObject, null, (x, y) => x.OnFocusExit());
+                    if (lastHitTransform != null)
+                    {
+                        ExecuteEvents.Execute<IFocusable>(lastHitTransform.gameObject, null, (x, y) => x.OnFocusExit());
+                    }
+                    ExecuteEvents.Execute<IFocusable>(hit.transform.gameObject, null, (x, y) => x.OnFocusEnter());
                 }
-                ExecuteEvents.Execute<IFocusable>(hit.transform.gameObject, null, (x, y) => x.OnFocusEnter());
+                else
+                {
+                    if (lastHitTransform != null && lastHitTransform == lastDown)
+                    {
+                        ExecuteEvents.Execute<IFocusable>(lastHitTransform.gameObject, null, (x, y) => x.OnFocusExit());
+                    }
+                    if (hit.transform == lastDown)
+                    {
+                        ExecuteEvents.Execute<IFocusable>(hit.transform.gameObject, null, (x, y) => x.OnFocusEnter());
+                        ExecuteEvents.Execute<IInputHandler>(hit.transform.gameObject, null, (x, y) => x.OnInputDown(inputEventData));
+                    }
+                }
                 lastHitTransform = hit.transform;
             }
-
-            InputEventData inputEventData = new InputEventData(EventSystem.current);
 
             if (Controller.GetPressDown(SteamVR_Controller.ButtonMask.Trigger))
             {
