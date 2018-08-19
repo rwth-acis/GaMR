@@ -61,7 +61,7 @@ public class LaserPointer : Tool
         {
             hitInstance.SetActive(true);
             hitPoint = hit.point;
-            hitInstance.transform.position = hitPoint;
+            hitInstance.transform.position = hitPoint + 0.015f * hit.normal;
             hitInstance.transform.rotation = Quaternion.LookRotation(hit.normal);
 
             if (showAlways || Controller.GetPress(SteamVR_Controller.ButtonMask.Trigger))
