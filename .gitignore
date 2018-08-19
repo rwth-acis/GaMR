@@ -33,3 +33,4 @@ sysinfo.txt
 *.apk
 *.unitypackage
 /Frontend/GaMR/Assets/SteamVR
+/Frontend/GaMR/Assets/SteamVR.meta
