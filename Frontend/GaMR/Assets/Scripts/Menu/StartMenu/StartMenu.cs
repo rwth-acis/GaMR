@@ -69,6 +69,9 @@ public class StartMenu : BaseMenu
 
     private void Login()
     {
+        MessageBox.Show(LocalizationManager.Instance.ResolveString("Login in using the desktop browser"), MessageBoxType.INFORMATION,
+            transform.position - transform.rotation * new Vector3(0.1f, 0, 0),
+            Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y +90f, transform.eulerAngles.z));
         AuthorizationManager.Instance.Login();
     }
 
