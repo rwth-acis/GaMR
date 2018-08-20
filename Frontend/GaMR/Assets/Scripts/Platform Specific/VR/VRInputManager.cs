@@ -9,10 +9,79 @@ public class VRInputManager : Tool
     private Transform lastHitTransform;
     private Transform lastDown;
 
+    private LaserPointer laserPointer;
+    private BowTeleport teleport;
+
+    private bool pointerEnabled;
+    private bool pointerEnabledBeforeTeleport;
+
+    private static List<VRInputManager> instances = new List<VRInputManager>();
+
+    public bool PointerEnabled
+    {
+        get
+        {
+            return pointerEnabled;
+        }
+        set
+        {
+            if (value && pointerEnabled != value) // if switched on: switch all others off
+            {
+                foreach(VRInputManager instance in instances)
+                {
+                    if (instance != this)
+                    {
+                        instance.PointerEnabled = false;
+                    }
+                }
+            }
+            pointerEnabled = value;
+            laserPointer.enabled = value;
+        }
+    }
+
+
+    private void Start()
+    {
+        laserPointer = GetComponent<LaserPointer>();
+        teleport = GetComponent<BowTeleport>();
+        instances.Add(this);
+        PointerEnabled = true;
+    }
+
     private void Update()
     {
-        RaycastHit hit;
+        // teleport starting
+        if (Controller.GetPressDown(SteamVR_Controller.ButtonMask.Touchpad))
+        {
+            teleport.ShowTeleportBow = true;
+            pointerEnabledBeforeTeleport = pointerEnabled;
+            PointerEnabled = false;
+        }
 
+        // teleport finished
+        if (Controller.GetPressUp(SteamVR_Controller.ButtonMask.Touchpad))
+        {
+            teleport.ShowTeleportBow = false;
+            PointerEnabled = pointerEnabledBeforeTeleport;
+        }
+
+        // toggle pointer
+        if (Controller.GetPressUp(SteamVR_Controller.ButtonMask.ApplicationMenu))
+        {
+            PointerEnabled = !PointerEnabled;
+        }
+
+        // update pointer
+        if (pointerEnabled)
+        {
+            PointerUpdate();
+        }
+    }
+
+    private void PointerUpdate()
+    {
+        RaycastHit hit;
         if (Physics.Raycast(trackedObj.transform.position, transform.forward, out hit, 100))
         {
             InputEventData inputEventData = new InputEventData(EventSystem.current);
@@ -67,5 +136,11 @@ public class VRInputManager : Tool
             }
             lastDown = null;
         }
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+
     }
 }

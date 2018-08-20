@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BowTeleport : IconTool
+public class BowTeleport : Tool
 {
     public float startVelocity = 1f;
     public float timeStep = 0.2f;
@@ -28,6 +28,31 @@ public class BowTeleport : IconTool
     private float time = 0;
     private const float maxDur = 5f;
     private bool standardMaterialsActive = true;
+
+    private bool showTeleportBow;
+
+    public bool ShowTeleportBow
+    {
+        get
+        {
+            return showTeleportBow;
+        }
+        set
+        {
+            if (value != showTeleportBow)
+            {
+                if (value) // switched on
+                {
+                    StartTeleport();
+                }
+                else // switched off
+                {
+                    EndTeleport();
+                }
+            }
+            showTeleportBow = value;
+        }
+    }
 
     private void Start()
     {
@@ -85,9 +110,26 @@ public class BowTeleport : IconTool
         }
     }
 
+    private void StartTeleport()
+    {
+        GridManager.Instance.ShowGrids();
+    }
+
+    private void EndTeleport()
+    {
+        if (teleportAllowed)
+        {
+            Vector3 offset = Camera.main.transform.localPosition;
+            GameObject.FindGameObjectWithTag("Player").transform.position = targetPosition - new Vector3(offset.x, 0, offset.z);
+        }
+
+        GridManager.Instance.HideGrids();
+        bowParent.SetActive(false);
+    }
+
     private void Update()
     {
-        if (Controller.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
+        if (showTeleportBow)
         {
             bowParent.SetActive(true);
             BowUpdate();
@@ -97,21 +139,31 @@ public class BowTeleport : IconTool
             bowParent.SetActive(false);
         }
 
-        if (Controller.GetPressDown(SteamVR_Controller.ButtonMask.Touchpad))
-        {
-            GridManager.Instance.ShowGrids();
-        }
+        //if (Controller.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
+        //{
+        //    bowParent.SetActive(true);
+        //    BowUpdate();
+        //}
+        //else
+        //{
+        //    bowParent.SetActive(false);
+        //}
 
-        if (Controller.GetPressUp(SteamVR_Controller.ButtonMask.Touchpad))
-        {
-            if (teleportAllowed)
-            {
-                Vector3 offset = Camera.main.transform.localPosition;
-                GameObject.FindGameObjectWithTag("Player").transform.position = targetPosition - new Vector3(offset.x, 0, offset.z);
-            }
+        //if (Controller.GetPressDown(SteamVR_Controller.ButtonMask.Touchpad))
+        //{
+        //    GridManager.Instance.ShowGrids();
+        //}
 
-            GridManager.Instance.HideGrids();
-        }
+        //if (Controller.GetPressUp(SteamVR_Controller.ButtonMask.Touchpad))
+        //{
+        //    if (teleportAllowed)
+        //    {
+        //        Vector3 offset = Camera.main.transform.localPosition;
+        //        GameObject.FindGameObjectWithTag("Player").transform.position = targetPosition - new Vector3(offset.x, 0, offset.z);
+        //    }
+
+        //    GridManager.Instance.HideGrids();
+        //}
     }
 
     private void BowUpdate()
