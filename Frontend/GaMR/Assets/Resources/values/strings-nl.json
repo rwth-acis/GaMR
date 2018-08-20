@@ -191,11 +191,14 @@
     {
       "key": "Enter your feedback",
       "value": "Vul uw feedback in"
-    }
-    ,
+    },
     {
       "key": "Enter the feedback title",
       "value": "Voer de feedbacktitel in"
+    },
+    {
+      "key": "Version",
+      "value": "Versie"
     }
   ]
 }

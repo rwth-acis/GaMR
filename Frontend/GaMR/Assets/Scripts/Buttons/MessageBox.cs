@@ -93,12 +93,38 @@ public class MessageBox : MonoBehaviour
     /// <param name="type">The type of the MessageBox</param>
     public static void Show(string text, MessageBoxType type)
     {
+        Show(text, type, false, Vector3.zero, Quaternion.identity);
+    }
+
+    public static void Show(string text, MessageBoxType type, Vector3 position, Quaternion rotation)
+    {
+        Show(text, type, true, position, rotation);
+    }
+
+    private static void Show(string text, MessageBoxType type, bool fixedPosition, Vector3 position, Quaternion rotation)
+    {
         // load the MessageBox from the resources and set the necessary variables
-        GameObject messageBox = (GameObject) Instantiate(Resources.Load("MessageBox"));
-        messageBox.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 3;
+        GameObject messageBox = (GameObject)Instantiate(Resources.Load("MessageBox"));
+        //messageBox.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 3;
         MessageBox msgBox = messageBox.GetComponent<MessageBox>();
         msgBox.Text = text;
         msgBox.type = type;
+
+        if (fixedPosition)
+        {
+            // if a fixed position is used: destroy all compononents from the prefab which modify the position and rotation
+            SimpleTagalong tagalong = messageBox.GetComponent<SimpleTagalong>();
+            Destroy(tagalong);
+            FaceCamera faceCamera = messageBox.GetComponent<FaceCamera>();
+            Destroy(faceCamera);
+            Window3D window = messageBox.GetComponent<Window3D>();
+            Destroy(window);
+
+            // then set the position and rotation
+            messageBox.transform.position = position;
+            messageBox.transform.rotation = rotation;
+        }
+
         count++;
     }
 
