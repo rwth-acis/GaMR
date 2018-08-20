@@ -16,6 +16,8 @@ public class BowTeleport : IconTool
     public Material[] noTargetMaterials;
     public LayerMask allowedTeleportLayers;
 
+    public Transform uiContainer;
+
     private const float gravity = 9.81f;
 
     private GameObject allowedCursorInstance, forbiddenCursorInstance;
@@ -30,6 +32,7 @@ public class BowTeleport : IconTool
     private void Start()
     {
         bowParent = new GameObject("Bow Parent");
+        bowParent.transform.parent = uiContainer;
         curveFollowers = new List<GameObject>();
         int i = 0;
         for (float t = 0f; t < maxDur; t += timeStep)

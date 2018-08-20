@@ -18,6 +18,8 @@ public class LaserPointer : Tool
     public Vector3 cursorSize = new Vector3(0.015f, 0.015f, 0.015f);
     public Vector3 cursorPressedSize = new Vector3(0.008f, 0.008f, 0.008f);
 
+    public Transform uiContainer;
+
     private Material laserMaterial;
 
     private Renderer laserRenderer;
@@ -28,9 +30,11 @@ public class LaserPointer : Tool
     private void Start()
     {
         laser = Instantiate(laserPrefab);
+        laser.transform.parent = uiContainer;
         laserRenderer = laser.GetComponent<Renderer>();
         laserMaterial = laserRenderer.material;
         hitInstance = Instantiate(hitPrefab);
+        hitInstance.transform.parent = uiContainer;
     }
 
     private void ShowLaser(RaycastHit hit)
