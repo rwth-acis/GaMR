@@ -195,6 +195,10 @@
     {
       "key": "Enter the feedback title",
       "value": "Feedback-Titel eingeben"
+    },
+    {
+      "key": "Version",
+      "value": "Version"
     }
   ]
 }
