@@ -23,6 +23,9 @@ public class GaMRButton : MonoBehaviour, IInputClickHandler
 
     public int Data { get; set; } // custom data
 
+    /// <summary>
+    /// Gets the necessary components of the button
+    /// </summary>
     private void Start()
     {
         Transform caption = transform.Find("Caption");
@@ -57,6 +60,10 @@ public class GaMRButton : MonoBehaviour, IInputClickHandler
         }
     }
 
+    /// <summary>
+    /// The text which is displayed on the button
+    /// If changed, the new text will automatically be applied to the button's representation
+    /// </summary>
     public string Text
     {
         get { return text; }
@@ -79,6 +86,10 @@ public class GaMRButton : MonoBehaviour, IInputClickHandler
         }
     }
 
+    /// <summary>
+    /// The icon which is displayed on the button
+    /// If changed, the new icon is automatically applied to the button's representation
+    /// </summary>
     public Sprite Icon
     {
         get { return icon; }
@@ -101,6 +112,10 @@ public class GaMRButton : MonoBehaviour, IInputClickHandler
         }
     }
 
+    /// <summary>
+    /// True if the icon is visible on the button
+    /// Changes to this value are automatically applied
+    /// </summary>
     public bool IconVisible
     {
         get
