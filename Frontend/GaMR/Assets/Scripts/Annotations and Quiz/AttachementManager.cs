@@ -119,6 +119,10 @@ public class AttachementManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Saves the given string as a quiz file and loads it as the current quiz
+    /// </summary>
+    /// <param name="res">json annotation file</param>
     public void ConvertToQuizManager(string res)
     {
         if (!IsQuiz)

@@ -12,8 +12,20 @@ public class QuizManager : AnnotationManager
     protected new string subPathLoad = "/resources/quiz/load/";
     protected new string subPathSave = "/resources/quiz/save/";
 
+    /// <summary>
+    /// Gets or sets the name of the currently selected quiz question
+    /// </summary>
     public string CurrentlySelectedName { get; set; }
+
+    /// <summary>
+    /// Gets or sets the currently selection annotation
+    /// </summary>
     public Annotation CurrentlySelectedAnnotation { get; set; }
+
+    /// <summary>
+    /// Gets or sets the currently selected annotation container
+    /// Also handles the highlighting of this annotation
+    /// </summary>
     public AnnotationContainer CurrentlySelectedAnnotationContainer
     {
         get { return currentlySelectedAnnotationContainer; }
@@ -43,6 +55,10 @@ public class QuizManager : AnnotationManager
     /// </summary>
     public string QuizName { get; set; }
 
+    /// <summary>
+    /// The model's gamification manager
+    /// Note that this is not a singleton because each model has its own gamification manager
+    /// </summary>
     public GamificationManager GamificiationManager { get { return gamificationManager; } }
 
     /// <summary>
@@ -75,6 +91,9 @@ public class QuizManager : AnnotationManager
         LoadAnnotations();
     }
 
+    /// <summary>
+    /// Makes sure that the game and quiz are created in the Gamification Framework
+    /// </summary>
     private void EnsureQuizGamification()
     {
         Achievement createAchievement = new Achievement("Achi" + QuizName, QuizName, "", annotations.Count, "defaultBadge");
@@ -146,6 +165,9 @@ public class QuizManager : AnnotationManager
             );
     }
 
+    /// <summary>
+    /// Displays a list of names next to the object
+    /// </summary>
     public void ShowNames()
     {
         transform.parent.parent.GetComponentInChildren<QuizMenuSpawner>().enabled = true;
@@ -156,7 +178,7 @@ public class QuizManager : AnnotationManager
     {
         for (int i = 0; i < annotations.Count; i++)
         {
-            int indexForLambda = i;
+            int indexForLambda = i; // the index i of the for loop is changing while the lambda function is executed => store the current value in another variable
             GameAction action = GameAction.FromAnnotation(annotations[i], QuizName);
             quest.AddAction(action, 1);
             GamificationFramework.Instance.CreateAction(gamificationManager.gameId, action,
