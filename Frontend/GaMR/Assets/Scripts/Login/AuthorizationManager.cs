@@ -14,6 +14,15 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
     [SerializeField]
     private string debugToken;
     private string accessToken;
+    private string authorizationCode;
+
+    const string learningLayersAuthorizationEndpoint = "https://api.learning-layers.eu/o/oauth2/authorize";
+    const string learningLayersTokenEndpoint = "https://api.learning-layers.eu/o/oauth2/token";
+    const string learningLayersUserInfoEndpoint = "https://api.learning-layers.eu/o/oauth2/userinfo";
+
+    const string scopes = "openid%20profile%20email";
+
+    const string gamrRedirectURI = "gamr://";
 
     public string AccessToken { get { return accessToken; } }
 
@@ -24,7 +33,7 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
         {
             accessToken = debugToken;
             AddAccessTokenToHeader();
-            RestManager.Instance.GET("https://api.learning-layers.eu/o/oauth2/userinfo?access_token=" + accessToken, GetUserInfoForDebugToken);
+            RestManager.Instance.GET(learningLayersUserInfoEndpoint + "?access_token=" + accessToken, GetUserInfoForDebugToken);
         }
     }
 
@@ -50,7 +59,7 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
             SceneManager.LoadScene("Scene", LoadSceneMode.Single);
             return;
         }
-        Application.OpenURL("https://api.learning-layers.eu/o/oauth2/authorize?response_type=token&scope=openid%20profile%20email&client_id=" + clientId + "&redirect_uri=gamr://");
+        Application.OpenURL(learningLayersAuthorizationEndpoint + "?response_type=code&scope=" + scopes + "&client_id=" + clientId + "&redirect_uri=" + gamrRedirectURI);
     }
 
     public void Logout()
@@ -63,13 +72,21 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
     {
         if (uri.Fragment != null)
         {
-            char[] splitters = { '#', '&' };
-            string[] arguments = uri.Fragment.Split(splitters);
+            char[] splitters = { '?', '&' };
+            string[] arguments = uri.AbsoluteUri.Split(splitters);
             foreach (string argument in arguments)
             {
-                if (argument.StartsWith("access_token="))
+                if (argument.StartsWith("code="))
                 {
-                    accessToken = argument.Replace("access_token=", "");
+                    authorizationCode = argument.Replace("code=", "");
+                    Debug.Log("authorizationCode: " + authorizationCode);
+                    // now exchange authorization code for access token
+                    RestManager.Instance.POST(learningLayersTokenEndpoint + "?code=" + authorizationCode + "&client_id=" + clientId +
+                        "&redirect_uri=" + gamrRedirectURI + "&grant_type=authorization_code", (req) => // TODO: add client secret
+                        {
+                            string json = req.downloadHandler.text;
+                        }
+                        );
                     break;
                 }
             }
@@ -96,7 +113,7 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
 
     private void CheckAccessToken()
     {
-        RestManager.Instance.GET("https://api.learning-layers.eu/o/oauth2/userinfo?access_token=" + accessToken, OnLogin);
+        RestManager.Instance.GET(learningLayersUserInfoEndpoint + "?access_token=" + accessToken, OnLogin);
     }
 
     private void OnLogin(UnityWebRequest result)
