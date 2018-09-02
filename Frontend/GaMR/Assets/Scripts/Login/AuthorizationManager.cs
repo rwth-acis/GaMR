@@ -11,6 +11,7 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
 
     [SerializeField]
     private string clientId = "c4ced10f-ce0f-4155-b6f7-a4c40ffa410c";
+    private string clientSecret;
     [SerializeField]
     private string debugToken;
     private string accessToken;
@@ -29,12 +30,22 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
     private void Start()
     {
         // skip the login by using the debug token
-        if (Application.isEditor && (accessToken == null || accessToken == ""))
+        if (Application.isEditor)
         {
-            accessToken = debugToken;
-            AddAccessTokenToHeader();
-            RestManager.Instance.GET(learningLayersUserInfoEndpoint + "?access_token=" + accessToken, GetUserInfoForDebugToken);
+            if (accessToken == null || accessToken == "")
+            {
+                accessToken = debugToken;
+                AddAccessTokenToHeader();
+                RestManager.Instance.GET(learningLayersUserInfoEndpoint + "?access_token=" + accessToken, GetUserInfoForDebugToken);
+            }
         }
+        //else // else: fetch the client secret
+        //{
+            TextAsset secretAsset = (TextAsset)Resources.Load("values/client_secret");
+            clientSecret = secretAsset.text;
+        //}
+
+        StartedByProtocol(new Uri("http://127.0.0.1/?code=mF4JZc"));
     }
 
     private void GetUserInfoForDebugToken(UnityWebRequest req)
@@ -82,9 +93,24 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
                     Debug.Log("authorizationCode: " + authorizationCode);
                     // now exchange authorization code for access token
                     RestManager.Instance.POST(learningLayersTokenEndpoint + "?code=" + authorizationCode + "&client_id=" + clientId +
-                        "&redirect_uri=" + gamrRedirectURI + "&grant_type=authorization_code", (req) => // TODO: add client secret
+                        "&client_secret=" + clientSecret + "&redirect_uri=" + "http://127.0.0.1" + "&grant_type=authorization_code", (req) =>
                         {
                             string json = req.downloadHandler.text;
+                            AuthorizationFlowAnswer answer = JsonUtility.FromJson<AuthorizationFlowAnswer>(json);
+                            if (!string.IsNullOrEmpty(answer.error))
+                            {
+                                MessageBox.Show(answer.error_description, MessageBoxType.ERROR);
+                            }
+                            else
+                            {
+                                // extract access token and check it
+                                accessToken = answer.access_token;
+
+                                Debug.Log("The access token is " + accessToken);
+
+                                AddAccessTokenToHeader();
+                                CheckAccessToken();
+                            }
                         }
                         );
                     break;
@@ -92,11 +118,6 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
             }
 
         }
-
-        Debug.Log("The access token is " + accessToken);
-
-        AddAccessTokenToHeader();
-        CheckAccessToken();
     }
 
     private void AddAccessTokenToHeader()
