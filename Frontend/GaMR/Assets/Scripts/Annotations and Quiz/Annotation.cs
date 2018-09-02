@@ -10,9 +10,9 @@ using UnityEngine;
 public class Annotation {
 
     [SerializeField]
-    private Vector3 position;
+    private Vector3 position; // position of the annotation in object-relative coordinates
     [SerializeField]
-    private string text;
+    private string text; // the text of the annotation
     public bool Answered { get; set; }
 
     /// <summary>
