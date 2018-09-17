@@ -39,13 +39,11 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
                 RestManager.Instance.GET(learningLayersUserInfoEndpoint + "?access_token=" + accessToken, GetUserInfoForDebugToken);
             }
         }
-        //else // else: fetch the client secret
-        //{
+        else // else: fetch the client secret
+        {
             TextAsset secretAsset = (TextAsset)Resources.Load("values/client_secret");
             clientSecret = secretAsset.text;
-        //}
-
-        StartedByProtocol(new Uri("http://127.0.0.1/?code=mF4JZc"));
+        }
     }
 
     private void GetUserInfoForDebugToken(UnityWebRequest req)
