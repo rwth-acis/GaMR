@@ -91,7 +91,7 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
                     Debug.Log("authorizationCode: " + authorizationCode);
                     // now exchange authorization code for access token
                     RestManager.Instance.POST(learningLayersTokenEndpoint + "?code=" + authorizationCode + "&client_id=" + clientId +
-                        "&client_secret=" + clientSecret + "&redirect_uri=" + "http://127.0.0.1" + "&grant_type=authorization_code", (req) =>
+                        "&client_secret=" + clientSecret + "&redirect_uri=" + gamrRedirectURI + "&grant_type=authorization_code", (req) =>
                         {
                             string json = req.downloadHandler.text;
                             AuthorizationFlowAnswer answer = JsonUtility.FromJson<AuthorizationFlowAnswer>(json);
