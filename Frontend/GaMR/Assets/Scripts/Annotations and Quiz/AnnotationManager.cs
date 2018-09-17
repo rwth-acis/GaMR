@@ -7,9 +7,11 @@ using UnityEngine.Networking;
 using HoloToolkit.Sharing.Tests;
 using HoloToolkit.Sharing;
 
+/// <summary>
+/// administers the annotations on a model
+/// </summary>
 public class AnnotationManager : MonoBehaviour
 {
-
     protected List<Annotation> annotations;
     protected List<AnnotationContainer> annotationContainers;
     protected bool editMode = true;
@@ -24,6 +26,10 @@ public class AnnotationManager : MonoBehaviour
 
     private AnnotationMenu currentlyOpenAnnotationMenu;
 
+    /// <summary>
+    /// Gets or sets the annotation menu which is currently open
+    /// If set, it automatically closes any other open annotation menu (on the same model)
+    /// </summary>
     public AnnotationMenu CurrentlyOpenAnnotationMenu
     {
         get
@@ -52,6 +58,11 @@ public class AnnotationManager : MonoBehaviour
         LoadAnnotations();
     }
 
+    /// <summary>
+    /// Called if the annotations have been updated by another participant of the shared session
+    /// Reloads the annotations
+    /// </summary>
+    /// <param name="msg">The network message containing the ID of the sender and the model name</param>
     private void RemoteAnnotationsUpdated(NetworkInMessage msg)
     {
         Debug.Log("Received remote annotations update");
@@ -144,6 +155,11 @@ public class AnnotationManager : MonoBehaviour
         Save();
     }
 
+    /// <summary>
+    /// Notifies the annotation manager about changes to the annotations
+    /// Saves the current annotations
+    /// </summary>
+    /// <param name="updatedAnnotation"></param>
     public virtual void NotifyAnnotationEdited(Annotation updatedAnnotation)
     {
         Save();
@@ -186,6 +202,10 @@ public class AnnotationManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Deletes an audio annotation on the backend's storage and destroys the refernce to it in the annotation container
+    /// </summary>
+    /// <param name="container">The container which holds the audio annotation</param>
     public void DeleteAudioAnnotation(AnnotationContainer container)
     {
         container.AnnotationClip = null;
@@ -269,6 +289,10 @@ public class AnnotationManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Loads an audio clip which is stored as an audio annotations from the backend
+    /// </summary>
+    /// <param name="index">The index of the requested clip</param>
     private void LoadAudioAnnotations(int index)
     {
         Debug.Log("Loading audio for " + index);
@@ -280,12 +304,15 @@ public class AnnotationManager : MonoBehaviour
                     annotationContainers[index].AnnotationClip = clip;
                 }
 
+                // to avoid placing all requests at once and stressing the server, the request for the next
+                // index is only executed once the previous query has finished
                 if (index < annotationContainers.Count - 1)
                 {
                     LoadAudioAnnotations(index + 1);
                 }
                 else
                 {
+                    // no more audio files to load => indicate this in a Boolean
                     initializingAudio = false;
                 }
             });

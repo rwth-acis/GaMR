@@ -59,7 +59,10 @@ public class Window3D : MonoBehaviour
         set
         {
             overwriteRotation = value;
-            faceCamera.enabled = !overwriteRotation;
+            if (faceCamera != null)
+            {
+                faceCamera.enabled = !overwriteRotation;
+            }
         }
     }
 

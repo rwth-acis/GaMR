@@ -11,20 +11,38 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
 
     [SerializeField]
     private string clientId = "c4ced10f-ce0f-4155-b6f7-a4c40ffa410c";
+    private string clientSecret;
     [SerializeField]
     private string debugToken;
     private string accessToken;
+    private string authorizationCode;
+
+    const string learningLayersAuthorizationEndpoint = "https://api.learning-layers.eu/o/oauth2/authorize";
+    const string learningLayersTokenEndpoint = "https://api.learning-layers.eu/o/oauth2/token";
+    const string learningLayersUserInfoEndpoint = "https://api.learning-layers.eu/o/oauth2/userinfo";
+
+    const string scopes = "openid%20profile%20email";
+
+    const string gamrRedirectURI = "gamr://";
 
     public string AccessToken { get { return accessToken; } }
 
     private void Start()
     {
         // skip the login by using the debug token
-        if (Application.isEditor && (accessToken == null || accessToken == ""))
+        if (Application.isEditor)
         {
-            accessToken = debugToken;
-            AddAccessTokenToHeader();
-            RestManager.Instance.GET("https://api.learning-layers.eu/o/oauth2/userinfo?access_token=" + accessToken, GetUserInfoForDebugToken);
+            if (accessToken == null || accessToken == "")
+            {
+                accessToken = debugToken;
+                AddAccessTokenToHeader();
+                RestManager.Instance.GET(learningLayersUserInfoEndpoint + "?access_token=" + accessToken, GetUserInfoForDebugToken);
+            }
+        }
+        else // else: fetch the client secret
+        {
+            TextAsset secretAsset = (TextAsset)Resources.Load("values/client_secret");
+            clientSecret = secretAsset.text;
         }
     }
 
@@ -50,7 +68,7 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
             SceneManager.LoadScene("Scene", LoadSceneMode.Single);
             return;
         }
-        Application.OpenURL("https://api.learning-layers.eu/o/oauth2/authorize?response_type=token&scope=openid%20profile%20email&client_id=" + clientId + "&redirect_uri=gamr://");
+        Application.OpenURL(learningLayersAuthorizationEndpoint + "?response_type=code&scope=" + scopes + "&client_id=" + clientId + "&redirect_uri=" + gamrRedirectURI);
     }
 
     public void Logout()
@@ -63,23 +81,41 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
     {
         if (uri.Fragment != null)
         {
-            char[] splitters = { '#', '&' };
-            string[] arguments = uri.Fragment.Split(splitters);
+            char[] splitters = { '?', '&' };
+            string[] arguments = uri.AbsoluteUri.Split(splitters);
             foreach (string argument in arguments)
             {
-                if (argument.StartsWith("access_token="))
+                if (argument.StartsWith("code="))
                 {
-                    accessToken = argument.Replace("access_token=", "");
+                    authorizationCode = argument.Replace("code=", "");
+                    Debug.Log("authorizationCode: " + authorizationCode);
+                    // now exchange authorization code for access token
+                    RestManager.Instance.POST(learningLayersTokenEndpoint + "?code=" + authorizationCode + "&client_id=" + clientId +
+                        "&client_secret=" + clientSecret + "&redirect_uri=" + "http://127.0.0.1" + "&grant_type=authorization_code", (req) =>
+                        {
+                            string json = req.downloadHandler.text;
+                            AuthorizationFlowAnswer answer = JsonUtility.FromJson<AuthorizationFlowAnswer>(json);
+                            if (!string.IsNullOrEmpty(answer.error))
+                            {
+                                MessageBox.Show(answer.error_description, MessageBoxType.ERROR);
+                            }
+                            else
+                            {
+                                // extract access token and check it
+                                accessToken = answer.access_token;
+
+                                Debug.Log("The access token is " + accessToken);
+
+                                AddAccessTokenToHeader();
+                                CheckAccessToken();
+                            }
+                        }
+                        );
                     break;
                 }
             }
 
         }
-
-        Debug.Log("The access token is " + accessToken);
-
-        AddAccessTokenToHeader();
-        CheckAccessToken();
     }
 
     private void AddAccessTokenToHeader()
@@ -96,7 +132,7 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
 
     private void CheckAccessToken()
     {
-        RestManager.Instance.GET("https://api.learning-layers.eu/o/oauth2/userinfo?access_token=" + accessToken, OnLogin);
+        RestManager.Instance.GET(learningLayersUserInfoEndpoint + "?access_token=" + accessToken, OnLogin);
     }
 
     private void OnLogin(UnityWebRequest result)

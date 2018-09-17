@@ -134,7 +134,7 @@ public class Keyboard : MonoBehaviour, IWindow
         if (inputBackground != null)
         {
             inputBackgroundPivot = CreateScalingPivot(inputBackground);
-            maxWidth = maxWidth != 0.0f ? maxWidth: Geometry.GetBoundsIndependentFromRotation(inputBackground).size.x;
+            maxWidth = maxWidth != 0.0f ? maxWidth : Geometry.GetBoundsIndependentFromRotation(inputBackground).size.x;
         }
         if (background != null)
         {
@@ -194,6 +194,21 @@ public class Keyboard : MonoBehaviour, IWindow
 
     public static void Display(string label, string text, int maxNumberOfCharacters, Action<string> callWithResult, bool fullKeyboard)
     {
+        Display(label, text, maxNumberOfCharacters, callWithResult, fullKeyboard, false, Vector3.zero, Quaternion.identity);
+    }
+
+    public static void Display(string label, string text, Action<string> callWithResult, bool fullKeyboard, Vector3 position, Quaternion rotation)
+    {
+        Display(label, text, 0, callWithResult, fullKeyboard, true, position, rotation);
+    }
+
+    public static void Display(string label, string text, int maxNumberOfCharacters, Action<string> callWithResult, bool fullKeyboard, Vector3 position, Quaternion rotation)
+    {
+        Display(label, text, maxNumberOfCharacters, callWithResult, fullKeyboard, true, position, rotation);
+    }
+
+    private static void Display(string label, string text, int maxNumberOfCharacters, Action<string> callWithResult, bool fullKeyboard, bool fixedPosition, Vector3 position, Quaternion rotation)
+    {
         GameObject keyboardInstance;
         if (fullKeyboard)
         {
@@ -209,6 +224,22 @@ public class Keyboard : MonoBehaviour, IWindow
         keyboard.callWithResult = callWithResult;
         keyboard.IsFullKeyboard = fullKeyboard;
         keyboard.MaxLength = maxNumberOfCharacters;
+
+        if (fixedPosition) // use a fixed position for the keyboardi instead of tracking it with the view
+        {
+            // delete the components from the prefab which realize the view tracking
+            SimpleTagalong tagalong = keyboardInstance.GetComponent<SimpleTagalong>();
+            Destroy(tagalong);
+            FaceCamera faceCamera = keyboardInstance.GetComponent<FaceCamera>();
+            Destroy(faceCamera);
+            Window3D window = keyboardInstance.GetComponent<Window3D>();
+            Destroy(window);
+
+            // set the position of the keyboard
+            keyboardInstance.transform.position = position;
+            keyboardInstance.transform.rotation = rotation;
+        }
+
         currentlyOpenedKeyboard = keyboard;
     }
 

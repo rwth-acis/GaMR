@@ -46,7 +46,9 @@ public class MessageBox : MonoBehaviour
     private float maxWidth;
     private Transform background;
 
-
+    /// <summary>
+    /// gets the necessary components
+    /// </summary>
     private void Awake()
     {
         background = transform.Find("Background");
@@ -93,12 +95,54 @@ public class MessageBox : MonoBehaviour
     /// <param name="type">The type of the MessageBox</param>
     public static void Show(string text, MessageBoxType type)
     {
+        Show(text, type, false, Vector3.zero, Quaternion.identity);
+    }
+
+    /// <summary>
+    /// Call this to show a new MessageBox with a fixed position and rotation
+    /// </summary>
+    /// <param name="text">The text message which should be displayed to the user</param>
+    /// <param name="type">The type of the MessageBox</param>
+    /// <param name="position">The global position where the message box is shown</param>
+    /// <param name="rotation">The global rotation of the message box</param>
+    public static void Show(string text, MessageBoxType type, Vector3 position, Quaternion rotation)
+    {
+        Show(text, type, true, position, rotation);
+    }
+
+    /// <summary>
+    /// Internal function which is the base for the different public Show methods
+    /// Displays a MessageBox and sets it either at a fixed position or to follow the user
+    /// </summary>
+    /// <param name="text">The text message which should be displayed to the user</param>
+    /// <param name="type">The type of the MessageBox</param>
+    /// <param name="fixedPosition">True if the MessageBox should be displayed at a fixed position</param>
+    /// <param name="position">The global position where the message box is shown (only used if fixedPosition true)</param>
+    /// <param name="rotation">The global rotation of the message box (only used if fixedPosition true)</param>
+    private static void Show(string text, MessageBoxType type, bool fixedPosition, Vector3 position, Quaternion rotation)
+    {
         // load the MessageBox from the resources and set the necessary variables
-        GameObject messageBox = (GameObject) Instantiate(Resources.Load("MessageBox"));
-        messageBox.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 3;
+        GameObject messageBox = (GameObject)Instantiate(Resources.Load("MessageBox"));
+        //messageBox.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 3;
         MessageBox msgBox = messageBox.GetComponent<MessageBox>();
         msgBox.Text = text;
         msgBox.type = type;
+
+        if (fixedPosition)
+        {
+            // if a fixed position is used: destroy all compononents from the prefab which modify the position and rotation
+            SimpleTagalong tagalong = messageBox.GetComponent<SimpleTagalong>();
+            Destroy(tagalong);
+            FaceCamera faceCamera = messageBox.GetComponent<FaceCamera>();
+            Destroy(faceCamera);
+            Window3D window = messageBox.GetComponent<Window3D>();
+            Destroy(window);
+
+            // then set the position and rotation
+            messageBox.transform.position = position;
+            messageBox.transform.rotation = rotation;
+        }
+
         count++;
     }
 

@@ -12,6 +12,9 @@ public class RecordingManager : Singleton<RecordingManager>
     private AudioClip currentClip;
     private const int recordingLength = 60;
 
+    /// <summary>
+    /// true if a recording is currently active
+    /// </summary>
     public bool IsRecording
     {
         get; private set;
@@ -26,6 +29,10 @@ public class RecordingManager : Singleton<RecordingManager>
         private set;
     }
 
+    /// <summary>
+    /// Test-routine for debugging
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator TestRecording()
     {
         StartRecording();
@@ -41,6 +48,10 @@ public class RecordingManager : Singleton<RecordingManager>
         yield return post.Send();
     }
 
+    /// <summary>
+    /// Starts a recording
+    /// </summary>
+    /// <returns>true if the recording was successfully started</returns>
     public bool StartRecording()
     {
         if (Microphone.devices.Length > 0)
@@ -58,6 +69,10 @@ public class RecordingManager : Singleton<RecordingManager>
         }
     }
 
+    /// <summary>
+    /// Stops the recording currently active recording
+    /// </summary>
+    /// <returns>the full audio clip of the recording</returns>
     public AudioClip StopRecording()
     {
         CancelInvoke("CopyClipData");
@@ -74,6 +89,11 @@ public class RecordingManager : Singleton<RecordingManager>
         return CreateAudioClip();
     }
 
+    /// <summary>
+    /// Copies the samples of a limited audio clip to the overall recording samples
+    /// This is required since it is only possible to start recordings with a predefined length
+    /// For recordings with an arbitrary length, many of these fixed-length clips are concatenated
+    /// </summary>
     private void CopyClipData()
     {
         Debug.Log("Copying clip data");
@@ -83,6 +103,10 @@ public class RecordingManager : Singleton<RecordingManager>
         Debug.Log("New record length: " + recording.Count);
     }
 
+    /// <summary>
+    /// Converts the current list of recording samples to an audio clip
+    /// </summary>
+    /// <returns>The audio clip created from the recording</returns>
     private AudioClip CreateAudioClip()
     {
         AudioClip clip = AudioClip.Create("Recording", recording.Count, 1, 44100, false);
@@ -91,6 +115,9 @@ public class RecordingManager : Singleton<RecordingManager>
         return clip;
     }
 
+    /// <summary>
+    /// Updates the recording length so that it can be displayed
+    /// </summary>
     private void Update()
     {
         if (IsRecording)
