@@ -26,7 +26,7 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
 
     const string scopes = "openid%20profile%20email";
 
-    const string gamrRedirectURI = "gamr://";
+    string gamrRedirectURI = "http://127.0.0.1";
 
     private Thread serverThread;
     private bool serverActive = false;
@@ -77,9 +77,9 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
         //    return;
         //}
 
-        if (string.IsNullOrEmpty(redirectUri))
+        if (string.IsNullOrEmpty(gamrRedirectURI))
         {
-            redirectUri = GenerateRedirectUri();
+            gamrRedirectURI = GenerateRedirectUri();
         }
         StartServer();
         Application.OpenURL(learningLayersAuthorizationEndpoint + "?response_type=code&scope=" + scopes + "&client_id=" + clientId + "&redirect_uri=" + gamrRedirectURI);
@@ -200,11 +200,11 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
     private void Listen()
     {
         http = new HttpListener();
-        if (string.IsNullOrEmpty(redirectUri))
+        if (string.IsNullOrEmpty(gamrRedirectURI))
         {
-            redirectUri = GenerateRedirectUri();
+            gamrRedirectURI = GenerateRedirectUri();
         }
-        http.Prefixes.Add(redirectUri);
+        http.Prefixes.Add(gamrRedirectURI);
         http.Start();
         Debug.Log("HTTPListener listening...");
 
