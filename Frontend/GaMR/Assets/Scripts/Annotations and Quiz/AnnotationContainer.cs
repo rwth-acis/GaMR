@@ -81,6 +81,10 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
     {
     }
 
+    /// <summary>
+    /// Called if the user clicks on the annotation marker
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnInputDown(InputEventData eventData)
     {
         // close the keyboard if it is open
@@ -124,6 +128,9 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
         get; set;
     }
 
+    /// <summary>
+    /// The associated audio recording
+    /// </summary>
     public AudioClip AnnotationClip
     {
         get
@@ -151,6 +158,10 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
         Destroy(gameObject);
     }
 
+    /// <summary>
+    /// Sets a new text for the given annotation
+    /// </summary>
+    /// <param name="newText">The new text of the annotation</param>
     public void EditAnnotation(string newText)
     {
         // set text
@@ -159,11 +170,17 @@ public class AnnotationContainer : MonoBehaviour, IInputHandler
         annotationManager.NotifyAnnotationEdited(Annotation);
     }
 
+    /// <summary>
+    /// Visually highlights the associated annotation marker
+    /// </summary>
     public void Select()
     {
         mat.color = new Color(selectedColor.r, selectedColor.g, selectedColor.b, mat.color.a);
     }
 
+    /// <summary>
+    /// Visually deselects the associated annotation marker
+    /// </summary>
     internal void Deselect()
     {
         mat.color = new Color(deselectedColor.r, deselectedColor.g, deselectedColor.b, mat.color.a);

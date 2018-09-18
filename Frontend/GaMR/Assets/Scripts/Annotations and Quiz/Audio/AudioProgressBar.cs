@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class AudioProgressBar : MonoBehaviour
 {
-    private Transform innerProgressBar;
-    private TextMesh timeLabel;
+    private Transform innerProgressBar; // reference to the innter progress bar
+    private TextMesh timeLabel; // reference to the time display
 
     /// <summary>
     /// The audio source which is monitored by the progress bar. Its progress is visualized.
