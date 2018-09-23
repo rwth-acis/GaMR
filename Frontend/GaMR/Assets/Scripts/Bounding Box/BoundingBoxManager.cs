@@ -39,9 +39,18 @@ public class BoundingBoxManager : MonoBehaviour
         {
             widgets.Add(t);
         }
-        foreach(Transform t in gameObject.transform.Find("Widgets/Rotation"))
+
+        if (VersionManager.Instance.TargetPlatform == TargetPlatform.HTC_VIVE)
         {
-            widgets.Add(t);
+            // disable the rotation controls as they are not needed in VR
+            gameObject.transform.Find("Widgets/Rotation").gameObject.SetActive(false);
+        }
+        else // for other platforms: add widgets to widget list
+        {
+            foreach (Transform t in gameObject.transform.Find("Widgets/Rotation"))
+            {
+                widgets.Add(t);
+            }
         }
     }
 

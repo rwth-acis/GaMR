@@ -35,6 +35,13 @@ public class TransformationManager : MonoBehaviour
             instances = new Dictionary<string, TransformationManager>();
         }
         instances.Add(boxInfo.Id.ToString(), this);
+
+        if (VersionManager.Instance.TargetPlatform == TargetPlatform.HTC_VIVE)
+        {
+            Destroy(tapToPlace);
+
+            gameObject.AddComponent<GrabbableObject>();
+        }
     }
 
     private void OnDestroy()

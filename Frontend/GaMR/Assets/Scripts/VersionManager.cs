@@ -49,6 +49,11 @@ public class VersionManager : Singleton<VersionManager>
             }
         }
     }
+
+    public TargetPlatform TargetPlatform
+    {
+        get { return targetPlatform; }
+    }
 }
 
 public enum TargetPlatform

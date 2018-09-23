@@ -6,6 +6,9 @@ using UnityEngine.EventSystems;
 
 public class VRInputManager : Tool
 {
+    public LayerMask pointableLayers;
+    public LayerMask grabbableLayers;
+
     private Transform lastHitTransform;
     private Transform lastDown;
 
@@ -37,6 +40,7 @@ public class VRInputManager : Tool
             }
             pointerEnabled = value;
             laserPointer.enabled = value;
+            laserPointer.mask = pointableLayers;
         }
     }
 
@@ -82,7 +86,7 @@ public class VRInputManager : Tool
     private void PointerUpdate()
     {
         RaycastHit hit;
-        if (Physics.Raycast(trackedObj.transform.position, transform.forward, out hit, 100))
+        if (Physics.Raycast(trackedObj.transform.position, transform.forward, out hit, 100, pointableLayers))
         {
             InputEventData inputEventData = new InputEventData(EventSystem.current);
 

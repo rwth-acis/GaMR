@@ -71,11 +71,11 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
 
     public void Login()
     {
-        //if (Application.isEditor)
-        //{
-        //    SceneManager.LoadScene("Scene", LoadSceneMode.Single);
-        //    return;
-        //}
+        if (Application.isEditor)
+        {
+            SceneManager.LoadScene("Scene", LoadSceneMode.Single);
+            return;
+        }
 
         if (string.IsNullOrEmpty(gamrRedirectURI))
         {
@@ -192,9 +192,12 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
 
     private void StopServerImmediately()
     {
-        serverThread.Abort();
-        http.Stop();
-        Debug.Log("HTTPListener stopped.");
+        if (serverThread != null)
+        {
+            serverThread.Abort();
+            http.Stop();
+            Debug.Log("HTTPListener stopped.");
+        }
     }
 
     private void Listen()
