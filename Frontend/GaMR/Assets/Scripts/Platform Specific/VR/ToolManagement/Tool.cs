@@ -6,7 +6,7 @@ public class Tool : MonoBehaviour
 {
     protected SteamVR_TrackedObject trackedObj;
 
-    protected SteamVR_Controller.Device Controller
+    public SteamVR_Controller.Device Controller
     {
         get { return SteamVR_Controller.Input((int)trackedObj.index); }
     }

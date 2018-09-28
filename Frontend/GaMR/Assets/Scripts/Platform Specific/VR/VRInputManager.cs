@@ -18,6 +18,10 @@ public class VRInputManager : Tool
     private bool pointerEnabled;
     private bool pointerEnabledBeforeTeleport;
 
+    private GameObject grabbedObject;
+    private bool isGrabbing;
+    private GameObject collidingObject;
+
     private static List<VRInputManager> instances = new List<VRInputManager>();
 
     public bool PointerEnabled
@@ -74,6 +78,35 @@ public class VRInputManager : Tool
         if (Controller.GetPressUp(SteamVR_Controller.ButtonMask.ApplicationMenu))
         {
             PointerEnabled = !PointerEnabled;
+        }
+
+        if (Controller.GetPressDown(SteamVR_Controller.ButtonMask.Trigger))
+        {
+            if (!isGrabbing && collidingObject != null)
+            {
+                isGrabbing = ExecuteEvents.Execute<IGrabbable>(collidingObject, null, (x, y) => x.OnGrabStarted(this));
+                if (isGrabbing)
+                {
+                    grabbedObject = collidingObject;
+                }
+            }
+        }
+
+        // if object is grabbed
+        if (isGrabbing)
+        {
+            // update grab if trigger is still held
+            if (Controller.GetPress(SteamVR_Controller.ButtonMask.Trigger))
+            {
+                ExecuteEvents.Execute<IGrabbable>(grabbedObject, null, (x, y) => x.OnGrabUpdate(this));
+            }
+            // if trigger is released  => grab stops
+            else if (Controller.GetPressUp(SteamVR_Controller.ButtonMask.Trigger))
+            {
+                ExecuteEvents.Execute<IGrabbable>(grabbedObject, null, (x, y) => x.OnGrabCompleted(this));
+                isGrabbing = false;
+                grabbedObject = null;
+            }
         }
 
         // update pointer
@@ -142,9 +175,59 @@ public class VRInputManager : Tool
         }
     }
 
+    private void SetCollidingObject(Collider col)
+    {
+        if (collidingObject != null || col.gameObject.GetComponent<Rigidbody>() == null)
+        {
+            return;
+        }
+        collidingObject = col.gameObject;
+    }
+
+    /// <summary>
+    /// Can be called by other scripts to set an object as grabbed
+    /// </summary>
+    /// <param name="newObject"></param>
+    public void GrabObject(GameObject newObject)
+    {
+        ReleaseObject(); // in case anything is already in the hand: release it (this is needed if the function is called by another script)
+        if (grabbedObject == null)
+        {
+            isGrabbing = ExecuteEvents.Execute<IGrabbable>(newObject, null, (x, y) => x.OnGrabStarted(this)); // only returns true if a grabbable object was found
+            if (isGrabbing)
+            {
+                grabbedObject = newObject;
+            }
+        }
+    }
+
+    public void ReleaseObject()
+    {
+        if (grabbedObject != null)
+        {
+            ExecuteEvents.Execute<IGrabbable>(grabbedObject, null, (x, y) => x.OnGrabCompleted(this));
+            grabbedObject = null;
+            isGrabbing = false;
+        }
+    }
+
     protected override void OnEnable()
     {
         base.OnEnable();
+    }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        SetCollidingObject(other);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        collidingObject = null;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        SetCollidingObject(other);
     }
 }
