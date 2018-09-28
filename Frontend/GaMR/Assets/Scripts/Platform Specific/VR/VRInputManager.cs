@@ -88,9 +88,12 @@ public class VRInputManager : Tool
                 if (isGrabbing)
                 {
                     grabbedObject = collidingObject;
+                    Debug.Log("grabbed " + grabbedObject);
                 }
             }
         }
+
+        Debug.Log("isGrabbing: " + isGrabbing);
 
         // if object is grabbed
         if (isGrabbing)
@@ -105,6 +108,7 @@ public class VRInputManager : Tool
             {
                 ExecuteEvents.Execute<IGrabbable>(grabbedObject, null, (x, y) => x.OnGrabCompleted(this));
                 isGrabbing = false;
+                Debug.Log("released " + grabbedObject);
                 grabbedObject = null;
             }
         }
@@ -184,32 +188,32 @@ public class VRInputManager : Tool
         collidingObject = col.gameObject;
     }
 
-    /// <summary>
-    /// Can be called by other scripts to set an object as grabbed
-    /// </summary>
-    /// <param name="newObject"></param>
-    public void GrabObject(GameObject newObject)
-    {
-        ReleaseObject(); // in case anything is already in the hand: release it (this is needed if the function is called by another script)
-        if (grabbedObject == null)
-        {
-            isGrabbing = ExecuteEvents.Execute<IGrabbable>(newObject, null, (x, y) => x.OnGrabStarted(this)); // only returns true if a grabbable object was found
-            if (isGrabbing)
-            {
-                grabbedObject = newObject;
-            }
-        }
-    }
+    ///// <summary>
+    ///// Can be called by other scripts to set an object as grabbed
+    ///// </summary>
+    ///// <param name="newObject"></param>
+    //public void GrabObject(GameObject newObject)
+    //{
+    //    ReleaseObject(); // in case anything is already in the hand: release it (this is needed if the function is called by another script)
+    //    if (grabbedObject == null)
+    //    {
+    //        isGrabbing = ExecuteEvents.Execute<IGrabbable>(newObject, null, (x, y) => x.OnGrabStarted(this)); // only returns true if a grabbable object was found
+    //        if (isGrabbing)
+    //        {
+    //            grabbedObject = newObject;
+    //        }
+    //    }
+    //}
 
-    public void ReleaseObject()
-    {
-        if (grabbedObject != null)
-        {
-            ExecuteEvents.Execute<IGrabbable>(grabbedObject, null, (x, y) => x.OnGrabCompleted(this));
-            grabbedObject = null;
-            isGrabbing = false;
-        }
-    }
+    //public void ReleaseObject()
+    //{
+    //    if (grabbedObject != null)
+    //    {
+    //        ExecuteEvents.Execute<IGrabbable>(grabbedObject, null, (x, y) => x.OnGrabCompleted(this));
+    //        grabbedObject = null;
+    //        isGrabbing = false;
+    //    }
+    //}
 
     protected override void OnEnable()
     {

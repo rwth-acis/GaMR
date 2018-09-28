@@ -43,6 +43,7 @@ public class GrabbableObject : MonoBehaviour, IGrabbable
 
     public void OnGrabStarted(VRInputManager sender)
     {
+        Debug.Log("OnGrabStarted" + gameObject.name);
         if (grabbableRigidBody != null)
         {
             grabbableRigidBody.isKinematic = true;
