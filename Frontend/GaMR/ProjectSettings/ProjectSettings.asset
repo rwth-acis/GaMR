@@ -265,7 +265,7 @@ PlayerSettings:
     m_Devices:
     - HoloLens
   - m_BuildTarget: Standalone
-    m_Enabled: 1
+    m_Enabled: 0
     m_Devices:
     - Oculus
     - OpenVR
@@ -564,7 +564,8 @@ PlayerSettings:
   webGLUseEmbeddedResources: 0
   webGLUseWasm: 0
   webGLCompressionFormat: 1
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    7: 
   platformArchitecture: {}
   scriptingBackend:
     Metro: 2

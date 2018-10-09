@@ -106,7 +106,10 @@ public class InformationManager : Singleton<InformationManager>
         set
         {
             collisionEnabled = value;
-            SpatialMappingManager.Instance.gameObject.SetActive(value);
+            if (SpatialMappingManager.Instance != null)
+            {
+                SpatialMappingManager.Instance.gameObject.SetActive(value);
+            }
         }
     }
 
