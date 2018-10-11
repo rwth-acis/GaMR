@@ -3,14 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Controls the gamification progress bar of quizzes
+/// </summary>
 public class ProgressBar : MonoBehaviour {
 
     [Tooltip("The full height of the progress bar")]
     public float targetHeight = 0.28f;
 
+    // variables for smooth transitions between different fill levels
     private Vector3 velocity = Vector3.zero;
     [Tooltip("The time needed to complete the movement to the new value")]
     public float smoothTime = 0.3f;
+
+    // variables which hold parts of the 3D construction of the progress bar
     [SerializeField]
     private GameObject progressBar;
     [SerializeField]
@@ -31,6 +37,9 @@ public class ProgressBar : MonoBehaviour {
         set { progress = value; }
     }
 
+    /// <summary>
+    /// The associated badge which can be won once the progress bar is filled up completely
+    /// </summary>
     public GameObject Badge
     {
         get; private set;
@@ -60,6 +69,9 @@ public class ProgressBar : MonoBehaviour {
         CreateBadge();
     }
 
+    /// <summary>
+    /// Creates a badge representation on top of the progress bar and fills it with the data of the associated badge
+    /// </summary>
     private void CreateBadge()
     {
         GameObject badge = (GameObject)Instantiate(Resources.Load("Badge"));
