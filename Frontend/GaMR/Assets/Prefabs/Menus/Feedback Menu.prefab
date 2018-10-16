@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 23106134097948934}
   - component: {fileID: 114373145576091334}
   - component: {fileID: 114280260123817196}
-  - component: {fileID: 114429139830432680}
+  - component: {fileID: 114273667029173840}
   m_Layer: 0
   m_Name: Close Button
   m_TagString: Untagged
@@ -239,7 +239,7 @@ GameObject:
   - component: {fileID: 23303155005264548}
   - component: {fileID: 114223401079371866}
   - component: {fileID: 114760306076840730}
-  - component: {fileID: 114660154877540278}
+  - component: {fileID: 114626890355815122}
   m_Layer: 0
   m_Name: Title Button
   m_TagString: Untagged
@@ -379,7 +379,7 @@ GameObject:
   - component: {fileID: 23437550318105160}
   - component: {fileID: 114221631816548144}
   - component: {fileID: 114433348903071186}
-  - component: {fileID: 114635193277732360}
+  - component: {fileID: 114411534019302100}
   m_Layer: 0
   m_Name: Comment Button
   m_TagString: Untagged
@@ -492,7 +492,7 @@ GameObject:
   - component: {fileID: 23957683141208922}
   - component: {fileID: 114908457201547588}
   - component: {fileID: 114798216669689170}
-  - component: {fileID: 114993507770211492}
+  - component: {fileID: 114149901303678696}
   m_Layer: 0
   m_Name: Post ReqBaz Button
   m_TagString: Untagged
@@ -718,7 +718,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1298831096238600}
   m_LocalRotation: {x: 0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4867465227048244}
@@ -905,7 +905,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1041842819032530}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.5666684, y: -0.30999827, z: -0.000007074574}
+  m_LocalPosition: {x: -0.56666636, y: -0.30999827, z: -0.0000073967617}
   m_LocalScale: {x: 0.034999978, y: 0.034999978, z: 0.21583332}
   m_Children: []
   m_Father: {fileID: 4570735687122652}
@@ -945,7 +945,7 @@ Transform:
   m_GameObject: {fileID: 1950669141419960}
   m_LocalRotation: {x: -0.00000001545431, y: 0.7071068, z: -0.00000001545431, w: 0.7071068}
   m_LocalPosition: {x: -0.57333314, y: 0, z: 0}
-  m_LocalScale: {x: 0.005010536, y: 0.03845945, z: 0.2371668}
+  m_LocalScale: {x: 0.01803793, y: 0.13845402, z: 0.85380054}
   m_Children: []
   m_Father: {fileID: 4417458586968640}
   m_RootOrder: 2
@@ -957,7 +957,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1119478410879352}
   m_LocalRotation: {x: -0.00000001545431, y: 0.7071068, z: -0.00000001545431, w: 0.7071068}
-  m_LocalPosition: {x: -0.5666682, y: 0.0000000788462, z: 0.23500092}
+  m_LocalPosition: {x: -0.56666726, y: 0.0000000788462, z: 0.23500092}
   m_LocalScale: {x: 0.05732363, y: 0.43999988, z: 2.7133353}
   m_Children: []
   m_Father: {fileID: 4417458586968640}
@@ -1020,7 +1020,7 @@ Transform:
   m_GameObject: {fileID: 1547145545057788}
   m_LocalRotation: {x: -0.00000001545431, y: 0.7071068, z: -0.00000001545431, w: 0.7071068}
   m_LocalPosition: {x: -0.57333314, y: 0, z: 0}
-  m_LocalScale: {x: 0.0050105387, y: 0.009881934, z: 0.2371668}
+  m_LocalScale: {x: 0.01803794, y: 0.03557496, z: 0.85380054}
   m_Children: []
   m_Father: {fileID: 4510766255743444}
   m_RootOrder: 2
@@ -1033,7 +1033,7 @@ Transform:
   m_GameObject: {fileID: 1839388031239442}
   m_LocalRotation: {x: -0.00000001545431, y: 0.7071068, z: -0.00000001545431, w: 0.7071068}
   m_LocalPosition: {x: -0.57333314, y: 0, z: 0}
-  m_LocalScale: {x: 0.03845946, y: 0.03845945, z: 0.2371668}
+  m_LocalScale: {x: 0.13845406, y: 0.13845402, z: 0.85380054}
   m_Children: []
   m_Father: {fileID: 4570735687122652}
   m_RootOrder: 2
@@ -1207,7 +1207,7 @@ Transform:
   m_GameObject: {fileID: 1342328304461494}
   m_LocalRotation: {x: -0.00000001545431, y: 0.7071068, z: -0.00000001545431, w: 0.7071068}
   m_LocalPosition: {x: -0.57333314, y: 0, z: 0}
-  m_LocalScale: {x: 0.005010536, y: 0.023716656, z: 0.2371668}
+  m_LocalScale: {x: 0.01803793, y: 0.085379966, z: 0.85380054}
   m_Children: []
   m_Father: {fileID: 4878767001586808}
   m_RootOrder: 2
@@ -2686,6 +2686,18 @@ MonoBehaviour:
   constantOffset: {x: -0.015300106, y: -0.000000019393717, z: -0.44367653}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
+--- !u!114 &114149901303678696
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1709313106524422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85a458358f5fd3547b9a44720050fe3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pressDepth: 0.02
 --- !u!114 &114151559569724524
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2703,7 +2715,7 @@ MonoBehaviour:
   captionSize: 0.09
   ledSize: 6.2
   contentSize: 0.11
-  borderWidth: 0.05
+  borderWidth: 0.18
   scaleComponentsWithButton: 1
 --- !u!114 &114183529518899128
 MonoBehaviour:
@@ -2722,7 +2734,7 @@ MonoBehaviour:
   captionSize: 0.09
   ledSize: 6.2
   contentSize: 0.11
-  borderWidth: 0.05
+  borderWidth: 0.18
   scaleComponentsWithButton: 1
 --- !u!114 &114187827406343374
 MonoBehaviour:
@@ -2757,7 +2769,7 @@ MonoBehaviour:
   captionSize: 0.008
   ledSize: 6.2
   contentSize: 0.01
-  borderWidth: 0.05
+  borderWidth: 0.18
   scaleComponentsWithButton: 0
 --- !u!114 &114223401079371866
 MonoBehaviour:
@@ -2776,7 +2788,7 @@ MonoBehaviour:
   captionSize: 0.008
   ledSize: 6.2
   contentSize: 0.012
-  borderWidth: 0.05
+  borderWidth: 0.18
   scaleComponentsWithButton: 0
 --- !u!114 &114235858544801602
 MonoBehaviour:
@@ -2805,7 +2817,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85a458358f5fd3547b9a44720050fe3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pressDepth: 0.008
+  pressDepth: 0.02
+--- !u!114 &114273667029173840
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1162173402012966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85a458358f5fd3547b9a44720050fe3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pressDepth: 0.02
 --- !u!114 &114280260123817196
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2887,8 +2911,20 @@ MonoBehaviour:
   captionSize: 0.035
   ledSize: 6.2
   contentSize: 0.08
-  borderWidth: 0.05
+  borderWidth: 0.18
   scaleComponentsWithButton: 1
+--- !u!114 &114411534019302100
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1566624236385320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5db6ac60a770130439407d74480cb1f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pressDepth: 0.02
 --- !u!114 &114413652128056896
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2905,18 +2941,6 @@ MonoBehaviour:
   constantOffset: {x: -0.009922981, y: -0.14604174, z: 0.14222279}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
---- !u!114 &114429139830432680
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1162173402012966}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85a458358f5fd3547b9a44720050fe3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pressDepth: 0.008
 --- !u!114 &114433348903071186
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3029,19 +3053,7 @@ MonoBehaviour:
   constantOffset: {x: -0.009922981, y: -0.14604174, z: 0.14222279}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
---- !u!114 &114635193277732360
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1566624236385320}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5db6ac60a770130439407d74480cb1f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pressDepth: 0.008
---- !u!114 &114660154877540278
+--- !u!114 &114626890355815122
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -3052,7 +3064,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5db6ac60a770130439407d74480cb1f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pressDepth: 0.008
+  pressDepth: 0.02
 --- !u!114 &114692405515622264
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3112,7 +3124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85a458358f5fd3547b9a44720050fe3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pressDepth: 0.008
+  pressDepth: 0.02
 --- !u!114 &114798216669689170
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3212,7 +3224,7 @@ MonoBehaviour:
   captionSize: 0.09
   ledSize: 6.2
   contentSize: 0.11
-  borderWidth: 0.05
+  borderWidth: 0.18
   scaleComponentsWithButton: 1
 --- !u!114 &114946319913524678
 MonoBehaviour:
@@ -3264,18 +3276,6 @@ MonoBehaviour:
   constantOffset: {x: -0.017, y: 0.10500151, z: -0.50000596}
   scaleProportionalToParent: 1
   scaleEffect: {x: 0, y: 1, z: 1}
---- !u!114 &114993507770211492
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1709313106524422}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85a458358f5fd3547b9a44720050fe3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pressDepth: 0.008
 --- !u!212 &212009263091557412
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -3315,7 +3315,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 200.21999, y: 42.3}
+  m_Size: {x: 55.61666, y: 11.75}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -3359,7 +3359,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 200.21999, y: 26.085}
+  m_Size: {x: 55.61666, y: 7.245833}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -3535,7 +3535,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 26.084984, y: 26.085}
+  m_Size: {x: 7.2458286, y: 7.245833}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -3799,7 +3799,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 200.21988, y: 101.52}
+  m_Size: {x: 55.61663, y: 28.199997}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
