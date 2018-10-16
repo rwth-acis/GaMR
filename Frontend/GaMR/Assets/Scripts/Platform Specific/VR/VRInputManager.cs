@@ -88,12 +88,9 @@ public class VRInputManager : Tool
                 if (isGrabbing)
                 {
                     grabbedObject = collidingObject;
-                    Debug.Log("grabbed " + grabbedObject);
                 }
             }
         }
-
-        Debug.Log("isGrabbing: " + isGrabbing);
 
         // if object is grabbed
         if (isGrabbing)
@@ -108,7 +105,6 @@ public class VRInputManager : Tool
             {
                 ExecuteEvents.Execute<IGrabbable>(grabbedObject, null, (x, y) => x.OnGrabCompleted(this));
                 isGrabbing = false;
-                Debug.Log("released " + grabbedObject);
                 grabbedObject = null;
             }
         }

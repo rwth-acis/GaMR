@@ -64,7 +64,7 @@ public class GrabbableObject : MonoBehaviour, IGrabbable
         {
             lastDistance = 0;
             firstScaleFrame = true;
-            ScalingPivotManager.Instance.Pivot.transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
+            ScalingPivotManager.Instance.Pivot.transform.localScale = Vector3.one;
             transform.parent = ScalingPivotManager.Instance.Pivot.transform;
         }
     }
