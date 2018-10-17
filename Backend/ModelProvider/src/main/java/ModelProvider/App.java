@@ -26,7 +26,7 @@ public class App {
 
     private static final int major = 1;
     private static final int minor = 4;
-    private static final int patch = 0;
+    private static final int patch = 1;
 
     public static void main(String[] args) throws Exception {
 
