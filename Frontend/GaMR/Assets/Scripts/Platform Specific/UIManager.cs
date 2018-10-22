@@ -9,13 +9,13 @@ public class UIManager : MonoBehaviour
     public Transform loginPage;
     public Transform settingsPage;
 
-    private Animator loginPageAnimator;
-    private Animator settingsPageAnimator;
+    //private Animator loginPageAnimator;
+    //private Animator settingsPageAnimator;
+
+        public Animator uiAnimator;
 
     private void Awake()
     {
-        loginPageAnimator = loginPage.GetComponent<Animator>();
-        settingsPageAnimator = settingsPage.GetComponent<Animator>();
     }
 
     public void Login()
@@ -25,8 +25,12 @@ public class UIManager : MonoBehaviour
 
     public void ShowSettings()
     {
-        loginPageAnimator.SetBool("LoginMenuVisible", !loginPageAnimator.GetBool("LoginMenuVisible"));
-        settingsPageAnimator.SetBool("SettingsVisible", !settingsPageAnimator.GetBool("SettingsVisible"));
+        uiAnimator.SetBool("ShowSettings", true);
+    }
+
+    public void ShowLoginMenu()
+    {
+        uiAnimator.SetBool("ShowSettings", false);
     }
 
     private void Update()
