@@ -8,8 +8,7 @@ public class UILanguageSetter : MonoBehaviour, ILanguageUpdater
     Text loginText;
     Text settingsText;
     Text languageText;
-    Text modelServerText;
-    Text gamificationServerText;
+    Text serverAddressesText;
 
 
     // Use this for initialization
@@ -24,8 +23,7 @@ public class UILanguageSetter : MonoBehaviour, ILanguageUpdater
         loginText = transform.Find("Overall Background/Login Menu Buttons/Button Login/Text").GetComponent<Text>();
         settingsText = transform.Find("Overall Background/Login Menu Buttons/Button Settings/Text").GetComponent<Text>();
         languageText = transform.Find("Overall Background/Settings Buttons/Button Language/Text").GetComponent<Text>();
-        modelServerText = transform.Find("Overall Background/Settings Buttons/Button Model Server Address/Text").GetComponent<Text>();
-        gamificationServerText = transform.Find("Overall Background/Settings Buttons/Button Gamification Server Address/Text").GetComponent<Text>();
+        serverAddressesText = transform.Find("Overall Background/Settings Buttons/Button Server Addresses/Text").GetComponent<Text>();
 
         OnUpdateLanguage();
     }
@@ -43,7 +41,6 @@ public class UILanguageSetter : MonoBehaviour, ILanguageUpdater
         loginText.text = LocalizationManager.Instance.ResolveString("Login");
         settingsText.text = LocalizationManager.Instance.ResolveString("Settings");
         languageText.text = LocalizationManager.Instance.ResolveString("Language");
-        modelServerText.text = LocalizationManager.Instance.ResolveString("Model Server Address");
-        gamificationServerText.text = LocalizationManager.Instance.ResolveString("Gamification Server Address");
+        serverAddressesText.text = LocalizationManager.Instance.ResolveString("Server Addresses");
     }
 }
