@@ -589,7 +589,7 @@ Prefab:
     - target: {fileID: 114977820072034394, guid: 06e5f77db56eddb40a53febc7dbb5b9c,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114977820072034394, guid: 06e5f77db56eddb40a53febc7dbb5b9c,
         type: 2}
@@ -599,7 +599,7 @@ Prefab:
     - target: {fileID: 114399417014382472, guid: 06e5f77db56eddb40a53febc7dbb5b9c,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114399417014382472, guid: 06e5f77db56eddb40a53febc7dbb5b9c,
         type: 2}
@@ -609,7 +609,7 @@ Prefab:
     - target: {fileID: 114913962002550042, guid: 06e5f77db56eddb40a53febc7dbb5b9c,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114913962002550042, guid: 06e5f77db56eddb40a53febc7dbb5b9c,
         type: 2}
@@ -634,7 +634,7 @@ Prefab:
     - target: {fileID: 114913962002550042, guid: 06e5f77db56eddb40a53febc7dbb5b9c,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ShowLoginMenu
+      value: SetLanguage
       objectReference: {fileID: 0}
     - target: {fileID: 114913962002550042, guid: 06e5f77db56eddb40a53febc7dbb5b9c,
         type: 2}
@@ -644,7 +644,7 @@ Prefab:
     - target: {fileID: 114977820072034394, guid: 06e5f77db56eddb40a53febc7dbb5b9c,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ShowLoginMenu
+      value: SetLanguage
       objectReference: {fileID: 0}
     - target: {fileID: 114977820072034394, guid: 06e5f77db56eddb40a53febc7dbb5b9c,
         type: 2}
@@ -654,7 +654,7 @@ Prefab:
     - target: {fileID: 114399417014382472, guid: 06e5f77db56eddb40a53febc7dbb5b9c,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ShowLoginMenu
+      value: SetLanguage
       objectReference: {fileID: 0}
     - target: {fileID: 114399417014382472, guid: 06e5f77db56eddb40a53febc7dbb5b9c,
         type: 2}
@@ -672,6 +672,31 @@ Prefab:
     - target: {fileID: 1154969114634570, guid: 06e5f77db56eddb40a53febc7dbb5b9c, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114913962002550042, guid: 06e5f77db56eddb40a53febc7dbb5b9c,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114399417014382472, guid: 06e5f77db56eddb40a53febc7dbb5b9c,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114382701596173728, guid: 06e5f77db56eddb40a53febc7dbb5b9c,
+        type: 2}
+      propertyPath: m_FontData.m_FontSize
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 224294081153904042, guid: 06e5f77db56eddb40a53febc7dbb5b9c,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 71.145
+      objectReference: {fileID: 0}
+    - target: {fileID: 224294081153904042, guid: 06e5f77db56eddb40a53febc7dbb5b9c,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: -178.29
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 06e5f77db56eddb40a53febc7dbb5b9c, type: 2}
@@ -1807,3 +1832,19 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 37075499}
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+--- !u!1 &2136223567 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1342181274858768, guid: 06e5f77db56eddb40a53febc7dbb5b9c,
+    type: 2}
+  m_PrefabInternal: {fileID: 37075499}
+--- !u!114 &2136223568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2136223567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 368087f8f2d98d24696e34f7891ea96f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

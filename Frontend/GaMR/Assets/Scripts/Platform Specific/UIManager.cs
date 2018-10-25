@@ -8,11 +8,7 @@ public class UIManager : MonoBehaviour
     public CanvasScaler canvasScaler;
     public Transform loginPage;
     public Transform settingsPage;
-
-    //private Animator loginPageAnimator;
-    //private Animator settingsPageAnimator;
-
-        public Animator uiAnimator;
+    public Animator uiAnimator;
 
     private void Awake()
     {
@@ -31,6 +27,25 @@ public class UIManager : MonoBehaviour
     public void ShowLanguages()
     {
         uiAnimator.SetBool("ShowLanguages", true);
+    }
+
+    public void SetLanguage(int index)
+    {
+        if (index == 1)
+        {
+            InformationManager.Instance.Language = Language.GERMAN;
+        }
+        else if (index == 2)
+        {
+            InformationManager.Instance.Language = Language.DUTCH;
+        }
+        else
+        {
+            InformationManager.Instance.Language = Language.ENGLISH;
+        }
+
+        // return to the login menu
+        ShowLoginMenu();
     }
 
 
@@ -56,5 +71,4 @@ public class UIManager : MonoBehaviour
     private void Update()
     {
     }
-
 }
