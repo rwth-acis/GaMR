@@ -28,9 +28,29 @@ public class UIManager : MonoBehaviour
         uiAnimator.SetBool("ShowSettings", true);
     }
 
+    public void ShowLanguages()
+    {
+        uiAnimator.SetBool("ShowLanguages", true);
+    }
+
+
+
+    public void Back()
+    {
+        if (uiAnimator.GetBool("ShowLanguages"))
+        {
+            uiAnimator.SetBool("ShowLanguages", false);
+        }
+        else if (uiAnimator.GetBool("ShowSettings"))
+        {
+            uiAnimator.SetBool("ShowSettings", false);
+        }
+    }
+
     public void ShowLoginMenu()
     {
         uiAnimator.SetBool("ShowSettings", false);
+        uiAnimator.SetBool("ShowLanguages", false);
     }
 
     private void Update()
