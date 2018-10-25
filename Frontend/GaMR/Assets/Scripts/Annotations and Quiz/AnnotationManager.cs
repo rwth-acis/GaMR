@@ -104,7 +104,14 @@ public class AnnotationManager : MonoBehaviour
         if (editMode)
         {
             GameObject annotationObject = (GameObject)Instantiate(Resources.Load("AnnotationSphere"));
-            annotationObject.transform.position = GazeManager.Instance.HitPosition;
+            if (VersionManager.Instance.TargetPlatform == TargetPlatform.HTC_VIVE)
+            {
+                annotationObject.transform.position = PointerCursor.Instance.HitPosition;
+            }
+            else
+            {
+                annotationObject.transform.position = GazeManager.Instance.HitPosition;
+            }
             annotationObject.transform.parent = gameObject.transform;
             annotationObject.transform.localScale = new Vector3(annotationSize, annotationSize, annotationSize);
 

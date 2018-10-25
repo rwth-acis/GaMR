@@ -48,10 +48,13 @@ public class BoundingBoxActions : MonoBehaviour
     /// </summary>
     public void EnableBoundingBox(bool enable)
     {
-            EnableControls(enable);
-            boundingBoxVisible = enable;
+        EnableControls(enable);
+        boundingBoxVisible = enable;
+        if (tapToPlace != null)
+        {
             tapToPlace.enabled = enable;
-            transformationManager.enabled = enable;
+        }
+        transformationManager.enabled = enable;
     }
 
     /// <summary>
@@ -69,7 +72,7 @@ public class BoundingBoxActions : MonoBehaviour
     private void EnableControls(bool active)
     {
         coll.enabled = active;
-        foreach(Transform boxPart in boundingBoxPieces)
+        foreach (Transform boxPart in boundingBoxPieces)
         {
             boxPart.gameObject.SetActive(active);
         }
