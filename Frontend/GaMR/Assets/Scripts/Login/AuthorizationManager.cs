@@ -94,6 +94,7 @@ public class AuthorizationManager : Singleton<AuthorizationManager>
                         "&client_secret=" + clientSecret + "&redirect_uri=" + gamrRedirectURI + "&grant_type=authorization_code", (req) =>
                         {
                             string json = req.downloadHandler.text;
+                            Debug.Log("Token json: " + json);
                             AuthorizationFlowAnswer answer = JsonUtility.FromJson<AuthorizationFlowAnswer>(json);
                             if (!string.IsNullOrEmpty(answer.error))
                             {
