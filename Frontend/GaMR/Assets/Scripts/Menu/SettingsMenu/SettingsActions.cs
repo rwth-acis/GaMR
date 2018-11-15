@@ -11,19 +11,19 @@ public class SettingsActions : MonoBehaviour {
     /// </summary>
     public void EnterServer()
     {
-        Keyboard.Display(LocalizationManager.Instance.ResolveString("Enter the Server"), InformationManager.Instance.BackendServer, SetServer, true, transform.position + new Vector3(-0.03f, 0,0), Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y+90f, transform.eulerAngles.z));
+        Keyboard.Display(LocalizationManager.Instance.ResolveString("Enter the Server"), InformationManager.Instance.BackendServer, SetServer, true, transform.position + new Vector3(-0.03f, 0,0), Quaternion.Euler(0, transform.eulerAngles.y+90f, 0));
         gameObject.SetActive(false);
     }
 
     public void EnterGamificationServer()
     {
-        Keyboard.Display(LocalizationManager.Instance.ResolveString("Enter Gamification Server"), InformationManager.Instance.GamificationServer, SetGamificationServer, true, transform.position + new Vector3(-0.03f, 0, 0), Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y + 90f, transform.eulerAngles.z));
+        Keyboard.Display(LocalizationManager.Instance.ResolveString("Enter Gamification Server"), InformationManager.Instance.GamificationServer, SetGamificationServer, true, transform.position + new Vector3(-0.03f, 0, 0), Quaternion.Euler(0, transform.eulerAngles.y + 90f, 0));
         gameObject.SetActive(false);
     }
 
     public void EnterSharingServer()
     {
-        Keyboard.Display(LocalizationManager.Instance.ResolveString("Enter Sharing Server"), InformationManager.Instance.SharingServer, SetSharingServer, true, transform.position + new Vector3(-0.03f, 0, 0), Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y + 90f, transform.eulerAngles.z));
+        Keyboard.Display(LocalizationManager.Instance.ResolveString("Enter Sharing Server"), InformationManager.Instance.SharingServer, SetSharingServer, true, transform.position + new Vector3(-0.03f, 0, 0), Quaternion.Euler(0, transform.eulerAngles.y + 90f, 0));
         gameObject.SetActive(false);
     }
 
