@@ -127,7 +127,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 1.5.3
+  bundleVersion: 1.5.4
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -158,7 +158,8 @@ PlayerSettings:
   resolutionScalingMode: 0
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
-  applicationIdentifier: {}
+  applicationIdentifier:
+    Standalone: com.rwth-acis.GaMR
   buildNumber: {}
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 16
@@ -575,12 +576,12 @@ PlayerSettings:
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
   metroPackageName: GaMR
-  metroPackageVersion: 1.5.2.0
-  metroCertificatePath: Assets\WSATestCertificate.pfx
-  metroCertificatePassword: 
-  metroCertificateSubject: DefaultCompany
-  metroCertificateIssuer: DefaultCompany
-  metroCertificateNotAfter: 0030e89f6e7bd401
+  metroPackageVersion: 1.5.4.0
+  metroCertificatePath: Assets/WSATestCertificate.pfx
+  metroCertificatePassword: ~{xde9MOE_
+  metroCertificateSubject: rwth-acis
+  metroCertificateIssuer: rwth-acis
+  metroCertificateNotAfter: 008bdff0189bd501
   metroApplicationDescription: GaMR
   wsaImages:
     2031664: Assets/Textures/Logo/Logo_48px.png
