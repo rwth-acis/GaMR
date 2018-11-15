@@ -12,14 +12,6 @@ public class MoveMenu : MonoBehaviour, IFocusable, IManipulationHandler
     private Vector3 startingPoint;
     private Transform globalParent;
 
-    private void Update()
-    {
-        Vector3 targetPos = Camera.main.transform.position + Camera.main.transform.forward * 2f;
-        globalParent = GetGlobalParent();
-        globalParent.transform.position = targetPos;
-        FaceUser(-2f * Camera.main.transform.forward);
-    }
-
     public void OnFocusEnter()
     {
     }
