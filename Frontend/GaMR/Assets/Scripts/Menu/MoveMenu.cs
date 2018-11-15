@@ -1,15 +1,44 @@
 ﻿using HoloToolkit.Unity.InputModule;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MoveMenu : MonoBehaviour, IFocusable, IManipulationHandler
 {
     public Vector3 realForward;
-    private float speedFactor;
 
     private Vector3 startingPoint;
     private Transform globalParent;
+    private bool firstFrameOfScene = false;
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene loadedScene, LoadSceneMode mode)
+    {
+        firstFrameOfScene = true;
+    }
+
+    private void Update()
+    {
+        if (firstFrameOfScene)
+        {
+            Vector3 targetPos = Camera.main.transform.position + Camera.main.transform.forward * 2f;
+            globalParent = GetGlobalParent();
+            globalParent.transform.position = targetPos;
+            FaceUser(-2f * Camera.main.transform.forward);
+            firstFrameOfScene = false;
+        }
+    }
 
     public void OnFocusEnter()
     {
@@ -46,11 +75,10 @@ public class MoveMenu : MonoBehaviour, IFocusable, IManipulationHandler
 
         Vector3 vectorToCam = Camera.main.transform.position - globalParent.transform.position;
 
-        speedFactor = vectorToCam.magnitude;
+        float speedFactor = vectorToCam.magnitude;
         globalParent.position = startingPoint + speedFactor * eventData.CumulativeDelta;
 
-        globalParent.transform.rotation = Quaternion.LookRotation(vectorToCam, Vector3.up);
-        globalParent.transform.rotation = Quaternion.LookRotation(globalParent.transform.TransformDirection(realForward));
+        FaceUser(vectorToCam);
     }
 
     private Transform GetGlobalParent()
@@ -62,5 +90,11 @@ public class MoveMenu : MonoBehaviour, IFocusable, IManipulationHandler
         }
 
         return current;
+    }
+
+    private void FaceUser(Vector3 vectorToCam)
+    {
+        globalParent.transform.rotation = Quaternion.LookRotation(vectorToCam, Vector3.up);
+        globalParent.transform.rotation = Quaternion.LookRotation(globalParent.transform.TransformDirection(realForward));
     }
 }
