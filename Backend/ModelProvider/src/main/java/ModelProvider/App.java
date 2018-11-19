@@ -1,6 +1,11 @@
 package ModelProvider;
 
+import org.eclipse.jetty.server.NCSARequestLog;
+import org.eclipse.jetty.server.RequestLog;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.ContextHandlerCollection;
+import org.eclipse.jetty.server.handler.HandlerCollection;
+import org.eclipse.jetty.server.handler.RequestLogHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
@@ -26,7 +31,7 @@ public class App {
 
     private static final int major = 1;
     private static final int minor = 4;
-    private static final int patch = 2;
+    private static final int patch = 3;
 
     public static void main(String[] args) throws Exception {
 
@@ -44,12 +49,30 @@ public class App {
             return;
         }
 
+        HandlerCollection handlers = new HandlerCollection();
+        ContextHandlerCollection contexts = new ContextHandlerCollection();
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
 
+        handlers.addHandler(context);
+
         Server jettyServer = new Server(8080);
-        jettyServer.setHandler(context);
+        jettyServer.setHandler(handlers);
+
+        // log all activity on the server
+        NCSARequestLog requestLog = new NCSARequestLog();
+        requestLog.setFilename("." + File.separatorChar + "logs" + File.separatorChar + "yyyy_mm_dd.request.log");
+        requestLog.setFilenameDateFormat("yyyy_MM_dd");
+        requestLog.setRetainDays(90);
+        requestLog.setAppend(true);
+        requestLog.setExtended(true);
+        requestLog.setLogCookies(false);
+        requestLog.setLogTimeZone("GMT");
+        RequestLogHandler requestLogHandler = new RequestLogHandler();
+        requestLogHandler.setRequestLog(requestLog);
+        handlers.addHandler(requestLogHandler);
+
 
         ServletHolder jerseyServlet = context.addServlet(
                 org.glassfish.jersey.servlet.ServletContainer.class, "/*");
