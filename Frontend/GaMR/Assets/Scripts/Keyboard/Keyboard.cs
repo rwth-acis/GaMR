@@ -267,7 +267,7 @@ public class Keyboard : MonoBehaviour, IWindow
                 {
                     if (!Capslock && Shift)
                     {
-                        Shift = false;
+                        //Shift = false;
                     }
                 }
                 else
@@ -390,7 +390,7 @@ public class Keyboard : MonoBehaviour, IWindow
     public bool Shift
     {
         get { return shift; }
-        set { shift = value; UpdateKeys(value); }
+        set { shift = value; Debug.Log("shift: " + value); UpdateKeys(value); }
     }
 
     /// <summary>
