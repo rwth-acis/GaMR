@@ -49,8 +49,10 @@ public class BadgeManager : MonoBehaviour, IInputClickHandler
     public void WinBadge()
     {
         // un-parent from the progress bar
-        transform.parent = null;
-        StartCoroutine(MoveInFrontOfCamera(3f, 2f));
+        //transform.parent = null;
+        //StartCoroutine(MoveInFrontOfCamera(3f, 2f));
+
+        ConfettiManager.Instance.ShootConfetti(transform.position + new Vector3(0, transform.parent.localScale.y /2f, 0));
     }
 
     IEnumerator MoveInFrontOfCamera(float movementTime, float rotationHighlightTime)

@@ -61,7 +61,7 @@ ParticleSystem:
   m_GameObject: {fileID: 1059089148804866}
   serializedVersion: 5
   lengthInSec: 0.3
-  simulationSpeed: 0.8
+  simulationSpeed: 0.5
   stopAction: 1
   looping: 0
   prewarm: 0
@@ -113,7 +113,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 466246196
+  randomSeed: -69207810
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -557,7 +557,7 @@ ParticleSystem:
     serializedVersion: 5
     enabled: 1
     type: 4
-    angle: 5
+    angle: 7
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
@@ -1636,7 +1636,7 @@ ParticleSystem:
     magnitude:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 25
+      scalar: 15
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -1678,7 +1678,7 @@ ParticleSystem:
     inWorldSpace: 0
     multiplyDragByParticleSize: 1
     multiplyDragByParticleVelocity: 1
-    dampen: 0.2
+    dampen: 0.3
     drag:
       serializedVersion: 2
       minMaxState: 0

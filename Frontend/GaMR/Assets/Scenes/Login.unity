@@ -740,7 +740,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clientId: c4ced10f-ce0f-4155-b6f7-a4c40ffa410c
-  debugToken: 
+  debugToken: eyJhbGciOiJSUzI1NiJ9.eyJhdWQiOlsiYzc1ODhlZmMtZjgzMS00ZTMxLTkyOGUtMGY0NmE5MWZiMzExIl0sImlzcyI6Imh0dHBzOlwvXC9hcGkubGVhcm5pbmctbGF5ZXJzLmV1XC9vXC9vYXV0aDJcLyIsImV4cCI6MTU0Mzg2OTQ1NiwiaWF0IjoxNTQzODY1ODU2LCJqdGkiOiI2MDVjODZjMy1lZDA3LTRlNGQtOWQ1NC03Y2NiNzIwYjQxMjQifQ.EuThucqK_nTLOV3Cqlj3NksnTxhUnxYswcRiYLv6A9DvnkjyLwpmj3-810GFkqx9EE2nFPol3hMW_V9K6JXpTuNyai1uezLeUpKJgTpQz-LD57M4UDpMtCMTsLX636luMoSCeCFAKK8xZU8C1DEYlzH4M-bH-fl8bPzRAKGxabk
 --- !u!1 &1490208454 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1000014098139846, guid: 022450106439a8946ae18a9e20cc92d8,
@@ -885,19 +885,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4308037745263162, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.3581708
+      value: -0.3581726
       objectReference: {fileID: 0}
     - target: {fileID: 4196587989135580, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.00067657954
+      value: -0.0006823789
       objectReference: {fileID: 0}
     - target: {fileID: 4414823140297466, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.00019589216
+      value: -0.00019798639
       objectReference: {fileID: 0}
     - target: {fileID: 4086694633030028, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.00039725952
+      value: -0.00040112576
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114446218147326806, guid: e5c4719499dd85e4d8df3ba0f0282bfe, type: 2}
