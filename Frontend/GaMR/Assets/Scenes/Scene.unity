@@ -887,43 +887,43 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4765169307578292, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.00007666707
+      value: -0.00007940566
       objectReference: {fileID: 0}
     - target: {fileID: 4072071686527104, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.113007635
+      value: -0.1130079
       objectReference: {fileID: 0}
     - target: {fileID: 4723932946146056, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.00002610176
+      value: -0.000027068321
       objectReference: {fileID: 0}
     - target: {fileID: 4333652431246228, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.000024329744
+      value: -0.000024974119
       objectReference: {fileID: 0}
     - target: {fileID: 4557833660429020, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.000029627714
+      value: -0.000029909628
       objectReference: {fileID: 0}
     - target: {fileID: 4609140984152418, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.000044144275
+      value: -0.00004559412
       objectReference: {fileID: 0}
     - target: {fileID: 4734900918133012, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.000026727992
+      value: -0.000028016742
       objectReference: {fileID: 0}
     - target: {fileID: 4645226362716072, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.000020141319
+      value: -0.000020544054
       objectReference: {fileID: 0}
     - target: {fileID: 4716293537009974, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.11300714
+      value: -0.11300741
       objectReference: {fileID: 0}
     - target: {fileID: 4889603396104314, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -0.000039937695
+      value: -0.000040743165
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114863231991998280, guid: 315a6f3e911de8242b927d029b104d4a, type: 2}
@@ -1030,7 +1030,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pressDepth: 0.008
---- !u!114 &670922982
+--- !u!114 &670922985
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -2226,6 +2226,7 @@ GameObject:
   - component: {fileID: 2035823017}
   - component: {fileID: 2035823019}
   - component: {fileID: 2035823018}
+  - component: {fileID: 2035823020}
   m_Layer: 0
   m_Name: SpatialMappingManager
   m_TagString: Untagged
@@ -2258,7 +2259,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PhysicsLayer: 31
-  surfaceMaterial: {fileID: 15302, guid: 0000000000000000f000000000000000, type: 0}
+  surfaceMaterial: {fileID: 15303, guid: 0000000000000000f000000000000000, type: 0}
   autoStartObserver: 1
   drawVisualMeshes: 1
   castShadows: 0
@@ -2279,6 +2280,19 @@ MonoBehaviour:
   extents: {x: 10, y: 10, z: 10}
   origin: {x: 0, y: 0, z: 0}
   orientation: {x: 0, y: 0, z: 0, w: 1}
+--- !u!114 &2035823020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2035823016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13d883c0118351e4890753200e0ac916, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RoomModel: {fileID: 0}
+  SimulatedUpdatePeriodInSeconds: -1
 --- !u!1 &2048249648
 GameObject:
   m_ObjectHideFlags: 0
