@@ -36,6 +36,11 @@ public class RoundedMenu : MonoBehaviour
         Vector3 rightBottomOuterRight = rightBottomInner + new Vector3(cornerRadius, 0, 0);
         Vector3 rightBottomOuterBottom = rightBottomInner - new Vector3(0, cornerRadius, 0);
 
+        Vector3[] leftTopCorner = GetCornerVertexCoordinates(leftTopInner, 0f);
+        Vector3[] rightTopCorner = GetCornerVertexCoordinates(rightTopInner, 90f);
+        Vector3[] rightBottomCorner = GetCornerVertexCoordinates(rightBottomInner, 180f);
+        Vector3[] leftBottomCorner = GetCornerVertexCoordinates(leftBottomInner, 270f);
+
         // create the areas twice: once for the front and once for the back of the menu
         for (int i = 0; i < 2; i++)
         {
@@ -68,10 +73,10 @@ public class RoundedMenu : MonoBehaviour
             constructor.AddQuad(iLeftTopOuterLeft, iLeftTopInner, iLeftBottomInner, iLeftBottomOuterLeft, isBackFace);
 
             // create the rounded corners
-            CreateCorner(constructor, iLeftTopInner, iLeftTopOuterLeft, iLeftTopOuterTop, 0f, isBackFace);
-            CreateCorner(constructor, iRightTopInner, iRightTopOuterTop, iRightTopOuterRight, 90f, isBackFace);
-            CreateCorner(constructor, iRightBottomInner, iRightBottomOuterRight, iRightBottomOuterBottom, 180f, isBackFace);
-            CreateCorner(constructor, iLeftBottomInner, iLeftBottomOuterBottom, iLeftBottomOuterLeft, 270f, isBackFace);
+            CreateCorner(constructor, iLeftTopInner, iLeftTopOuterLeft, iLeftTopOuterTop, leftTopCorner, isBackFace);
+            CreateCorner(constructor, iRightTopInner, iRightTopOuterTop, iRightTopOuterRight, rightTopCorner, isBackFace);
+            CreateCorner(constructor, iRightBottomInner, iRightBottomOuterRight, iRightBottomOuterBottom, rightBottomCorner, isBackFace);
+            CreateCorner(constructor, iLeftBottomInner, iLeftBottomOuterBottom, iLeftBottomOuterLeft, leftBottomCorner, isBackFace);
         }
 
         // create rim vertex indices
@@ -111,39 +116,30 @@ public class RoundedMenu : MonoBehaviour
         return constructor.ConstructMesh();
     }
 
-    private int GetVertexByName(GeometryConstructor constructor, string name, bool front)
+    private Vector3[] GetCornerVertexCoordinates(Vector3 innerVertex, float angleOffset)
     {
-        if (front)
-        {
-            return constructor.NamedVertices[name + "0"];
-        }
-        else
-        {
-            return constructor.NamedVertices[name + "1"];
-        }
-    }
-
-    private void CreateCorner(GeometryConstructor constructor, int innerVertex, int outerVertex1, int outerVertex2, float angleOffset, bool isBackFace)
-    {
-        int lastIndex = -1;
+        Vector3[] cornerVertices = new Vector3[subdivisions];
         for (int i = 0; i < subdivisions; i++)
         {
             float angleStep = 90f / (subdivisions + 1) * (i + 1);
             float radianAngle = Mathf.Deg2Rad * (angleStep + angleOffset - 90f); // -90 correction so that 0 degrees offset is for left top corner
-            Vector3 circlePoint = circlePoint = constructor.Vertices[innerVertex] + cornerRadius * new Vector3(Mathf.Sin(radianAngle), Mathf.Cos(radianAngle), 0);
-
-            int vertexIndex = constructor.AddVertex(circlePoint);
-            if (i == 0)
-            {
-                constructor.AddTriangle(innerVertex, outerVertex1, vertexIndex, isBackFace);
-            }
-            else if (i > 0)
-            {
-                constructor.AddTriangle(innerVertex, lastIndex, vertexIndex, isBackFace);
-            }
-            lastIndex = vertexIndex;
+            cornerVertices[i] = innerVertex + cornerRadius * new Vector3(Mathf.Sin(radianAngle), Mathf.Cos(radianAngle), 0);
         }
-        constructor.AddTriangle(innerVertex, lastIndex, outerVertex2, isBackFace);
+        return cornerVertices;
+    }
+
+    private void CreateCorner(GeometryConstructor constructor, int innerVertex, int outerVertex1, int outerVertex2, Vector3[] subdivisionCoordinates, bool isBackFace)
+    {
+        int[] iCornerVertices = new int[subdivisions + 2]; // triangle fan must include existing endpoint vertices
+        Vector3 depthVector = isBackFace ? new Vector3(0, 0, depth) : Vector3.zero;
+        iCornerVertices[0] = outerVertex1;
+        for (int i = 0; i < subdivisionCoordinates.Length; i++)
+        {
+            iCornerVertices[i + 1] = constructor.AddVertex(subdivisionCoordinates[i] + depthVector);
+        }
+        iCornerVertices[iCornerVertices.Length - 1] = outerVertex2;
+
+        constructor.AddTriangleFan(innerVertex, iCornerVertices, isBackFace);
     }
 
     private void Awake()

@@ -106,13 +106,42 @@ public class GeometryConstructor
     /// <param name="v2">Index of vertex 2</param>
     /// <param name="v3">Index of vertex 3</param>
     /// <param name="v4">Index of vertex 4</param>
-    public void AddQuad(int v1, int v2, int v3, int v4, bool flipNormal = false)
+    /// /// <param name="flipNormals">If set to true, the quad will face the other way</param>
+    public void AddQuad(int v1, int v2, int v3, int v4, bool flipNormals = false)
     {
         if (CheckVertexIndex(v1) && CheckVertexIndex(v2) && CheckVertexIndex(v3) && CheckVertexIndex(v4))
         {
             // add two triangles: top right triangle and bottom left triangle
-            AddTriangle(v1, v2, v3, flipNormal);
-            AddTriangle(v1, v3, v4, flipNormal);
+            AddTriangle(v1, v2, v3, flipNormals);
+            AddTriangle(v1, v3, v4, flipNormals);
+        }
+    }
+
+    /// <summary>
+    /// Adds a fan of triangles to the geometry
+    /// List the otherVertices clockwise
+    /// The indices must exist in the geometry, i.e. they first need to be added using AddVertex()
+    /// </summary>
+    /// <param name="poleVertex">The pole vertex which is connected to all other vertices of the fan</param>
+    /// <param name="otherVertices">The vertices which span the fan</param>
+    /// <param name="flipNormals">If set to true, the triangle fan will face the other way</param>
+    public void AddTriangleFan(int poleVertex, int[] otherVertices, bool flipNormals = false)
+    {
+        if (CheckVertexIndex(poleVertex))
+        {
+            // check if all vertices are valid
+            for (int i=0;i<otherVertices.Length;i++)
+            {
+                if (!CheckVertexIndex(otherVertices[i]))
+                {
+                    return;
+                }
+            }
+
+            for (int i=0;i<otherVertices.Length-1;i++)
+            {
+                AddTriangle(poleVertex, otherVertices[i], otherVertices[i + 1], flipNormals);
+            }
         }
     }
 
