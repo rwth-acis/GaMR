@@ -19,89 +19,95 @@ public class RoundedMenu : MonoBehaviour
     {
         GeometryConstructor constructor = new GeometryConstructor();
 
-        const string nLeftTopOuterLeft = "leftTopOuterLeft";
-        const string nleftTopOuterTop = "leftTopOuterTop";
-        const string nLeftBottomOuterLeft = "leftBottomOuterLeft";
-        const string nLeftBottomOuterBottom = "leftBottomOuterBottom";
-        const string nRightTopOuterRight = "rightTopOuterRight";
-        const string nRightTopOuterTop = "rightTopOuterTop";
-        const string nRightBottomOuterRight = "rightBottomOuterRight";
-        const string nRightBottomOuterBottom = "rightBottomOuterBottom";
+        // vertex positions
+        // calculate positions of inner four vertices
+        Vector3 leftTopInner = new Vector3(-width / 2f + cornerRadius, height / 2f - cornerRadius, 0);
+        Vector3 leftBottomInner = new Vector3(-width / 2f + cornerRadius, -height / 2f + cornerRadius, 0);
+        Vector3 rightTopInner = new Vector3(width / 2f - cornerRadius, height / 2f - cornerRadius, 0);
+        Vector3 rightBottomInner = new Vector3(width / 2f - cornerRadius, -height / 2f + cornerRadius, 0);
 
+        // calculate positions of outer vertices (not part of the rounded corners)
+        Vector3 leftTopOuterLeft = leftTopInner - new Vector3(cornerRadius, 0, 0);
+        Vector3 leftTopOuterTop = leftTopInner + new Vector3(0, cornerRadius, 0);
+        Vector3 leftBottomOuterLeft = leftBottomInner - new Vector3(cornerRadius, 0, 0);
+        Vector3 leftBottomOuterBottom = leftBottomInner - new Vector3(0, cornerRadius, 0);
+        Vector3 rightTopOuterRight = rightTopInner + new Vector3(cornerRadius, 0, 0);
+        Vector3 rightTopOuterTop = rightTopInner + new Vector3(0, cornerRadius, 0);
+        Vector3 rightBottomOuterRight = rightBottomInner + new Vector3(cornerRadius, 0, 0);
+        Vector3 rightBottomOuterBottom = rightBottomInner - new Vector3(0, cornerRadius, 0);
 
+        // create the areas twice: once for the front and once for the back of the menu
         for (int i = 0; i < 2; i++)
         {
-            float vertexDepth = i * depth;
+            Vector3 depthOffset = new Vector3(0, 0, i * depth);
 
-            // inner four vertices
-            int leftTopInner = constructor.AddVertex(new Vector3(-width / 2f + cornerRadius, height / 2f - cornerRadius, vertexDepth));
-            int leftBottomInner = constructor.AddVertex(new Vector3(-width / 2f + cornerRadius, -height / 2f + cornerRadius, vertexDepth));
-            int rightTopInner = constructor.AddVertex(new Vector3(width / 2f - cornerRadius, height / 2f - cornerRadius, vertexDepth));
-            int rightBottomInner = constructor.AddVertex(new Vector3(width / 2f - cornerRadius, -height / 2f + cornerRadius, vertexDepth));
+            // get indices for inner four vertices
+            int iLeftTopInner = constructor.AddVertex(leftTopInner + depthOffset);
+            int iLeftBottomInner = constructor.AddVertex(leftBottomInner + depthOffset);
+            int iRightTopInner = constructor.AddVertex(rightTopInner + depthOffset);
+            int iRightBottomInner = constructor.AddVertex(rightBottomInner + depthOffset);
 
-            // outer vertices (not part of the rounded corners)
-            int leftTopOuterLeft = constructor.AddVertex(constructor.Vertices[leftTopInner] - new Vector3(cornerRadius, 0, 0), nLeftTopOuterLeft + i);
-            int leftTopOuterTop = constructor.AddVertex(constructor.Vertices[leftTopInner] + new Vector3(0, cornerRadius, 0), nleftTopOuterTop + i);
-            int leftBottomOuterLeft = constructor.AddVertex(constructor.Vertices[leftBottomInner] - new Vector3(cornerRadius, 0, 0), nLeftBottomOuterLeft + i);
-            int leftBottomOuterBottom = constructor.AddVertex(constructor.Vertices[leftBottomInner] - new Vector3(0, cornerRadius, 0), nLeftBottomOuterBottom + i);
-            int rightTopOuterRight = constructor.AddVertex(constructor.Vertices[rightTopInner] + new Vector3(cornerRadius, 0, 0), nRightTopOuterRight + i);
-            int rightTopOuterTop = constructor.AddVertex(constructor.Vertices[rightTopInner] + new Vector3(0, cornerRadius, 0), nRightTopOuterTop + i);
-            int rightBottomOuterRight = constructor.AddVertex(constructor.Vertices[rightBottomInner] + new Vector3(cornerRadius, 0, 0), nRightBottomOuterRight + i);
-            int rightBottomOuterBottom = constructor.AddVertex(constructor.Vertices[rightBottomInner] - new Vector3(0, cornerRadius, 0), nRightBottomOuterBottom + i);
+            // get indices for outer vertices
+            int iLeftTopOuterLeft = constructor.AddVertex(leftTopOuterLeft + depthOffset);
+            int iLeftTopOuterTop = constructor.AddVertex(leftTopOuterTop + depthOffset);
+            int iLeftBottomOuterLeft = constructor.AddVertex(leftBottomOuterLeft + depthOffset);
+            int iLeftBottomOuterBottom = constructor.AddVertex(leftBottomOuterBottom + depthOffset);
+            int iRightTopOuterRight = constructor.AddVertex(rightTopOuterRight + depthOffset);
+            int iRightTopOuterTop = constructor.AddVertex(rightTopOuterTop + depthOffset);
+            int iRightBottomOuterRight = constructor.AddVertex(rightBottomOuterRight + depthOffset);
+            int iRightBottomOuterBottom = constructor.AddVertex(rightBottomOuterBottom + depthOffset);
 
             bool isBackFace = (i == 1);
 
-            // inner quad
-            constructor.AddQuad(leftTopInner, rightTopInner, rightBottomInner, leftBottomInner, isBackFace);
-            // outer border
-            constructor.AddQuad(leftTopOuterTop, rightTopOuterTop, rightTopInner, leftTopInner, isBackFace);
-            constructor.AddQuad(rightTopInner, rightTopOuterRight, rightBottomOuterRight, rightBottomInner, isBackFace);
-            constructor.AddQuad(leftBottomInner, rightBottomInner, rightBottomOuterBottom, leftBottomOuterBottom, isBackFace);
-            constructor.AddQuad(leftTopOuterLeft, leftTopInner, leftBottomInner, leftBottomOuterLeft, isBackFace);
+            // create inner quad
+            constructor.AddQuad(iLeftTopInner, iRightTopInner, iRightBottomInner, iLeftBottomInner, isBackFace);
+            // create outer border
+            constructor.AddQuad(iLeftTopOuterTop, iRightTopOuterTop, iRightTopInner, iLeftTopInner, isBackFace);
+            constructor.AddQuad(iRightTopInner, iRightTopOuterRight, iRightBottomOuterRight, iRightBottomInner, isBackFace);
+            constructor.AddQuad(iLeftBottomInner, iRightBottomInner, iRightBottomOuterBottom, iLeftBottomOuterBottom, isBackFace);
+            constructor.AddQuad(iLeftTopOuterLeft, iLeftTopInner, iLeftBottomInner, iLeftBottomOuterLeft, isBackFace);
 
             // create the rounded corners
-            CreateCorner(constructor, leftTopInner, leftTopOuterLeft, leftTopOuterTop, 0f, isBackFace);
-            CreateCorner(constructor, rightTopInner, rightTopOuterTop, rightTopOuterRight, 90f, isBackFace);
-            CreateCorner(constructor, rightBottomInner, rightBottomOuterRight, rightBottomOuterBottom, 180f, isBackFace);
-            CreateCorner(constructor, leftBottomInner, leftBottomOuterBottom, leftBottomOuterLeft, 270f, isBackFace);
-
-            if (i == 0)
-            {
-                startBackVertices = constructor.Vertices.Count;
-            }
+            CreateCorner(constructor, iLeftTopInner, iLeftTopOuterLeft, iLeftTopOuterTop, 0f, isBackFace);
+            CreateCorner(constructor, iRightTopInner, iRightTopOuterTop, iRightTopOuterRight, 90f, isBackFace);
+            CreateCorner(constructor, iRightBottomInner, iRightBottomOuterRight, iRightBottomOuterBottom, 180f, isBackFace);
+            CreateCorner(constructor, iLeftBottomInner, iLeftBottomOuterBottom, iLeftBottomOuterLeft, 270f, isBackFace);
         }
 
-        // create rim
+        // create rim vertex indices
+        // these vertices need to be separate from the ones above, even if they have the same coordinates to create sharp edges
+        int[] rimLeftTopOuterLeft = new int[2];
+        int[] rimLeftTopOuterTop = new int[2];
+        int[] rimLeftBottomOuterLeft = new int[2];
+        int[] rimLeftBottomOuterBottom = new int[2];
+        int[] rimRightTopOuterRight = new int[2];
+        int[] rimRightTopOuterTop = new int[2];
+        int[] rimRightBottomOuterRight = new int[2];
+        int[] rimRightBottomOuterBottom = new int[2];
+
+        for (int i = 0; i < 2; i++)
+        {
+            Vector3 depthOffset = new Vector3(0, 0, i * depth);
+
+            rimLeftTopOuterLeft[i] = constructor.AddVertex(leftTopOuterLeft + depthOffset);
+            rimLeftTopOuterTop[i] = constructor.AddVertex(leftTopOuterTop + depthOffset);
+            rimLeftBottomOuterLeft[i] = constructor.AddVertex(leftBottomOuterLeft + depthOffset);
+            rimLeftBottomOuterBottom[i] = constructor.AddVertex(leftBottomOuterBottom + depthOffset);
+            rimRightTopOuterRight[i] = constructor.AddVertex(rightTopOuterRight + depthOffset);
+            rimRightTopOuterTop[i] = constructor.AddVertex(rightTopOuterTop + depthOffset);
+            rimRightBottomOuterRight[i] = constructor.AddVertex(rightBottomOuterRight + depthOffset);
+            rimRightBottomOuterBottom[i] = constructor.AddVertex(rightBottomOuterBottom + depthOffset);
+        }
+
         // top rim
-        constructor.AddQuad(
-            GetVertexByName(constructor, nleftTopOuterTop, false),
-            GetVertexByName(constructor, nRightTopOuterTop, false),
-            GetVertexByName(constructor, nRightTopOuterTop, true),
-            GetVertexByName(constructor, nleftTopOuterTop, true));
-
+        constructor.AddQuad(rimLeftTopOuterTop[1], rimRightTopOuterTop[1], rimRightTopOuterTop[0], rimLeftTopOuterTop[0]);
         // right rim
-        constructor.AddQuad(
-            GetVertexByName(constructor, nRightTopOuterRight, true),
-            GetVertexByName(constructor, nRightTopOuterRight, false),
-            GetVertexByName(constructor, nRightBottomOuterRight, false),
-            GetVertexByName(constructor, nRightBottomOuterRight, true)
-            );
-
+        constructor.AddQuad(rimRightTopOuterRight[0], rimRightTopOuterRight[1], rimRightBottomOuterRight[1], rimRightBottomOuterRight[0]);
         // bottom rim
-        constructor.AddQuad(
-            GetVertexByName(constructor, nLeftBottomOuterBottom, true),
-            GetVertexByName(constructor, nRightBottomOuterBottom, true),
-            GetVertexByName(constructor, nRightBottomOuterBottom, false),
-            GetVertexByName(constructor, nLeftBottomOuterBottom, false)
-            );
-
+        constructor.AddQuad(rimLeftBottomOuterBottom[0], rimRightBottomOuterBottom[0], rimRightBottomOuterBottom[1], rimLeftBottomOuterBottom[1]);
         // left rim
-        constructor.AddQuad(
-            GetVertexByName(constructor, nLeftTopOuterLeft, false),
-            GetVertexByName(constructor, nLeftTopOuterLeft, true),
-            GetVertexByName(constructor, nLeftBottomOuterLeft, true),
-            GetVertexByName(constructor, nLeftBottomOuterLeft, false)
-            );
+        constructor.AddQuad(rimLeftTopOuterLeft[1], rimLeftTopOuterLeft[0], rimLeftBottomOuterLeft[0], rimLeftBottomOuterLeft[1]);
+
         return constructor.ConstructMesh();
     }
 
