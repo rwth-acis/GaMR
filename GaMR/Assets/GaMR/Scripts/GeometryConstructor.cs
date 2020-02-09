@@ -46,7 +46,7 @@ public class GeometryConstructor
     /// <param name="coordinates">The coordinates of the vertex position</param>
     /// <param name="name">The unique name identified which should be assigned to the vertex</param>
     /// <returns>The index of the created vertex</returns>
-    public int AddNamedVertex(Vector3 coordinates, string name)
+    public int AddVertex(Vector3 coordinates, string name)
     {
         if (NamedVertices.ContainsKey(name))
         {
@@ -71,18 +71,28 @@ public class GeometryConstructor
     /// <summary>
     /// Adds a triangle to the geometry
     /// List the three vertices in clockwise order as seen from the outside
-    /// The indices must exist in the geometry
+    /// The indices must exist in the geometry, i.e. they first need to be added using AddVertex()
     /// </summary>
     /// <param name="v1">Index of vertex 1</param>
     /// <param name="v2">Index of vertex 2</param>
     /// <param name="v3">Index of vertex 3</param>
-    public void AddTriangle(int v1, int v2, int v3)
+    /// <param name="flipNormal">If set to true, the triangle will face the other way</param>
+    public void AddTriangle(int v1, int v2, int v3, bool flipNormal = false)
     {
         if (CheckVertexIndex(v1) && CheckVertexIndex(v2) && CheckVertexIndex(v3))
         {
-            Triangles.Add(v1);
-            Triangles.Add(v2);
-            Triangles.Add(v3);
+            if (flipNormal)
+            {
+                Triangles.Add(v1);
+                Triangles.Add(v3);
+                Triangles.Add(v2);
+            }
+            else
+            {
+                Triangles.Add(v1);
+                Triangles.Add(v2);
+                Triangles.Add(v3);
+            }
         }
     }
 
@@ -90,19 +100,19 @@ public class GeometryConstructor
     /// Adds a quad to the geometry (by adding two triangles)
     /// List the four vertices in clockwise order as seen from the outside
     /// The diagonal will be created between the first and third vertex
-    /// The indices must exist in the geometry
+    /// The indices must exist in the geometry, i.e. they first need to be added using AddVertex()
     /// </summary>
     /// <param name="v1">Index of vertex 1</param>
     /// <param name="v2">Index of vertex 2</param>
     /// <param name="v3">Index of vertex 3</param>
     /// <param name="v4">Index of vertex 4</param>
-    public void AddQuad(int v1, int v2, int v3, int v4)
+    public void AddQuad(int v1, int v2, int v3, int v4, bool flipNormal = false)
     {
         if (CheckVertexIndex(v1) && CheckVertexIndex(v2) && CheckVertexIndex(v3) && CheckVertexIndex(v4))
         {
             // add two triangles: top right triangle and bottom left triangle
-            AddTriangle(v1, v2, v3);
-            AddTriangle(v1, v3, v4);
+            AddTriangle(v1, v2, v3, flipNormal);
+            AddTriangle(v1, v3, v4, flipNormal);
         }
     }
 
