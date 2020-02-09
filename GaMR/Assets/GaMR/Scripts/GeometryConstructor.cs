@@ -89,6 +89,7 @@ public class GeometryConstructor
     /// <summary>
     /// Adds a quad to the geometry (by adding two triangles)
     /// List the four vertices in clockwise order as seen from the outside
+    /// The diagonal will be created between the first and third vertex
     /// The indices must exist in the geometry
     /// </summary>
     /// <param name="v1">Index of vertex 1</param>
