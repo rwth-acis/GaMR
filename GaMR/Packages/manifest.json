@@ -9,7 +9,7 @@
     }
   ],
   "dependencies": {
-    "com.i5.versiontool": "https://github.com/rwth-acis/Unity-VersionTool.git#0.1.0",
+    "com.i5.versiontool": "https://github.com/rwth-acis/Unity-VersionTool.git#0.1.1",
     "com.microsoft.msbuildforunity": "0.8.3",
     "com.unity.ads": "2.0.8",
     "com.unity.analytics": "3.2.2",
@@ -52,8 +52,8 @@
   },
   "lock": {
     "com.i5.versiontool": {
-      "hash": "818e1113691335276649da5f1dc41f73a5993de0",
-      "revision": "0.1.0"
+      "hash": "7a9e26109d7c260183f708ef29df41027a6effa2",
+      "revision": "0.1.1"
     }
   }
 }

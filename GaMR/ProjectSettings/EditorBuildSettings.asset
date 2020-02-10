@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/GaMR/TestScenes/RoundedMenuTest/RoundedMenuTest.unity
+    guid: 580aa585b1f7bab4fa0be8a4831a8784
   m_configObjects: {}
