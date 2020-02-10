@@ -114,21 +114,10 @@ public class RoundedMenu : MonoBehaviour
         constructor.AddQuad(rimLeftTopOuterLeft[1], rimLeftTopOuterLeft[0], rimLeftBottomOuterLeft[0], rimLeftBottomOuterLeft[1]);
 
         // rim of the corners
-        int[] frontCornerVertices = new int[subdivisions];
-        int[] backCornerVertices = new int[subdivisions];
-        Vector3 depthVector = new Vector3(0, 0, depth);
-        for (int i = 0; i < leftTopCorner.Length; i++)
-        {
-            frontCornerVertices[i] = constructor.AddVertex(leftTopCorner[i]);
-            backCornerVertices[i] = constructor.AddVertex(leftTopCorner[i] + depthVector);
-        }
-        // TODO: connect top rim to first corner segment 
-        // connect corner segments
-        for (int i = 0; i < subdivisions - 1; i++)
-        {
-            constructor.AddQuad(backCornerVertices[i], backCornerVertices[i + 1], frontCornerVertices[i + 1], frontCornerVertices[i]);
-        }
-        // TODO: connect last corner segment to right rim
+        CreateCornerRim(constructor, rimLeftTopOuterLeft, leftTopCorner, rimLeftTopOuterTop);
+        CreateCornerRim(constructor, rimRightTopOuterTop, rightTopCorner, rimRightTopOuterRight);
+        CreateCornerRim(constructor, rimRightBottomOuterRight, rightBottomCorner, rimRightBottomOuterBottom);
+        CreateCornerRim(constructor, rimLeftBottomOuterBottom, leftBottomCorner, rimLeftBottomOuterLeft);
 
 
         return constructor.ConstructMesh();
@@ -158,6 +147,27 @@ public class RoundedMenu : MonoBehaviour
         iCornerVertices[iCornerVertices.Length - 1] = outerVertex2;
 
         constructor.AddTriangleFan(innerVertex, iCornerVertices, isBackFace);
+    }
+
+    public void CreateCornerRim(GeometryConstructor constructor, int[] endpoints1, Vector3[] cornerVertexCoordinates, int[] endpoints2)
+    {
+        int[] frontCornerVertices = new int[subdivisions];
+        int[] backCornerVertices = new int[subdivisions];
+        Vector3 depthVector = new Vector3(0, 0, depth);
+        for (int i = 0; i < subdivisions; i++)
+        {
+            frontCornerVertices[i] = constructor.AddVertex(cornerVertexCoordinates[i]);
+            backCornerVertices[i] = constructor.AddVertex(cornerVertexCoordinates[i] + depthVector);
+        }
+        // connect top rim to first corner segment
+        constructor.AddQuad(endpoints1[1], backCornerVertices[0], frontCornerVertices[0], endpoints1[0]);
+        // connect corner segments
+        for (int i = 0; i < subdivisions - 1; i++)
+        {
+            constructor.AddQuad(backCornerVertices[i], backCornerVertices[i + 1], frontCornerVertices[i + 1], frontCornerVertices[i]);
+        }
+        // connect last corner segment to right rim
+        constructor.AddQuad(backCornerVertices[subdivisions - 1], endpoints2[1], endpoints2[0], frontCornerVertices[subdivisions - 1]);
     }
 
     private void Awake()
