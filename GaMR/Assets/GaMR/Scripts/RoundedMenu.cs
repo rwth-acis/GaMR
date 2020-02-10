@@ -21,6 +21,18 @@ public class RoundedMenu : MonoBehaviour
 
     private MeshFilter meshFilter;
 
+    private MeshFilter MeshFilter
+    {
+        get
+        {
+            if (meshFilter == null)
+            {
+                meshFilter = GetComponent<MeshFilter>();
+            }
+            return meshFilter;
+        }
+    }
+
     /// <summary>
     /// Generates the mesh based on the settings of the menu
     /// </summary>
@@ -220,19 +232,8 @@ public class RoundedMenu : MonoBehaviour
         constructor.AddQuad(backCornerVertices[subdivisions - 1], endpoints2[1], endpoints2[0], frontCornerVertices[subdivisions - 1]);
     }
 
-    /// <summary>
-    /// Gets the necessary components
-    /// </summary>
-    private void Awake()
+    private void OnValidate()
     {
-        meshFilter = GetComponent<MeshFilter>();
-    }
-
-    /// <summary>
-    /// Debug test for real-time updates of the mesh
-    /// </summary>
-    private void Update()
-    {
-        meshFilter.mesh = GenerateMesh();
+        MeshFilter.mesh = GenerateMesh();
     }
 }
