@@ -113,6 +113,24 @@ public class RoundedMenu : MonoBehaviour
         // left rim
         constructor.AddQuad(rimLeftTopOuterLeft[1], rimLeftTopOuterLeft[0], rimLeftBottomOuterLeft[0], rimLeftBottomOuterLeft[1]);
 
+        // rim of the corners
+        int[] frontCornerVertices = new int[subdivisions];
+        int[] backCornerVertices = new int[subdivisions];
+        Vector3 depthVector = new Vector3(0, 0, depth);
+        for (int i = 0; i < leftTopCorner.Length; i++)
+        {
+            frontCornerVertices[i] = constructor.AddVertex(leftTopCorner[i]);
+            backCornerVertices[i] = constructor.AddVertex(leftTopCorner[i] + depthVector);
+        }
+        // TODO: connect top rim to first corner segment 
+        // connect corner segments
+        for (int i = 0; i < subdivisions - 1; i++)
+        {
+            constructor.AddQuad(backCornerVertices[i], backCornerVertices[i + 1], frontCornerVertices[i + 1], frontCornerVertices[i]);
+        }
+        // TODO: connect last corner segment to right rim
+
+
         return constructor.ConstructMesh();
     }
 
