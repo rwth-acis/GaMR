@@ -20,16 +20,47 @@ public class RoundedMenu : MonoBehaviour
     public int subdivisions = 3;
 
     private MeshFilter meshFilter;
+    private BoxCollider boxCollider;
 
+    /// <summary>
+    /// The corner radius which is actually used
+    /// Equal to cornerRadius whenever possible
+    /// </summary>
+    private float realCornerRadius;
+
+    /// <summary>
+    /// Safe way to get the mesh filter
+    /// This property should always return the mesh filter
+    /// If the component does not exist, it will be added
+    /// </summary>
     private MeshFilter MeshFilter
     {
         get
         {
+            // if the meshFilter was not set yet => try to get or add it
             if (meshFilter == null)
             {
-                meshFilter = GetComponent<MeshFilter>();
+                meshFilter = ComponentUtilities.GetOrAddComponent<MeshFilter>(gameObject);
             }
             return meshFilter;
+        }
+    }
+
+    /// <summary>
+    /// Safe way to get the box collider
+    /// This poroperty should always return the box collider
+    /// If the component does not exist, it will be added
+    /// </summary>
+    private BoxCollider BoxCollider
+    {
+        get
+        {
+            // if the boxCollider was not set yet => try to get or add it
+            if (boxCollider == null)
+            {
+                boxCollider = ComponentUtilities.GetOrAddComponent<BoxCollider>(gameObject);
+            }
+            return boxCollider;
         }
     }
 
@@ -43,20 +74,20 @@ public class RoundedMenu : MonoBehaviour
 
         // vertex positions
         // calculate positions of inner four vertices
-        Vector3 leftTopInner = new Vector3(-width / 2f + cornerRadius, height / 2f - cornerRadius, 0);
-        Vector3 leftBottomInner = new Vector3(-width / 2f + cornerRadius, -height / 2f + cornerRadius, 0);
-        Vector3 rightTopInner = new Vector3(width / 2f - cornerRadius, height / 2f - cornerRadius, 0);
-        Vector3 rightBottomInner = new Vector3(width / 2f - cornerRadius, -height / 2f + cornerRadius, 0);
+        Vector3 leftTopInner = new Vector3(-width / 2f + realCornerRadius, height / 2f - realCornerRadius, 0);
+        Vector3 leftBottomInner = new Vector3(-width / 2f + realCornerRadius, -height / 2f + realCornerRadius, 0);
+        Vector3 rightTopInner = new Vector3(width / 2f - realCornerRadius, height / 2f - realCornerRadius, 0);
+        Vector3 rightBottomInner = new Vector3(width / 2f - realCornerRadius, -height / 2f + realCornerRadius, 0);
 
         // calculate positions of outer vertices (not part of the rounded corners)
-        Vector3 leftTopOuterLeft = leftTopInner - new Vector3(cornerRadius, 0, 0);
-        Vector3 leftTopOuterTop = leftTopInner + new Vector3(0, cornerRadius, 0);
-        Vector3 leftBottomOuterLeft = leftBottomInner - new Vector3(cornerRadius, 0, 0);
-        Vector3 leftBottomOuterBottom = leftBottomInner - new Vector3(0, cornerRadius, 0);
-        Vector3 rightTopOuterRight = rightTopInner + new Vector3(cornerRadius, 0, 0);
-        Vector3 rightTopOuterTop = rightTopInner + new Vector3(0, cornerRadius, 0);
-        Vector3 rightBottomOuterRight = rightBottomInner + new Vector3(cornerRadius, 0, 0);
-        Vector3 rightBottomOuterBottom = rightBottomInner - new Vector3(0, cornerRadius, 0);
+        Vector3 leftTopOuterLeft = leftTopInner - new Vector3(realCornerRadius, 0, 0);
+        Vector3 leftTopOuterTop = leftTopInner + new Vector3(0, realCornerRadius, 0);
+        Vector3 leftBottomOuterLeft = leftBottomInner - new Vector3(realCornerRadius, 0, 0);
+        Vector3 leftBottomOuterBottom = leftBottomInner - new Vector3(0, realCornerRadius, 0);
+        Vector3 rightTopOuterRight = rightTopInner + new Vector3(realCornerRadius, 0, 0);
+        Vector3 rightTopOuterTop = rightTopInner + new Vector3(0, realCornerRadius, 0);
+        Vector3 rightBottomOuterRight = rightBottomInner + new Vector3(realCornerRadius, 0, 0);
+        Vector3 rightBottomOuterBottom = rightBottomInner - new Vector3(0, realCornerRadius, 0);
 
         // calculate positions of the front vertices for the rounded corners
         // back vertices can be calculated from this later
@@ -160,7 +191,7 @@ public class RoundedMenu : MonoBehaviour
         {
             float angleStep = 90f / (subdivisions + 1) * (i + 1);
             float radianAngle = Mathf.Deg2Rad * (angleStep + angleOffset - 90f); // -90 correction so that 0 degrees offset is for left top corner
-            cornerVertices[i] = innerVertex + cornerRadius * new Vector3(Mathf.Sin(radianAngle), Mathf.Cos(radianAngle), 0);
+            cornerVertices[i] = innerVertex + realCornerRadius * new Vector3(Mathf.Sin(radianAngle), Mathf.Cos(radianAngle), 0);
         }
         return cornerVertices;
     }
@@ -203,7 +234,7 @@ public class RoundedMenu : MonoBehaviour
     /// <param name="endpoints2">Array of size two, containing the vertex index of the second endpoints (seen clockwise from the front)
     /// first entry: front vertex index
     /// second entry: back vertex index</param>
-    public void CreateCornerRim(GeometryConstructor constructor, int[] endpoints1, Vector3[] cornerVertexCoordinates, int[] endpoints2)
+    private void CreateCornerRim(GeometryConstructor constructor, int[] endpoints1, Vector3[] cornerVertexCoordinates, int[] endpoints2)
     {
         if (endpoints1.Length != 2 || endpoints2.Length != 2)
         {
@@ -232,8 +263,30 @@ public class RoundedMenu : MonoBehaviour
         constructor.AddQuad(backCornerVertices[subdivisions - 1], endpoints2[1], endpoints2[0], frontCornerVertices[subdivisions - 1]);
     }
 
+    private void AdaptBoxCollider()
+    {
+        BoxCollider.size = new Vector3(width, height, depth);
+        BoxCollider.center = new Vector3(0, 0, depth / 2f);
+    }
+
+    /// <summary>
+    /// Checks if the input values are in the correct range
+    /// If not, the values are corrected
+    /// </summary>
+    private void CheckValues()
+    {
+        width = Mathf.Max(0, width);
+        height = Mathf.Max(0, height);
+        depth = Mathf.Max(0, depth);
+        cornerRadius = Mathf.Max(0, cornerRadius);
+        subdivisions = Mathf.Max(1, subdivisions);
+        realCornerRadius = Mathf.Clamp(cornerRadius, 0, Mathf.Min(width, height) / 2f);
+    }
+
     private void OnValidate()
     {
+        CheckValues();
         MeshFilter.mesh = GenerateMesh();
+        AdaptBoxCollider();
     }
 }
