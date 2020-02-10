@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Utility class which guides the construction of meshes
+/// Provides helper methods to register vertices and create faces of different shapes
+/// </summary>
 public class GeometryConstructor
 {
     /// <summary>

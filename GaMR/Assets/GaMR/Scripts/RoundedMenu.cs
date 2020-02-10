@@ -3,18 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Constructs a rounded 3D rectangle with depth
+/// </summary>
 public class RoundedMenu : MonoBehaviour
 {
+    [Tooltip("The width of the element")]
     public float width = 1f;
+    [Tooltip("The height of the element")]
     public float height = 1f;
+    [Tooltip("The depth of the element")]
     public float depth = 0.01f;
+    [Tooltip("The corner radius of the element")]
     public float cornerRadius = 0.1f;
+    [Tooltip("Number of subdivisions for the rounded corners")]
     public int subdivisions = 3;
 
     private MeshFilter meshFilter;
 
-    private int startBackVertices;
-
+    /// <summary>
+    /// Generates the mesh based on the settings of the menu
+    /// </summary>
+    /// <returns></returns>
     private Mesh GenerateMesh()
     {
         GeometryConstructor constructor = new GeometryConstructor();
@@ -36,6 +46,8 @@ public class RoundedMenu : MonoBehaviour
         Vector3 rightBottomOuterRight = rightBottomInner + new Vector3(cornerRadius, 0, 0);
         Vector3 rightBottomOuterBottom = rightBottomInner - new Vector3(0, cornerRadius, 0);
 
+        // calculate positions of the front vertices for the rounded corners
+        // back vertices can be calculated from this later
         Vector3[] leftTopCorner = GetCornerVertexCoordinates(leftTopInner, 0f);
         Vector3[] rightTopCorner = GetCornerVertexCoordinates(rightTopInner, 90f);
         Vector3[] rightBottomCorner = GetCornerVertexCoordinates(rightBottomInner, 180f);
@@ -123,6 +135,12 @@ public class RoundedMenu : MonoBehaviour
         return constructor.ConstructMesh();
     }
 
+    /// <summary>
+    /// Calculates the corner vertex coordinates
+    /// </summary>
+    /// <param name="innerVertex">The position of the midpoint of the corner circle; vertices are rotated around this vertex</param>
+    /// <param name="angleOffset">Determines at which angle the vertices start (0 for top left, 90 for top right, 180 for bottom right, 270 for bottom left)</param>
+    /// <returns>The positions of the vertices which describe the rounded corner</returns>
     private Vector3[] GetCornerVertexCoordinates(Vector3 innerVertex, float angleOffset)
     {
         Vector3[] cornerVertices = new Vector3[subdivisions];
@@ -135,10 +153,22 @@ public class RoundedMenu : MonoBehaviour
         return cornerVertices;
     }
 
+    /// <summary>
+    /// Creates the rounded corner in the mesh constructor
+    /// </summary>
+    /// <param name="constructor">The mesh constructor to which the geometry of the corner should be added</param>
+    /// <param name="innerVertex">The index of the inner vertex around which the corner is rotated</param>
+    /// <param name="outerVertex1">The clockwise first outer vertex to which the rounded corner is connected</param>
+    /// <param name="outerVertex2">The clockwise second outer vertex to which the rounded corner is connected</param>
+    /// <param name="subdivisionCoordinates">The front coorindates of the vertices of the rounded corner</param>
+    /// <param name="isBackFace">True if the back faces should be generated</param>
     private void CreateCorner(GeometryConstructor constructor, int innerVertex, int outerVertex1, int outerVertex2, Vector3[] subdivisionCoordinates, bool isBackFace)
     {
-        int[] iCornerVertices = new int[subdivisions + 2]; // triangle fan must include existing endpoint vertices
+        // triangle fan must include existing endpoint vertices => two more entries in vertex indices
+        int[] iCornerVertices = new int[subdivisions + 2];
+        // determine at which depth the vertices should be placed
         Vector3 depthVector = isBackFace ? new Vector3(0, 0, depth) : Vector3.zero;
+        // create the vertices and write the indices to the index array
         iCornerVertices[0] = outerVertex1;
         for (int i = 0; i < subdivisionCoordinates.Length; i++)
         {
@@ -146,11 +176,30 @@ public class RoundedMenu : MonoBehaviour
         }
         iCornerVertices[iCornerVertices.Length - 1] = outerVertex2;
 
+        // create the triangle fan which represents the rounded corner
         constructor.AddTriangleFan(innerVertex, iCornerVertices, isBackFace);
     }
 
+    /// <summary>
+    /// Creates and adds the rim of a rounded corner to the geometry constructor
+    /// </summary>
+    /// <param name="constructor">The geometry constructor to which the rim of the corner should be added</param>
+    /// <param name="endpoints1">Array of size two, containing the vertex index of the first endpoints (seen clockwise from the front)
+    /// first entry: front vertex index
+    /// second entry: back vertex index</param>
+    /// <param name="cornerVertexCoordinates">Front vertex coordinates of the rounded corner</param>
+    /// <param name="endpoints2">Array of size two, containing the vertex index of the second endpoints (seen clockwise from the front)
+    /// first entry: front vertex index
+    /// second entry: back vertex index</param>
     public void CreateCornerRim(GeometryConstructor constructor, int[] endpoints1, Vector3[] cornerVertexCoordinates, int[] endpoints2)
     {
+        if (endpoints1.Length != 2 || endpoints2.Length != 2)
+        {
+            Debug.LogError("[RoundedMenu]: Expected endpoints array size of 2 but got " + endpoints1.Length + " and " + endpoints2.Length, gameObject);
+            return;
+        }
+
+        // generate vertex indices
         int[] frontCornerVertices = new int[subdivisions];
         int[] backCornerVertices = new int[subdivisions];
         Vector3 depthVector = new Vector3(0, 0, depth);
@@ -159,6 +208,7 @@ public class RoundedMenu : MonoBehaviour
             frontCornerVertices[i] = constructor.AddVertex(cornerVertexCoordinates[i]);
             backCornerVertices[i] = constructor.AddVertex(cornerVertexCoordinates[i] + depthVector);
         }
+
         // connect top rim to first corner segment
         constructor.AddQuad(endpoints1[1], backCornerVertices[0], frontCornerVertices[0], endpoints1[0]);
         // connect corner segments
@@ -170,12 +220,17 @@ public class RoundedMenu : MonoBehaviour
         constructor.AddQuad(backCornerVertices[subdivisions - 1], endpoints2[1], endpoints2[0], frontCornerVertices[subdivisions - 1]);
     }
 
+    /// <summary>
+    /// Gets the necessary components
+    /// </summary>
     private void Awake()
     {
         meshFilter = GetComponent<MeshFilter>();
-        //meshFilter.mesh = GenerateMesh();
     }
 
+    /// <summary>
+    /// Debug test for real-time updates of the mesh
+    /// </summary>
     private void Update()
     {
         meshFilter.mesh = GenerateMesh();
