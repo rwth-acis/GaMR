@@ -9,7 +9,7 @@
     <UnityCurrentPlatform>WindowsStandalone64</UnityCurrentPlatform>
     <UnityCurrentTargetFramework>netstandard2.0</UnityCurrentTargetFramework>
     
-    <UnityMajorVersion>2018</UnityMajorVersion>
+    <UnityMajorVersion>2019</UnityMajorVersion>
     <UnityMinorVersion>4</UnityMinorVersion>
   </PropertyGroup>
   
