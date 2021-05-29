@@ -6,9 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Samples/Mixed Reality Toolkit Foundation/2.6.1/Scene System Resources/DefaultManagerScene.unity
-    guid: ae7bb08d297fb69408695d8de0962524
+    path: Assets/GaMR/Scenes/ManagerScene.unity
+    guid: 4cd1ac1c8ed3e1446bee4cdaf359ad2b
   - enabled: 1
-    path: Assets/Samples/Mixed Reality Toolkit Foundation/2.6.1/Scene System Resources/DefaultLightingScene.unity
-    guid: 7e54e36c44f826c438c95da79f8de638
+    path: Assets/GaMR/Scenes/Content/Login.unity
+    guid: 8749dbb6c64670a44a83189b7fb024e8
+  - enabled: 1
+    path: Assets/GaMR/Scenes/Content/MainScene.unity
+    guid: b86eef71ca3b66340bd8474724f77e5f
   m_configObjects: {}

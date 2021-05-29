@@ -1,13 +1,22 @@
 {
   "dependencies": {
     "com.i5.toolkit.core": {
-      "version": "1.6.1",
+      "version": "file:D:/Unity/i5-Toolkit-for-Unity/Assets/i5 Toolkit for Unity",
       "depth": 0,
-      "source": "registry",
+      "source": "local",
       "dependencies": {
         "com.unity.textmeshpro": "2.0.1"
-      },
-      "url": "https://package.openupm.com"
+      }
+    },
+    "com.i5.toolkit.mixedreality": {
+      "version": "file:D:/Unity/i5-Toolkit-for-Mixed-Reality/Assets/i5 Toolkit for Mixed Reality",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {
+        "com.i5.toolkit.core": "1.2.1",
+        "com.microsoft.mixedreality.toolkit.foundation": "2.6.1",
+        "com.unity.textmeshpro": "1.5.1"
+      }
     },
     "com.microsoft.mixedreality.toolkit.examples": {
       "version": "2.6.1",

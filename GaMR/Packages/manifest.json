@@ -17,7 +17,8 @@
     }
   ],
   "dependencies": {
-    "com.i5.toolkit.core": "1.6.1",
+    "com.i5.toolkit.core": "file:D:/Unity/i5-Toolkit-for-Unity/Assets/i5 Toolkit for Unity",
+    "com.i5.toolkit.mixedreality": "file:D:/Unity/i5-Toolkit-for-Mixed-Reality/Assets/i5 Toolkit for Mixed Reality",
     "com.microsoft.mixedreality.toolkit.examples": "2.6.1",
     "com.microsoft.mixedreality.toolkit.foundation": "2.6.1",
     "com.microsoft.mixedreality.toolkit.tools": "2.6.1",
