@@ -1,50 +1,80 @@
 using i5.Toolkit.Core.ServiceCore;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+using i5.Toolkit.Core.Utilities;
+using i5.Toolkit.Core.Utilities.UnityAdapters;
 using Microsoft.MixedReality.Toolkit.Utilities;
+using System.Threading.Tasks;
+using UnityEngine.SceneManagement;
 
-public class SceneService : IService
+namespace i5.GaMR.Services
 {
-    private const int loginScene = 1;
-    private const int contentScene = 2;
-
-    private Scene currentlyLoadedScene;
-
-    public void Initialize(IServiceManager owner)
+    public class SceneService : IService
     {
-    }
+        private const int loginScene = 1;
+        private const int contentScene = 2;
 
-    public async void Cleanup()
-    {
-        await UnloadSceneAsync();
-    }
+        private int currentlyLoadedSceneIndex = -1;
 
-    public async Task LoadLoginSceneAsync()
-    {
-        await UnloadSceneAsync();
-        await LoadScene(loginScene);
-    }
-
-    public async Task LoadContentSceneAsync()
-    {
-        await UnloadSceneAsync();
-        await LoadScene(contentScene);
-    }
-
-    private async Task UnloadSceneAsync()
-    {
-        if (currentlyLoadedScene != null && currentlyLoadedScene.isLoaded)
+        private Scene CurrentlyLoadedScene
         {
-            await SceneManager.UnloadSceneAsync(currentlyLoadedScene);
+            get
+            {
+                if (currentlyLoadedSceneIndex < 0)
+                {
+                    return default;
+                }
+                return SceneManagerWrapper.GetSceneByBuildIndex(currentlyLoadedSceneIndex);
+            }
+        }
+
+        public ISceneManager SceneManagerWrapper { get; set; } = new SceneManagerWrapper();
+
+        public void Initialize(IServiceManager owner)
+        {
+        }
+
+        public async void Cleanup()
+        {
+            await UnloadSceneAsync();
+        }
+
+        public async Task LoadSceneAsync(SceneType sceneType)
+        {
+            await UnloadSceneAsync();
+            switch (sceneType)
+            {
+                case SceneType.LOGIN:
+                    await LoadScene(loginScene);
+                    break;
+                case SceneType.CONTENT:
+                    await LoadScene(contentScene);
+                    break;
+                default:
+                    i5Debug.LogError("Tried to load an unrecognized scene", this);
+                    break;
+            }
+        }
+
+        private async Task UnloadSceneAsync()
+        {
+            if (currentlyLoadedSceneIndex >= 0)
+            {
+                Scene currentlyLoaded = CurrentlyLoadedScene;
+                if (currentlyLoaded.isLoaded)
+                {
+                    await SceneManagerWrapper.UnloadSceneAsync(currentlyLoaded);
+                }
+            }
+        }
+
+        private async Task LoadScene(int index)
+        {
+            await SceneManagerWrapper.LoadSceneAsync(index, LoadSceneMode.Additive);
+            currentlyLoadedSceneIndex = index;
         }
     }
 
-    private async Task LoadScene(int index)
+    public enum SceneType
     {
-        await SceneManager.LoadSceneAsync(index, LoadSceneMode.Additive);
-        currentlyLoadedScene = SceneManager.GetSceneByBuildIndex(index);
+        LOGIN, CONTENT
     }
 }

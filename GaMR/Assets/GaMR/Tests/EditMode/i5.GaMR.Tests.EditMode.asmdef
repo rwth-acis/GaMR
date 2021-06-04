@@ -1,0 +1,23 @@
+{
+    "name": "i5.GaMR.Tests.EditMode",
+    "rootNamespace": "i5.GaMR.Tests.EditMode",
+    "references": [
+        "GUID:f64ba276450c22b4a82a97f26d30a16a",
+        "GUID:f32d19dcd8c86204c933aa66960594a6",
+        "GUID:9328611ac1c7bb44aac2931af3bb2e84"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll",
+        "FakeItEasy.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,17 +1,20 @@
 using i5.Toolkit.Core.ServiceCore;
 using UnityEngine;
 
-public class Bootstrapper : BaseServiceBootstrapper
+namespace i5.GaMR.Services
 {
-    [SerializeField] private GameObject progressOrbsPrefab;
-
-    protected override void RegisterServices()
+    public class Bootstrapper : BaseServiceBootstrapper
     {
-        ServiceManager.RegisterService(new SceneService());
-    }
+        [SerializeField] private GameObject progressOrbsPrefab;
 
-    protected override void UnRegisterServices()
-    {
-        ServiceManager.RemoveService<SceneService>();
+        protected override void RegisterServices()
+        {
+            ServiceManager.RegisterService(new SceneService());
+        }
+
+        protected override void UnRegisterServices()
+        {
+            ServiceManager.RemoveService<SceneService>();
+        }
     }
 }
