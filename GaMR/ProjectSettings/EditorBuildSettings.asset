@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/GaMR/Scenes/Content/MainScene.unity
     guid: b86eef71ca3b66340bd8474724f77e5f
+  - enabled: 1
+    path: Assets/GaMR/Tests/PlayMode/TestScene.unity
+    guid: 042dba1a1388d4e44a95ca3e8a47088d
   m_configObjects: {}

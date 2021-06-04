@@ -7,6 +7,7 @@ using NUnit.Framework;
 using System.Collections;
 using System.Threading.Tasks;
 using UnityEditor.SceneManagement;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 
@@ -22,7 +23,7 @@ namespace i5.GaMR.Tests.EditMode.Services
         [SetUp]
         public void Setup()
         {
-            EditorSceneManager.NewScene(NewSceneSetup.EmptyScene);
+            EditModeTestHelper.LoadTestScene();
 
             sceneService = new SceneService()
             {
@@ -38,7 +39,7 @@ namespace i5.GaMR.Tests.EditMode.Services
             yield return AsyncTest.WaitForTask(task);
 
             A.CallTo(()=>sceneService.SceneManagerWrapper.LoadSceneAsync(
-                loginSceneIndex, UnityEngine.SceneManagement.LoadSceneMode.Additive))
+                loginSceneIndex, LoadSceneMode.Additive))
                 .MustHaveHappened();
         }
 
@@ -52,17 +53,15 @@ namespace i5.GaMR.Tests.EditMode.Services
         }
 
         [UnityTest]
-        public IEnumerator LoadSceneAsync_LoginAndSceneLoaded_SceneUnloaded()
+        public IEnumerator LoadSceneAsync_LoginLoadedTwice_NoUnload()
         {
-            EditorSceneManager.LoadScene(loginSceneIndex, LoadSceneMode.Additive);
-            Scene fakeScene = EditorSceneManager.GetSceneByBuildIndex(loginSceneIndex);
-            A.CallTo(() => sceneService.SceneManagerWrapper.GetSceneByBuildIndex(A<int>.Ignored)).Returns(fakeScene);
-
             Task task = sceneService.LoadSceneAsync(SceneType.LOGIN);
             yield return AsyncTest.WaitForTask(task);
 
-            A.CallTo(() => sceneService.SceneManagerWrapper.UnloadSceneAsync(fakeScene)).MustHaveHappenedOnceExactly();
-        }
+            task = sceneService.LoadSceneAsync(SceneType.LOGIN);
+            yield return AsyncTest.WaitForTask(task);
 
+            A.CallTo(() => sceneService.SceneManagerWrapper.UnloadSceneAsync(A<Scene>.Ignored)).MustNotHaveHappened();
+        }
     }
 }

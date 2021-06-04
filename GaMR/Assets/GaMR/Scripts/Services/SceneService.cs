@@ -9,9 +9,6 @@ namespace i5.GaMR.Services
 {
     public class SceneService : IService
     {
-        private const int loginScene = 1;
-        private const int contentScene = 2;
-
         private int currentlyLoadedSceneIndex = -1;
 
         private Scene CurrentlyLoadedScene
@@ -39,24 +36,13 @@ namespace i5.GaMR.Services
 
         public async Task LoadSceneAsync(SceneType sceneType)
         {
-            await UnloadSceneAsync();
-            switch (sceneType)
-            {
-                case SceneType.LOGIN:
-                    await LoadScene(loginScene);
-                    break;
-                case SceneType.CONTENT:
-                    await LoadScene(contentScene);
-                    break;
-                default:
-                    i5Debug.LogError("Tried to load an unrecognized scene", this);
-                    break;
-            }
+            await UnloadSceneAsync((int)sceneType);
+            await LoadScene((int)sceneType);
         }
 
-        private async Task UnloadSceneAsync()
+        private async Task UnloadSceneAsync(int nextSceneIndex = -1)
         {
-            if (currentlyLoadedSceneIndex >= 0)
+            if (currentlyLoadedSceneIndex >= 0 && nextSceneIndex != currentlyLoadedSceneIndex)
             {
                 Scene currentlyLoaded = CurrentlyLoadedScene;
                 if (currentlyLoaded.isLoaded)
@@ -68,13 +54,17 @@ namespace i5.GaMR.Services
 
         private async Task LoadScene(int index)
         {
-            await SceneManagerWrapper.LoadSceneAsync(index, LoadSceneMode.Additive);
-            currentlyLoadedSceneIndex = index;
+            if (index != currentlyLoadedSceneIndex)
+            {
+                await SceneManagerWrapper.LoadSceneAsync(index, LoadSceneMode.Additive);
+                currentlyLoadedSceneIndex = index;
+            }
         }
     }
 
     public enum SceneType
     {
-        LOGIN, CONTENT
+        LOGIN = 1,
+        CONTENT = 2
     }
 }
