@@ -16,7 +16,7 @@ namespace i5.GaMR.Tests.EditMode.Services
     public class SceneServiceTests
     {
         private const int loginSceneIndex = 1;
-        private const int contentScentIndex = 2;
+        private const int contentSceneIndex = 2;
 
         private SceneService sceneService;
 
@@ -62,6 +62,62 @@ namespace i5.GaMR.Tests.EditMode.Services
             yield return AsyncTest.WaitForTask(task);
 
             A.CallTo(() => sceneService.SceneManagerWrapper.UnloadSceneAsync(A<Scene>.Ignored)).MustNotHaveHappened();
+        }
+
+        [UnityTest]
+        public IEnumerator LoadSceneAsync_LoginLoadedTwice_NoSecondLoad()
+        {
+            Task task = sceneService.LoadSceneAsync(SceneType.LOGIN);
+            yield return AsyncTest.WaitForTask(task);
+
+            task = sceneService.LoadSceneAsync(SceneType.LOGIN);
+            yield return AsyncTest.WaitForTask(task);
+
+            A.CallTo(() => sceneService.SceneManagerWrapper.LoadSceneAsync(loginSceneIndex, LoadSceneMode.Additive)).MustHaveHappenedOnceExactly();
+        }
+
+        [UnityTest]
+        public IEnumerator LoadSceneAsync_Content_ContentSceneLoaded()
+        {
+            Task task = sceneService.LoadSceneAsync(SceneType.CONTENT);
+            yield return AsyncTest.WaitForTask(task);
+
+            A.CallTo(() => sceneService.SceneManagerWrapper.LoadSceneAsync(
+                contentSceneIndex, LoadSceneMode.Additive))
+                .MustHaveHappened();
+        }
+
+        [UnityTest]
+        public IEnumerator LoadSceneAsync_ContentNoSceneLoaded_NoSceneUnloaded()
+        {
+            Task task = sceneService.LoadSceneAsync(SceneType.CONTENT);
+            yield return AsyncTest.WaitForTask(task);
+
+            A.CallTo(() => sceneService.SceneManagerWrapper.UnloadSceneAsync(A<Scene>.Ignored)).MustNotHaveHappened();
+        }
+
+        [UnityTest]
+        public IEnumerator LoadSceneAsync_ContentLoadedTwice_NoUnload()
+        {
+            Task task = sceneService.LoadSceneAsync(SceneType.CONTENT);
+            yield return AsyncTest.WaitForTask(task);
+
+            task = sceneService.LoadSceneAsync(SceneType.CONTENT);
+            yield return AsyncTest.WaitForTask(task);
+
+            A.CallTo(() => sceneService.SceneManagerWrapper.UnloadSceneAsync(A<Scene>.Ignored)).MustNotHaveHappened();
+        }
+
+        [UnityTest]
+        public IEnumerator LoadSceneAsync_ContentLoadedTwice_NoSecondLoad()
+        {
+            Task task = sceneService.LoadSceneAsync(SceneType.CONTENT);
+            yield return AsyncTest.WaitForTask(task);
+
+            task = sceneService.LoadSceneAsync(SceneType.CONTENT);
+            yield return AsyncTest.WaitForTask(task);
+
+            A.CallTo(() => sceneService.SceneManagerWrapper.LoadSceneAsync(contentSceneIndex, LoadSceneMode.Additive)).MustHaveHappenedOnceExactly();
         }
     }
 }

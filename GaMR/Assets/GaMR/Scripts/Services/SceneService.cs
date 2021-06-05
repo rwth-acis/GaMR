@@ -31,16 +31,16 @@ namespace i5.GaMR.Services
 
         public async void Cleanup()
         {
-            await UnloadSceneAsync();
+            await UnloadSceneForNextAsync();
         }
 
         public async Task LoadSceneAsync(SceneType sceneType)
         {
-            await UnloadSceneAsync((int)sceneType);
+            await UnloadSceneForNextAsync((int)sceneType);
             await LoadScene((int)sceneType);
         }
 
-        private async Task UnloadSceneAsync(int nextSceneIndex = -1)
+        private async Task UnloadSceneForNextAsync(int nextSceneIndex = -1)
         {
             if (currentlyLoadedSceneIndex >= 0 && nextSceneIndex != currentlyLoadedSceneIndex)
             {

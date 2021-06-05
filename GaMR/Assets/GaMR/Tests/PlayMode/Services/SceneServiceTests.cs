@@ -4,7 +4,6 @@ using i5.Toolkit.Core.ServiceCore;
 using i5.Toolkit.Core.TestHelpers;
 using i5.Toolkit.Core.Utilities.UnityAdapters;
 using NUnit.Framework;
-using System;
 using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
@@ -24,11 +23,36 @@ namespace i5.GaMR.Tests.PlayMode
         {
             PlayModeTestHelper.LoadTestScene();
 
-            sceneService = new SceneService()
-            {
-                SceneManagerWrapper = A.Fake<ISceneManager>()
-            };
+            sceneService = new SceneService();
             sceneService.Initialize(A.Fake<IServiceManager>());
+        }
+
+        [UnityTest]
+        public IEnumerator LoadSceneAsync_FirstLoginThenContent_LoginLoadedAndUnloaded()
+        {
+            Task task = sceneService.LoadSceneAsync(SceneType.LOGIN);
+            yield return AsyncTest.WaitForTask(task);
+
+            Scene expectedLogin = SceneManager.GetSceneByBuildIndex(loginSceneIndex);
+            Assert.IsTrue(expectedLogin.isLoaded);
+
+            task = sceneService.LoadSceneAsync(SceneType.CONTENT);
+            yield return AsyncTest.WaitForTask(task);
+
+            Assert.IsFalse(expectedLogin.isLoaded);
+        }
+
+        [UnityTest]
+        public IEnumerator LoadSceneAsync_FirstLoginThenContent_ContentLoaded()
+        {
+            Task task = sceneService.LoadSceneAsync(SceneType.LOGIN);
+            yield return AsyncTest.WaitForTask(task);
+
+            task = sceneService.LoadSceneAsync(SceneType.CONTENT);
+            yield return AsyncTest.WaitForTask(task);
+
+            Scene expectedContent = SceneManager.GetSceneByBuildIndex(contentSceneIndex);
+            Assert.IsTrue(expectedContent.isLoaded);
         }
     }
 }
