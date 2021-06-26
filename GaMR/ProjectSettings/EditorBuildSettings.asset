@@ -17,4 +17,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/GaMR/Tests/PlayMode/TestScene.unity
     guid: 042dba1a1388d4e44a95ca3e8a47088d
-  m_configObjects: {}
+  m_configObjects:
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 470125d8aadabb540829599859b00251,
+      type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: e7307f7d0bcd4e9418ee3b91079b1fbc,
+      type: 2}
