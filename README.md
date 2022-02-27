@@ -6,3 +6,6 @@ This framework enables a gamified approach to training and learning in a mixed r
 The framework provides a learning environment which can visualize and gamify the study of three-dimensional structures.
 
 Setup and compilation instructions can be found in the [Wiki](https://github.com/rwth-acis/GaMR/wiki/ProjectSetup).
+
+
+test- rz
